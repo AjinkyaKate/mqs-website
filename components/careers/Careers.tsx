@@ -22,44 +22,45 @@ const SANS = "var(--font-sans)";
 const eyebrow = (color: string) => ({ font: `500 11px/1 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase" as const, color });
 const h2 = (color: string) => ({ margin: 0, font: `600 clamp(28px,3.8vw,46px)/1.08 ${SANS}`, letterSpacing: "-.025em", color });
 
-const LIFE = [
-  "Hardware, firmware, physics and applications sit in one room — a design review takes minutes, not a sprint.",
-  "You follow your subsystem all the way through: concept, build, FAT, and the customer floor.",
-  "Real machines to test on. Nothing here is developed against a simulator alone.",
-  "Direct access to the applications engineers — and, often, to the customers they serve.",
-  "Scope grows with demonstrated capability, not with tenure or title.",
+const LIFE_INTRO = "We are a multidisciplinary engineering team that values ownership, curiosity and execution. Work here blends design thinking with real-world manufacturing and customer impact — so you see your work go live, not stay in slides.";
+const LIFE: [string, string][] = [
+  ["Engineering-first environment", "Build, test, improve, repeat."],
+  ["Hands-on learning", "Exposure to full systems, field use-cases and real customer requirements."],
+  ["Mentorship & growth", "Guidance from senior engineers and functional leads."],
+  ["Certification & skill support", "Support for relevant training and certifications, based on role."],
+  ["Cross-functional collaboration", "Mechanical, electronics, software, applications and service, working together."],
 ];
 
 const VALUES: [string, string][] = [
-  ["Physics first.", "Every claim traces back to a measurement someone can repeat."],
-  ["Own the outcome.", "Your subsystem is yours until it works on the customer's floor."],
-  ["Document as you go.", "In a regulated industry, undocumented work did not happen."],
-  ["Question the spec.", "Push back at kickoff, not at acceptance testing."],
-  ["Small team, wide scope.", "Titles are thin here. Responsibility is not."],
+  ["Precision & Accountability", "Quality is non-negotiable."],
+  ["Customer-driven engineering", "Build for real-world outcomes."],
+  ["Ownership", "Take responsibility, finish what you start."],
+  ["Continuous improvement", "Learn fast, iterate faster."],
+  ["Integrity & Safety", "Trust and a safety-first mindset."],
 ];
 
 const TEAMS: [string, string][] = [
-  ["Mechanical", "Cabinets, shielding, manipulators and multi-axis part-handling stages."],
-  ["Electronics", "HV control, detector interfacing, motion control and safety interlocks."],
-  ["Software", "Acquisition, CT reconstruction, defect-recognition tooling and the operator UI."],
-  ["Applications", "Technique development, sample studies, customer trials and training."],
-  ["Service", "Installation, commissioning, calibration and field support across India."],
-  ["Sales", "Technical qualification, specification and tender response."],
-  ["Operations", "Supply chain, production planning, quality assurance and dispatch."],
+  ["Mechanical", "Cabinets, manipulators, granite bases, shielding and part-handling mechanisms."],
+  ["Electronics", "Control units, power electronics, embedded platforms and system integration."],
+  ["Software", "MQS Imaging Suite, acquisition and control, image processing and AI inspection tools."],
+  ["Applications", "Customer parts, inspection technique development, demonstrations and training."],
+  ["Service", "Installation, commissioning, preventive maintenance and breakdown support in the field."],
+  ["Sales", "Technical consultation with quality and manufacturing teams across India."],
+  ["Operations", "Production planning, supply chain, quality systems and documentation."],
 ];
 
 const STEPS: [string, string][] = [
-  ["Apply.", "Send a resume through the form below. A person reads it, and you hear back within two working days."],
-  ["Technical conversation.", "Forty-five minutes with the engineer who would work beside you, about what you have actually built."],
-  ["On-site round.", "Come to Hyderabad, see the machines, and work a real problem with two or three of the team."],
-  ["Offer.", "Scope, compensation, reporting line and start date — in writing, with time to consider it."],
+  ["Apply", "Submit your resume through the form below."],
+  ["Screening", "An initial conversation about your background and interests."],
+  ["Technical discussion", "With the functional lead for the relevant team."],
+  ["Offer", "Role, compensation and start date confirmed."],
 ];
 
 // Live vacancies. Empty by default → the talent-pool state renders (never a
 // fabricated "current openings" list). Add { title, team, meta } to publish roles.
 const OPENINGS: { title: string; team: string; meta: string }[] = [];
 
-const DEPARTMENTS = ["Mechanical", "Electronics", "Software", "Applications", "Service", "Sales", "Operations"];
+const DEPARTMENTS = ["Mechanical", "Electronics", "Software", "Applications", "Service", "Sales", "Operations", "Other"];
 const EXPERIENCE = ["0 – 2 years", "2 – 5 years", "5 – 10 years", "10 – 15 years", "15+ years"];
 
 type FieldProps = { label: string; name: string; type?: string; placeholder?: string; required?: boolean };
@@ -130,8 +131,8 @@ export default function Careers() {
           <div className="flex flex-col" style={{ maxWidth: 760, gap: "clamp(16px,2vw,22px)" }}>
             <div style={eyebrow(CYAN_D)}>Careers at MQS Technologies</div>
             <h1 style={{ margin: 0, font: `600 clamp(34px,5.4vw,64px)/1.02 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>Join the Team Behind High-Trust Inspection.</h1>
-            <p style={{ margin: 0, maxWidth: 600, font: `400 clamp(17px,1.6vw,21px)/1.5 ${SANS}`, color: "rgba(255,255,255,.86)" }}>We design and build industrial X-ray, CT and NDT systems for the parts that are not allowed to fail.</p>
-            <p style={{ margin: 0, maxWidth: 560, font: `400 15px/1.6 ${SANS}`, color: "rgba(255,255,255,.68)" }}>Mechanical, electronics, software, applications, service, sales and operations — one team, one building, machines you can put your hands on.</p>
+            <p style={{ margin: 0, maxWidth: 600, font: `400 clamp(17px,1.6vw,21px)/1.5 ${SANS}`, color: "rgba(255,255,255,.86)" }}>Build inspection systems that protect quality, safety and performance.</p>
+            <p style={{ margin: 0, maxWidth: 640, font: `400 15px/1.6 ${SANS}`, color: "rgba(255,255,255,.68)" }}>At MQS Technologies we build advanced X-ray, CT, NDT, ATE and inspection solutions for mission-critical industries. If you are driven by engineering challenges, hands-on problem solving, and building products that matter, you will feel at home here.</p>
             <div className="flex flex-wrap items-center" style={{ gap: 16, marginTop: 8 }}>
               <a href="#apply" style={btn(CYAN, "#08283A")} className="hover:!bg-white hover:!text-[#0B2A3A]">Submit Your Resume</a>
               <div className="flex items-center" style={{ gap: 10, font: `500 11px/1 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase", color: "rgba(255,255,255,.78)" }}>
@@ -147,7 +148,7 @@ export default function Careers() {
         <div className="mx-auto flex flex-col" style={{ maxWidth: 1000, padding: "clamp(64px,9vw,140px) clamp(24px,4vw,55px)", gap: "clamp(24px,3vw,36px)" }}>
           <div style={eyebrow(CYAN_L)}>Why MQS</div>
           <h2 style={{ margin: 0, font: `600 clamp(30px,4.6vw,56px)/1.06 ${SANS}`, letterSpacing: "-.025em", color: INK, textWrap: "pretty" }}>Your Work Ships. And Then It Flies.</h2>
-          <p style={{ margin: 0, maxWidth: 720, font: `400 clamp(16px,1.5vw,19px)/1.65 ${SANS}`, color: BODY, textWrap: "pretty" }}>Our systems inspect castings, welds, batteries and composites for aerospace, defence, automotive and power customers. Every machine that leaves Hyderabad becomes the reason someone else signs off a part. That is a short, unambiguous line between the work you do on a Tuesday and a component in service — and it is why we hire for judgement, documentation and follow-through rather than for résumé keywords.</p>
+          <p style={{ margin: 0, maxWidth: 720, font: `400 clamp(16px,1.5vw,19px)/1.65 ${SANS}`, color: BODY, textWrap: "pretty" }}>The systems built here inspect rocket motors, aircraft structures, brake components and battery cells. When an engineer at MQS solves a problem, the result leaves the building, gets installed on a customer floor, and is used to decide whether a safety-critical part is fit to ship. That is a short feedback loop for an engineering job — shorter than most, and it is the reason people stay.</p>
         </div>
       </section>
 
@@ -161,12 +162,16 @@ export default function Careers() {
           <div className="flex flex-col" style={{ gap: 18 }}>
             <div style={eyebrow(CYAN_L)}>Life at MQS</div>
             <h2 style={h2(INK)}>An Engineering-First Team.</h2>
+            <p style={{ margin: "6px 0 0", maxWidth: 720, font: `400 clamp(16px,1.5vw,19px)/1.65 ${SANS}`, color: BODY, textWrap: "pretty" }}>{LIFE_INTRO}</p>
           </div>
           <div className="flex flex-col" style={{ borderTop: `1px solid ${HAIR}` }}>
-            {LIFE.map((t, i) => (
+            {LIFE.map(([title, desc], i) => (
               <div key={i} className="grid" style={{ gridTemplateColumns: "64px 1fr", gap: "clamp(16px,3vw,32px)", padding: "clamp(20px,2.4vw,30px) 0", borderBottom: `1px solid ${HAIR}` }}>
                 <div style={{ font: `500 13px/1.2 ${SANS}`, letterSpacing: ".045em", color: CYAN_L }}>{String(i + 1).padStart(2, "0")}</div>
-                <p style={{ margin: 0, font: `400 clamp(16px,1.5vw,20px)/1.5 ${SANS}`, color: INK, textWrap: "pretty" }}>{t}</p>
+                <div className="flex flex-col" style={{ gap: 6 }}>
+                  <div style={{ font: `600 clamp(17px,1.5vw,20px)/1.3 ${SANS}`, letterSpacing: "-.02em", color: INK }}>{title}</div>
+                  <p style={{ margin: 0, font: `400 15px/1.55 ${SANS}`, color: BODY, textWrap: "pretty" }}>{desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -258,7 +263,7 @@ export default function Careers() {
           <div className="flex flex-col" style={{ gap: 18, maxWidth: 680 }}>
             <div style={eyebrow(CYAN_L)}>Apply</div>
             <h2 style={h2(INK)}>Join Our Talent Pool.</h2>
-            <p style={{ margin: 0, font: `400 clamp(16px,1.4vw,18px)/1.6 ${SANS}`, color: BODY }}>One form, whether or not a matching role is posted. Tell us what you build and we will route your resume to the engineer who owns that area.</p>
+            <p style={{ margin: 0, font: `400 clamp(16px,1.4vw,18px)/1.6 ${SANS}`, color: BODY }}>Join MQS and work on engineering solutions that support automotive, aerospace and defence, electronics and advanced manufacturing. Share your resume and our team will reach out when something relevant opens.</p>
           </div>
 
           <form noValidate className="flex flex-col" style={{ gap: "clamp(28px,3vw,40px)", borderTop: `2px solid ${CYAN}`, paddingTop: "clamp(28px,3vw,40px)" }}>
@@ -298,16 +303,21 @@ export default function Careers() {
               {fileErr && <div className="flex items-center" style={{ gap: 8, font: `400 13px/1.4 ${SANS}`, color: ERROR }}><span style={{ width: 6, height: 6, background: ERROR }} />{fileErr}</div>}
             </div>
 
-            {/* Consent */}
-            <label className="flex items-start" style={{ gap: 14, cursor: "pointer" }}>
-              <span className="flex flex-none items-center justify-center" style={{ width: 22, height: 22, marginTop: 2, border: `1px solid ${consent ? CYAN_L : INK}`, background: consent ? CYAN_L : "#fff", transition: `background 150ms ${EASE},border-color 150ms ${EASE}` }}>
-                {consent && <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="square"><path d="M4 12l5 5L20 6" /></svg>}
-              </span>
-              <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} style={{ position: "absolute", width: 1, height: 1, opacity: 0 }} />
-              <span style={{ font: `400 14px/1.55 ${SANS}`, color: BODY, maxWidth: 640 }}>
-                I consent to MQS Technologies storing and processing my details for recruitment purposes. We keep applications for 12 months and never share them outside MQS.
-              </span>
-            </label>
+            {/* Consent + DPDP privacy notice */}
+            <div className="flex flex-col" style={{ gap: 12 }}>
+              <label className="flex items-start" style={{ gap: 14, cursor: "pointer" }}>
+                <span className="flex flex-none items-center justify-center" style={{ width: 22, height: 22, marginTop: 2, border: `1px solid ${consent ? CYAN_L : INK}`, background: consent ? CYAN_L : "#fff", transition: `background 150ms ${EASE},border-color 150ms ${EASE}` }}>
+                  {consent && <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="square"><path d="M4 12l5 5L20 6" /></svg>}
+                </span>
+                <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} style={{ position: "absolute", width: 1, height: 1, opacity: 0 }} />
+                <span style={{ font: `400 14px/1.55 ${SANS}`, color: BODY, maxWidth: 640 }}>
+                  I agree to be contacted by MQS Technologies regarding relevant opportunities. <span style={{ color: CYAN_L }}>*</span>
+                </span>
+              </label>
+              <p style={{ margin: 0, paddingLeft: 36, maxWidth: 660, font: `400 13px/1.6 ${SANS}`, color: MUTED }}>
+                We collect the details and resume you submit only to assess your application, keep them for 12 months, and delete them after that. You can ask us to delete your data at any time by emailing <a href="mailto:sales@mqstechnologies.in" style={{ color: CYAN_L }}>sales@mqstechnologies.in</a>. Full details are in our privacy policy.
+              </p>
+            </div>
 
             <div className="flex flex-wrap items-center" style={{ gap: 20 }}>
               <button type="button" style={btn(CYAN, "#08283A")} className="hover:!bg-[#0B2A3A] hover:!text-white">Submit Resume</button>
