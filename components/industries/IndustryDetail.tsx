@@ -127,9 +127,9 @@ export default function IndustryDetail({ data }: { data: IndustryData }) {
               <h2 style={{ margin: 0, font: `600 clamp(22px,2.5vw,32px)/1.12 ${SANS}`, letterSpacing: "-.025em", color: INK }}>{d.extra.heading}</h2>
               <p style={{ margin: 0, maxWidth: 420, font: `400 14px/1.6 ${SANS}`, color: MUTED }}>{d.extra.blurb}</p>
             </div>
-            <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(200px,100%),1fr))", gap: 1, background: HAIR, border: `1px solid ${HAIR}` }}>
+            <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(190px,100%),1fr))", gap: "clamp(10px,1vw,14px)" }}>
               {d.extra.items.map((it) => (
-                <div key={it} className="flex items-center" style={{ background: "#fff", minHeight: 84, padding: "clamp(18px,2vw,24px)", font: `600 16px/1.3 ${SANS}`, letterSpacing: "-.02em", color: INK }}>{it}</div>
+                <div key={it} className="flex items-center" style={{ background: "#fff", border: `1px solid ${HAIR}`, minHeight: 84, padding: "clamp(18px,2vw,24px)", font: `600 16px/1.3 ${SANS}`, letterSpacing: "-.02em", color: INK }}>{it}</div>
               ))}
             </div>
           </div>
