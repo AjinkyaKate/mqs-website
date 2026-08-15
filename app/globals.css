@@ -204,6 +204,12 @@ img {
 }
 select.careers-field { appearance: none; -webkit-appearance: none; cursor: pointer; }
 
+/* Industries routing matrix — stack rows / hide header on phones */
+@media (max-width: 640px) {
+  [data-matrix-head] { display: none !important; }
+  [data-matrix-row] { grid-template-columns: 1fr !important; gap: 6px !important; }
+}
+
 /* Background <video>: never show the iOS "tap to play" overlay / controls */
 video::-webkit-media-controls,
 video::-webkit-media-controls-enclosure,
