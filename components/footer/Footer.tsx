@@ -36,10 +36,10 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
   {
     title: "Industries",
     links: [
-      { label: "Aerospace & Defence", href: "/#industries" },
-      { label: "Automotive", href: "/#industries" },
-      { label: "Electronics", href: "/#industries" },
-      { label: "Energy", href: "/#industries" },
+      { label: "Aerospace & Defence", href: "/industries" },
+      { label: "Automotive", href: "/industries" },
+      { label: "Electronics", href: "/industries" },
+      { label: "Energy", href: "/industries" },
     ],
   },
   {
