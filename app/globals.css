@@ -180,6 +180,30 @@ img {
   .mqs-soc__ink { transition: none; }
 }
 
+/* ── Careers page — underline form fields (Careers A · Editorial) ── */
+.careers-field {
+  width: 100%;
+  height: 48px;
+  padding: 0 2px;
+  border: none;
+  border-bottom: 1px solid #d3dfe7;
+  background: transparent;
+  outline: none;
+  color: #0b2a3a;
+  font: 400 16px/1.4 var(--font-sans);
+  transition: border-color 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.careers-field::placeholder { color: #5f7688; }
+.careers-field:focus { border-bottom: 2px solid #0a6a88; }
+.careers-field--area {
+  height: auto;
+  min-height: 104px;
+  padding: 12px 2px;
+  line-height: 1.55;
+  resize: vertical;
+}
+select.careers-field { appearance: none; -webkit-appearance: none; cursor: pointer; }
+
 /* Background <video>: never show the iOS "tap to play" overlay / controls */
 video::-webkit-media-controls,
 video::-webkit-media-controls-enclosure,
