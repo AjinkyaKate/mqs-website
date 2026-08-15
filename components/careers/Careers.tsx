@@ -93,6 +93,78 @@ function SelectField({ label, name, placeholder, options, required }: { label: s
   );
 }
 
+// City suggestions for the location typeahead (India-focused + a few global hubs).
+const CITIES = [
+  "Hyderabad, Telangana", "Warangal, Telangana", "Bengaluru, Karnataka", "Mysuru, Karnataka",
+  "Mangaluru, Karnataka", "Hubballi, Karnataka", "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu",
+  "Madurai, Tamil Nadu", "Tiruchirappalli, Tamil Nadu", "Salem, Tamil Nadu", "Pune, Maharashtra",
+  "Mumbai, Maharashtra", "Nagpur, Maharashtra", "Nashik, Maharashtra", "Thane, Maharashtra",
+  "Aurangabad, Maharashtra", "New Delhi, Delhi", "Gurugram, Haryana", "Faridabad, Haryana",
+  "Noida, Uttar Pradesh", "Ghaziabad, Uttar Pradesh", "Lucknow, Uttar Pradesh", "Kanpur, Uttar Pradesh",
+  "Ahmedabad, Gujarat", "Vadodara, Gujarat", "Surat, Gujarat", "Rajkot, Gujarat",
+  "Kolkata, West Bengal", "Visakhapatnam, Andhra Pradesh", "Vijayawada, Andhra Pradesh",
+  "Tirupati, Andhra Pradesh", "Kochi, Kerala", "Thiruvananthapuram, Kerala", "Kozhikode, Kerala",
+  "Indore, Madhya Pradesh", "Bhopal, Madhya Pradesh", "Jaipur, Rajasthan", "Jodhpur, Rajasthan",
+  "Udaipur, Rajasthan", "Chandigarh", "Amritsar, Punjab", "Ludhiana, Punjab", "Jalandhar, Punjab",
+  "Bhubaneswar, Odisha", "Patna, Bihar", "Ranchi, Jharkhand", "Raipur, Chhattisgarh",
+  "Dehradun, Uttarakhand", "Guwahati, Assam",
+  "Dubai, UAE", "Singapore", "London, United Kingdom", "Munich, Germany", "Detroit, United States",
+];
+
+function LocationField() {
+  const [q, setQ] = useState("");
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(-1);
+
+  const matches = (() => {
+    const s = q.trim().toLowerCase();
+    if (!s) return [];
+    const starts = CITIES.filter((c) => c.toLowerCase().startsWith(s));
+    const incl = CITIES.filter((c) => !c.toLowerCase().startsWith(s) && c.toLowerCase().includes(s));
+    return [...starts, ...incl].slice(0, 7);
+  })();
+
+  const choose = (c: string) => { setQ(c); setOpen(false); setActive(-1); };
+
+  const onKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!open || matches.length === 0) return;
+    if (e.key === "ArrowDown") { e.preventDefault(); setActive((a) => Math.min(a + 1, matches.length - 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActive((a) => Math.max(a - 1, 0)); }
+    else if (e.key === "Enter" && active >= 0) { e.preventDefault(); choose(matches[active]); }
+    else if (e.key === "Escape") { setOpen(false); setActive(-1); }
+  };
+
+  return (
+    <label className="flex flex-col gap-2" style={{ position: "relative" }}>
+      {fieldLabel("Current location", true)}
+      <input
+        type="text" name="location" autoComplete="off" value={q}
+        placeholder="Start typing your city…"
+        onChange={(e) => { setQ(e.target.value); setOpen(true); setActive(-1); }}
+        onFocus={() => q && setOpen(true)}
+        onBlur={() => setTimeout(() => setOpen(false), 120)}
+        onKeyDown={onKey}
+        role="combobox" aria-expanded={open && matches.length > 0} aria-autocomplete="list"
+        className="careers-field"
+      />
+      {open && matches.length > 0 && (
+        <div role="listbox" style={{ position: "absolute", top: "100%", left: 0, right: 0, zIndex: 20, marginTop: 2, background: "#fff", border: `1px solid ${HAIR}`, boxShadow: "0 12px 28px rgba(11,42,58,.14)", maxHeight: 240, overflowY: "auto" }}>
+          {matches.map((c, i) => (
+            <div
+              key={c} role="option" aria-selected={i === active}
+              onMouseDown={(e) => { e.preventDefault(); choose(c); }}
+              onMouseEnter={() => setActive(i)}
+              style={{ padding: "11px 14px", cursor: "pointer", font: `400 15px/1.3 ${SANS}`, color: INK, background: i === active ? "#EAF6FB" : "#fff", borderBottom: i < matches.length - 1 ? `1px solid ${HAIR}` : "none" }}
+            >
+              {c}
+            </div>
+          ))}
+        </div>
+      )}
+    </label>
+  );
+}
+
 export default function Careers() {
   const [file, setFile] = useState<File | null>(null);
   const [fileErr, setFileErr] = useState("");
@@ -271,7 +343,7 @@ export default function Careers() {
               <TextField label="Full name" name="fullname" placeholder="Priya Raghavan" required />
               <TextField label="Email" name="email" type="email" placeholder="you@company.com" required />
               <TextField label="Phone" name="phone" type="tel" placeholder="+91" required />
-              <TextField label="Current location" name="location" placeholder="City, country" required />
+              <LocationField />
               <SelectField label="Department" name="department" placeholder="Select a department" options={DEPARTMENTS} required />
               <SelectField label="Total experience" name="experience" placeholder="Select a range" options={EXPERIENCE} />
               <TextField label="Current company" name="company" placeholder="Employer" />
