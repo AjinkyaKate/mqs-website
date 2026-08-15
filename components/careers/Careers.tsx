@@ -201,15 +201,11 @@ export default function Careers() {
         <div className="absolute inset-0" style={{ pointerEvents: "none", background: "linear-gradient(90deg,rgba(11,42,58,.90) 0%,rgba(11,42,58,.74) 42%,rgba(11,42,58,.24) 100%)" }} />
         <div className="relative mx-auto w-full" style={{ maxWidth: 1330, padding: "clamp(96px,10vw,150px) clamp(24px,4vw,55px) clamp(48px,6vw,88px)" }}>
           <div className="flex flex-col" style={{ maxWidth: 760, gap: "clamp(16px,2vw,22px)" }}>
-            <div style={eyebrow(CYAN_D)}>Careers at MQS Technologies</div>
             <h1 style={{ margin: 0, font: `600 clamp(34px,5.4vw,64px)/1.02 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>Join the Team Behind High-Trust Inspection.</h1>
             <p style={{ margin: 0, maxWidth: 600, font: `400 clamp(17px,1.6vw,21px)/1.5 ${SANS}`, color: "rgba(255,255,255,.86)" }}>Build inspection systems that protect quality, safety and performance.</p>
             <p style={{ margin: 0, maxWidth: 640, font: `400 15px/1.6 ${SANS}`, color: "rgba(255,255,255,.68)" }}>At MQS Technologies we build advanced X-ray, CT, NDT, ATE and inspection solutions for mission-critical industries. If you are driven by engineering challenges, hands-on problem solving, and building products that matter, you will feel at home here.</p>
             <div className="flex flex-wrap items-center" style={{ gap: 16, marginTop: 8 }}>
               <a href="#apply" style={btn(CYAN, "#08283A")} className="hover:!bg-white hover:!text-[#0B2A3A]">Submit Your Resume</a>
-              <div className="flex items-center" style={{ gap: 10, font: `500 11px/1 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase", color: "rgba(255,255,255,.78)" }}>
-                <span style={{ width: 6, height: 6, background: CYAN }} />Hyderabad, India
-              </div>
             </div>
           </div>
         </div>
@@ -393,7 +389,6 @@ export default function Careers() {
 
             <div className="flex flex-wrap items-center" style={{ gap: 20 }}>
               <button type="button" style={btn(CYAN, "#08283A")} className="hover:!bg-[#0B2A3A] hover:!text-white">Submit Resume</button>
-              <span style={{ font: `400 13px/1.5 ${SANS}`, color: MUTED }}>Fields marked * are required.</span>
             </div>
           </form>
         </div>
