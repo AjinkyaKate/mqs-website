@@ -32,6 +32,7 @@ const PRIMARY: Card[] = [
     systems: ["High-Energy X-ray", "MQCT", "Microfocus CT", "MQXC Cabinet DR", "Rotor Blade DR"],
     href: "/industries/aerospace-defence",
     cta: "Explore Aerospace & Defence",
+    image: "/assets/he-k15-card.jpg",
     confidential: "We don't publish aerospace scan results. Our customers' programmes stay their own — which is usually why they chose us.",
   },
   {
@@ -150,7 +151,7 @@ export default function IndustriesOverview() {
                 {c.image ? (
                   <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: "#111417" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={c.image} alt={`${c.name} inspection radiograph`} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+                    <img src={c.image} alt={c.confidential ? "MQS high-energy LINAC inspection system" : `${c.name} inspection radiograph`} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
                   </div>
                 ) : (
                   <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: NAVY }}>

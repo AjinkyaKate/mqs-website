@@ -47,7 +47,7 @@ export const aerospace: IndustryData = {
     { title: "Energetics & ordnance", desc: "Fuze, warhead and propellant assemblies inspected for fill, voids and component placement." },
   ],
   systems: [
-    { name: "High-Energy X-ray", desc: "Penetration through dense, thick-section aerospace castings and assemblies.", href: "/products" },
+    { name: "High-Energy X-ray", desc: "Penetration through dense, thick-section aerospace castings and assemblies.", href: "/products/high-energy-xray" },
     { name: "MQCT", desc: "3D computed tomography for internal defect mapping and dimensional metrology.", href: "/products" },
     { name: "Microfocus CT", desc: "Sub-micron detail on high-value, small-feature components.", href: "/products" },
     { name: "MQXC Cabinet DR", desc: "AERB-compliant cabinet digital radiography from 160–450 kV.", href: "/products/mqxc-series" },

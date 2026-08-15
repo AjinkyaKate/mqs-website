@@ -30,7 +30,7 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
       { label: "Digital Radiography", href: "/products" },
       { label: "Industrial CT", href: "/products" },
       { label: "Microfocus X-ray", href: "/products" },
-      { label: "High-Energy X-ray", href: "/products" },
+      { label: "High-Energy X-ray", href: "/products/high-energy-xray" },
     ],
   },
   {

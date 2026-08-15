@@ -13,6 +13,7 @@ export const HREF_MAP: Record<string, string> = {
   About: "/#about",
   Careers: "/careers",
   Contact: "/#contact",
+  "High-Energy X-ray": "/products/high-energy-xray",
 };
 
 export const linkFor = (parent: string, label: string): string =>
