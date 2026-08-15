@@ -3,6 +3,7 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "../hero/icons";
+import { linkFor } from "./nav-links";
 
 /* Full site header — the same navbar as the home hero, extracted so every
    page shares one navbar. Fixed overlay: transparent over a dark hero at the
@@ -37,6 +38,7 @@ const MEGA: [string, string[]][] = [
   ["Services", ["CT Inspection Services", "Industrial Electronics", "Precision Sub-Assemblies", "Preventive Maintenance", "Repair & Support"]],
   ["Resources", ["Case Studies", "News", "Industries", "Downloads", "FAQ"]],
 ];
+
 
 export default function SiteHeaderFull() {
   const [w, setW] = useState(1440);
@@ -267,7 +269,7 @@ export default function SiteHeaderFull() {
                 <div style={{ ...LABEL, color: "#6B6B6B", marginBottom: 20 }}>{title}</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   {links.map((l) => (
-                    <a key={l} href="/products" style={{ font: "var(--type-body)", color: "#0B2A3A" }} className="transition-colors duration-200 hover:!text-[#0A6A88]">
+                    <a key={l} href={linkFor(title, l)} style={{ font: "var(--type-body)", color: "#0B2A3A" }} className="transition-colors duration-200 hover:!text-[#0A6A88]">
                       {l}
                     </a>
                   ))}
@@ -290,7 +292,7 @@ export default function SiteHeaderFull() {
         <div data-mqs-panel onMouseEnter={cancelDropClose} onMouseLeave={scheduleDropClose} style={{ position: "fixed", top: navH, left: menuLeft ?? 600, zIndex: 40, minWidth: 320, background: "#FFFFFF", animation: `mqsPanel 200ms ${EASE} both` }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {openItem.children.map((l) => (
-              <a key={l} href="/products" style={{ display: "block", padding: "12px 28px", font: "var(--type-body)", color: "#0B2A3A" }} className="transition-colors duration-200 hover:!bg-[#F4F8FA] hover:!text-[#0A6A88]">
+              <a key={l} href={linkFor(openItem.name, l)} style={{ display: "block", padding: "12px 28px", font: "var(--type-body)", color: "#0B2A3A" }} className="transition-colors duration-200 hover:!bg-[#F4F8FA] hover:!text-[#0A6A88]">
                 {l}
               </a>
             ))}
@@ -333,7 +335,7 @@ export default function SiteHeaderFull() {
                           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.22, ease: EASE_ARR }} style={{ overflow: "hidden" }}>
                             <div style={{ display: "flex", flexDirection: "column", paddingLeft: 16, paddingBottom: 8 }}>
                               {item.children!.map((c) => (
-                                <a key={c} href="/products" style={{ display: "block", padding: `${isTablet ? 7 : 5}px 0`, font: "var(--type-body)", fontFamily: "var(--font-sans)", fontSize: isTablet ? 15 : 14, color: "#4A4A4A", transition: `color 200ms ${EASE}` }} className="hover:!text-[#0A6A88]">
+                                <a key={c} href={linkFor(item.name, c)} style={{ display: "block", padding: `${isTablet ? 7 : 5}px 0`, font: "var(--type-body)", fontFamily: "var(--font-sans)", fontSize: isTablet ? 15 : 14, color: "#4A4A4A", transition: `color 200ms ${EASE}` }} className="hover:!text-[#0A6A88]">
                                   {c}
                                 </a>
                               ))}
