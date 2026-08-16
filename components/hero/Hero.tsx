@@ -70,7 +70,15 @@ const SPECS = [
 const LABEL: CSSProperties = { font: "var(--type-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase" };
 const rise = (d: number): CSSProperties => ({ animation: `mqsRise 420ms ${EASE} both`, animationDelay: `${d}ms` });
 
-export default function Hero() {
+type ImageOverride = { src: string; alt: string };
+
+export default function Hero({
+  bgImage,
+  insetImage,
+}: {
+  bgImage?: ImageOverride;
+  insetImage?: ImageOverride;
+} = {}) {
   const [w, setW] = useState(1440);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -249,7 +257,7 @@ export default function Hero() {
     >
 
       {/* 1 — background: still poster + video (steel-navy duotone, matches Industries) */}
-      <Image src="/assets/hero-poster.jpg" alt="Precision drive components under inspection" fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} />
+      <Image src={bgImage?.src ?? "/assets/hero-poster.jpg"} alt={bgImage?.alt ?? "Precision drive components under inspection"} fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} unoptimized={!!bgImage?.src} />
       {!reducedMotion && !videoError && (
         <video
           ref={(el) => {
@@ -268,7 +276,7 @@ export default function Hero() {
           loop
           playsInline
           preload="auto"
-          poster="/assets/hero-poster.jpg"
+          poster={bgImage?.src ?? "/assets/hero-poster.jpg"}
           onCanPlay={() => setVideoReady(true)}
           onLoadedData={() => setVideoReady(true)}
           onPlaying={() => setVideoReady(true)}
@@ -294,7 +302,7 @@ export default function Hero() {
       {/* 4 — inset (desktop) */}
       {isDesktop && (
         <div className="group" style={{ position: "absolute", left: `${INSET_LEFT}%`, top: `${INSET_TOP}vh`, width: `${INSET_W}%`, height: IMG_H, overflow: "hidden", ...rise(160) }}>
-          <Image src="/assets/inset-operator.jpg" alt="Technician operating an industrial inspection machine on the production floor" fill sizes="28vw" className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.06]" />
+          <Image src={insetImage?.src ?? "/assets/inset-operator.jpg"} alt={insetImage?.alt ?? "Technician operating an industrial inspection machine on the production floor"} fill sizes="28vw" className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.06]" unoptimized={!!insetImage?.src} />
         </div>
       )}
 
@@ -567,7 +575,7 @@ export default function Hero() {
 
           {isSmall && (
             <div style={{ marginTop: isTablet ? 32 : 28, flex: "1 1 auto", minHeight: isTablet ? 380 : 190, overflow: "hidden", position: "relative" }}>
-              <Image src="/assets/inset-operator.jpg" alt="Technician operating an industrial inspection machine on the production floor" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "50% 50%" }} />
+              <Image src={insetImage?.src ?? "/assets/inset-operator.jpg"} alt={insetImage?.alt ?? "Technician operating an industrial inspection machine on the production floor"} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "50% 50%" }} unoptimized={!!insetImage?.src} />
             </div>
           )}
         </div>

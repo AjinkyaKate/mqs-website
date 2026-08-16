@@ -31,6 +31,18 @@ export default async function AdminLayout({
           >
             Enquiries
           </a>
+          <a
+            href="/admin/images"
+            className="rounded px-3 py-2 text-sm transition-colors hover:bg-white/10"
+          >
+            Site Images
+          </a>
+          <a
+            href="/admin/blog"
+            className="rounded px-3 py-2 text-sm transition-colors hover:bg-white/10"
+          >
+            Blog
+          </a>
         </nav>
         <form action={logoutAction} className="p-3">
           <button
