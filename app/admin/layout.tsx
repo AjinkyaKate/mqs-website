@@ -3,6 +3,7 @@ import Image from "next/image";
 import { verifySession } from "@/lib/auth";
 import { logoutAction } from "@/lib/actions/auth";
 import AdminNav from "@/components/admin/AdminNav";
+import { prisma } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Admin — MQS Technologies",
@@ -19,6 +20,8 @@ export default async function AdminLayout({
   if (!authed) {
     return <>{children}</>;
   }
+
+  const newCount = await prisma.enquiry.count({ where: { status: "new" } });
 
   return (
     <div className="flex min-h-screen bg-[#F1F5F9]">
@@ -59,8 +62,8 @@ export default async function AdminLayout({
         </div>
       </aside>
 
-      {/* Mobile header */}
       <div className="flex flex-1 flex-col">
+        {/* Mobile header */}
         <header className="flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4 md:hidden">
           <Image
             src="/assets/mqs-logo-2a-light.png"
@@ -69,7 +72,37 @@ export default async function AdminLayout({
             height={38}
             className="h-7 w-auto"
           />
-          <AdminNav mobile />
+          <div className="flex items-center gap-2">
+            <a
+              href="/admin/enquiries?status=new"
+              className="relative flex h-9 w-9 items-center justify-center rounded text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
+              title={`${newCount} new enquiries`}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              {newCount > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                  {newCount}
+                </span>
+              )}
+            </a>
+            <AdminNav mobile />
+          </div>
+        </header>
+
+        {/* Desktop top bar */}
+        <header className="hidden h-14 items-center justify-end border-b border-gray-200 bg-white px-6 md:flex">
+          <a
+            href="/admin/enquiries?status=new"
+            className="relative flex h-9 w-9 items-center justify-center rounded text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
+            title={`${newCount} new enquiries`}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            {newCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                {newCount}
+              </span>
+            )}
+          </a>
         </header>
 
         <main className="flex-1 overflow-y-auto">{children}</main>
