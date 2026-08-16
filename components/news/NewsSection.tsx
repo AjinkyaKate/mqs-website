@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 /* Recognition — MQS awards. Two cards (photo · award tag · title · description),
    hover 4px cyan inset frame + accent title + slow zoom. Palette 2B. */
@@ -45,11 +46,11 @@ function AwardCard({ tag, image, title, desc }: Award) {
           transition: `box-shadow 200ms ${EASE}`,
         }}
       >
-        <img
+        <Image
           src={image}
           alt={title}
-          loading="lazy"
-          decoding="async"
+          width={800}
+          height={450}
           className="h-full w-full object-cover"
           style={{ transform: hovered ? "scale(1.04)" : "scale(1)", transition: `transform 420ms ${EASE}` }}
         />

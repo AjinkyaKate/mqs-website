@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────
    MQXC Series product detail page — ported from
@@ -105,8 +106,7 @@ export default function MqxcSeries() {
     <main style={{ background: PAGE, color: INK, fontFamily: "var(--font-sans)" }}>
       {/* HERO — full-bleed dark, header overlays it */}
       <section id="overview" style={{ position: "relative", background: "#0B2A3A", overflow: "hidden" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/mqxc-hero-bg.jpg" alt="Production floor lined with inspection and manufacturing machinery" className="absolute inset-0 h-full w-full object-cover" style={{ filter: "grayscale(1)" }} />
+        <Image src="/assets/mqxc-hero-bg.jpg" alt="Production floor lined with inspection and manufacturing machinery" fill sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} />
         {/* steel-navy duotone (matches Industries / home hero) */}
         <div className="absolute inset-0" style={{ background: "#12405C", mixBlendMode: "color" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(90deg,rgba(11,42,58,.94) 0%,rgba(11,42,58,.78) 46%,rgba(11,42,58,.34) 100%)" }} />
@@ -138,8 +138,7 @@ export default function MqxcSeries() {
               <h2 style={{ margin: "14px 0 0", font: "600 clamp(28px,3.2vw,42px)/1.08 var(--font-sans)", letterSpacing: "-.025em", color: INK, textWrap: "pretty" }}>Built for the part you actually inspect.</h2>
             </div>
             <div style={{ border: `1px solid ${HAIR}`, aspectRatio: compact ? "16/9" : "4/3", overflow: "hidden", background: "#fff" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/mqxc-hero.jpg" alt="MQXC cabinet X-ray system" className="h-full w-full object-cover" />
+              <Image src="/assets/mqxc-hero.jpg" alt="MQXC cabinet X-ray system" width={800} height={600} className="h-full w-full object-cover" />
             </div>
           </div>
           <div className="flex flex-col" style={{ gap: 20 }}>
@@ -180,8 +179,7 @@ export default function MqxcSeries() {
           {GALLERY.map(([src, note, caption]) => (
             <figure key={src} className="m-0" style={{ background: "#fff", padding: 16 }}>
               <div style={{ position: "relative", aspectRatio: "4/3", background: "#111417", border: `1px solid ${HAIR}`, overflow: "hidden" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={note} className="h-full w-full object-cover" />
+                <Image src={src} alt={note} width={800} height={600} className="h-full w-full object-cover" />
               </div>
               <figcaption style={{ marginTop: 10, font: "500 11px/1.4 var(--font-sans)", letterSpacing: ".045em", textTransform: "uppercase", color: MUTED }}>{caption}</figcaption>
             </figure>
@@ -196,8 +194,7 @@ export default function MqxcSeries() {
           <h2 style={{ ...h2, marginBottom: 40 }}>What makes up an MQXC system.</h2>
           <div className="grid items-start" style={{ gridTemplateColumns: desktop ? "1fr 1fr" : "1fr", gap: "clamp(32px,4vw,56px)" }}>
             <div style={{ position: "relative", border: `1px solid ${HAIR}`, aspectRatio: compact ? "16/9" : "4/3", minHeight: compact ? undefined : 320, overflow: "hidden", background: PAGE }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/mqxc-cutaway.jpg" alt="Cabinet cutaway showing shielding, door, detector, manipulator and control station" className="absolute inset-0 h-full w-full object-cover" />
+              <Image src="/assets/mqxc-cutaway.jpg" alt="Cabinet cutaway showing shielding, door, detector, manipulator and control station" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
               {CALLOUTS.map(([letter, label, , x, y], i) => {
                 const on = activeCallout === i;
                 return (
@@ -356,8 +353,7 @@ export default function MqxcSeries() {
               <iframe title="MQXC product video" className="absolute inset-0 h-full w-full" style={{ border: 0 }} allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`} />
             ) : (
               <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/mqxc-hero.jpg" alt="MQXC in operation" className="absolute inset-0 h-full w-full object-cover" style={{ opacity: 0.5 }} />
+                <Image src="/assets/mqxc-hero.jpg" alt="MQXC in operation" fill sizes="100vw" className="object-cover" style={{ opacity: 0.5 }} />
                 <button type="button" onClick={() => setPlaying(true)} aria-label="Play product video" className="absolute inset-0 flex items-center justify-center hover:!bg-black/20" style={{ background: "transparent" }}>
                   <span className="flex items-center justify-center hover:!bg-[#16C1F3] hover:!border-[#16C1F3]" style={{ width: 68, height: 68, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.42)", color: "#fff", transition: `background 200ms ${EASE},border-color 200ms ${EASE}` }}>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z" /></svg>
@@ -397,8 +393,7 @@ function ModelMedia({ m }: { m: Model }) {
   return (
     <figure className="m-0">
       <div style={{ position: "relative", background: "#111417", border: `1px solid ${HAIR}`, aspectRatio: "4/3", overflow: "hidden" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={m.img} alt={`Radiograph — ${m.shot}`} className="h-full w-full object-cover" />
+        <Image src={m.img} alt={`Radiograph — ${m.shot}`} width={800} height={600} className="h-full w-full object-cover" />
       </div>
       <figcaption style={{ marginTop: 10, font: "500 11px/1.4 var(--font-sans)", letterSpacing: ".045em", textTransform: "uppercase", color: MUTED }}>Sample result — {m.name}</figcaption>
     </figure>

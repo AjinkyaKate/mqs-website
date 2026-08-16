@@ -247,9 +247,6 @@ export default function Hero() {
         background: "#0B2A3A",
       }}
     >
-      {/* preload light logo */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/mqs-logo-2a-light.png" alt="" aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, opacity: 0, pointerEvents: "none" }} />
 
       {/* 1 — background: still poster + video (steel-navy duotone, matches Industries) */}
       <Image src="/assets/hero-poster.jpg" alt="Precision drive components under inspection" fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} />
@@ -569,9 +566,8 @@ export default function Hero() {
           </div>
 
           {isSmall && (
-            <div style={{ marginTop: isTablet ? 32 : 28, flex: "1 1 auto", minHeight: isTablet ? 380 : 190, overflow: "hidden" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/inset-operator.jpg" alt="Technician operating an industrial inspection machine on the production floor" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 50%", display: "block" }} />
+            <div style={{ marginTop: isTablet ? 32 : 28, flex: "1 1 auto", minHeight: isTablet ? 380 : 190, overflow: "hidden", position: "relative" }}>
+              <Image src="/assets/inset-operator.jpg" alt="Technician operating an industrial inspection machine on the production floor" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "50% 50%" }} />
             </div>
           )}
         </div>

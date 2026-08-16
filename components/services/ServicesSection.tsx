@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────
    Services Section — ported from `Services Section.dc.html`
@@ -182,14 +183,14 @@ export default function ServicesSection() {
           </h2>
           <div
             className="w-full overflow-hidden aspect-[4/3] md:aspect-[16/9] lg:aspect-[4/3]"
-            style={{ background: DARK }}
+            style={{ background: DARK, position: "relative" }}
           >
-            <img
+            <Image
               src="/assets/photo-services.jpg"
               alt="Plant floor"
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 44vw"
+              className="object-cover"
             />
           </div>
           <AllServices className="hidden px-7 lg:inline-flex" />

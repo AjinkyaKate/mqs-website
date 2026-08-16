@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────
    Industries — hub / routing page.
@@ -103,8 +104,7 @@ export default function IndustriesOverview() {
     <main style={{ background: PAGE, color: INK, fontFamily: SANS }}>
       {/* HERO */}
       <section style={{ position: "relative", overflow: "hidden", background: NAVY, minHeight: "clamp(460px,52vw,600px)", display: "flex", alignItems: "flex-end" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/mqxc-app-bracket.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" style={{ filter: "grayscale(1)", opacity: 0.22 }} />
+        <Image src="/assets/mqxc-app-bracket.jpg" alt="" fill sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)", opacity: 0.22 }} />
         <div className="absolute inset-0" style={{ background: "#12405C", mixBlendMode: "color" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(90deg,rgba(11,42,58,.92) 0%,rgba(11,42,58,.78) 46%,rgba(11,42,58,.5) 100%)" }} />
         <div className="relative mx-auto w-full" style={{ maxWidth: 1330, padding: "clamp(96px,10vw,150px) clamp(24px,4vw,55px) clamp(44px,5vw,72px)" }}>
@@ -150,8 +150,7 @@ export default function IndustriesOverview() {
               <a key={c.name} href={c.href} className="group flex flex-col hover:!border-[#0A6A88]" style={{ background: "#fff", border: `1px solid ${HAIR}`, color: INK, transition: `border-color 200ms ${EASE}` }}>
                 {c.image ? (
                   <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: "#111417" }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={c.image} alt={c.confidential ? "MQS high-energy LINAC inspection system" : `${c.name} inspection radiograph`} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+                    <Image src={c.image} alt={c.confidential ? "MQS high-energy LINAC inspection system" : `${c.name} inspection radiograph`} width={800} height={600} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
                   </div>
                 ) : (
                   <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: NAVY }}>

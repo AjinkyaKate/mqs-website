@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import BackgroundVideo from "@/components/media/BackgroundVideo";
 
 /* ──────────────────────────────────────────────────────────────
@@ -121,11 +122,11 @@ export default function AboutSection() {
             {/* col 1 — tall portrait + Learn more */}
             <div className="flex flex-col gap-6">
               <div className="overflow-hidden" style={{ aspectRatio: "3 / 4.5", background: DARK }}>
-                <img
+                <Image
                   src="/assets/about-entrance.jpg"
                   alt="MQS Technologies office entrance"
-                  loading="lazy"
-                  decoding="async"
+                  width={400}
+                  height={600}
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -134,11 +135,11 @@ export default function AboutSection() {
 
             {/* col 2 — large centre */}
             <div className="overflow-hidden" style={{ aspectRatio: "1 / 1.08", background: DARK }}>
-              <img
+              <Image
                 src="/assets/about-banner.jpg"
                 alt="Engineers operating an MQS X-ray and CT inspection system"
-                loading="lazy"
-                decoding="async"
+                width={800}
+                height={864}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -146,11 +147,11 @@ export default function AboutSection() {
             {/* col 3 — medium + paragraph */}
             <div className="flex flex-col gap-7">
               <div className="overflow-hidden" style={{ aspectRatio: "4 / 3.2", background: DARK }}>
-                <img
+                <Image
                   src="/assets/about-office.jpg"
                   alt="MQS engineering team at work"
-                  loading="lazy"
-                  decoding="async"
+                  width={400}
+                  height={320}
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -224,11 +225,11 @@ export default function AboutSection() {
             {PARAGRAPH}
           </p>
           <div className="mt-1 aspect-[3/4] overflow-hidden md:mt-2 md:aspect-[16/9]" style={{ background: DARK }}>
-            <img
+            <Image
               src="/assets/about-banner.jpg"
               alt="Engineers operating an MQS X-ray and CT inspection system"
-              loading="lazy"
-              decoding="async"
+              width={800}
+              height={864}
               className="h-full w-full object-cover"
             />
           </div>

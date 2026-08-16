@@ -6,6 +6,8 @@
    Tablet: 2×2 grid + CTA below. Phone: single column (stacked features) + CTA below.
    ────────────────────────────────────────────────────────────── */
 
+import Image from "next/image";
+
 const DARK = "#0B2A3A";
 const PRIMARY = "#0E3A52";
 const RULE = "rgba(255,255,255,.14)";
@@ -134,13 +136,12 @@ function WorkWithUs({ className = "" }: { className?: string }) {
 export default function WhyChooseUs() {
   return (
     <section id="why" className="relative overflow-hidden" style={{ background: DARK }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src="/assets/photo-dark-hero.jpg"
         alt="Plant floor at night"
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        sizes="100vw"
+        className="object-cover"
       />
       <div className="absolute inset-0" style={{ background: "rgba(11,42,58,.80)" }} />
 

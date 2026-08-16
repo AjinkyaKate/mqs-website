@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────
    High-Energy X-ray Solutions — product page.
@@ -140,8 +141,7 @@ export default function HighEnergy() {
             </div>
           </div>
           <div style={{ position: "relative", border: `1px solid ${HAIR_DARK}`, background: "#0A1016", aspectRatio: "16/11", overflow: "hidden" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/he-hero.jpg" alt="High-energy dual-head multi-energy CT system with linear accelerator, object manipulator and flat panel detector" className="absolute inset-0 h-full w-full object-contain" />
+            <Image src="/assets/he-hero.jpg" alt="High-energy dual-head multi-energy CT system with linear accelerator, object manipulator and flat panel detector" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain" />
           </div>
         </div>
       </section>
@@ -250,8 +250,7 @@ export default function HighEnergy() {
               const imgFirst = desktop && i % 2 === 0;
               const media = (
                 <div style={{ position: "relative", background: "#0A1016", border: `1px solid ${HAIR}`, aspectRatio: "4/3", overflow: "hidden" }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={c.image} alt={c.title} className="absolute inset-0 h-full w-full object-contain" />
+                  <Image src={c.image} alt={c.title} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain" />
                 </div>
               );
               const body = (

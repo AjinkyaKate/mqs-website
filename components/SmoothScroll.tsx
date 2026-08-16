@@ -1,7 +1,12 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
+import dynamic from "next/dynamic";
 import { PropsWithChildren, useEffect, useState } from "react";
+
+const ReactLenis = dynamic(
+  () => import("lenis/react").then((m) => m.ReactLenis),
+  { ssr: false }
+);
 
 /**
  * Lenis smooth scrolling, disabled when the user prefers reduced motion.

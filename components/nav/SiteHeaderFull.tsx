@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "../hero/icons";
@@ -173,10 +174,12 @@ export default function SiteHeaderFull() {
         }}
       >
         <a href="/" style={{ display: "flex", alignItems: "center", paddingLeft: gut, flex: "none" }} aria-label="MQS Technologies">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={inkHeader ? "/assets/mqs-logo-2a-light.png" : "/assets/mqs-logo-2a-dark.png"}
             alt="MQS Technologies"
+            width={124}
+            height={60}
+            priority
             style={{ height: logoH, width: "auto", display: "block" }}
           />
         </a>

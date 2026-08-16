@@ -6,6 +6,8 @@
    Palette 2B + type scale. Static.
    ────────────────────────────────────────────────────────────── */
 
+import Image from "next/image";
+
 const NAVY = "#0E3A52";
 const MUTED = "rgba(255,255,255,.72)";
 const HEAD = "rgba(255,255,255,.60)";
@@ -115,8 +117,7 @@ export default function Footer() {
       <div className="mqs-footer-grid">
         {/* brand */}
         <div className="mqs-footer-brand">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/mqs-logo-2a-dark.png" alt="MQS Technologies" className="h-8 w-auto self-start sm:h-[34px] lg:h-[38px]" />
+          <Image src="/assets/mqs-logo-2a-dark.png" alt="MQS Technologies" width={124} height={38} className="h-8 w-auto self-start sm:h-[34px] lg:h-[38px]" />
           <div className="t-h4" style={{ color: "#fff" }}>
             Industrial X-ray, CT &amp; NDT inspection systems.
           </div>

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /* Product Card — ported from `Product Card.dc.html`. Palette 2B.
    Image tile → spec · name · subtitle · description → View solution / Brochure.
    Hover: 1px cyan inset frame, accent name, slow image zoom (CSS group-hover). */
@@ -25,12 +27,11 @@ export default function ProductCard({ spec, name, subtitle, desc, image, href }:
       <div className="relative overflow-hidden" style={{ background: "#F4F8FA", borderBottom: `1px solid ${HAIRLINE}` }}>
         <div className="flex h-[200px] items-center justify-center p-6">
           {image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={image}
               alt={name}
-              loading="lazy"
-              decoding="async"
+              width={400}
+              height={200}
               className="max-h-full max-w-full object-contain transition-transform duration-[420ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.04]"
             />
           ) : (

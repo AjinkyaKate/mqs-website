@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import SiteHeaderFull from "@/components/nav/SiteHeaderFull";
 import Footer from "@/components/footer/Footer";
 import ProductsCatalog from "@/components/products/ProductsCatalog";
@@ -19,8 +20,7 @@ export default function ProductsPage() {
 
       {/* hero band */}
       <section className="relative overflow-hidden" style={{ background: "#0B2A3A" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/products-hero.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-[.28]" />
+        <Image src="/assets/products-hero.jpg" alt="" fill sizes="100vw" className="object-cover opacity-[.28]" />
         <div className="relative flex flex-col gap-5 px-6 pt-[84px] md:gap-[26px] md:px-10 md:pt-[104px] lg:gap-[34px] lg:px-[55px] lg:pt-[128px]">
           <div className="t-eyebrow" style={{ color: "#5AD1F7" }}>
             All solutions

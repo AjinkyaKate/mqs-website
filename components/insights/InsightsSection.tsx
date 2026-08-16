@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────
    Insights & Resources — ported from `Insights And Resources.dc.html`
@@ -42,11 +43,11 @@ function ArticleCard({ date, image, title }: Article) {
           transition: `box-shadow 200ms ${EASE}`,
         }}
       >
-        <img
+        <Image
           src={image}
           alt={title}
-          loading="lazy"
-          decoding="async"
+          width={800}
+          height={600}
           className="h-full w-full object-cover"
           style={{ transform: hovered ? "scale(1.04)" : "scale(1)", transition: `transform 420ms ${EASE}` }}
         />

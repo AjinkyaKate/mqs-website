@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────
    Equipment Section — ported from `Equipment Section.dc.html`
@@ -128,11 +129,11 @@ function EquipmentCard(p: CardProps) {
         className="flex w-full items-center justify-center overflow-hidden"
         style={{ aspectRatio: "4 / 3", background: TILE, padding: "7%" }}
       >
-        <img
+        <Image
           src={p.image}
           alt={p.category}
-          loading="lazy"
-          decoding="async"
+          width={600}
+          height={450}
           className="h-full w-full object-contain"
           style={{
             transform: hovered ? "scale(1.04)" : "scale(1)",

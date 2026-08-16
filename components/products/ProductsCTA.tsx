@@ -8,6 +8,13 @@
    :focus state. Stacks below from tablet down.
    ────────────────────────────────────────────────────────────── */
 
+"use client";
+
+import Image from "next/image";
+import { useRef, useActionState } from "react";
+import { submitProductForm } from "@/lib/actions/enquiry";
+import type { ContactFormState } from "@/lib/schemas";
+
 const DARK = "#0B2A3A";
 const INK = "#0B2A3A";
 const MUTED = "#5F7688";
@@ -21,6 +28,7 @@ const CHIPS = ["Digital radiography", "Industrial CT", "PCB X-ray", "ATE"];
 
 type FieldDef = {
   label: string;
+  name: string;
   type?: string;
   placeholder?: string;
   textarea?: boolean;
@@ -28,14 +36,15 @@ type FieldDef = {
 };
 
 const FIELDS: FieldDef[] = [
-  { label: "Full name*", placeholder: "Jane Smith" },
-  { label: "Company name*", placeholder: "Company Pvt. Ltd." },
-  { label: "Work email*", type: "email", placeholder: "jane@example.com" },
-  { label: "Phone", type: "tel", placeholder: "+91 98765 43210" },
-  { label: "Part / material", placeholder: "Aluminium casting, 40 mm" },
-  { label: "Defect type*", placeholder: "Porosity, cracks, inclusions" },
+  { label: "Full name*", name: "name", placeholder: "Jane Smith" },
+  { label: "Company name*", name: "company", placeholder: "Company Pvt. Ltd." },
+  { label: "Work email*", name: "email", type: "email", placeholder: "jane@example.com" },
+  { label: "Phone", name: "phone", type: "tel", placeholder: "+91 98765 43210" },
+  { label: "Part / material", name: "partMaterial", placeholder: "Aluminium casting, 40 mm" },
+  { label: "Defect type*", name: "defectType", placeholder: "Porosity, cracks, inclusions" },
   {
     label: "Application details",
+    name: "appDetails",
     textarea: true,
     full: true,
     placeholder: "Throughput, resolution and site constraints",
@@ -48,12 +57,13 @@ const labelStyle = {
 const inputBase =
   "w-full border-0 border-b bg-transparent pl-0.5 outline-none transition-colors duration-200 focus:!border-b-[#16C1F3]";
 
-function Field({ label, type = "text", placeholder, textarea, full }: FieldDef) {
+function Field({ label, name, type = "text", placeholder, textarea, full }: FieldDef) {
   return (
     <div className={`flex flex-col gap-2.5 ${full ? "md:col-span-2" : ""}`}>
       <label className="t-caption" style={labelStyle}>{label}</label>
       {textarea ? (
         <textarea
+          name={name}
           rows={4}
           placeholder={placeholder}
           className={`${inputBase} t-body resize-none py-1.5`}
@@ -61,6 +71,7 @@ function Field({ label, type = "text", placeholder, textarea, full }: FieldDef) 
         />
       ) : (
         <input
+          name={name}
           type={type}
           placeholder={placeholder}
           className={`${inputBase} t-body h-12`}
@@ -72,15 +83,17 @@ function Field({ label, type = "text", placeholder, textarea, full }: FieldDef) 
 }
 
 export default function ProductsCTA() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [state, formAction, pending] = useActionState<ContactFormState, FormData>(submitProductForm, { success: false });
+
   return (
     <section id="contact" className="relative overflow-hidden" style={{ background: DARK }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src="/assets/photo-dark-hero.jpg"
         alt="Plant floor at night"
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        sizes="100vw"
+        className="object-cover"
       />
       <div className="absolute inset-0" style={{ background: "rgba(11,42,58,.82)" }} />
 
@@ -126,27 +139,48 @@ export default function ProductsCTA() {
           className="bg-white px-6 py-7 md:p-10 lg:flex-[0_0_46%] lg:p-12"
           style={{ borderTop: `2px solid ${CYAN}` }}
         >
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-x-6 md:gap-y-7 lg:gap-x-7 lg:gap-y-8">
-            {FIELDS.map((f) => (
-              <Field key={f.label} {...f} />
-            ))}
-          </div>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row md:mt-9 lg:mt-10">
-            <button
-              type="button"
-              className="t-button flex h-12 items-center justify-center rounded-none px-7 transition-colors duration-200 hover:!bg-[#0A2B3D]"
-              style={{ background: PRIMARY, color: "#fff" }}
-            >
-              Request consultation
-            </button>
-            <button
-              type="button"
-              className="t-button flex h-12 items-center justify-center rounded-none px-7 transition-colors duration-200 hover:!bg-[#0B2A3A] hover:!text-white"
-              style={{ border: `1px solid ${INK}`, color: INK }}
-            >
-              Request a demo
-            </button>
-          </div>
+          {state.success ? (
+            <div className="flex flex-col items-center gap-4 py-12 text-center">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="24" fill="#16C1F3" opacity=".12" />
+                <path d="M15 25l6 6 12-12" stroke="#16C1F3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <p className="t-body" style={{ color: INK }}>{state.message}</p>
+            </div>
+          ) : (
+            <form ref={formRef} action={formAction}>
+              <input type="hidden" name="sourcePage" value="/products" />
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-x-6 md:gap-y-7 lg:gap-x-7 lg:gap-y-8">
+                {FIELDS.map((f) => (
+                  <Field key={f.label} {...f} />
+                ))}
+              </div>
+              {state.errors && (
+                <div className="mt-4 text-sm text-red-600">
+                  {Object.values(state.errors).flat().map((e, i) => (
+                    <p key={i}>{e}</p>
+                  ))}
+                </div>
+              )}
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row md:mt-9 lg:mt-10">
+                <button
+                  type="submit"
+                  disabled={pending}
+                  className="t-button flex h-12 items-center justify-center rounded-none px-7 transition-colors duration-200 hover:!bg-[#0A2B3D] disabled:opacity-50"
+                  style={{ background: PRIMARY, color: "#fff" }}
+                >
+                  {pending ? "Submitting..." : "Request consultation"}
+                </button>
+                <a
+                  href="#contact"
+                  className="t-button flex h-12 items-center justify-center rounded-none px-7 transition-colors duration-200 hover:!bg-[#0B2A3A] hover:!text-white"
+                  style={{ border: `1px solid ${INK}`, color: INK }}
+                >
+                  Request a demo
+                </a>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </section>
