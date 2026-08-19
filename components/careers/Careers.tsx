@@ -204,7 +204,7 @@ export default function Careers() {
     <main style={{ background: PAGE, color: INK, fontFamily: SANS }}>
       {/* HERO */}
       <section style={{ position: "relative", width: "100%", minHeight: "clamp(560px,64vw,720px)", display: "flex", alignItems: "flex-end", overflow: "hidden", background: NAVY }}>
-        <Image src="/assets/careers-hero.jpg" alt="The MQS Technologies engineering team in the Hyderabad office" fill sizes="100vw" className="object-cover" />
+        <Image src="/assets/careers-hero.jpg" quality={90} alt="The MQS Technologies engineering team in the Hyderabad office" fill sizes="100vw" className="object-cover" />
         <div className="absolute inset-0" style={{ pointerEvents: "none", background: "linear-gradient(90deg,rgba(11,42,58,.90) 0%,rgba(11,42,58,.74) 42%,rgba(11,42,58,.24) 100%)" }} />
         <div className="relative mx-auto w-full" style={{ maxWidth: 1330, padding: "clamp(96px,10vw,150px) clamp(24px,4vw,55px) clamp(48px,6vw,88px)" }}>
           <div className="flex flex-col" style={{ maxWidth: 760, gap: "clamp(16px,2vw,22px)" }}>
@@ -230,7 +230,7 @@ export default function Careers() {
       {/* LIFE AT MQS */}
       <section style={{ background: PAGE }}>
         <div className="mx-auto relative" style={{ width: "100%", maxWidth: 1440, aspectRatio: "3/2", maxHeight: 640 }}>
-          <Image src="/assets/careers-life.jpg" alt="Engineers at work in the MQS Technologies office" fill sizes="100vw" className="object-cover" />
+          <Image src="/assets/careers-life.jpg" quality={90} alt="Engineers at work in the MQS Technologies office" fill sizes="100vw" className="object-cover" />
         </div>
         <div className="mx-auto flex flex-col" style={{ maxWidth: 1000, padding: "clamp(56px,7vw,110px) clamp(24px,4vw,55px)", gap: "clamp(28px,3vw,44px)" }}>
           <div className="flex flex-col" style={{ gap: 18 }}>

@@ -16,10 +16,10 @@ export type Product = {
   desc: string;
   image?: string;
   href?: string;
-  /* Path under /public/brochures plus its real size. The button only renders when
-     a file exists: it used to point every product at #contact while showing a
-     download arrow, which promised a file that was never there. */
-  brochure?: { file: string; size: string };
+  /* Filename under /public/brochures. The button only renders when a file
+     exists: it used to point every product at #contact while showing a download
+     arrow, which promised a file that was never there. */
+  brochure?: string;
 };
 
 export default function ProductCard({ spec, name, subtitle, desc, image, href, brochure }: Product) {
@@ -77,13 +77,13 @@ export default function ProductCard({ spec, name, subtitle, desc, image, href, b
         </a>
         {brochure && (
           <a
-            href={`/brochures/${brochure.file}`}
+            href={`/brochures/${brochure}`}
             target="_blank"
             rel="noopener"
             className="t-button flex h-11 items-center px-[18px] no-underline transition-colors duration-200 hover:!border-[#0E3A52] hover:!bg-[#0E3A52] hover:!text-white"
             style={{ border: `1px solid ${INK}`, color: INK, background: "transparent" }}
           >
-            Brochure ({brochure.size}) ↓
+            Brochure ↓
           </a>
         )}
       </div>

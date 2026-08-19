@@ -282,3 +282,27 @@ video::-webkit-media-controls-start-playback-button {
     transition: none !important;
   }
 }
+
+/* Client-wall marquee on /about-us/ — ported from the About design, which
+   translates a doubled list by -50%. Durations are the designer's: 34s at
+   tablet, 40s at desktop. The global prefers-reduced-motion block above
+   already disables it. */
+@keyframes mqsMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.mqs-marquee {
+  animation: mqsMarquee 80s linear infinite;
+  will-change: transform;
+}
+
+@media (min-width: 1024px) {
+  .mqs-marquee {
+    animation-duration: 90s;
+  }
+}

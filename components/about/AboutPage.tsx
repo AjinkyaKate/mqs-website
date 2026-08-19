@@ -1,416 +1,745 @@
 /* ──────────────────────────────────────────────────────────────
    About page — /about-us/
-   Ported from the MACHIN design system template
-   `templates/mqs-about/About.dc.html` (+ AboutPage.jsx).
+   Ported from the design project "MQS About — Concept 04 Responsive"
+   (77311f34-c26a-40a2-af51-b798797a5102), which imports
+   `MQS About Page.dc.html` at three authored breakpoints.
 
-   The page argues that the people and one checkable fact are the case: it opens
-   on MQS engineers at an MQS system, states the through-line (a doctorate in
-   tomography, a tomography systems manufacturer) as a diptych on deep navy,
-   then lets the record back it up. Dark and light grounds alternate so no two
-   navy sections sit adjacent.
+   Built exactly to the design. Section order:
+     Hero (+ stats)  →  Origin  →  SIDM award  →  Portfolio
+     →  Team statement  →  Timeline  →  Pillars  →  Purpose  →  Clients
 
-   Same deviations from the canvas template as the other ports: the template's
-   preview header and footer are dropped (the site supplies both), the handoff
-   annotations block is not shipped, and the `bp` prop becomes fluid clamps plus
-   Tailwind breakpoints. The closing CTA uses id="contact-cta" rather than the
-   template's "contact", because the site's ContactSection already owns
-   id="contact" and both appear on this page.
+   The design authors two compositions, not one design scaled: the wide
+   composition (1440 / 1280) and a stacked composition re-ordered for tablet
+   (768) and mobile (390). Both are reproduced from a single DOM using
+   Tailwind breakpoints (base = mobile, md: = tablet, lg: = desktop), except
+   in the two places where the authored compositions are structurally
+   different rather than merely reflowed:
 
-   The breadcrumb (Home / About Us) is removed at the client's request, even
-   though their content brief specifies it under "PAGE SETUP".
+     · Portfolio — desktop is a six-cell bento with bespoke per-cell markup;
+       tablet and mobile are uniform image-over-text cards. Both are rendered
+       from the same PORTFOLIO.items array and toggled with hidden/lg:grid,
+       so the copy is defined once in source.
+     · Clients — desktop and tablet run an animated marquee of names set in
+       type; mobile is a static bordered grid.
 
-   The template's closing CTA ("Want to Learn More About MQS?", Talk to an Expert
-   / View Our Products) is deliberately not rendered: ContactSection follows this
-   page and already carries the closing call to action, so the template's band
-   read as a second CTA stacked on the first. Its copy is still in about-data.ts
-   as CTA if it is ever wanted back.
+   Three further authored differences, all deliberate:
+     · The hero's supporting sentence sits inside the photograph on desktop
+       and tablet, and moves out onto the navy block on mobile.
+     · The timeline is on navy on desktop and tablet and on the light ground
+       on mobile, so long year ranges stay legible.
+     · The team statement is shortened on mobile, where the photograph sits
+       above the text and "the people in this photograph" no longer reads.
 
-   Static server component. Reveal and the milestone track are the only
-   client-side pieces.
+   No breadcrumb and no closing CTA, matching the design and the client's
+   earlier instruction to remove both. The hero's "About MQS Technologies"
+   eyebrow is also removed at the client's request.
+
+   Server component with three client islands: AboutMotion (reveal on scroll,
+   from the interactive prototype), AboutStats (the hero count-up, matching the
+   home page's StatsStrip) and the CSS marquee on the client wall. The sticky
+   section sub-nav and its scroll-progress bar were built from the interactive
+   prototype and then removed at the client's request.
    ────────────────────────────────────────────────────────────── */
 
-import type { CSSProperties, ReactNode } from "react";
-import Reveal from "@/components/services/Reveal";
-import MilestoneTrack from "./MilestoneTrack";
+import Image from "next/image";
+import AboutMotion from "./AboutMotion";
+import AboutStats from "./AboutStats";
 import {
-  AWARD, CLIENTS, FOUNDER, HERO, IMAGES, MILESTONES, PILLARS, PORTFOLIO, PURPOSE, STORY,
-  type ImageSlot, type Pillar, type Role,
+  AWARD, CLIENT_LOGOS, CLIENTS, HERO, IMAGES, LEADERSHIP, ORIGIN, PILLARS,
+  PORTFOLIO, PURPOSE, STATS, TEAM, TIMELINE,
 } from "./about-data";
 
-const EASE = "cubic-bezier(.22,.61,.36,1)";
-const INK = "#0B2A3A", BODY = "#41586A", MUTED = "#5F7688";
-const HAIR = "#D3DFE7", HAIR_DARK = "rgba(255,255,255,.16)";
+const INK = "#0B2A3A", BODY = "#41586A";
+const HAIR = "#D3DFE7", HAIR_2 = "#C3D2DB";
 const PAGE = "#F4F8FA", INSET = "#E9F0F4", WHITE = "#FFFFFF";
 const NAVY = "#0B2A3A", NAVY_2 = "#0E3A52";
-const CYAN = "#16C1F3", CYAN_L = "#0A6A88", CYAN_D = "#5AD1F7";
+const CYAN = "#16C1F3", CYAN_L = "#0A6A88";
+const GHOST = "#E9F0F4", CLIENT_TYPE = "#C3D2DB", CLIENT_GRID = "#8FA6B4";
+
 const SANS = "var(--font-sans)";
 const DISPLAY = "var(--font-display)";
 
+/* 55px inset on a 1440 viewport is a 1330px content column. */
 const MAXW = 1330;
-const GUT = "clamp(24px,4vw,55px)";
-const PAD_Y = "clamp(64px,7vw,120px)";
-const PAD_Y_SM = "clamp(56px,6vw,96px)";
+const GUT = "px-5 md:px-10 lg:px-[55px]";
+/* Anchor offset for the section ids below. The sticky sub-nav from the
+   interactive prototype was removed at the client's request; the ids stay so
+   deep links still work, and this clears the fixed global header (60/72/76). */
+const SCROLL_MT = "scroll-mt-[80px] md:scroll-mt-[92px] lg:scroll-mt-[96px]";
+const INNER = `mx-auto w-full ${GUT}`;
 
-/* ── style helpers ── */
+const GRAD_HERO_D = "linear-gradient(100deg,rgba(11,42,58,.9) 0%,rgba(11,42,58,.62) 45%,rgba(11,42,58,.18) 100%)";
+const GRAD_HERO_T = "linear-gradient(15deg,rgba(11,42,58,.94) 0%,rgba(11,42,58,.62) 60%,rgba(11,42,58,.3) 100%)";
+const GRAD_HERO_M = "linear-gradient(to top,rgba(11,42,58,.96) 0%,rgba(11,42,58,.5) 70%,rgba(11,42,58,.28) 100%)";
+const GRAD_AWARD_D = "linear-gradient(to top,rgba(11,42,58,.92) 0%,rgba(11,42,58,.1) 62%)";
+const GRAD_AWARD_T = "linear-gradient(to top,rgba(11,42,58,.94) 0%,rgba(11,42,58,.1) 68%)";
+const GRAD_CARD = "linear-gradient(to top,rgba(11,42,58,.92),rgba(11,42,58,0) 60%)";
+/* Team band. The award band weights its gradient to the bottom because its text
+   sits there; this band's text is vertically centred, so the weight is centred
+   too: heavy through the middle where the copy sits, easing off at both edges so
+   the photograph is still read rather than flattened. */
+const GRAD_TEAM_D = "linear-gradient(to bottom,rgba(11,42,58,.20) 0%,rgba(11,42,58,.86) 30%,rgba(11,42,58,.86) 70%,rgba(11,42,58,.20) 100%)";
+const GRAD_TEAM_T = "linear-gradient(to bottom,rgba(11,42,58,.24) 0%,rgba(11,42,58,.90) 30%,rgba(11,42,58,.90) 72%,rgba(11,42,58,.24) 100%)";
 
-const h2 = (color: string): CSSProperties => ({
-  margin: 0, font: `600 clamp(26px,3.2vw,38px)/1.12 ${SANS}`, letterSpacing: "-.025em", color, textWrap: "pretty",
-});
-const lead = (color: string): CSSProperties => ({
-  margin: 0, font: `400 clamp(16px,1.5vw,18px)/1.6 ${SANS}`, color, textWrap: "pretty",
-});
-const bodyText = (color: string): CSSProperties => ({
-  margin: 0, font: `400 16px/1.6 ${SANS}`, color, textWrap: "pretty",
-});
-const btn = (bg: string, color: string, border?: string): CSSProperties => ({
-  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10,
-  height: 52, padding: "0 26px", background: bg, color, border: border ?? "0",
-  transition: `background 200ms ${EASE},color 200ms ${EASE}`,
-});
+const EYEBROW = "font-medium uppercase tracking-[.09em] leading-none";
+const LABEL = "font-medium uppercase tracking-[.045em] leading-[1.3]";
+const NUM = "font-extrabold leading-none";
 
-function Arrow({ size = 20, className, style }: { size?: number; className?: string; style?: CSSProperties }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.6" strokeLinecap="square" aria-hidden="true"
-      className={className} style={{ display: "block", ...style }}>
-      <path d="M4 12h14M12 5.5 18.5 12 12 18.5" />
-    </svg>
-  );
-}
-
-function Section({
-  id, tone = "page", padY = PAD_Y, children,
-}: {
-  id?: string; tone?: "page" | "white" | "inset" | "navy" | "navy2"; padY?: string; children: ReactNode;
-}) {
-  const bg = { page: PAGE, white: WHITE, inset: INSET, navy: NAVY, navy2: NAVY_2 }[tone];
-  return (
-    <section id={id} style={{ background: bg }}>
-      <div className="mx-auto" style={{ maxWidth: MAXW, padding: `${padY} ${GUT}` }}>{children}</div>
-    </section>
-  );
-}
-
-function SectionHead({
-  eyebrow, title, lead: leadCopy, onDark = false,
-}: { eyebrow: string; title: string; lead?: string; onDark?: boolean }) {
-  return (
-    <div className="flex flex-col" style={{ gap: 18, marginBottom: "clamp(32px,4vw,48px)" }}>
-      <div className="t-eyebrow" style={{ color: onDark ? CYAN_D : CYAN_L }}>{eyebrow}</div>
-      <h2 style={{ ...h2(onDark ? "#fff" : INK), maxWidth: "26ch" }}>{title}</h2>
-      {leadCopy && <p style={{ ...lead(onDark ? "rgba(255,255,255,.82)" : BODY), maxWidth: "62ch" }}>{leadCopy}</p>}
-    </div>
-  );
-}
-
-/* Photograph, or a labelled placeholder naming the frame the design asks for. */
-function Photo({
-  slot, className, style, onDark = false,
-}: { slot: ImageSlot; className?: string; style?: CSSProperties; onDark?: boolean }) {
-  if (slot.src) {
-    return (
-      <div className={className} style={{ background: INSET, overflow: "hidden", ...style }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={slot.src} alt={slot.alt ?? ""} loading="lazy" decoding="async" className="h-full w-full object-cover" />
-      </div>
-    );
-  }
-  return (
-    <div className={className} style={{
-      background: onDark ? "rgba(255,255,255,.05)" : INSET,
-      border: `1px solid ${onDark ? HAIR_DARK : HAIR}`,
-      display: "grid", placeItems: "center", padding: "clamp(20px,3vw,32px)", ...style,
-    }}>
-      <div className="flex flex-col items-center text-center" style={{ gap: 12, maxWidth: 340 }}>
-        <span aria-hidden="true" style={{ width: 10, height: 10, background: CYAN }} />
-        <span className="t-caption" style={{ color: onDark ? CYAN_D : CYAN_L }}>Photography pending</span>
-        <span style={{ font: `400 13px/1.55 ${SANS}`, color: onDark ? "rgba(255,255,255,.7)" : MUTED }}>{slot.need}</span>
-      </div>
-    </div>
-  );
-}
-
-/* ── 1. photographic hero ── */
+/* ══════════════ 1 — hero + stats ══════════════ */
 
 function Hero() {
   return (
-    <section style={{
-      position: "relative", overflow: "hidden", background: NAVY,
-      minHeight: "clamp(540px,54vw,660px)", display: "flex",
-    }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={IMAGES.hero.src} alt="" className="absolute inset-0 h-full w-full object-cover" />
-      <div aria-hidden="true" className="absolute inset-0" style={{
-        background: "linear-gradient(90deg,rgba(11,42,58,.95) 0%,rgba(11,42,58,.84) 46%,rgba(11,42,58,.44) 100%)",
-      }} />
-      <div className="relative mx-auto flex w-full flex-col justify-end"
-        style={{ maxWidth: MAXW, padding: `clamp(96px,11vw,132px) ${GUT} clamp(40px,5vw,56px)` }}>
-        <div>
-          <div className="t-eyebrow" style={{ color: CYAN }}>{HERO.eyebrow}</div>
-          <h1 style={{
-            margin: "22px 0 0", color: "#fff", letterSpacing: "-.03em",
-            font: `600 clamp(34px,5.2vw,74px)/1.02 ${SANS}`,
-          }}>{HERO.heading}</h1>
-          <p style={{ ...lead("rgba(255,255,255,.82)"), maxWidth: "54ch", marginTop: 22 }}>{HERO.lead}</p>
-          <div className="flex flex-col items-stretch sm:flex-row sm:items-center" style={{ gap: 14, marginTop: 34 }}>
-            <a href="#contact" className="t-button hover:!bg-white hover:!text-[#0B2A3A]" style={btn(CYAN, "#08283A")}>
-              Talk to an Expert
-            </a>
-            <a href="/products" className="t-button hover:!bg-white/20"
-              style={btn("rgba(255,255,255,.1)", "#fff", "1px solid rgba(255,255,255,.28)")}>
-              View Our Products<Arrow size={16} />
-            </a>
-          </div>
+    <section className="relative" style={{ background: NAVY }}>
+      <div className="relative h-[400px] md:h-[520px] lg:h-[820px]">
+        <Image
+          src={IMAGES.hero.src}
+          alt={IMAGES.hero.alt}
+          fill
+          priority
+          quality={90}
+          sizes="100vw"
+          className="object-cover object-[52%_46%] md:object-[44%_46%]"
+        />
+        <div className="absolute inset-0 md:hidden" style={{ background: GRAD_HERO_M }} />
+        <div className="absolute inset-0 hidden md:block lg:hidden" style={{ background: GRAD_HERO_T }} />
+        <div className="absolute inset-0 hidden lg:block" style={{ background: GRAD_HERO_D }} />
+
+        {/* Desktop: the design anchored this block at top:104px; at the client's
+            request it now sits on the image's vertical centre, still left
+            aligned on the 55px inset. Tablet and mobile stay bottom-anchored
+            as authored. */}
+        <div className="absolute inset-x-5 bottom-[26px] md:inset-x-10 md:bottom-10 lg:inset-x-auto lg:left-[55px] lg:top-1/2 lg:bottom-auto lg:max-w-[760px] lg:-translate-y-1/2">
+          {/* The design's "About MQS Technologies" eyebrow is removed at the
+              client's request. HERO.eyebrow is kept in about-data.ts so the
+              design's copy stays traceable. */}
+          <h1
+            className="m-0 mb-0 md:mb-5 lg:mb-7 text-[46px] leading-[.98] md:text-[68px] md:leading-[.96] lg:text-[108px] lg:leading-[.94] font-semibold tracking-[-.032em] lg:tracking-[-.035em] text-white"
+            style={{ fontFamily: SANS }}
+          >
+            {HERO.title}
+          </h1>
+          <p
+            className="m-0 hidden md:block md:max-w-[520px] lg:max-w-[600px] text-[17px] leading-[1.6] lg:text-[19px] lg:leading-[1.62] text-white/84 text-pretty"
+            style={{ fontFamily: SANS }}
+          >
+            {HERO.lead}
+          </p>
+        </div>
+      </div>
+
+      {/* Desktop: inside the photograph, flush to its bottom edge.
+          Tablet and mobile: its own strip below, on navy. */}
+      {/* Desktop: the strip is absolutely inset 55px, so it must carry no
+          gutter padding of its own or the inset doubles. */}
+      <div className="px-5 pt-[26px] md:px-10 md:pt-0 lg:px-0 lg:pt-0 lg:absolute lg:inset-x-[55px] lg:bottom-0">
+        <div className="bg-[#0B2A3A] md:bg-[#0E3A52] lg:bg-transparent -mx-5 px-5 md:-mx-10 md:px-10 lg:mx-0 lg:px-0">
+          <p
+            className="m-0 mb-[26px] md:hidden text-[17px] leading-[1.6] text-white/84 text-pretty"
+            style={{ fontFamily: SANS }}
+          >
+            {HERO.lead}
+          </p>
+          <AboutStats />
         </div>
       </div>
     </section>
   );
 }
 
-/* ── 2. the through-line statement: the one aesthetic risk on the page ── */
+/* ══════════════ 2 — origin ══════════════ */
 
-function ThroughLine() {
-  const cell = (title: string, sub: string, accent: boolean) => (
-    <div className="flex flex-col" style={{ gap: 16 }}>
-      <span style={{
-        font: `600 clamp(26px,3.6vw,46px)/1.1 ${SANS}`, letterSpacing: "-.025em",
-        color: accent ? CYAN : "#fff", textWrap: "balance",
-      }}>{title}</span>
-      <p style={{ ...bodyText("rgba(255,255,255,.8)"), maxWidth: "40ch" }}>{sub}</p>
-    </div>
-  );
+function Origin() {
   return (
-    <Section id="founder" tone="navy2" padY="clamp(64px,7.5vw,104px)">
-      <Reveal>
-        <div className="t-eyebrow" style={{ color: CYAN, marginBottom: 34 }}>The through-line</div>
-        <div className="grid items-start lg:grid-cols-[1fr_64px_1fr]" style={{ gap: "clamp(28px,3vw,34px)" }}>
-          {cell(FOUNDER.claim, FOUNDER.claimSub, false)}
-          <div aria-hidden="true" className="hidden justify-center lg:flex" style={{ paddingTop: 12 }}>
-            <Arrow size={30} style={{ color: CYAN }} />
+    <section id="story" className={SCROLL_MT} style={{ background: NAVY }}>
+      <div className={`${INNER} py-14 pb-16 md:py-[72px] lg:py-[120px]`} style={{ maxWidth: MAXW }}>
+        <div className="lg:grid lg:grid-cols-[520px_1fr] lg:gap-[88px] lg:items-start">
+          <div>
+            <div
+              className={`${NUM} text-[92px] leading-[.86] md:text-[128px] md:leading-[.82] lg:text-[216px] lg:leading-[.8] tracking-[-.05em]`}
+              style={{ fontFamily: DISPLAY, color: "transparent", WebkitTextStroke: `2px ${CYAN}` }}
+            >
+              {ORIGIN.year}
+            </div>
+            <p
+              className="m-0 mt-[26px] hidden lg:block border-t border-white/20 pt-6 text-[16px] leading-[1.6] text-white/70"
+              style={{ fontFamily: SANS }}
+            >
+              {ORIGIN.caption}
+            </p>
           </div>
-          {cell(FOUNDER.result, FOUNDER.resultSub, true)}
-        </div>
-        <div className="grid items-start md:grid-cols-[200px_1fr]"
-          style={{
-            gap: "clamp(24px,3vw,40px)", marginTop: "clamp(40px,5vw,64px)",
-            borderTop: `1px solid ${HAIR_DARK}`, paddingTop: 34,
-          }}>
-          <Photo slot={IMAGES.founder} onDark className="w-full" style={{ maxWidth: 200, aspectRatio: "413 / 531" }} />
-          <dl className="m-0 flex flex-col" style={{ gap: 22, maxWidth: "44ch" }}>
-            {FOUNDER.roles.map((r: Role) => (
-              <div key={r.label}>
-                <dt className="t-eyebrow" style={{ color: CYAN, marginBottom: 6 }}>{r.label}</dt>
-                <dd style={{ ...bodyText("#fff"), margin: 0 }}>{r.value}</dd>
+
+          <div>
+            <h2
+              className="m-0 mt-[26px] md:mt-9 lg:mt-0 mb-[18px] md:mb-[22px] lg:mb-[30px] text-[30px] leading-[1.1] md:text-[40px] md:leading-[1.06] lg:text-[60px] lg:leading-[1.04] font-semibold tracking-[-.026em] md:tracking-[-.028em] lg:tracking-[-.03em] text-white text-pretty"
+              style={{ fontFamily: SANS }}
+            >
+              {ORIGIN.heading}
+            </h2>
+
+            {/* Mobile runs the designer's two shortened paragraphs. */}
+            <div className="md:hidden">
+              <p className="m-0 mb-4 text-[16px] leading-[1.62] text-white/78 text-pretty" style={{ fontFamily: SANS }}>
+                {ORIGIN.paraMobileFirst}
+              </p>
+              <p className="m-0 mb-[34px] text-[16px] leading-[1.62] text-white/78 text-pretty" style={{ fontFamily: SANS }}>
+                {ORIGIN.paraMobile}
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <p className="m-0 mb-[18px] lg:mb-[22px] lg:max-w-[700px] text-[17px] leading-[1.62] lg:text-[18px] lg:leading-[1.64] text-white/78 text-pretty" style={{ fontFamily: SANS }}>
+                {ORIGIN.paras[0]}
+              </p>
+              <p className="m-0 mb-10 lg:mb-12 lg:max-w-[700px] text-[17px] leading-[1.62] lg:text-[18px] lg:leading-[1.64] text-white/78 text-pretty" style={{ fontFamily: SANS }}>
+                {ORIGIN.paras[1]}
+              </p>
+            </div>
+
+            <div className="border-t border-white/20 pt-[30px] md:pt-9 lg:pt-11 md:grid md:grid-cols-[180px_1fr] md:gap-8 lg:grid-cols-[200px_1fr] lg:gap-11 md:items-center">
+              <Image
+                src={IMAGES.founder.src}
+                alt={IMAGES.founder.alt}
+                width={413}
+                height={531}
+                quality={90}
+                sizes="(min-width:1024px) 200px, (min-width:768px) 180px, 100vw"
+                className="block w-full h-[300px] md:w-[180px] md:h-[225px] lg:w-[200px] lg:h-[250px] object-cover object-[50%_18%] md:object-[50%_20%] grayscale-[.2]"
+              />
+              <div className="mt-6 md:mt-0">
+                <p
+                  className="m-0 mb-[18px] text-[26px] leading-[1.18] md:text-[30px] md:leading-[1.16] lg:text-[40px] lg:leading-[1.14] font-semibold tracking-[-.022em] md:tracking-[-.024em] lg:tracking-[-.026em] text-white text-pretty"
+                  style={{ fontFamily: SANS }}
+                >
+                  {LEADERSHIP.claimBefore}
+                  <span style={{ color: CYAN }}>{LEADERSHIP.claimAccent}</span>
+                  {LEADERSHIP.claimAfter}
+                </p>
+                <div className="flex flex-col gap-1 lg:flex-row lg:gap-12">
+                  {LEADERSHIP.people.map((p, i) => (
+                    <div key={p.name}>
+                      <p
+                        className={`m-0 lg:mb-1 text-[15px] leading-[1.4] md:text-[16px] md:leading-[1.3] lg:text-[17px] font-semibold ${i === 0 ? "text-white" : "text-white/70 lg:text-white"}`}
+                        style={{ fontFamily: SANS }}
+                      >
+                        {p.name}
+                        <span className="lg:hidden"> · {p.role}</span>
+                      </p>
+                      <p className={`m-0 hidden lg:block text-[11px] ${LABEL} text-white/66`} style={{ fontFamily: SANS }}>
+                        {p.role}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </dl>
-        </div>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ── 3. story ── */
-
-function Story() {
-  return (
-    <Section id="story" tone="white">
-      <Reveal>
-        <div className="grid items-start lg:grid-cols-[0.78fr_1fr]" style={{ gap: "clamp(32px,6vw,88px)" }}>
-          <div>
-            <div className="t-eyebrow" style={{ color: CYAN_L, marginBottom: 20 }}>Our story</div>
-            <h2 style={{ ...h2(INK), maxWidth: "18ch" }}>{STORY.heading}</h2>
+            </div>
           </div>
-          <div className="flex flex-col" style={{ gap: 22, maxWidth: "62ch" }}>
-            <p style={{ ...bodyText(BODY), fontSize: 17 }}>{STORY.paras[0]}</p>
-            <p style={{ ...bodyText(BODY), fontSize: 17 }}>{STORY.paras[1]}</p>
-            <p style={{ ...bodyText(BODY), fontSize: 17 }}>{STORY.paras[2]}</p>
-            <p style={{ ...bodyText(BODY), fontSize: 17 }}>{STORY.today}</p>
-            <p style={{ ...bodyText(BODY), fontSize: 17 }}>{STORY.paras[3]}</p>
-          </div>
-        </div>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ── 5. award ── */
-
-function AwardBand() {
-  return (
-    <Section tone="white" padY={PAD_Y_SM}>
-      <Reveal>
-        <div className="grid items-center md:grid-cols-[0.86fr_1fr]" style={{ gap: "clamp(28px,4vw,56px)" }}>
-          <Photo slot={IMAGES.award} className="aspect-[1280/853] w-full" />
-          <div>
-            <div className="t-eyebrow" style={{ color: CYAN_L, marginBottom: 18 }}>{AWARD.eyebrow}</div>
-            <h2 style={{
-              margin: 0, font: `600 clamp(25px,3.2vw,40px)/1.15 ${SANS}`,
-              letterSpacing: "-.025em", color: INK, maxWidth: "20ch",
-            }}>{AWARD.title}</h2>
-            <p style={{ ...lead(BODY), marginTop: 18, maxWidth: "44ch" }}>{AWARD.body}</p>
-            <p className="t-eyebrow" style={{ margin: "22px 0 0", color: MUTED }}>{AWARD.date}</p>
-          </div>
-        </div>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ── 6. pillars, claim and proof on navy ── */
-
-function PillarClaim({ p, i }: { p: Pillar; i: number }) {
-  return (
-    <Reveal delay={Math.min(i, 3) * 40}>
-      <div className="grid lg:grid-cols-2"
-        style={{ gap: "clamp(14px,3vw,40px)", padding: "clamp(26px,3vw,34px) 0", borderTop: `1px solid ${HAIR_DARK}` }}>
-        <div className="flex" style={{ gap: "clamp(14px,1.8vw,22px)" }}>
-          <span className="flex-none" style={{ font: `800 clamp(15px,1.6vw,18px)/1.5 ${DISPLAY}`, color: CYAN }}>{p.n}</span>
-          <div>
-            <h3 style={{ margin: 0, font: `500 clamp(21px,2.4vw,26px)/1.2 ${SANS}`, letterSpacing: "-.02em", color: "#fff" }}>{p.title}</h3>
-            <p style={{ ...bodyText("rgba(255,255,255,.8)"), marginTop: 12, maxWidth: "46ch" }}>{p.body}</p>
-          </div>
-        </div>
-        <p style={{
-          margin: 0, font: `500 clamp(17px,1.8vw,20px)/1.5 ${SANS}`,
-          color: CYAN, maxWidth: "40ch", textWrap: "pretty",
-        }}>{p.proof}</p>
-      </div>
-    </Reveal>
-  );
-}
-
-function Pillars() {
-  return (
-    <section id="pillars" style={{ background: NAVY }}>
-      <div className="mx-auto" style={{ maxWidth: MAXW, padding: `${PAD_Y} ${GUT}` }}>
-        <SectionHead onDark eyebrow="Our promise" title={PILLARS.heading} lead={PILLARS.lead} />
-        <div style={{ borderBottom: `1px solid ${HAIR_DARK}` }}>
-          {PILLARS.items.map((p, i) => <PillarClaim key={p.n} p={p} i={i} />)}
         </div>
       </div>
     </section>
   );
 }
 
-/* ── 7. portfolio: type first, images as a secondary layer ── */
+/* ══════════════ 3 — SIDM award ══════════════ */
 
-/* Six supplied files at six different sizes. Each keeps its own ratio and the row
-   is bottom-aligned, so nothing is upscaled or force-cropped to a common cell.
-   Wraps on desktop; below that it is a swipeable strip rather than six tall stacks. */
-function PortfolioImages() {
+function Award() {
   return (
-    <div className="flex flex-nowrap items-end overflow-x-auto lg:flex-wrap lg:overflow-x-visible"
-      style={{ gap: "clamp(12px,1.6vw,20px)", paddingBottom: 6 }}>
-      {PORTFOLIO.items.map((it) => (
-        <div key={it.src} className="relative flex-none"
-          style={{
-            aspectRatio: it.ratio,
-            height: it.tall ? "clamp(190px,24vw,290px)" : "clamp(132px,16vw,186px)",
-            background: INSET, border: `1px solid ${HAIR}`, overflow: "hidden",
-          }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={it.src} alt={it.name} loading="lazy" decoding="async"
-            className="absolute inset-0 h-full w-full object-cover" />
+    <section id="award" className={`relative ${SCROLL_MT}`} style={{ background: NAVY_2 }}>
+      <div className="relative h-[280px] md:h-[440px] lg:h-[680px]">
+        <Image
+          src={IMAGES.award.src}
+          alt={IMAGES.award.alt}
+          fill
+          quality={90}
+          sizes="100vw"
+          className="object-cover object-[44%_34%] md:object-[50%_34%]"
+        />
+        <div className="absolute inset-0 hidden md:block lg:hidden" style={{ background: GRAD_AWARD_T }} />
+        <div className="absolute inset-0 hidden lg:block" style={{ background: GRAD_AWARD_D }} />
+      </div>
+
+      {/* Tablet and desktop: the text sits directly on the photograph, carried by
+          the gradient scrim above. Only mobile gets a solid ground, because
+          there the photograph ends above the text rather than behind it.
+          The background must be a class, not an inline style: an inline style
+          cannot be turned off at a breakpoint and previously left a solid navy
+          box sitting over the image at every width. */}
+      <div className="bg-[#0E3A52] px-5 pt-7 pb-[34px] md:absolute md:inset-x-10 md:bottom-9 md:bg-transparent md:p-0 lg:inset-x-[55px] lg:bottom-16 lg:grid lg:grid-cols-[1fr_420px] lg:gap-20 lg:items-end">
+        <div>
+          <p className={`m-0 mb-3 md:mb-3.5 lg:mb-5 text-[11px] lg:text-[12px] ${EYEBROW}`} style={{ fontFamily: SANS, color: CYAN }}>
+            {AWARD.eyebrow}
+          </p>
+          <h2
+            className="m-0 mb-3 md:mb-3.5 lg:mb-0 text-[30px] leading-[1.1] md:text-[40px] md:leading-[1.04] lg:text-[64px] lg:leading-[1.02] font-semibold tracking-[-.026em] md:tracking-[-.028em] lg:tracking-[-.03em] text-white text-pretty"
+            style={{ fontFamily: SANS }}
+          >
+            {AWARD.title}
+          </h2>
         </div>
-      ))}
+        <p
+          className="m-0 md:max-w-[520px] lg:max-w-none text-[16px] leading-[1.6] lg:text-[17px] lg:leading-[1.62] text-white/84 text-pretty"
+          style={{ fontFamily: SANS }}
+        >
+          {AWARD.body}
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════ 4 — portfolio ══════════════ */
+
+function PortfolioHead() {
+  return (
+    <div className="lg:flex lg:items-end lg:justify-between mb-7 md:mb-10 lg:mb-12">
+      <div>
+        <p className={`m-0 mb-3.5 lg:mb-[18px] text-[11px] lg:text-[12px] ${EYEBROW}`} style={{ fontFamily: SANS, color: CYAN_L }}>
+          {PORTFOLIO.eyebrow}
+        </p>
+        <h2
+          className="m-0 text-[30px] leading-[1.08] md:text-[40px] md:leading-[1.04] lg:text-[52px] lg:leading-[1.02] font-semibold tracking-[-.026em] md:tracking-[-.028em] text-pretty"
+          style={{ fontFamily: SANS, color: INK }}
+        >
+          {PORTFOLIO.heading}
+        </h2>
+      </div>
+      <p className={`m-0 mt-4 lg:mt-0 text-[11px] ${LABEL} lg:leading-none`} style={{ fontFamily: SANS, color: CYAN_L }}>
+        {PORTFOLIO.flow}
+      </p>
     </div>
   );
 }
 
 function Portfolio() {
-  const list = (
-    <div style={{ borderBottom: `1px solid ${HAIR}` }}>
-      {PORTFOLIO.items.map((it, i) => (
-        <div key={it.src}
-          className="group grid grid-cols-[40px_1fr] items-baseline transition-colors duration-200 hover:!border-[#16C1F3] md:grid-cols-[72px_1fr]"
-          style={{ gap: "clamp(12px,2vw,28px)", padding: "clamp(20px,2.4vw,26px) 0", borderTop: `1px solid ${HAIR}` }}>
-          <span style={{ font: `800 clamp(17px,1.8vw,20px)/1 ${DISPLAY}`, color: CYAN_L }}>{"0" + (i + 1)}</span>
-          <div className="grid items-baseline" style={{ gap: 8 }}>
-            <h3 className="transition-colors duration-200 group-hover:!text-[#0A6A88]"
-              style={{
-                margin: 0, font: `500 clamp(20px,2.4vw,27px)/1.2 ${SANS}`,
-                letterSpacing: "-.02em", color: INK, textWrap: "pretty",
-              }}>{it.name}</h3>
-            <p style={{ ...bodyText(BODY), maxWidth: "52ch" }}>{it.body}</p>
+  const [i1, i2, i3, i4, i5, i6] = PORTFOLIO.items;
+  const cardBox = "flex flex-col justify-between p-[30px]";
+  const cardNum = `m-0 mb-2.5 text-[11px] ${LABEL} leading-none`;
+  const cardH = "m-0 mb-2 text-[22px] leading-[1.18] font-semibold tracking-[-.018em]";
+  const cardP = "m-0 text-[15px] leading-[1.55]";
+
+  return (
+    <section id="portfolio" className={SCROLL_MT} style={{ background: PAGE }}>
+      <div className={`${INNER} py-14 md:py-20 lg:py-[110px]`} style={{ maxWidth: MAXW }}>
+        <PortfolioHead />
+
+        {/* ── desktop: six-cell bento ── */}
+        <div
+          className="hidden lg:grid gap-4"
+          style={{ gridTemplateColumns: "2fr 1fr 1fr", gridTemplateRows: "340px 300px 300px" }}
+        >
+          {/* 01 — tall photograph, spans two rows */}
+          <div className="relative overflow-hidden" style={{ gridRow: "span 2", background: NAVY }}>
+            {/* The render is portrait, so cover trims 235px vertically and
+                nothing horizontally. Biased to the top so the hood and the
+                "MQXC 102 / MQS" branding keep clear air above them; the base it
+                gives up is the area the heading overlays anyway. */}
+            <Image src={i1.src} alt={i1.alt} fill quality={90} sizes="(min-width:1024px) 660px, 50vw" className="object-cover object-[50%_12%]" />
+            <div className="absolute inset-0" style={{ background: GRAD_CARD }} />
+            <div className="absolute inset-x-9 bottom-[34px]">
+              <p className={`m-0 mb-2.5 text-[11px] ${LABEL} leading-none`} style={{ fontFamily: SANS, color: CYAN }}>{i1.n}</p>
+              <h3 className="m-0 mb-2.5 text-[32px] leading-[1.14] font-semibold tracking-[-.022em] text-white" style={{ fontFamily: SANS }}>{i1.name}</h3>
+              <p className="m-0 max-w-[460px] text-[16px] leading-[1.55] text-white/80" style={{ fontFamily: SANS }}>{i1.desc}</p>
+            </div>
+          </div>
+
+          {/* 02 — wide, spans two columns */}
+          <div
+            className="grid grid-cols-[1fr_300px] items-center gap-6 p-9"
+            style={{ gridColumn: "span 2", background: WHITE, border: `1px solid ${HAIR}` }}
+          >
+            <div>
+              <p className={`m-0 mb-2.5 text-[11px] ${LABEL} leading-none`} style={{ fontFamily: SANS, color: CYAN_L }}>{i2.n}</p>
+              <h3 className="m-0 mb-2.5 text-[30px] leading-[1.14] font-semibold tracking-[-.022em]" style={{ fontFamily: SANS, color: INK }}>{i2.name}</h3>
+              <p className="m-0 text-[16px] leading-[1.55] text-pretty" style={{ fontFamily: SANS, color: BODY }}>{i2.desc}</p>
+            </div>
+            <Image src={i2.src} alt={i2.alt} width={605} height={557} quality={90} sizes="300px" className="block w-[300px] h-[230px] object-contain" />
+          </div>
+
+          {/* 03 */}
+          <div className={cardBox} style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
+            <div>
+              <p className={cardNum} style={{ fontFamily: SANS, color: CYAN_L }}>{i3.n}</p>
+              <h3 className={cardH} style={{ fontFamily: SANS, color: INK }}>{i3.name}</h3>
+              <p className={cardP} style={{ fontFamily: SANS, color: BODY }}>{i3.short}</p>
+            </div>
+            <Image src={i3.src} alt={i3.alt} width={846} height={1200} quality={90} sizes="320px" className="block w-full h-[120px] object-contain" />
+          </div>
+
+          {/* 04 — photograph at low opacity */}
+          <div className="relative overflow-hidden" style={{ background: NAVY }}>
+            {/* The design faded this cell's image to .55 to knock back a busy
+                software screenshot. The asset is now an actual radiograph, which
+                is the cell's subject rather than texture, so it runs at full
+                opacity. The bottom scrim stays for the heading. */}
+            <Image src={i4.src} alt={i4.alt} fill quality={90} sizes="(min-width:1024px) 640px, 25vw" className="object-cover object-[50%_30%]" />
+            <div className="absolute inset-0" style={{ background: GRAD_CARD }} />
+            <div className="absolute inset-x-[30px] bottom-7">
+              <p className={`m-0 mb-2.5 text-[11px] ${LABEL} leading-none`} style={{ fontFamily: SANS, color: CYAN }}>{i4.n}</p>
+              <h3 className="m-0 mb-2 text-[22px] leading-[1.18] font-semibold tracking-[-.018em] text-white" style={{ fontFamily: SANS }}>{i4.name}</h3>
+              <p className="m-0 text-[15px] leading-[1.5] text-white/82" style={{ fontFamily: SANS }}>{i4.short}</p>
+            </div>
+          </div>
+
+          {/* 05 */}
+          <div className={cardBox} style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
+            <div>
+              <p className={cardNum} style={{ fontFamily: SANS, color: CYAN_L }}>{i5.n}</p>
+              <h3 className={cardH} style={{ fontFamily: SANS, color: INK }}>{i5.name}</h3>
+              <p className={cardP} style={{ fontFamily: SANS, color: BODY }}>{i5.short}</p>
+            </div>
+            <Image src={i5.src} alt={i5.alt} width={354} height={570} quality={90} sizes="320px" className="block w-full h-[120px] object-contain" />
+          </div>
+
+          {/* 06 */}
+          <div className={cardBox} style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
+            <div>
+              <p className={cardNum} style={{ fontFamily: SANS, color: CYAN_L }}>{i6.n}</p>
+              <h3 className={cardH} style={{ fontFamily: SANS, color: INK }}>{i6.name}</h3>
+              <p className={cardP} style={{ fontFamily: SANS, color: BODY }}>{i6.short}</p>
+            </div>
+            <Image src={i6.src} alt={i6.alt} width={415} height={409} quality={90} sizes="320px" className="block w-full h-[120px] object-contain" />
           </div>
         </div>
-      ))}
-    </div>
-  );
-  return (
-    <Section id="portfolio" tone="white">
-      <SectionHead eyebrow="What we build" title={PORTFOLIO.heading} lead={PORTFOLIO.lead} />
-      {/* min-w-0 on the image cell: without it the nowrap strip sizes its grid
-          track to content and pushes the page sideways on narrow screens. */}
-      <div className="grid items-start lg:grid-cols-[1fr_0.62fr]" style={{ gap: "clamp(28px,5vw,64px)" }}>
-        <Reveal className="min-w-0">{list}</Reveal>
-        <Reveal delay={80} className="min-w-0"><PortfolioImages /></Reveal>
+
+        {/* ── tablet + mobile: uniform cards ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-3.5 lg:hidden">
+          {PORTFOLIO.items.map((p) => (
+            <div key={p.n} className="flex min-w-0 flex-col" style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
+              <Image
+                src={p.src}
+                alt={p.alt}
+                width={846}
+                height={1200}
+                quality={90}
+                sizes="(min-width:768px) 50vw, 100vw"
+                className="block w-full h-[170px] md:h-[160px] object-contain"
+                style={{ background: PAGE, borderBottom: `1px solid ${HAIR}` }}
+              />
+              <div className="px-5 pt-5 pb-6 md:px-6 md:pt-[22px] md:pb-[26px]">
+                <p className={`m-0 mb-2 md:mb-2.5 text-[11px] ${LABEL} leading-none`} style={{ fontFamily: SANS, color: CYAN_L }}>{p.n}</p>
+                <h3 className="m-0 mb-2 text-[20px] md:text-[21px] leading-[1.2] font-semibold tracking-[-.018em]" style={{ fontFamily: SANS, color: INK }}>{p.name}</h3>
+                <p className="m-0 text-[15px] leading-[1.55] text-pretty" style={{ fontFamily: SANS, color: BODY }}>{p.short}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
-/* ── 8. purpose and values ── */
+/* ══════════════ 5 — team statement ══════════════ */
+
+function Team() {
+  return (
+    <section className="relative" style={{ background: NAVY }}>
+      <div className="relative h-[260px] md:h-[420px] lg:h-[560px]">
+        {/* A different photograph from the hero's: the hero image was carrying
+            this band as well, so it appeared twice on the page. */}
+        <Image
+          src={IMAGES.team.src}
+          alt={IMAGES.team.alt}
+          fill
+          quality={90}
+          sizes="100vw"
+          className="object-cover object-[50%_25%]"
+        />
+        <div className="absolute inset-0 hidden md:block lg:hidden" style={{ background: GRAD_TEAM_T }} />
+        <div className="absolute inset-0 hidden lg:block" style={{ background: GRAD_TEAM_D }} />
+      </div>
+
+      {/* Same as the award band: tablet and desktop put the text on the
+          photograph, carried by the flat scrim above it, and only mobile needs
+          a solid ground because there the photograph ends above the text.
+          Set as a class, not an inline style, so it can be dropped at md. */}
+      <div className="bg-[#0B2A3A] px-5 pt-[30px] pb-9 md:absolute md:inset-x-10 md:top-1/2 md:-translate-y-1/2 md:bg-transparent md:p-0 lg:inset-x-[55px] lg:grid lg:grid-cols-[1fr_380px] lg:gap-20 lg:items-center">
+        <p
+          className="m-0 mb-3.5 md:mb-[18px] lg:mb-0 text-[26px] leading-[1.16] md:text-[34px] md:leading-[1.14] lg:text-[50px] lg:leading-[1.1] font-semibold tracking-[-.022em] md:tracking-[-.026em] lg:tracking-[-.028em] text-white text-pretty"
+          style={{ fontFamily: SANS }}
+        >
+          <span className="md:hidden">{TEAM.statementMobile}</span>
+          <span className="hidden md:inline">{TEAM.statement}</span>
+        </p>
+        <div className="lg:border-l lg:border-white/28 lg:pl-9">
+          <p
+            className="m-0 md:max-w-[520px] lg:max-w-none text-[16px] leading-[1.6] lg:text-[17px] lg:leading-[1.62] text-white/78 lg:text-white/82 text-pretty"
+            style={{ fontFamily: SANS }}
+          >
+            {TEAM.note}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════ 6 — timeline ══════════════ */
+
+function Timeline() {
+  return (
+    <section id="timeline" className={`bg-[#F4F8FA] md:bg-[#0B2A3A] ${SCROLL_MT}`}>
+      <div className={`${INNER} py-14 md:py-20 lg:py-[110px]`} style={{ maxWidth: MAXW }}>
+        <div className="lg:max-w-[820px] mb-9 md:mb-12 lg:mb-16">
+          <p className={`m-0 mb-3.5 lg:mb-[18px] text-[11px] lg:text-[12px] ${EYEBROW} text-[#0A6A88] md:text-[#16C1F3]`} style={{ fontFamily: SANS }}>
+            {TIMELINE.eyebrow}
+          </p>
+          <h2
+            className="m-0 text-[30px] leading-[1.1] md:text-[40px] md:leading-[1.06] lg:text-[52px] lg:leading-[1.04] font-semibold tracking-[-.026em] md:tracking-[-.028em] text-[#0B2A3A] md:text-white text-pretty"
+            style={{ fontFamily: SANS }}
+          >
+            {TIMELINE.heading}
+          </h2>
+        </div>
+
+        <div className="border-t border-[#0B2A3A] md:border-white/24">
+          {TIMELINE.items.map((t) => (
+            <div
+              key={t.year}
+              className="py-6 md:py-7 lg:py-[34px] border-b border-[#D3DFE7] md:border-white/16 lg:grid lg:grid-cols-[300px_1fr] lg:gap-14 lg:items-baseline"
+            >
+              <div
+                className={`${NUM} text-[40px] md:text-[48px] lg:text-[56px] tracking-[-.035em] whitespace-nowrap ${
+                  t.major ? "text-[#0A6A88] md:text-[#16C1F3]" : "text-[#0B2A3A] md:text-white/88"
+                }`}
+                style={{ fontFamily: DISPLAY }}
+              >
+                {t.year}
+              </div>
+              {/* The design's "Turning point" label on major milestones is removed
+                  at the client's request; major years stay distinguished by
+                  colour alone. TIMELINE.majorLabel is kept in about-data.ts. */}
+              <div className="lg:max-w-[760px]">
+                <h3
+                  className="m-0 mt-3 md:mt-3.5 lg:mt-0 mb-2 text-[19px] leading-[1.24] md:text-[22px] md:leading-[1.22] lg:text-[26px] lg:leading-[1.2] font-semibold tracking-[-.016em] md:tracking-[-.018em] lg:tracking-[-.02em] text-[#0B2A3A] md:text-white text-pretty"
+                  style={{ fontFamily: SANS }}
+                >
+                  {t.title}
+                </h3>
+                <p
+                  className="m-0 text-[15px] leading-[1.6] md:text-[16px] text-[#41586A] md:text-white/70 text-pretty"
+                  style={{ fontFamily: SANS }}
+                >
+                  {t.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════ 7 — pillars ══════════════ */
+
+function Pillars() {
+  return (
+    <section id="pillars" className={SCROLL_MT} style={{ background: WHITE }}>
+      <div className={`${INNER} py-14 md:py-20 lg:py-[110px]`} style={{ maxWidth: MAXW }}>
+        <h2
+          className="m-0 mb-8 md:mb-11 lg:mb-14 text-[30px] leading-[1.1] md:text-[38px] md:leading-[1.06] lg:text-[46px] lg:leading-[1.04] font-semibold tracking-[-.026em] "
+          style={{ fontFamily: SANS, color: INK }}
+        >
+          {PILLARS.heading}
+        </h2>
+        <div className="border-t" style={{ borderColor: INK }}>
+          {PILLARS.items.map((p) => (
+            <div
+              key={p.n}
+              className="py-6 md:py-7 lg:py-[38px] border-b md:grid md:grid-cols-[80px_1fr] md:gap-6 lg:grid-cols-[120px_1fr_1fr] lg:gap-14 lg:items-baseline"
+              style={{ borderColor: HAIR }}
+            >
+              <span
+                className={`hidden md:block ${NUM} text-[36px] lg:text-[52px] tracking-[-.04em]`}
+                style={{ fontFamily: DISPLAY, color: GHOST }}
+              >
+                {p.n}
+              </span>
+              <div className="lg:contents">
+                <div className="flex items-baseline gap-3.5 mb-2.5 lg:mb-0">
+                  <span className={`md:hidden ${NUM} text-[22px] tracking-[-.03em]`} style={{ fontFamily: DISPLAY, color: CYAN }}>
+                    {p.n}
+                  </span>
+                  <h3
+                    className="m-0 text-[21px] leading-[1.2] md:text-[24px] md:leading-[1.18] lg:text-[34px] lg:leading-[1.14] font-semibold tracking-[-.018em] md:tracking-[-.02em] lg:tracking-[-.024em] text-pretty"
+                    style={{ fontFamily: SANS, color: INK }}
+                  >
+                    {p.name}
+                  </h3>
+                </div>
+                <div>
+                  <p
+                    className="m-0 mb-3 lg:mb-3.5 text-[15px] leading-[1.58] md:text-[16px] lg:text-[17px] lg:leading-[1.6] text-pretty"
+                    style={{ fontFamily: SANS, color: BODY }}
+                  >
+                    {p.desc}
+                  </p>
+                  <p className={`m-0 text-[11px] ${LABEL}`} style={{ fontFamily: SANS, color: CYAN_L }}>
+                    {p.proof}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════ 8 — purpose ══════════════ */
 
 function Purpose() {
   return (
-    <Section id="purpose" tone="inset">
-      <SectionHead eyebrow="Purpose and values" title={PURPOSE.heading} />
-      <div className="grid lg:grid-cols-3" style={{ gap: "clamp(0px,4vw,48px)" }}>
-        {PURPOSE.items.map((it, i) => (
-          <Reveal key={it.label} delay={i * 60}>
-            <div style={{ borderTop: `2px solid ${NAVY}`, paddingTop: 20, paddingBottom: 26 }}>
-              <h3 className="t-eyebrow" style={{ margin: "0 0 14px", color: CYAN_L }}>{it.label}</h3>
-              <p style={{ ...bodyText(BODY), fontSize: 17 }}>{it.body}</p>
+    <section style={{ background: INSET }}>
+      <div className={`${INNER} py-14 md:py-20 lg:py-[110px]`} style={{ maxWidth: MAXW }}>
+        <p className={`m-0 mb-[22px] md:mb-7 lg:mb-10 text-[11px] lg:text-[12px] ${EYEBROW}`} style={{ fontFamily: SANS, color: CYAN_L }}>
+          {PURPOSE.eyebrow}
+        </p>
+        <h2
+          className="m-0 mb-9 md:mb-12 lg:mb-16 lg:max-w-[1240px] text-[30px] leading-[1.14] md:text-[40px] md:leading-[1.1] lg:text-[58px] font-semibold tracking-[-.026em] lg:tracking-[-.03em] text-pretty"
+          style={{ fontFamily: SANS, color: INK }}
+        >
+          {PURPOSE.heading}
+        </h2>
+        <div className="md:grid md:grid-cols-2 md:gap-9 lg:gap-14">
+          {PURPOSE.items.map((it, i) => (
+            <div
+              key={it.label}
+              className={`border-t pt-5 md:pt-[22px] lg:pt-[26px] ${i === 0 ? "mb-7 md:mb-0" : ""}`}
+              style={{ borderColor: HAIR_2 }}
+            >
+              <p className={`m-0 mb-2.5 lg:mb-3 text-[11px] ${LABEL} leading-none`} style={{ fontFamily: SANS, color: CYAN_L }}>
+                {it.label}
+              </p>
+              <p
+                className="m-0 text-[16px] leading-[1.58] md:text-[17px] md:leading-[1.55] lg:text-[20px] text-pretty"
+                style={{ fontFamily: SANS, color: INK }}
+              >
+                {it.body}
+              </p>
             </div>
-          </Reveal>
-        ))}
+          ))}
+        </div>
       </div>
-      <Reveal style={{ marginTop: "clamp(40px,5vw,64px)" }}>
-        <Photo slot={IMAGES.facility} className="aspect-[4/3] w-full md:aspect-[21/9]" />
-      </Reveal>
-    </Section>
+    </section>
   );
 }
 
-/* ── 9. clients, type only ── */
+/* ══════════════ 9 — clients ══════════════ */
+
+/* The design set ten client names in Archivo type. At the client's request the
+   wall now shows the 32 supplied logos instead, keeping the design's two
+   authored structures: an animated marquee at tablet and desktop, and a static
+   bordered grid on mobile.
+
+   The marquee duplicates the list to loop, so its marks carry empty alt text
+   and the readable client list is rendered once, visually hidden. The mobile
+   grid is a single pass, so there its marks carry real alt text.
+
+   Marquee duration is scaled from the design's 40s/34s to hold the same pixel
+   speed over a track that is now three times longer. */
+
+function LogoMarquee() {
+  const doubled = [...CLIENT_LOGOS, ...CLIENT_LOGOS];
+  return (
+    <div
+      className="overflow-hidden py-[30px] lg:py-10"
+      style={{ borderTop: `1px solid ${HAIR}`, borderBottom: `1px solid ${HAIR}` }}
+    >
+      {/* Each mark sits in a fixed box and is contained inside it, so marks of
+          wildly different aspect (6.5:1 down to 0.68:1) keep one rhythm.
+          Note: globals.css sets an unlayered `img { max-width:100% }`, which
+          beats Tailwind's max-w-* utilities, so the box carries the size and
+          the image simply fills it. */}
+      <div className="mqs-marquee flex w-max items-center gap-10 lg:gap-14" aria-hidden="true">
+        {doubled.map((l, i) => (
+          <div key={`${l.src}-${i}`} className="flex h-8 w-[116px] shrink-0 items-center justify-center lg:h-10 lg:w-[150px]">
+            <Image
+              src={l.src}
+              alt=""
+              width={l.w}
+              height={l.h}
+              quality={90}
+              sizes="300px"
+              className="h-full w-full object-contain"
+            />
+          </div>
+        ))}
+      </div>
+      <ul className="sr-only">
+        {CLIENT_LOGOS.map((l) => <li key={l.src}>{l.name}</li>)}
+      </ul>
+    </div>
+  );
+}
 
 function Clients() {
   return (
-    <Section id="clients" tone="white">
-      <SectionHead eyebrow="Strategic collaborations" title={CLIENTS.heading} lead={CLIENTS.lead} />
-      <Reveal>
-        <ul className="m-0 grid list-none grid-cols-2 p-0 md:grid-cols-3 lg:grid-cols-5"
-          style={{ borderTop: `1px solid ${HAIR}`, borderLeft: `1px solid ${HAIR}` }}>
-          {CLIENTS.names.map((n) => (
-            <li key={n} className="flex items-center"
-              style={{
-                borderRight: `1px solid ${HAIR}`, borderBottom: `1px solid ${HAIR}`,
-                minHeight: "clamp(88px,10vw,112px)", padding: "clamp(16px,2vw,22px)",
-              }}>
-              <span style={{ font: `500 clamp(17px,1.8vw,20px)/1.2 ${DISPLAY}`, letterSpacing: "-.01em", color: INK }}>{n}</span>
-            </li>
+    <section id="clients" className={SCROLL_MT} style={{ background: PAGE }}>
+      {/* mobile: heading and a bordered grid of marks */}
+      <div className={`${INNER} md:hidden py-14 pb-16`} style={{ maxWidth: MAXW }}>
+        <h2 className="m-0 mb-2.5 text-[28px] leading-[1.1] font-semibold tracking-[-.024em]" style={{ fontFamily: SANS, color: INK }}>
+          {CLIENTS.heading}
+        </h2>
+        <p className="m-0 mb-7 text-[16px] leading-[1.55] text-pretty" style={{ fontFamily: SANS, color: BODY }}>
+          {CLIENTS.lead}
+        </p>
+        <div
+          className="grid grid-cols-3"
+          style={{ background: WHITE, borderTop: `1px solid ${HAIR}`, borderLeft: `1px solid ${HAIR}` }}
+        >
+          {CLIENT_LOGOS.map((l) => (
+            <div
+              key={l.src}
+              className="flex h-[86px] items-center justify-center px-2.5"
+              style={{ borderRight: `1px solid ${HAIR}`, borderBottom: `1px solid ${HAIR}` }}
+            >
+              <div className="flex h-[38px] w-full items-center justify-center">
+                <Image
+                  src={l.src}
+                  alt={l.name}
+                  width={l.w}
+                  height={l.h}
+                  quality={90}
+                  sizes="200px"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+            </div>
           ))}
-        </ul>
-      </Reveal>
-      <p style={{ ...bodyText(MUTED), marginTop: 22, fontSize: 15, maxWidth: "70ch" }}>{CLIENTS.note}</p>
-    </Section>
+        </div>
+      </div>
+
+      {/* tablet + desktop: heading in the gutter, marquee full bleed */}
+      <div className="hidden md:block pt-[72px] pb-20 lg:pt-[90px] lg:pb-[100px]">
+        <div className={`${INNER} pb-7 lg:pb-[34px]`} style={{ maxWidth: MAXW }}>
+          <h2
+            className="m-0 mb-2.5 lg:mb-3 text-[34px] leading-[1.06] lg:text-[40px] lg:leading-[1.04] font-semibold tracking-[-.025em]"
+            style={{ fontFamily: SANS, color: INK }}
+          >
+            {CLIENTS.heading}
+          </h2>
+          <p className="m-0 lg:max-w-[600px] text-[16px] leading-[1.55] text-pretty" style={{ fontFamily: SANS, color: BODY }}>
+            {CLIENTS.lead}
+          </p>
+        </div>
+        <LogoMarquee />
+      </div>
+    </section>
   );
 }
 
-/* ── page ── */
-
 export default function AboutPage() {
   return (
-    <main style={{ background: PAGE, color: INK, fontFamily: SANS }}>
+    <main>
+      {/* reveal on scroll, from the interactive prototype; renders nothing */}
+      <AboutMotion />
       <Hero />
-      <ThroughLine />
-      <Story />
-      <MilestoneTrack milestones={MILESTONES} />
-      <AwardBand />
-      <Pillars />
+      <Origin />
+      <Award />
       <Portfolio />
+      <Team />
+      <Timeline />
+      <Pillars />
       <Purpose />
       <Clients />
     </main>
