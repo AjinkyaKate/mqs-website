@@ -21,9 +21,9 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
     title: "Company",
     links: [
       { label: "About", href: "/about-us" },
-      { label: "Leadership", href: "/#about" },
+      { label: "Leadership", href: "/about-us" },
       { label: "Careers", href: "/careers" },
-      { label: "Contact", href: "/#contact" },
+      { label: "Contact", href: "/contact" },
     ],
   },
   {
