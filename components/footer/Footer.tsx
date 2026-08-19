@@ -116,7 +116,7 @@ export default function Footer() {
       <div className="mqs-footer-grid">
         {/* brand */}
         <div className="mqs-footer-brand">
-          <Image src="/assets/mqs-logo-2a-dark.png" alt="MQS Technologies" width={124} height={38} className="h-8 w-auto self-start sm:h-[34px] lg:h-[38px]" />
+          <Image src="/assets/mqs-logo-2a-dark.png" unoptimized alt="MQS Technologies" width={124} height={38} className="h-8 w-auto self-start sm:h-[34px] lg:h-[38px]" />
           <div className="t-h4" style={{ color: "#fff" }}>
             Industrial X-ray, CT &amp; NDT inspection systems.
           </div>

@@ -175,6 +175,7 @@ export default function SiteHeaderFull() {
       >
         <a href="/" style={{ display: "flex", alignItems: "center", paddingLeft: gut, flex: "none" }} aria-label="MQS Technologies">
           <Image
+            unoptimized
             src={inkHeader ? "/assets/mqs-logo-2a-light.png" : "/assets/mqs-logo-2a-dark.png"}
             alt="MQS Technologies"
             width={124}
