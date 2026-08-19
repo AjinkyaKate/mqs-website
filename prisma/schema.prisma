@@ -45,3 +45,30 @@ model Enquiry {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+/// Careers applications. Kept separate from Enquiry: an application has its own
+/// fields (department, experience, resume) and its own retention rule. The
+/// careers form's DPDP notice promises deletion after 12 months, so createdAt
+/// is what a cleanup job would filter on.
+model Application {
+  id         String   @id @default(cuid())
+  status     String   @default("new") // "new" | "reviewed" | "shortlisted" | "archived"
+  name       String
+  email      String
+  phone      String
+  location   String   @default("")
+  department String
+  experience String   @default("")
+  company    String   @default("")
+  linkedin   String   @default("")
+  message    String   @default("")
+  /// Vercel Blob pathname, not a public URL. Resumes are stored with
+  /// access: "private" and served only through an authenticated admin route.
+  resumePath String
+  resumeName String
+  resumeSize Int
+  /// When the applicant ticked the consent box, for DPDP record-keeping.
+  consentAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
