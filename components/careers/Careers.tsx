@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useActionState, useRef, useState } from "react";
+import { submitApplication } from "@/lib/actions/application";
 import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────
@@ -9,7 +10,11 @@ import Image from "next/image";
    + site font). Hero → Why MQS → Life at MQS → Values → Teams →
    Hiring → Apply form. Openings are data-driven: an empty list shows
    the honest "talent pool" state rather than fabricated vacancies.
-   Form is functional UI (file pick + consent + client validation);
+   The form posts to submitApplication: zod-validated, resume written to Vercel
+   Blob with private access, stored as an Application row and readable in the
+   admin panel. Client-side file checks stay as a fast first pass; the server
+   repeats them, since a client check is a courtesy and not a control.
+   (was: functional UI only)
    submission backend is wired separately.
    ────────────────────────────────────────────────────────────── */
 
@@ -171,6 +176,8 @@ export default function Careers() {
   const [fileErr, setFileErr] = useState("");
   const [consent, setConsent] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const [state, formAction, pending] = useActionState(submitApplication, { success: false });
+  const err = (k: string) => state.errors?.[k]?.[0];
   const hasOpenings = OPENINGS.length > 0;
 
   const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -333,7 +340,7 @@ export default function Careers() {
             <p style={{ margin: 0, font: `400 clamp(16px,1.4vw,18px)/1.6 ${SANS}`, color: BODY }}>Join MQS and work on engineering solutions that support automotive, aerospace and defence, electronics and advanced manufacturing. Share your resume and our team will reach out when something relevant opens.</p>
           </div>
 
-          <form noValidate className="flex flex-col" style={{ gap: "clamp(28px,3vw,40px)", borderTop: `2px solid ${CYAN}`, paddingTop: "clamp(28px,3vw,40px)" }}>
+          <form action={formAction} encType="multipart/form-data" noValidate className="flex flex-col" style={{ gap: "clamp(28px,3vw,40px)", borderTop: `2px solid ${CYAN}`, paddingTop: "clamp(28px,3vw,40px)" }}>
             <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(300px,100%),1fr))", gap: "clamp(24px,3vw,36px)" }}>
               <TextField label="Full name" name="fullname" placeholder="Priya Raghavan" required />
               <TextField label="Email" name="email" type="email" placeholder="you@company.com" required />
@@ -357,7 +364,7 @@ export default function Careers() {
                 <button type="button" onClick={() => fileRef.current?.click()} className="hover:!bg-[#0B2A3A] hover:!text-white" style={{ display: "inline-flex", alignItems: "center", height: 44, padding: "0 22px", border: `1px solid ${INK}`, background: "transparent", color: INK, font: `500 12px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase", cursor: "pointer", transition: `background 200ms ${EASE},color 200ms ${EASE}` }}>
                   {file ? "Replace file" : "Choose file"}
                 </button>
-                <input ref={fileRef} type="file" accept=".pdf,.docx" onChange={onFile} style={{ position: "absolute", width: 1, height: 1, opacity: 0, pointerEvents: "none" }} />
+                <input ref={fileRef} name="resume" type="file" accept=".pdf,.docx" onChange={onFile} style={{ position: "absolute", width: 1, height: 1, opacity: 0, pointerEvents: "none" }} />
                 {file ? (
                   <div className="flex items-center" style={{ gap: 12, font: `400 14px/1.4 ${SANS}`, color: INK }}>
                     <span>{file.name} · {(file.size / 1024 / 1024).toFixed(1)} MB</span>
@@ -367,7 +374,7 @@ export default function Careers() {
                   <div style={{ font: `400 14px/1.5 ${SANS}`, color: MUTED }}>PDF or DOCX, up to 5 MB</div>
                 )}
               </div>
-              {fileErr && <div className="flex items-center" style={{ gap: 8, font: `400 13px/1.4 ${SANS}`, color: ERROR }}><span style={{ width: 6, height: 6, background: ERROR }} />{fileErr}</div>}
+              {(fileErr || err("resume")) && <div className="flex items-center" style={{ gap: 8, font: `400 13px/1.4 ${SANS}`, color: ERROR }}><span style={{ width: 6, height: 6, background: ERROR }} />{fileErr || err("resume")}</div>}
             </div>
 
             {/* Consent + DPDP privacy notice */}
@@ -376,7 +383,7 @@ export default function Careers() {
                 <span className="flex flex-none items-center justify-center" style={{ width: 22, height: 22, marginTop: 2, border: `1px solid ${consent ? CYAN_L : INK}`, background: consent ? CYAN_L : "#fff", transition: `background 150ms ${EASE},border-color 150ms ${EASE}` }}>
                   {consent && <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="square"><path d="M4 12l5 5L20 6" /></svg>}
                 </span>
-                <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} style={{ position: "absolute", width: 1, height: 1, opacity: 0 }} />
+                <input type="checkbox" name="consent" checked={consent} onChange={(e) => setConsent(e.target.checked)} style={{ position: "absolute", width: 1, height: 1, opacity: 0 }} />
                 <span style={{ font: `400 14px/1.55 ${SANS}`, color: BODY, maxWidth: 640 }}>
                   I agree to be contacted by MQS Technologies regarding relevant opportunities. <span style={{ color: CYAN_L }}>*</span>
                 </span>
@@ -384,10 +391,24 @@ export default function Careers() {
               <p style={{ margin: 0, paddingLeft: 36, maxWidth: 660, font: `400 13px/1.6 ${SANS}`, color: MUTED }}>
                 We collect the details and resume you submit only to assess your application, keep them for 12 months, and delete them after that. You can ask us to delete your data at any time by emailing <a href="mailto:sales@mqstechnologies.in" style={{ color: CYAN_L }}>sales@mqstechnologies.in</a>. Full details are in our privacy policy.
               </p>
+              {err("consent") && <div className="flex items-center" style={{ gap: 8, paddingLeft: 36, font: `400 13px/1.4 ${SANS}`, color: ERROR }}><span style={{ width: 6, height: 6, background: ERROR }} />{err("consent")}</div>}
             </div>
 
-            <div className="flex flex-wrap items-center" style={{ gap: 20 }}>
-              <button type="button" style={btn(CYAN, "#08283A")} className="hover:!bg-[#0B2A3A] hover:!text-white">Submit Resume</button>
+            <div className="flex flex-col" style={{ gap: 16 }}>
+              <div className="flex flex-wrap items-center" style={{ gap: 20 }}>
+                <button type="submit" disabled={pending} style={{ ...btn(CYAN, "#08283A"), opacity: pending ? 0.6 : 1, cursor: pending ? "default" : "pointer" }} className="hover:!bg-[#0B2A3A] hover:!text-white">
+                  {pending ? "Submitting…" : "Submit Resume"}
+                </button>
+                {Object.keys(state.errors ?? {}).length > 0 && (
+                  <span style={{ font: `400 14px/1.5 ${SANS}`, color: ERROR }}>Please check the highlighted fields.</span>
+                )}
+              </div>
+              {state.message && (
+                <div className="flex items-start" style={{ gap: 12, padding: "16px 18px", border: `1px solid ${state.success ? CYAN_L : ERROR}`, background: state.success ? "#EAF6FB" : "#FBEEEC", maxWidth: 660 }}>
+                  <span className="flex-none" style={{ width: 8, height: 8, marginTop: 7, background: state.success ? CYAN_L : ERROR }} />
+                  <p style={{ margin: 0, font: `400 15px/1.55 ${SANS}`, color: state.success ? INK : ERROR }}>{state.message}</p>
+                </div>
+              )}
             </div>
           </form>
         </div>
