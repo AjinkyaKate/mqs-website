@@ -33,9 +33,10 @@ const EASE = "cubic-bezier(.22,.61,.36,1)";
 type Props = {
   placeholder: string;
   options: string[];
+  name?: string;
 };
 
-export default function FormSelect({ placeholder, options }: Props) {
+export default function FormSelect({ placeholder, options, name }: Props) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
@@ -61,6 +62,7 @@ export default function FormSelect({ placeholder, options }: Props) {
 
   return (
     <div ref={ref} className="relative">
+      {name && <input type="hidden" name={name} value={value ?? ""} />}
       {/* MOBILE (<md) — native OS picker inside the underline shell */}
       <div className="relative md:hidden">
         <select

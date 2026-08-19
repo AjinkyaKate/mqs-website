@@ -10,9 +10,11 @@
 
 "use client";
 
-import { useRef, useState, type Ref } from "react";
+import { useRef, useState, useActionState, type Ref } from "react";
 import FormSelect from "./FormSelect";
 import BackgroundVideo from "@/components/media/BackgroundVideo";
+import { submitContactForm } from "@/lib/actions/enquiry";
+import type { ContactFormState } from "@/lib/schemas";
 
 const DARK = "#0B2A3A";
 const INK = "#0B2A3A";
@@ -34,6 +36,7 @@ const CHIPS = [
 
 type FieldDef = {
   label: string;
+  name: string;
   type?: string;
   placeholder?: string;
   defaultValue?: string;
@@ -43,12 +46,13 @@ type FieldDef = {
 };
 
 const FIELDS: FieldDef[] = [
-  { label: "Full name*", placeholder: "Your name" },
-  { label: "Company name*", placeholder: "Your company" },
-  { label: "Work email*", type: "email", placeholder: "you@company.com" },
-  { label: "Phone", type: "tel", placeholder: "+91 …" },
+  { label: "Full name*", name: "name", placeholder: "Your name" },
+  { label: "Company name*", name: "company", placeholder: "Your company" },
+  { label: "Work email*", name: "email", type: "email", placeholder: "you@company.com" },
+  { label: "Phone", name: "phone", type: "tel", placeholder: "+91 …" },
   {
     label: "Industry",
+    name: "industry",
     placeholder: "Select industry",
     options: [
       "Aerospace & Defence",
@@ -62,6 +66,7 @@ const FIELDS: FieldDef[] = [
   },
   {
     label: "Application",
+    name: "application",
     placeholder: "Select application",
     options: [
       "Casting inspection",
@@ -75,6 +80,7 @@ const FIELDS: FieldDef[] = [
   },
   {
     label: "What do you need to inspect?*",
+    name: "message",
     textarea: true,
     full: true,
     placeholder: "Tell us the part, material, defect type and inspection goal.",
@@ -87,15 +93,16 @@ const labelStyle = {
 const inputBase =
   "w-full border-0 border-b bg-transparent pl-0.5 outline-none transition-colors duration-200 focus:!border-b-[#16C1F3]";
 
-function Field({ label, type = "text", placeholder, defaultValue, textarea, full, options, value, onChange, inputRef }: FieldDef & { value?: string; onChange?: (v: string) => void; inputRef?: Ref<HTMLTextAreaElement> }) {
+function Field({ label, name, type = "text", placeholder, defaultValue, textarea, full, options, value, onChange, inputRef }: FieldDef & { value?: string; onChange?: (v: string) => void; inputRef?: Ref<HTMLTextAreaElement> }) {
   return (
     <div className={`flex flex-col gap-2.5 ${full ? "md:col-span-2" : ""}`}>
       <label className="t-caption" style={labelStyle}>{label}</label>
       {options ? (
-        <FormSelect placeholder={placeholder ?? "Select"} options={options} />
+        <FormSelect name={name} placeholder={placeholder ?? "Select"} options={options} />
       ) : textarea ? (
         <textarea
           ref={inputRef}
+          name={name}
           rows={4}
           placeholder={placeholder}
           value={value}
@@ -105,6 +112,7 @@ function Field({ label, type = "text", placeholder, defaultValue, textarea, full
         />
       ) : (
         <input
+          name={name}
           type={type}
           placeholder={placeholder}
           defaultValue={defaultValue}
@@ -120,6 +128,8 @@ export default function ContactSection({ showChips = true }: { showChips?: boole
   const [selectedChip, setSelectedChip] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const messageRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [state, formAction, pending] = useActionState<ContactFormState, FormData>(submitContactForm, { success: false });
 
   const handleChip = (c: string) => {
     const msg = `I'm interested in ${c} — `;
@@ -193,25 +203,46 @@ export default function ContactSection({ showChips = true }: { showChips?: boole
           className="bg-white px-6 py-7 md:p-10 lg:flex-[0_0_44%] lg:p-12"
           style={{ borderTop: `2px solid ${CYAN}` }}
         >
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-x-6 md:gap-y-7 lg:gap-x-7 lg:gap-y-8">
-            {FIELDS.map((f) =>
-              f.textarea ? (
-                <Field key={f.label} {...f} value={message} onChange={setMessage} inputRef={messageRef} />
-              ) : (
-                <Field key={f.label} {...f} />
-              )
-            )}
-          </div>
-          <button
-            type="button"
-            className="t-button mt-8 flex h-12 w-full items-center justify-center rounded-none transition-colors duration-200 hover:!bg-[#0A2B3D] md:mt-9 md:inline-flex md:w-auto md:justify-start md:px-7 lg:mt-10"
-            style={{
-              background: PRIMARY,
-              color: "#fff",
-            }}
-          >
-            Request consultation
-          </button>
+          {state.success ? (
+            <div className="flex flex-col items-center gap-4 py-12 text-center">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="24" fill="#16C1F3" opacity=".12" />
+                <path d="M15 25l6 6 12-12" stroke="#16C1F3" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <p className="t-body" style={{ color: INK }}>{state.message}</p>
+            </div>
+          ) : (
+            <form ref={formRef} action={formAction}>
+              <input type="hidden" name="sourcePage" value="/" />
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-x-6 md:gap-y-7 lg:gap-x-7 lg:gap-y-8">
+                {FIELDS.map((f) =>
+                  f.textarea ? (
+                    <Field key={f.label} {...f} value={message} onChange={setMessage} inputRef={messageRef} />
+                  ) : (
+                    <Field key={f.label} {...f} />
+                  )
+                )}
+              </div>
+              {state.errors && (
+                <div className="mt-4 text-sm text-red-600">
+                  {Object.values(state.errors).flat().map((e, i) => (
+                    <p key={i}>{e}</p>
+                  ))}
+                </div>
+              )}
+              <button
+                type="submit"
+                disabled={pending}
+                className="t-button mt-8 flex h-12 w-full items-center justify-center rounded-none transition-colors duration-200 hover:!bg-[#0A2B3D] disabled:opacity-50 md:mt-9 md:inline-flex md:w-auto md:justify-start md:px-7 lg:mt-10"
+                style={{
+                  background: PRIMARY,
+                  color: "#fff",
+                }}
+              >
+                {pending ? "Submitting..." : "Request consultation"}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </section>

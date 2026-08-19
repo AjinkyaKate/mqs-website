@@ -8,11 +8,16 @@ import WhyChooseUs from "@/components/why/WhyChooseUs";
 import NewsSection from "@/components/news/NewsSection";
 import ContactSection from "@/components/contact/ContactSection";
 import Footer from "@/components/footer/Footer";
+import { getSiteImage } from "@/lib/site-images";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const heroBg = await getSiteImage("hero-bg");
+
   return (
     <main>
-      <Hero />
+      <Hero bgImage={heroBg ? { src: heroBg.url, alt: heroBg.alt } : undefined} />
       <StatsStrip />
       <AboutSection />
       <EquipmentSection />

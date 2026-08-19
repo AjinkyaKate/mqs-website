@@ -1,6 +1,8 @@
 /* Solid interior header for non-home routes (e.g. /products).
    Logo · nav links · Get a quote. Palette 2B. */
 
+import Image from "next/image";
+
 const INK = "#0B2A3A";
 
 const LINKS: [string, string][] = [
@@ -17,8 +19,7 @@ export default function SiteHeader() {
       style={{ borderColor: "rgba(16,16,16,.08)" }}
     >
       <a href="/" className="flex items-center" aria-label="MQS Technologies — home">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/mqs-logo-2a-light.png" alt="MQS Technologies" className="h-8 w-auto md:h-9" />
+        <Image src="/assets/mqs-logo-2a-light.png" alt="MQS Technologies" width={124} height={36} priority className="h-8 w-auto md:h-9" />
       </a>
 
       <nav className="ml-auto hidden items-center gap-9 lg:flex">

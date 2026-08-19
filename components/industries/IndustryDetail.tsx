@@ -5,6 +5,7 @@
    radiograph (system-only, per NDA). Palette 2B + site font. Static.
    ────────────────────────────────────────────────────────────── */
 
+import Image from "next/image";
 import type { IndustryData } from "./industries-data";
 
 const EASE = "cubic-bezier(.22,.61,.36,1)";
@@ -30,8 +31,7 @@ export default function IndustryDetail({ data }: { data: IndustryData }) {
       <section style={{ position: "relative", overflow: "hidden", background: NAVY, minHeight: "clamp(440px,50vw,580px)", display: "flex", alignItems: "flex-end" }}>
         {d.heroImage ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={d.heroImage} alt="" className="absolute inset-0 h-full w-full object-cover" style={{ filter: "grayscale(1)", opacity: 0.24 }} />
+            <Image src={d.heroImage} alt="" fill sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)", opacity: 0.24 }} />
             <div className="absolute inset-0" style={{ background: "#12405C", mixBlendMode: "color" }} />
           </>
         ) : (

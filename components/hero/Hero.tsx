@@ -61,7 +61,9 @@ const MEGA: [string, string[]][] = [
 const LABEL: CSSProperties = { font: "var(--type-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase" };
 const rise = (d: number): CSSProperties => ({ animation: `mqsRise 420ms ${EASE} both`, animationDelay: `${d}ms` });
 
-export default function Hero() {
+type ImageOverride = { src: string; alt: string };
+
+export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
   const [w, setW] = useState(1440);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -226,12 +228,9 @@ export default function Hero() {
         background: "#0B2A3A",
       }}
     >
-      {/* preload light logo */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/mqs-logo-2a-light.png" alt="" aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, opacity: 0, pointerEvents: "none" }} />
 
       {/* 1 — background: still poster + video (steel-navy duotone, matches Industries) */}
-      <Image src="/assets/hero-poster.jpg" alt="Precision drive components under inspection" fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} />
+      <Image src={bgImage?.src ?? "/assets/hero-poster.jpg"} alt={bgImage?.alt ?? "Precision drive components under inspection"} fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} unoptimized={!!bgImage?.src} />
       {!reducedMotion && !videoError && (
         <video
           ref={(el) => {
@@ -250,7 +249,7 @@ export default function Hero() {
           loop
           playsInline
           preload="auto"
-          poster="/assets/hero-poster.jpg"
+          poster={bgImage?.src ?? "/assets/hero-poster.jpg"}
           onCanPlay={() => setVideoReady(true)}
           onLoadedData={() => setVideoReady(true)}
           onPlaying={() => setVideoReady(true)}

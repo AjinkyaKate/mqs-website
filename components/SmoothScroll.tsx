@@ -1,12 +1,19 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
+import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 import { PropsWithChildren, useEffect, useState } from "react";
 
+const ReactLenis = dynamic(
+  () => import("lenis/react").then((m) => m.ReactLenis),
+  { ssr: false }
+);
+
 /**
- * Lenis smooth scrolling, disabled when the user prefers reduced motion.
+ * Lenis smooth scrolling, disabled for admin routes and reduced motion.
  */
 export default function SmoothScroll({ children }: PropsWithChildren) {
+  const pathname = usePathname();
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -17,7 +24,7 @@ export default function SmoothScroll({ children }: PropsWithChildren) {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  if (reducedMotion) return <>{children}</>;
+  if (reducedMotion || pathname.startsWith("/admin")) return <>{children}</>;
 
   return (
     <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>

@@ -16,6 +16,8 @@
    real sector imagery (aerospace / automotive / electronics).
    ────────────────────────────────────────────────────────────── */
 
+import Image from "next/image";
+
 const EASE = "ease-[cubic-bezier(.22,.61,.36,1)]";
 
 const CARDS = [
@@ -71,13 +73,12 @@ export default function IndustriesSection() {
             className={`group relative block aspect-[4/3] overflow-hidden border-t-2 border-[#16C1F3] bg-[#0B2A3A] no-underline outline-none transition-colors duration-200 ${EASE} sm:aspect-[4/5] sm:border-[rgba(255,255,255,.14)] sm:group-hover:border-[#16C1F3] sm:group-focus:border-[#16C1F3]`}
           >
             {/* image — grayscale, darkens + zooms on reveal */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={c.src}
               alt={c.alt}
-              loading="lazy"
-              decoding="async"
-              className={`absolute inset-0 h-full w-full object-cover grayscale contrast-[1.12] brightness-[.74] transition duration-[400ms] ${EASE} motion-reduce:transition-none sm:brightness-[.92] sm:group-hover:scale-105 sm:group-hover:brightness-[.70] sm:group-focus:scale-105 sm:group-focus:brightness-[.70]`}
+              fill
+              sizes="(max-width: 640px) 100vw, 33vw"
+              className={`object-cover grayscale contrast-[1.12] brightness-[.74] transition duration-[400ms] ${EASE} motion-reduce:transition-none sm:brightness-[.92] sm:group-hover:scale-105 sm:group-hover:brightness-[.70] sm:group-focus:scale-105 sm:group-focus:brightness-[.70]`}
             />
 
             {/* steel-navy duotone */}
