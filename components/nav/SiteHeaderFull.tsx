@@ -21,14 +21,14 @@ type NavItem = { name: string; href?: string; children?: string[]; mega?: boolea
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
   { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
-  { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
+  { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "All pages", mega: true, children: ["Company", "Products", "Industries", "Resources"] },
 ];
 const MOBILE_MENU: NavItem[] = [
   { name: "About", href: "/about-us" },
   { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
-  { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
+  { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
   { name: "Contact", href: "/contact" },
@@ -36,8 +36,8 @@ const MOBILE_MENU: NavItem[] = [
 const MEGA: [string, string[]][] = [
   ["Company", ["About", "Recognition", "Clients", "Careers", "Contact"]],
   ["Products", ["Products overview", "MQXC Series", "High-Energy X-Ray"]],
-  ["Industries", ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"]],
-  ["Services", ["Services overview", "CT Inspection Services"]],
+  ["Industries", ["Industries overview"]],
+  ["Services", ["Services overview"]],
 ];
 
 

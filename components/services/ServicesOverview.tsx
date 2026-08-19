@@ -47,18 +47,11 @@ const GUT = "clamp(24px,4vw,55px)";
 const PAD_Y = "clamp(64px,7vw,120px)";
 const PAD_Y_SM = "clamp(56px,6vw,96px)";
 
-/* The IA in the client content doc is a /services/ hub over five detail pages:
-   /services/ct-inspection/, /services/precision-sub-assemblies/,
-   /services/industrial-electronics/, /services/preventive-maintenance/,
-   /services/repair-support/. Only CT Inspection is built; the other four resolve
-   to the matching section on this page until they land. */
-const ROUTE = {
-  ctInspection: "/services/ct-inspection",
-  subAssemblies: "#precision-manufacturing",
-  electronics: "#precision-manufacturing",
-  maintenance: "#service-support",
-  repair: "#service-support",
-};
+/* Phase 1 scope is locked to a single /services/ page: the client content doc's
+   five detail pages are not being built. The per-service "View ..." links are
+   therefore gone, since there is nowhere for them to go, and each service block
+   reads as complete in itself. The Service Finder still routes, but to the
+   matching section on this page rather than to a detail page. */
 
 /* ── image slots ──
    Each slot names the photograph the design calls for. Where no authentic MQS
@@ -68,25 +61,33 @@ type Slot = { src?: string; alt?: string; need: string };
 
 const IMG: Record<string, Slot> = {
   hero: {
-    src: "/assets/photo-dark-hero.jpg",
-    alt: "Engineer on the plant floor beside an industrial system",
-    need: "Engineer servicing an open industrial inspection system. Full-bleed, 2880×1280, no demo-license watermarks.",
+    /* IMG-01. The client's own photograph, replacing a generic stock frame.
+       Note this is the same file MQS supplied twice, as both "Image 1.jpg" and
+       "Preventive Maintenance Plans.jpg", and it also carries the About page's
+       team band. Worth a distinct hero frame when one is available. */
+    src: "/assets/svc-hero.jpg",
+    alt: "MQS service engineer testing a system's control electronics with a digital multimeter",
+    need: "Supplied at 6240×4160 as Service Overview/Image 1.jpg. Reused on /about-us; a distinct frame would be better.",
   },
   inspection: {
-    src: "/assets/mqxc-cutaway.jpg",
-    alt: "MQS inspection cabinet with the manipulator and turntable exposed",
-    need: "CT inspection — part loading or scanned-component visualisation. 4:3 desktop / 16:10 below, 1600×1200.",
+    /* IMG-02. A real CT volume with defect indications annotated, replacing a
+       generic cabinet render. */
+    src: "/assets/svc-ct-inspection.jpg",
+    alt: "CT volume of a machined linkage with defect indications and volume measurements annotated",
+    need: "Supplied at 2067×1177 as Service Overview/CT Inspection Services.jpg.",
   },
   subAssemblies: {
-    need: "EM Guide, B3 power supply or another authentic MQS electro-mechanical assembly. 4:3, 1600×1200 minimum.",
+    /* IMG-03. Deliberately empty: the only supplied frame is 175×224 against an
+       800×600 spec, so it renders a labelled placeholder rather than a stand-in. */
+    need: "EM Guide and B3 power supply, per the brief. Supplied frame is only 175×224. Need 1600×1200.",
   },
   electronics: {
     need: "Authentic MQS industrial electronics: control unit, PCB integration or cabinet wiring. 4:3, 1600×1200 minimum.",
   },
   maintenance: {
-    src: "/assets/photo-services.jpg",
-    alt: "Engineer working on an industrial system with tooling in hand",
-    need: "Engineer performing maintenance on an MQS system, panel open, tooling in hand. 3:4 desktop / 16:9 below, 1200×1600.",
+    /* IMG-04. Deliberately empty. The stock frame that stood here is removed, and
+       the only supplied candidate is byte-identical to IMG-01 above. */
+    need: "Engineer performing maintenance on an MQS system, panel open, tooling in hand. Must be distinct from the hero frame. 1200×1600.",
   },
 };
 
@@ -275,11 +276,11 @@ function Families() {
 /* ── 3. service finder ── */
 
 const FINDER: [string, string, string][] = [
-  ["Need results but not a system", "CT Inspection Services", ROUTE.ctInspection],
-  ["Have a drawing and need it built", "Precision Sub-Assemblies", ROUTE.subAssemblies],
-  ["Need custom control or power electronics", "Industrial Electronics", ROUTE.electronics],
-  ["Own a system and want it to stay reliable", "Preventive Maintenance Plans", ROUTE.maintenance],
-  ["Have a system that is down right now", "Repair & Breakdown Support", ROUTE.repair],
+  ["Need results but not a system", "CT Inspection Services", "#inspection-services"],
+  ["Have a drawing and need it built", "Precision Sub-Assemblies", "#precision-manufacturing"],
+  ["Need custom control or power electronics", "Industrial Electronics", "#precision-manufacturing"],
+  ["Own a system and want it to stay reliable", "Preventive Maintenance Plans", "#service-support"],
+  ["Have a system that is down right now", "Repair & Breakdown Support", "#service-support"],
 ];
 
 function ServiceFinder() {
@@ -360,7 +361,6 @@ function Inspection() {
             <ul className="m-0 grid list-none p-0 sm:grid-cols-2" style={{ gap: "0 40px", marginTop: 8 }}>
               {CAPS.map((c) => <CapItem key={c}>{c}</CapItem>)}
             </ul>
-            <div style={{ marginTop: 8 }}><TextLink href={ROUTE.ctInspection}>View CT Inspection Services</TextLink></div>
           </div>
           <div className="flex flex-col">
             <Photo slot={IMG.inspection} className="aspect-[16/10] w-full lg:aspect-[4/3]" />
@@ -381,7 +381,7 @@ function Inspection() {
 
 /* ── 5. precision manufacturing ── */
 
-type Mfg = { title: string; slot: Slot; body: string; caps: string[]; cta: string; href: string };
+type Mfg = { title: string; slot: Slot; body: string; caps: string[] };
 
 const MFG: Mfg[] = [
   {
@@ -391,8 +391,6 @@ const MFG: Mfg[] = [
     caps: ["Electro-mechanical sub-assemblies", "Electronic modules and control units", "Indigenization and import substitution",
       "Testing and qualification support", "Repeatable batch production", "Low-volume through series supply",
       "Fixtures, tools and test setups"],
-    cta: "View Precision Sub-Assemblies",
-    href: ROUTE.subAssemblies,
   },
   {
     title: "Industrial Electronics",
@@ -400,8 +398,6 @@ const MFG: Mfg[] = [
     body: "Custom electronics and control systems for mission-critical applications, engineered for reliability, long life and repeatable performance in harsh environments.",
     caps: ["Custom control units", "Electronic modules", "Power electronics", "Power-supply units",
       "Wiring and harness integration", "Connectors and enclosures", "Embedded systems", "Microcontroller platforms"],
-    cta: "View Industrial Electronics",
-    href: ROUTE.electronics,
   },
 ];
 
@@ -429,7 +425,6 @@ function Precision() {
                 <ul className="m-0 list-none p-0" style={{ marginTop: 4 }}>
                   {m.caps.map((c) => <CapItem key={c}>{c}</CapItem>)}
                 </ul>
-                <div style={{ marginTop: "auto", paddingTop: 8 }}><TextLink href={m.href}>{m.cta}</TextLink></div>
               </div>
             </article>
           ))}
@@ -496,7 +491,7 @@ function HowItWorks() {
 
 /* ── 8. service & support ── */
 
-type Panel = { title: string; lead: string; intro: string; items: string[]; cta: string; href: string; dark?: boolean };
+type Panel = { title: string; lead: string; intro: string; items: string[]; dark?: boolean };
 
 const SUPPORT: Panel[] = [
   {
@@ -506,8 +501,6 @@ const SUPPORT: Panel[] = [
     items: ["Scheduled preventive-maintenance visits", "Safety and compliance checks",
       "Interlock, shielding and warning-system checks", "Performance verification", "Calibration support",
       "MIS and workflow health checks", "Remote support and troubleshooting", "Traceable service reports"],
-    cta: "View AMC Plans",
-    href: ROUTE.maintenance,
   },
   {
     title: "Repair & Breakdown Support",
@@ -516,8 +509,6 @@ const SUPPORT: Panel[] = [
     items: ["Remote troubleshooting and first response", "On-site diagnosis and repair", "Root-cause analysis",
       "Electrical subsystem repair", "Mechanical and motion-system repair", "Imaging and control-system repair",
       "Post-repair calibration", "Performance verification", "Service report with recommendations"],
-    cta: "View Repair & Breakdown Support",
-    href: ROUTE.repair,
     dark: true,
   },
 ];
@@ -539,15 +530,6 @@ function SupportPanel({ panel }: { panel: Panel }) {
       <ul className="m-0 list-none p-0">
         {panel.items.map((i) => <CapItem key={i} onDark={dark}>{i}</CapItem>)}
       </ul>
-      <div style={{ marginTop: "auto", paddingTop: 8 }}>
-        {dark ? (
-          <a href={panel.href} className="t-button w-full sm:w-auto hover:!bg-white hover:!text-[#0B2A3A]" style={{ ...btn(CYAN, "#08283A"), height: 48 }}>
-            {panel.cta}<Arrow size={16} />
-          </a>
-        ) : (
-          <TextLink href={panel.href}>{panel.cta}</TextLink>
-        )}
-      </div>
     </div>
   );
 }

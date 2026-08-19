@@ -24,35 +24,40 @@ const SANS = "var(--font-sans)";
 const eyebrow = (color: string) => ({ font: `500 11px/1 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase" as const, color });
 const h2 = (color: string) => ({ margin: 0, font: `600 clamp(26px,3.4vw,42px)/1.08 ${SANS}`, letterSpacing: "-.025em", color });
 
-type Card = { name: string; tagline: string; desc: string; systems: string[]; href: string; cta: string; image?: string; confidential?: string };
+type Card = { id: string; name: string; tagline: string; desc: string; systems: string[]; image?: string; alt?: string; confidential?: string };
 const PRIMARY: Card[] = [
   {
+    id: "aerospace-defence",
     name: "Aerospace & Defence",
     tagline: "Inspect with confidence, because failure is not an option.",
     desc: "Turbine parts, rotor blades, structural assemblies, nozzles and composite layups — where a micro-crack, an inclusion or a bond failure has consequences that reach far beyond the factory.",
     systems: ["High-Energy X-ray", "MQCT", "Microfocus CT", "MQXC Cabinet DR", "Rotor Blade DR"],
-    href: "/industries/aerospace-defence",
-    cta: "Explore Aerospace & Defence",
-    image: "/assets/he-k15-card.jpg",
+    /* IMG-02, the brief's specified subject: the rotor blade DR system. This
+       supersedes the K15 LINAC frame, which the brief named only as a fallback
+       for if this one proved unusable. */
+    image: "/assets/ind-aero-rotor-dr.jpg",
+    alt: "MQS rotor blade digital radiography system with long-format gantry, travelling X-ray source and flat panel detector",
     confidential: "We don't publish aerospace scan results. Our customers' programmes stay their own — which is usually why they chose us.",
   },
   {
+    id: "automotive",
     name: "Automotive & EV",
     tagline: "Inspect faster. Reduce scrap. Deliver safer vehicles.",
     desc: "Cast housings, brake components, powertrain parts and battery assemblies — inspected at production speed, because a zero-defect target means checking parts, not samples.",
     systems: ["MQS-PRISM", "MQXC Cabinet DR", "MQCT", "MQWR 160U"],
-    href: "/industries/automotive",
-    cta: "Explore Automotive",
-    image: "/assets/mqxc-app-wheel.jpg",
+    /* IMG-03, from the supplied 16-bit wheel hub radiograph. */
+    image: "/assets/ind-auto-wheel-hub.jpg",
+    alt: "Radiograph of an alloy wheel hub showing internal casting structure",
   },
   {
+    id: "electronics",
     name: "Electronics & Semiconductors",
     tagline: "Inspect what the eye cannot see.",
     desc: "BGA voids, head-in-pillow, bridging and PTH fill issues — defects that pass visual inspection, survive functional test, and come back as field returns.",
     systems: ["MQX.tracE", "MQX.tracE CT", "MQX.gINti", "Microfocus CT"],
-    href: "/industries/electronics",
-    cta: "Explore Electronics",
-    image: "/assets/ind-electronics.jpg",
+    /* IMG-04. Replaces a frame that showed shells rather than electronics. */
+    image: "/assets/ind-elec-bga.jpg",
+    alt: "Radiograph of a BGA solder ball array on a multilayer board",
   },
 ];
 
@@ -104,7 +109,7 @@ export default function IndustriesOverview() {
     <main style={{ background: PAGE, color: INK, fontFamily: SANS }}>
       {/* HERO */}
       <section style={{ position: "relative", overflow: "hidden", background: NAVY, minHeight: "clamp(460px,52vw,600px)", display: "flex", alignItems: "flex-end" }}>
-        <Image src="/assets/mqxc-app-bracket.jpg" alt="" fill sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)", opacity: 0.22 }} />
+        <Image src="/assets/ind-hero-bracket.jpg" alt="" fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)", opacity: 0.22 }} />
         <div className="absolute inset-0" style={{ background: "#12405C", mixBlendMode: "color" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(90deg,rgba(11,42,58,.92) 0%,rgba(11,42,58,.78) 46%,rgba(11,42,58,.5) 100%)" }} />
         <div className="relative mx-auto w-full" style={{ maxWidth: 1330, padding: "clamp(96px,10vw,150px) clamp(24px,4vw,55px) clamp(44px,5vw,72px)" }}>
@@ -145,42 +150,57 @@ export default function IndustriesOverview() {
             <p style={{ margin: 0, maxWidth: 360, font: `400 15px/1.6 ${SANS}`, color: MUTED }}>Three sectors with dedicated system configurations, acceptance criteria and application support.</p>
           </div>
 
-          <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: "clamp(16px,1.6vw,24px)" }}>
-            {PRIMARY.map((c) => (
-              <a key={c.name} href={c.href} className="group flex flex-col hover:!border-[#0A6A88]" style={{ background: "#fff", border: `1px solid ${HAIR}`, color: INK, transition: `border-color 200ms ${EASE}` }}>
-                {c.image ? (
-                  <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: "#111417" }}>
-                    <Image src={c.image} alt={c.confidential ? "MQS high-energy LINAC inspection system" : `${c.name} inspection radiograph`} width={800} height={600} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+          {/* Each industry is a full-width band rather than a card. Phase 1 is a
+              single /industries/ page, so these sections are the destination
+              rather than a router into a detail page, and they need the room.
+              They are no longer links, and the "Explore ..." CTAs are gone,
+              because there is nowhere for them to go. Copy is the client
+              brief's, verbatim. The image side alternates to give the three
+              bands rhythm down the page. */}
+          <div className="flex flex-col" style={{ gap: "clamp(24px,3vw,44px)" }}>
+            {PRIMARY.map((c, i) => {
+              const flip = i % 2 === 1;
+              return (
+                <article key={c.name} id={c.id} className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 md:gap-10 scroll-mt-[80px] md:scroll-mt-[92px] lg:scroll-mt-[96px]"
+                  style={{ background: "#fff", border: `1px solid ${HAIR}`, padding: "clamp(18px,2vw,26px)" }}>
+                  <div className={flip ? "md:order-2" : ""}>
+                    {c.image ? (
+                      <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: "#111417" }}>
+                        <Image src={c.image} alt={c.alt ?? `${c.name} inspection radiograph`} fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
+                      </div>
+                    ) : (
+                      <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: NAVY }}>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ gap: 14, color: CYAN_D }}>
+                          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="square"><path d="M3 4h18M3 20h18M6 4v16M18 4v16M9 9h6v6H9z" /><path d="M12 4v5M12 15v5" /></svg>
+                          <span style={{ font: `500 10px/1.4 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase", color: "rgba(255,255,255,.62)" }}>Inspection system</span>
+                        </div>
+                      </div>
+                    )}
+                    {/* The brief asks for this line directly under the image, set
+                        muted rather than as body copy: it explains why the card
+                        shows a system instead of a radiograph. */}
+                    {c.confidential && (
+                      <p style={{ margin: 0, paddingTop: 14, font: `italic 400 13px/1.55 ${SANS}`, color: MUTED, textWrap: "pretty" }}>{c.confidential}</p>
+                    )}
                   </div>
-                ) : (
-                  <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: NAVY }}>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ gap: 14, color: CYAN_D }}>
-                      <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="square"><path d="M3 4h18M3 20h18M6 4v16M18 4v16M9 9h6v6H9z" /><path d="M12 4v5M12 15v5" /></svg>
-                      <span style={{ font: `500 10px/1.4 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase", color: "rgba(255,255,255,.62)" }}>Inspection system</span>
+
+                  <div className={`flex flex-col ${flip ? "md:order-1" : ""}`} style={{ gap: 16, padding: "clamp(4px,1vw,14px)" }}>
+                    <div style={eyebrow(CYAN_L)}>Primary industry</div>
+                    <div className="flex flex-col" style={{ gap: 10 }}>
+                      <h3 style={{ margin: 0, font: `600 clamp(24px,2.6vw,34px)/1.14 ${SANS}`, letterSpacing: "-.025em", color: INK, textWrap: "pretty" }}>{c.name}</h3>
+                      <p style={{ margin: 0, font: `500 clamp(15px,1.5vw,17px)/1.45 ${SANS}`, color: CYAN_L }}>{c.tagline}</p>
+                    </div>
+                    <p style={{ margin: 0, font: `400 clamp(15px,1.4vw,17px)/1.65 ${SANS}`, color: BODY, textWrap: "pretty" }}>{c.desc}</p>
+                    <div className="flex flex-col" style={{ gap: 10, marginTop: 4, paddingTop: 18, borderTop: `1px solid ${HAIR}` }}>
+                      <div style={eyebrow(MUTED)}>Systems used</div>
+                      <div className="flex flex-wrap" style={{ gap: 6 }}>
+                        {c.systems.map((sys) => <span key={sys} style={chip}>{sys}</span>)}
+                      </div>
                     </div>
                   </div>
-                )}
-                {c.confidential && (
-                  <p style={{ margin: 0, padding: "14px clamp(20px,2vw,26px) 0", font: `italic 400 13px/1.5 ${SANS}`, color: MUTED }}>{c.confidential}</p>
-                )}
-                <div className="flex flex-1 flex-col" style={{ gap: 14, padding: "clamp(20px,2vw,26px)" }}>
-                  <div className="flex flex-col" style={{ gap: 8 }}>
-                    <h3 className="transition-colors duration-200 group-hover:!text-[#0A6A88]" style={{ margin: 0, font: `600 clamp(20px,1.7vw,24px)/1.2 ${SANS}`, letterSpacing: "-.025em", color: INK }}>{c.name}</h3>
-                    <p style={{ margin: 0, font: `500 14px/1.5 ${SANS}`, color: CYAN_L }}>{c.tagline}</p>
-                  </div>
-                  <p style={{ margin: 0, font: `400 15px/1.6 ${SANS}`, color: BODY, textWrap: "pretty" }}>{c.desc}</p>
-                  <div className="flex flex-col" style={{ marginTop: "auto", gap: 10, paddingTop: 16, borderTop: `1px solid ${HAIR}` }}>
-                    <div style={{ ...eyebrow(MUTED) }}>Systems used</div>
-                    <div className="flex flex-wrap" style={{ gap: 6 }}>
-                      {c.systems.map((s) => <span key={s} style={chip}>{s}</span>)}
-                    </div>
-                    <span className="flex items-center transition-colors duration-200 group-hover:!text-[#16C1F3]" style={{ gap: 10, marginTop: 6, font: `500 12px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase", color: CYAN_L }}>
-                      {c.cta}<span style={{ width: 18, height: 1, background: "currentColor" }} />
-                    </span>
-                  </div>
-                </div>
-              </a>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -5,15 +5,11 @@
    catalog (or the Industries hub when the parent is "Industries"). */
 
 export const HREF_MAP: Record<string, string> = {
-  /* Industries. Three detail pages exist. Energy, Foundry, Additive Manufacturing
-     and Research are named across the product pages but have no content of their
-     own (the client's Industries brief flags this as a decision needed), so they
-     are not in the nav. */
+  /* Industries. Phase 1 is a single /industries/ page, so there are no child
+     routes and Industries is a plain top-level link rather than a dropdown. The
+     page's own industry sections and routing matrix do the routing. */
   "Industries overview": "/industries",
   Industries: "/industries",
-  "Aerospace & Defence": "/industries/aerospace-defence",
-  Automotive: "/industries/automotive",
-  Electronics: "/industries/electronics",
 
   /* Products. Two detail pages exist. The rest of the catalogue is reachable from
      /products; category labels with no page behind them are not in the nav.
@@ -33,14 +29,10 @@ export const HREF_MAP: Record<string, string> = {
      and #recognition fragments once that is fixed. */
   Recognition: "/about-us",
   Clients: "/about-us",
-  /* Services. The brief specifies five detail pages; only CT Inspection is built,
-     so Services is a plain top-level link to the hub rather than a dropdown of
-     four entries with no pages behind them. The hub's own three-family block and
-     Service Finder do the routing. Re-add children as each page lands:
-     /services/precision-sub-assemblies/, /services/industrial-electronics/,
-     /services/preventive-maintenance/, /services/repair-support/. */
+  /* Services. Phase 1 is a single /services/ page; the brief's five detail pages
+     are not being built, so Services is a plain top-level link. The page's own
+     three-family block and Service Finder do the routing. */
   "Services overview": "/services",
-  "CT Inspection Services": "/services/ct-inspection",
 };
 
 export const linkFor = (parent: string, label: string): string =>
