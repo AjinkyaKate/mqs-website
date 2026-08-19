@@ -31,7 +31,7 @@ const MOBILE_MENU: NavItem[] = [
   { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
-  { name: "Contact", href: "/#contact" },
+  { name: "Contact", href: "/contact" },
 ];
 const MEGA: [string, string[]][] = [
   ["Company", ["About", "Recognition", "Clients", "Careers", "Contact"]],
@@ -257,7 +257,7 @@ export default function SiteHeaderFull() {
         )}
 
         {isDesktop && (
-          <a href="/#contact" style={{ ...LABEL, width: ctaW, flex: "none", display: "flex", alignItems: "center", justifyContent: "center", background: inkHeader ? "#0E3A52" : CYAN, color: inkHeader ? "#FFFFFF" : "#08283A", fontSize: 15, textDecoration: "none", transition: `background 200ms ${EASE}, color 200ms ${EASE}` }} className={inkHeader ? "hover:!bg-[#0A2B3D]" : "hover:!bg-[#0FA5D2]"}>
+          <a href="/contact" style={{ ...LABEL, width: ctaW, flex: "none", display: "flex", alignItems: "center", justifyContent: "center", background: inkHeader ? "#0E3A52" : CYAN, color: inkHeader ? "#FFFFFF" : "#08283A", fontSize: 15, textDecoration: "none", transition: `background 200ms ${EASE}, color 200ms ${EASE}` }} className={inkHeader ? "hover:!bg-[#0A2B3D]" : "hover:!bg-[#0FA5D2]"}>
             Contact us
           </a>
         )}
@@ -351,7 +351,7 @@ export default function SiteHeaderFull() {
                 );
               })}
             </nav>
-            <a href="/#contact" style={{ ...LABEL, flexShrink: 0, marginTop: isTablet ? 40 : 30, alignSelf: "flex-start", display: "inline-flex", alignItems: "center", justifyContent: "center", height: isTablet ? 56 : 50, padding: `0 ${isTablet ? 34 : 28}px`, background: "#0E3A52", color: "#FFFFFF", fontSize: isTablet ? 17 : 16, textDecoration: "none" }} className="hover:!bg-[#0A2B3D]">
+            <a href="/contact" style={{ ...LABEL, flexShrink: 0, marginTop: isTablet ? 40 : 30, alignSelf: "flex-start", display: "inline-flex", alignItems: "center", justifyContent: "center", height: isTablet ? 56 : 50, padding: `0 ${isTablet ? 34 : 28}px`, background: "#0E3A52", color: "#FFFFFF", fontSize: isTablet ? 17 : 16, textDecoration: "none" }} className="hover:!bg-[#0A2B3D]">
               Contact us
             </a>
           </motion.div>

@@ -48,7 +48,7 @@ const MOBILE_MENU: MobileItem[] = [
   { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
-  { name: "Contact", href: "#contact" },
+  { name: "Contact", href: "/contact" },
 ];
 
 const MEGA: [string, string[]][] = [

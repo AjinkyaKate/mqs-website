@@ -24,11 +24,15 @@ export const HREF_MAP: Record<string, string> = {
 
   About: "/about-us",
   Careers: "/careers",
-  Contact: "/#contact",
-  /* Sections, not pages, but real destinations: the awards band on the home page
-     and the client list on the About page. Labels match what is actually there. */
-  Recognition: "/#recognition",
-  Clients: "/about-us#clients",
+  Contact: "/contact",
+  /* Recognition and Clients are sections rather than pages. Both point at the
+     page, not the anchor: SmoothScroll wraps the app in a next/dynamic component
+     with ssr:false, so no page server-renders its DOM and a browser landing on a
+     cross-page anchor finds no target and never scrolls. Verified on production:
+     /#contact leaves scrollY at 0 with the target at 8019px. Restore the #clients
+     and #recognition fragments once that is fixed. */
+  Recognition: "/about-us",
+  Clients: "/about-us",
   /* Services. The brief specifies five detail pages; only CT Inspection is built,
      so Services is a plain top-level link to the hub rather than a dropdown of
      four entries with no pages behind them. The hub's own three-family block and

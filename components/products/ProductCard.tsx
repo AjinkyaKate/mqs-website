@@ -69,7 +69,7 @@ export default function ProductCard({ spec, name, subtitle, desc, image, href, b
 
       <div className="flex items-center justify-between gap-3 px-[22px] pb-[22px]">
         <a
-          href={href || "/#contact"}
+          href={href || "/contact"}
           className="t-button no-underline transition-colors duration-200 group-hover:!text-[#16C1F3]"
           style={{ color: ACCENT }}
         >
