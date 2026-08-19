@@ -18,7 +18,7 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
   {
     title: "Company",
     links: [
-      { label: "About", href: "/#about" },
+      { label: "About", href: "/about-us" },
       { label: "Leadership", href: "/#about" },
       { label: "Careers", href: "/careers" },
       { label: "Contact", href: "/#contact" },
@@ -27,28 +27,27 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
   {
     title: "Products",
     links: [
-      { label: "Digital Radiography", href: "/products" },
-      { label: "Industrial CT", href: "/products" },
-      { label: "Microfocus X-ray", href: "/products" },
-      { label: "High-Energy X-ray", href: "/products/high-energy-xray" },
+      { label: "All solutions", href: "/products" },
+      { label: "MQXC Series", href: "/products/mqxc-series" },
+      { label: "High-Energy X-Ray", href: "/products/high-energy-xray" },
     ],
   },
   {
     title: "Industries",
     links: [
+      { label: "All industries", href: "/industries" },
       { label: "Aerospace & Defence", href: "/industries/aerospace-defence" },
       { label: "Automotive", href: "/industries/automotive" },
       { label: "Electronics", href: "/industries/electronics" },
-      { label: "Energy", href: "/industries" },
     ],
   },
   {
     title: "Services",
     links: [
-      { label: "CT Inspection", href: "/#services" },
-      { label: "Industrial Electronics", href: "/#services" },
-      { label: "Sub-Assemblies", href: "/#services" },
-      { label: "Maintenance & Support", href: "/#services" },
+      { label: "Services overview", href: "/services" },
+      { label: "CT Inspection Services", href: "/services/ct-inspection" },
+      { label: "Precision Manufacturing", href: "/services#precision-manufacturing" },
+      { label: "Service & Support", href: "/services#service-support" },
     ],
   },
 ];

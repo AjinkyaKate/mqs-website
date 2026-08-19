@@ -5,15 +5,38 @@
    catalog (or the Industries hub when the parent is "Industries"). */
 
 export const HREF_MAP: Record<string, string> = {
+  /* Industries. Three detail pages exist. Energy, Foundry, Additive Manufacturing
+     and Research are named across the product pages but have no content of their
+     own (the client's Industries brief flags this as a decision needed), so they
+     are not in the nav. */
+  "Industries overview": "/industries",
+  Industries: "/industries",
   "Aerospace & Defence": "/industries/aerospace-defence",
   Automotive: "/industries/automotive",
   Electronics: "/industries/electronics",
-  Energy: "/industries",
-  Industries: "/industries",
-  About: "/#about",
+
+  /* Products. Two detail pages exist. The rest of the catalogue is reachable from
+     /products; category labels with no page behind them are not in the nav.
+     Add children here as each product page lands. */
+  "Products overview": "/products",
+  "MQXC Series": "/products/mqxc-series",
+  "High-Energy X-Ray": "/products/high-energy-xray",
+
+  About: "/about-us",
   Careers: "/careers",
   Contact: "/#contact",
-  "High-Energy X-ray": "/products/high-energy-xray",
+  /* Sections, not pages, but real destinations: the awards band on the home page
+     and the client list on the About page. Labels match what is actually there. */
+  Recognition: "/#recognition",
+  Clients: "/about-us#clients",
+  /* Services. The brief specifies five detail pages; only CT Inspection is built,
+     so Services is a plain top-level link to the hub rather than a dropdown of
+     four entries with no pages behind them. The hub's own three-family block and
+     Service Finder do the routing. Re-add children as each page lands:
+     /services/precision-sub-assemblies/, /services/industrial-electronics/,
+     /services/preventive-maintenance/, /services/repair-support/. */
+  "Services overview": "/services",
+  "CT Inspection Services": "/services/ct-inspection",
 };
 
 export const linkFor = (parent: string, label: string): string =>
