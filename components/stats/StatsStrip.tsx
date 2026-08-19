@@ -27,8 +27,14 @@ const EASE = "cubic-bezier(.22,.61,.36,1)";
 const DURATION = 1100;
 const STAGGER = 80;
 
+/* Founded 1994. Derived rather than hardcoded: the client's About brief asked for
+   the fixed "31 years" to go, because a literal goes stale every January. It was
+   already wrong, 1994 to 2026 is 32. */
+const FOUNDED = 1994;
+const YEARS = new Date().getFullYear() - FOUNDED;
+
 const STATS = [
-  { target: 31, suffix: "+", label: "Years" },
+  { target: YEARS, suffix: "+", label: "Years" },
   { target: 150, suffix: "+", label: "Engineers" },
   { target: 100, suffix: "+", label: "Installations" },
   { target: 8, suffix: "", label: "Cities" },
