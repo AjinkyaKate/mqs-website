@@ -16,9 +16,13 @@ export type Product = {
   desc: string;
   image?: string;
   href?: string;
+  /* Path under /public/brochures plus its real size. The button only renders when
+     a file exists: it used to point every product at #contact while showing a
+     download arrow, which promised a file that was never there. */
+  brochure?: { file: string; size: string };
 };
 
-export default function ProductCard({ spec, name, subtitle, desc, image, href }: Product) {
+export default function ProductCard({ spec, name, subtitle, desc, image, href, brochure }: Product) {
   return (
     <div
       className="group flex h-full flex-col bg-white transition-shadow duration-200 hover:shadow-[inset_0_0_0_1px_#16C1F3]"
@@ -71,13 +75,17 @@ export default function ProductCard({ spec, name, subtitle, desc, image, href }:
         >
           View solution →
         </a>
-        <a
-          href="/#contact"
-          className="t-button flex h-11 items-center px-[18px] no-underline transition-colors duration-200 hover:!border-[#0E3A52] hover:!bg-[#0E3A52] hover:!text-white"
-          style={{ border: `1px solid ${INK}`, color: INK, background: "transparent" }}
-        >
-          Brochure ↓
-        </a>
+        {brochure && (
+          <a
+            href={`/brochures/${brochure.file}`}
+            target="_blank"
+            rel="noopener"
+            className="t-button flex h-11 items-center px-[18px] no-underline transition-colors duration-200 hover:!border-[#0E3A52] hover:!bg-[#0E3A52] hover:!text-white"
+            style={{ border: `1px solid ${INK}`, color: INK, background: "transparent" }}
+          >
+            Brochure ({brochure.size}) ↓
+          </a>
+        )}
       </div>
     </div>
   );

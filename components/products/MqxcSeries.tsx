@@ -77,7 +77,13 @@ const SPEC_TABLES: SpecTable[] = [
 ];
 
 const NAV_ITEMS: [string, string][] = [["Overview", "#overview"], ["Highlights", "#highlights"], ["Models", "#models"], ["Applications", "#applications"], ["Specs", "#specs"], ["Video", "#video"], ["Demo", "#demo"]];
-const DOWNLOADS: [string, string][] = [["Product brochure", "PDF · 4.2 MB · MQXC series"], ["AERB compliance certificate", "PDF · 0.8 MB · Type approval"]];
+/* Real files in /public/brochures, with their real sizes. The former
+   "AERB compliance certificate · PDF · 0.8 MB" row is gone: no such document was
+   supplied, and both rows pointed at #contact while showing a download icon. */
+const DOWNLOADS: { title: string; meta: string; file: string }[] = [
+  { title: "MQXC Series brochure", meta: "PDF · 1.2 MB · Cabinet-based DR solutions", file: "mqxc-cabinet-dr.pdf" },
+  { title: "Digital radiography systems", meta: "PDF · 1.3 MB · Range overview", file: "digital-radiography.pdf" },
+];
 
 const eyebrow = (color: string) => ({ font: "500 11px/1 var(--font-sans)", letterSpacing: ".09em", textTransform: "uppercase" as const, color });
 const h2 = { margin: "14px 0 0", font: "600 clamp(28px,3.2vw,40px)/1.1 var(--font-sans)", letterSpacing: "-.025em", color: INK, textWrap: "pretty" as const };
@@ -115,7 +121,7 @@ export default function MqxcSeries() {
           <p style={{ margin: 0, font: "400 clamp(15px,1.3vw,19px)/1.55 var(--font-sans)", color: "rgba(255,255,255,.80)", maxWidth: 600, textWrap: "pretty" }}>Self-contained DR &amp; CT-ready platforms with AERB-compliant shielding, high-resolution detectors and multi-axis part handling — installed on your production floor, not in a bunker.</p>
           <div className="flex flex-wrap" style={{ gap: 12, marginTop: 8 }}>
             <a href="#contact" style={btnPrimary} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a demo</a>
-            <a href="#downloads" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: "transparent", border: "1px solid rgba(255,255,255,.42)", color: "#fff", font: "500 13px/1 var(--font-sans)", letterSpacing: ".045em", textTransform: "uppercase" }} className="hover:!bg-white/10">Download brochure (PDF)</a>
+            <a href="/brochures/mqxc-cabinet-dr.pdf" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: "transparent", border: "1px solid rgba(255,255,255,.42)", color: "#fff", font: "500 13px/1 var(--font-sans)", letterSpacing: ".045em", textTransform: "uppercase" }} className="hover:!bg-white/10">Download brochure (PDF)</a>
           </div>
         </div>
       </section>
@@ -371,8 +377,8 @@ export default function MqxcSeries() {
           <div style={eyebrow(CYAN_ON_LIGHT)}>Downloads &amp; demo</div>
           <h2 style={{ ...h2, marginBottom: 40 }}>Take the next step.</h2>
           <div className="grid" style={{ gridTemplateColumns: compact ? "1fr" : "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: 1, background: HAIR, border: `1px solid ${HAIR}` }}>
-            {DOWNLOADS.map(([title, meta]) => (
-              <a key={title} href="#contact" className="flex items-center justify-between hover:!bg-[#EAF6FB]" style={{ gap: 24, padding: "28px 26px", background: "#fff", transition: `background 200ms ${EASE}` }}>
+            {DOWNLOADS.map(({ title, meta, file }) => (
+              <a key={title} href={`/brochures/${file}`} target="_blank" rel="noopener" className="flex items-center justify-between hover:!bg-[#EAF6FB]" style={{ gap: 24, padding: "28px 26px", background: "#fff", transition: `background 200ms ${EASE}` }}>
                 <span className="flex flex-col" style={{ gap: 6 }}>
                   <span style={{ font: "600 17px/1.3 var(--font-sans)", letterSpacing: "-.01em", color: INK }}>{title}</span>
                   <span style={eyebrow(MUTED)}>{meta}</span>
