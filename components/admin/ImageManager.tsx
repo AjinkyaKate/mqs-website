@@ -5,13 +5,11 @@ import { saveSiteImage, deleteSiteImage } from "@/lib/actions/images";
 
 const DEFAULT_IMAGES: Record<string, { src: string; alt: string }> = {
   "hero-bg": { src: "/assets/hero-poster.jpg", alt: "Hero background" },
-  "hero-inset": { src: "/assets/inset-operator.jpg", alt: "Hero inset" },
 };
 
 // Minimum dimensions and aspect ratio tolerance per slot
 const SLOT_RULES: Record<string, { minW: number; minH: number; ratio: number; ratioLabel: string }> = {
   "hero-bg": { minW: 1920, minH: 1080, ratio: 16 / 9, ratioLabel: "16:9" },
-  "hero-inset": { minW: 668, minH: 1000, ratio: 668 / 1000, ratioLabel: "2:3 (portrait)" },
 };
 const RATIO_TOLERANCE = 0.15;
 

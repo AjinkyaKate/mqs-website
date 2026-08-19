@@ -13,17 +13,11 @@ import { getSiteImage } from "@/lib/site-images";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [heroBg, heroInset] = await Promise.all([
-    getSiteImage("hero-bg"),
-    getSiteImage("hero-inset"),
-  ]);
+  const heroBg = await getSiteImage("hero-bg");
 
   return (
     <main>
-      <Hero
-        bgImage={heroBg ? { src: heroBg.url, alt: heroBg.alt } : undefined}
-        insetImage={heroInset ? { src: heroInset.url, alt: heroInset.alt } : undefined}
-      />
+      <Hero bgImage={heroBg ? { src: heroBg.url, alt: heroBg.alt } : undefined} />
       <StatsStrip />
       <AboutSection />
       <EquipmentSection />

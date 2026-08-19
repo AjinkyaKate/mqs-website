@@ -19,25 +19,25 @@ const LABEL: CSSProperties = { font: "var(--type-label)", letterSpacing: "var(--
 
 type NavItem = { name: string; href?: string; children?: string[]; mega?: boolean };
 const NAV: NavItem[] = [
-  { name: "About", href: "/#about" },
-  { name: "Products", children: ["Digital Radiography", "Industrial CT", "Microfocus X-ray", "High-Energy X-ray", "PCB X-ray", "ATE Systems"] },
-  { name: "Industries", children: ["Aerospace & Defence", "Automotive", "Electronics", "Energy"] },
-  { name: "Services", children: ["CT Inspection Services", "Industrial Electronics", "Precision Sub-Assemblies", "Preventive Maintenance", "Repair & Support"] },
+  { name: "About", href: "/about-us" },
+  { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
+  { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
+  { name: "Services", href: "/services" },
   { name: "All pages", mega: true, children: ["Company", "Products", "Industries", "Resources"] },
 ];
 const MOBILE_MENU: NavItem[] = [
-  { name: "About", href: "/#about" },
-  { name: "Products", children: ["Digital Radiography", "Industrial CT", "Microfocus X-ray", "High-Energy X-ray", "PCB X-ray", "ATE Systems"] },
-  { name: "Industries", children: ["Aerospace & Defence", "Automotive", "Electronics", "Energy"] },
-  { name: "Services", children: ["CT Inspection Services", "Industrial Electronics", "Precision Sub-Assemblies", "Preventive Maintenance", "Repair & Support"] },
-  { name: "Careers", href: "/#contact" },
+  { name: "About", href: "/about-us" },
+  { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
+  { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
+  { name: "Services", href: "/services" },
+  { name: "Careers", href: "/careers" },
   { name: "Contact", href: "/#contact" },
 ];
 const MEGA: [string, string[]][] = [
-  ["Company", ["About", "Leadership", "Clients", "Careers"]],
-  ["Products", ["Digital Radiography", "Industrial CT", "Microfocus X-ray", "High-Energy X-ray", "PCB X-ray", "ATE Systems"]],
-  ["Services", ["CT Inspection Services", "Industrial Electronics", "Precision Sub-Assemblies", "Preventive Maintenance", "Repair & Support"]],
-  ["Resources", ["Case Studies", "News", "Industries", "Downloads", "FAQ"]],
+  ["Company", ["About", "Recognition", "Clients", "Careers", "Contact"]],
+  ["Products", ["Products overview", "MQXC Series", "High-Energy X-Ray"]],
+  ["Industries", ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"]],
+  ["Services", ["Services overview", "CT Inspection Services"]],
 ];
 
 

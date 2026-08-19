@@ -11,19 +11,16 @@ const EASE = "cubic-bezier(0.22,0.61,0.36,1)";
 const EASE_ARR = [0.22, 0.61, 0.36, 1] as const;
 const CYAN = "#16C1F3";
 const RULE = "1px solid rgba(255,255,255,.14)";
-// Desktop inset geometry (%). Grid rules derive from this so they always frame the image.
+// Desktop grid geometry (%). These framed the inset photograph and its spec
+// labels, both now removed; the four hairline rules on the desktop hero still
+// derive from them, so the numbers stay until the rules are re-cut.
 const INSET_TOP = 26.67;
 const INSET_LEFT = 55.97;
 const INSET_W = 27.78;
-const INSET_H = 66.67;
 const INSET_RIGHT = INSET_LEFT + INSET_W; // 83.75
-const INSET_BOTTOM = INSET_TOP + INSET_H; // 83.56
-// Inset is aspect-locked to the image (1336×2000). Its real bottom edge, in a
-// 100vh section, is: top(vh) + width(vw) / aspect. Line + specs anchor to this
-// so the line hugs the image and the spec sits just below it at any viewport.
-const IMG_H_VW = INSET_W * (2000 / 1336); // full-aspect image height, in vw
-// Cap the height so wide/short desktop windows can't push the image (and the
-// spec below it) past 100vh, where the section's overflow:hidden would clip it.
+// Height was aspect-locked to the removed image (1336×2000) and capped so wide,
+// short desktop windows could not push it past 100vh into overflow:hidden.
+const IMG_H_VW = INSET_W * (2000 / 1336);
 const IMG_H = `min(${IMG_H_VW.toFixed(3)}vw, 82vh)`;
 const IMG_BOTTOM = `calc(${INSET_TOP}vh + ${IMG_H})`;
 const SMALL_HEADER_GRADIENT =
@@ -33,38 +30,32 @@ const SCRIM_DESKTOP =
 const SCRIM_SMALL =
   "linear-gradient(180deg, rgba(0,0,0,.34) 0%, rgba(0,0,0,.60) 46%, rgba(0,0,0,.84) 100%)";
 
-type NavItem = { name: string; children?: string[]; mega?: boolean };
+type NavItem = { name: string; href?: string; children?: string[]; mega?: boolean };
 
 const NAV: NavItem[] = [
-  { name: "About" },
-  { name: "Products", children: ["Digital Radiography", "Industrial CT", "Microfocus X-ray", "High-Energy X-ray", "PCB X-ray", "ATE Systems"] },
-  { name: "Industries", children: ["Aerospace & Defence", "Automotive", "Electronics", "Energy"] },
-  { name: "Services", children: ["CT Inspection Services", "Industrial Electronics", "Precision Sub-Assemblies", "Preventive Maintenance", "Repair & Support"] },
+  { name: "About", href: "/about-us" },
+  { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
+  { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
+  { name: "Services", href: "/services" },
   { name: "All pages", mega: true, children: ["Company", "Products", "Industries", "Resources"] },
 ];
 
 // Mobile/tablet menu with expandable submenus.
 type MobileItem = { name: string; href?: string; children?: string[] };
 const MOBILE_MENU: MobileItem[] = [
-  { name: "About", href: "#about" },
-  { name: "Products", children: ["Digital Radiography", "Industrial CT", "Microfocus X-ray", "High-Energy X-ray", "PCB X-ray", "ATE Systems"] },
-  { name: "Industries", children: ["Aerospace & Defence", "Automotive", "Electronics", "Energy"] },
-  { name: "Services", children: ["CT Inspection Services", "Industrial Electronics", "Precision Sub-Assemblies", "Preventive Maintenance", "Repair & Support"] },
-  { name: "Careers", href: "#careers" },
+  { name: "About", href: "/about-us" },
+  { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
+  { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
+  { name: "Services", href: "/services" },
+  { name: "Careers", href: "/careers" },
   { name: "Contact", href: "#contact" },
 ];
 
 const MEGA: [string, string[]][] = [
-  ["Company", ["About", "Leadership", "Clients", "Careers"]],
-  ["Products", ["Digital Radiography", "Industrial CT", "Microfocus X-ray", "High-Energy X-ray", "PCB X-ray", "ATE Systems"]],
-  ["Services", ["CT Inspection Services", "Industrial Electronics", "Precision Sub-Assemblies", "Preventive Maintenance", "Repair & Support"]],
-  ["Resources", ["Case Studies", "News", "Industries", "Downloads", "FAQ"]],
-];
-
-const SPECS = [
-  { label: "Voltage range", value: "160–225 kV" },
-  { label: "Modality", value: "DR & CT" },
-  { label: "Certification", value: "AERB type-approved" },
+  ["Company", ["About", "Recognition", "Clients", "Careers", "Contact"]],
+  ["Products", ["Products overview", "MQXC Series", "High-Energy X-Ray"]],
+  ["Industries", ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"]],
+  ["Services", ["Services overview", "CT Inspection Services"]],
 ];
 
 const LABEL: CSSProperties = { font: "var(--type-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase" };
@@ -72,13 +63,7 @@ const rise = (d: number): CSSProperties => ({ animation: `mqsRise 420ms ${EASE} 
 
 type ImageOverride = { src: string; alt: string };
 
-export default function Hero({
-  bgImage,
-  insetImage,
-}: {
-  bgImage?: ImageOverride;
-  insetImage?: ImageOverride;
-} = {}) {
+export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
   const [w, setW] = useState(1440);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -231,18 +216,6 @@ export default function Hero({
       ]
   ).map((s) => ({ position: "absolute", pointerEvents: "none", ...s }));
 
-  // ── specs ─────────────────────────────────────────────────
-  const desktopSpecPos = [
-    { left: "57.2%", top: `calc(${INSET_TOP}vh - 80px)` },
-    { left: "84.9%", top: `calc(${INSET_TOP}vh + ${IMG_H} - 90px)` },
-    { left: "57.2%", top: `calc(${INSET_TOP}vh + ${IMG_H} + 16px)` },
-  ];
-  const shownSpecs = isDesktop ? SPECS : isTablet ? SPECS : SPECS.slice(0, 1);
-  const specStyle = (i: number): CSSProperties =>
-    isDesktop
-      ? { position: "absolute", maxWidth: 280, ...desktopSpecPos[i], ...rise(220 + i * 80) }
-      : { maxWidth: 300, ...rise(220 + i * 80) };
-
   return (
     <section
       style={{
@@ -299,12 +272,10 @@ export default function Hero({
         <div key={i} style={s} />
       ))}
 
-      {/* 4 — inset (desktop) */}
-      {isDesktop && (
-        <div className="group" style={{ position: "absolute", left: `${INSET_LEFT}%`, top: `${INSET_TOP}vh`, width: `${INSET_W}%`, height: IMG_H, overflow: "hidden", ...rise(160) }}>
-          <Image src={insetImage?.src ?? "/assets/inset-operator.jpg"} alt={insetImage?.alt ?? "Technician operating an industrial inspection machine on the production floor"} fill sizes="28vw" className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.06]" unoptimized={!!insetImage?.src} />
-        </div>
-      )}
+      {/* 4 — the desktop inset photograph was removed: it was a full-colour stock
+             frame sitting inside a greyscale duotone hero. The hairline grid and
+             the spec labels that framed it stay, now reading as a rule overlay on
+             the footage. */}
 
       {/* 5 — header (fixed) */}
       <header
@@ -340,6 +311,15 @@ export default function Hero({
             {NAV.map((item) => {
               const on = openMenu === item.name;
               const hasKids = !!item.children;
+              const navStyle: CSSProperties = { ...LABEL, display: "flex", alignItems: "center", gap: 6, fontSize: 15, whiteSpace: "nowrap", color: on ? (inkHeader ? "#0A6A88" : CYAN) : inkHeader ? "#0B2A3A" : "#FFFFFF", transition: `color 200ms ${EASE}`, cursor: "pointer" };
+              // A top-level item with no children is a link, not a dropdown toggle.
+              if (!hasKids) {
+                return (
+                  <a key={item.name} href={item.href || "/"} onMouseEnter={scheduleDropClose} onMouseLeave={scheduleDropClose} style={navStyle}>
+                    <span>{item.name}</span>
+                  </a>
+                );
+              }
               return (
                 <button
                   key={item.name}
@@ -347,7 +327,6 @@ export default function Hero({
                   aria-haspopup={hasKids}
                   aria-expanded={on}
                   onClick={(e) => {
-                    if (!hasKids) return e.preventDefault();
                     setMenuLeft(toggleLeft(e));
                     setOpenMenu((v) => (v === item.name ? null : item.name));
                   }}
@@ -547,22 +526,22 @@ export default function Hero({
         <div
           style={
             isDesktop
-              ? { position: "absolute", left: gut, top: "33.3%", width: "min(700px, calc(55.97vw - 95px))", zIndex: 5 }
+              ? { position: "absolute", left: gut, top: "32%", width: "min(900px, calc(68vw - 95px))", zIndex: 5 }
               : { position: "relative", zIndex: 5, display: "flex", flexDirection: "column", flex: "1 1 auto", minHeight: 0 }
           }
         >
-          <div className="t-eyebrow" style={{ color: "#FFFFFF", ...(isPhone ? { fontSize: 11 } : {}) }}>Precision inspection since 1994</div>
-          <h1 className="t-display" style={{ color: "#FFFFFF", textWrap: "balance", margin: isPhone ? "18px 0 0" : "26px 0 0", ...(isDesktop ? { fontSize: 56 } : isPhone ? { fontSize: 40 } : {}), ...rise(60) }}>
+          <div className="t-eyebrow" style={{ color: "#FFFFFF", ...(isDesktop ? { fontSize: 13 } : isPhone ? { fontSize: 11 } : {}) }}>Precision inspection since 1994</div>
+          <h1 className="t-display" style={{ color: "#FFFFFF", textWrap: "balance", margin: isPhone ? "18px 0 0" : "26px 0 0", ...(isDesktop ? { fontSize: "clamp(56px, 4.7vw, 72px)" } : isPhone ? { fontSize: 40 } : {}), ...rise(60) }}>
             See beyond. Test beyond. Build beyond.
           </h1>
-          <p className="t-lead" style={{ margin: "24px 0 0", maxWidth: 520, color: "rgba(255,255,255,.72)", ...rise(140) }}>
+          <p className="t-lead" style={{ margin: isDesktop ? "28px 0 0" : "24px 0 0", maxWidth: isDesktop ? 640 : 520, color: "rgba(255,255,255,.72)", ...(isDesktop ? { fontSize: "clamp(19px, 1.45vw, 22px)" } : {}), ...rise(140) }}>
             Advanced non-destructive testing, automated inspection and electrical test validation for mission-critical industries.
           </p>
           <div
             style={
               isPhone
                 ? { display: "flex", flexDirection: "column", gap: 12, marginTop: 30 }
-                : { display: "flex", gap: 16, marginTop: isDesktop ? 48 : 40, flexWrap: "wrap" }
+                : { display: "flex", gap: 16, marginTop: isDesktop ? 52 : 40, flexWrap: "wrap" }
             }
           >
             <CTAButton variant="primary" href="/products" fullWidth={isPhone}>
@@ -572,35 +551,6 @@ export default function Hero({
               Request a demo
             </CTAButton>
           </div>
-
-          {isSmall && (
-            <div style={{ marginTop: isTablet ? 32 : 28, flex: "1 1 auto", minHeight: isTablet ? 380 : 190, overflow: "hidden", position: "relative" }}>
-              <Image src={insetImage?.src ?? "/assets/inset-operator.jpg"} alt={insetImage?.alt ?? "Technician operating an industrial inspection machine on the production floor"} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "50% 50%" }} unoptimized={!!insetImage?.src} />
-            </div>
-          )}
-        </div>
-
-        <div
-          style={
-            isDesktop
-              ? { display: "contents" }
-              : {
-                  position: "relative",
-                  zIndex: 5,
-                  marginTop: isTablet ? 0 : "auto",
-                  paddingTop: isTablet ? 26 : 48,
-                  display: "grid",
-                  gridTemplateColumns: isTablet ? "repeat(3, 1fr)" : "1fr",
-                  gap: isTablet ? 28 : 16,
-                }
-          }
-        >
-          {shownSpecs.map((s, i) => (
-            <div key={s.label} style={specStyle(i)}>
-              <div style={{ ...LABEL, color: "#FFFFFF" }}>{s.label}</div>
-              <div className="t-body" style={{ color: "#FFFFFF", marginTop: 8 }}>{s.value}</div>
-            </div>
-          ))}
         </div>
       </div>
     </section>

@@ -3,7 +3,6 @@ import ImageManager from "@/components/admin/ImageManager";
 
 const SLOTS = [
   { slot: "hero-bg", label: "Hero Background", desc: "Main hero background — minimum 1920×1080px, 16:9 landscape" },
-  { slot: "hero-inset", label: "Hero Inset", desc: "Operator/technician photo — minimum 668×1000px, 2:3 portrait" },
 ];
 
 export default async function AdminImagesPage() {
