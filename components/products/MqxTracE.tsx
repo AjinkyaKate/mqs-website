@@ -24,10 +24,6 @@ import Image from "next/image";
    · The 7,500x magnification figure is the CT variant's total magnification;
      the 2.5D variant reaches about 7,000x. The hero badge is qualified here
      rather than implying both, per the brief's own instruction.
-   · IMG-05, the measured PTH overlay, is supplied at only 334 x 319 px. It is
-     the image carrying the fill and void percentages, so it is the one that
-     most needs resolution. It is shown unscaled here; re-export from the
-     inspection software before go-live.
    · The 2.5D variant lists a 6-axis manipulator and the CT variant 5-axis.
      Confirm, since the CT variant would normally have equal or more axes.
    · "India's first indigenous 2.5D PCB X-ray inspection system" is a strong
@@ -37,6 +33,11 @@ import Image from "next/image";
    · Resolution here is quoted as JIMA (0.9 and 0.75 um), which is a different
      measure from the detector pixel pitch quoted on the MQXC and MQCT pages.
      Every resolution figure across the site should state its basis.
+   · GALLERY COVERAGE. The six captures MQS supplied are two PTH frames, two
+     views of one QFP and two of one board. The brief lists BGAs, QFNs, QFPs and
+     PTH as the defect types the system finds, so a QFN and a BGA close-up are
+     named in the copy but no longer shown. Worth asking for one of each; the
+     row arithmetic takes any aspect ratio, so adding two is a data change.
    ────────────────────────────────────────────────────────────── */
 
 const EASE = "cubic-bezier(.22,.61,.36,1)";
@@ -91,34 +92,41 @@ const BENEFITS_CT: [string, string, string][] = [
   ["05", "Safe, compliant operation", "Radiation safety below 1 µSv/hr at the cabinet surface."],
 ];
 
-type Shot = { src: string; w: number; h: number; label: string; note: string; alt: string; small?: boolean };
+type Shot = { src: string; w: number; h: number; label: string; note: string; alt: string };
 
 /* Justified rows, the shape a mixed-aspect set actually wants.
 
-   These six images run from 0.97 to 1.87 in aspect, so no single tile shape
-   works: a square tile left the PTH capture filling 53% of its box, with the
-   rest as dead letterbox, while the near-square packages filled 96 to 99%. The
-   grid read as ragged for a reason that had nothing to do with the content.
+   These six run from 0.81 to 1.83 in aspect, so no single tile shape works: a
+   square tile with contain would leave the PTH capture filling 55% of its box
+   while the near-square packages filled 97%. The grid would read as ragged for
+   a reason that had nothing to do with the content.
 
-   Each row now sizes its tiles' widths in proportion to their aspect ratios, so
+   Each row sizes its tiles' widths in proportion to their aspect ratios, so
    every tile in a row shares one height and the row fills the measure exactly.
    Tile aspect equals image aspect, so nothing is letterboxed and nothing is
-   cropped. It also lands every image at or below native size, worst case 0.95x,
-   where the old square grid upscaled nothing but wasted up to 47% of a tile.
+   cropped. Row 1 sums to 4.103 and row 2 to 2.877, giving 292px and 417px
+   at the 1330 shell, and every image paints at roughly a third of its native
+   width, so none is upscaled.
 
-   Row membership is chosen so that arithmetic works out AND the PTH pair stays
-   adjacent, which the brief requires: they are the same joints, first imaged
-   then measured, and the second only means anything next to the first. */
+   The images arrive as cut-outs on transparency with 7 to 23% empty margin, so
+   each is trimmed to its alpha bounding box and flattened onto #06161F, the
+   tile ground below. Untrimmed margin would put the dead space straight back.
+
+   Order pairs each subject with its companion in reading order: the two PTH
+   frames, then the two views of the same QFP, then the two of the same board.
+   The PTH pair in particular has to stay adjacent, as the brief requires: they
+   are the same joints, first imaged then measured, and the second only means
+   anything beside the first. */
 const GALLERY_ROWS: Shot[][] = [
   [
-    { src: "/assets/prod-trace-pth.jpg", w: 925, h: 494, label: "PTH solder joints", note: "Voids visible as bright inclusions inside each barrel.", alt: "X-ray image of plated through-hole solder joints showing internal voids" },
-    { src: "/assets/prod-trace-pth-measured.jpg", w: 334, h: 319, small: true, label: "The same joints, measured", note: "Fill and void percentages calculated automatically.", alt: "Annotated X-ray of PTH joints with fill and void percentages per barrel" },
-    { src: "/assets/prod-trace-qfn.jpg", w: 550, h: 526, label: "QFN die-attach voiding", note: "Large irregular voids that pass functional test.", alt: "X-ray of a QFN package showing large voids in the die attach layer" },
+    { src: "/assets/prod-trace-pth.jpg", w: 1600, h: 874, label: "PTH solder joints", note: "Voids visible as bright inclusions inside each barrel.", alt: "X-ray of a row of plated through-hole solder joints in a carrier, with internal voids visible as bright inclusions" },
+    { src: "/assets/prod-trace-pth-measured.jpg", w: 1322, h: 1069, label: "The same joints, measured", note: "Fill and void percentages calculated automatically.", alt: "Annotated X-ray of four PTH joints with measurement cylinders, outlined voids and fill and void percentages per barrel" },
+    { src: "/assets/prod-trace-qfp-voids.jpg", w: 1186, h: 1146, label: "QFP die-attach voiding", note: "Large irregular voids beneath the die, every bond wire resolved.", alt: "X-ray of a quad flat package showing bond wires and large irregular voids in the die attach layer" },
   ],
   [
-    { src: "/assets/prod-trace-qfp.jpg", w: 812, h: 814, label: "QFP package", note: "Bond wires resolved individually, void at the die centre.", alt: "X-ray of a QFP package showing bond wires, leads and an internal void" },
-    { src: "/assets/prod-trace-bga.jpg", w: 1280, h: 1043, label: "BGA solder balls", note: "Adjacent bond wires and vias captured in one frame.", alt: "High-magnification X-ray of BGA solder balls, bond wires and vias" },
-    { src: "/assets/prod-trace-board.jpg", w: 900, h: 926, label: "Full assembled board", note: "One scan covering BGA, magnetics, connectors and inner layers.", alt: "Full-board X-ray of an assembled card showing BGA, magnetics and routing" },
+    { src: "/assets/prod-trace-qfp-field.jpg", w: 1144, h: 1128, label: "The same package, wider field", note: "Neighbouring passives and the full lead frame in one exposure.", alt: "X-ray of the same quad flat package with neighbouring surface-mount passives in frame" },
+    { src: "/assets/prod-trace-board.jpg", w: 1133, h: 1073, label: "Assembled board", note: "BGA array, magnetics and connectors in a single scan.", alt: "X-ray of an assembled card showing a BGA array, magnetics and two connectors" },
+    { src: "/assets/prod-trace-board-full.jpg", w: 1088, h: 1348, label: "The same board, full field", note: "Edge connector to mounting bracket, with inner-layer routing visible.", alt: "Full-field X-ray of the same assembled card, from edge connector to mounting bracket" },
   ],
 ];
 
@@ -357,8 +365,8 @@ export default function MqxTracE() {
       <Section id="gallery" tone="navy">
         <h2 style={h2("#fff")}>Sample inspection images.</h2>
         <p className="mt-4 max-w-[64ch]" style={lead("rgba(255,255,255,.80)")}>
-          Representative captures from MQX.tracE: solder voids, fill defects and bridging on real PCB components. Select any
-          image to open it at full resolution.
+          Representative captures from MQX.tracE: solder voids, fill measurement and package-level defects on real PCB
+          assemblies. Select any image to open it at full resolution.
         </p>
         {/* The gap shows the section's own navy. The house idiom is a 1px gap over
             a hairline ground, but these are light-toned radiographs on a dark
@@ -402,11 +410,6 @@ export default function MqxTracE() {
                   <figcaption className="pt-3.5">
                     <span className="block" style={{ font: `500 15px/1.35 ${SANS}`, letterSpacing: "-.01em", color: "#fff" }}>{g.label}</span>
                     <span className="mt-1.5 block" style={{ ...body("rgba(255,255,255,.68)"), fontSize: 14 }}>{g.note}</span>
-                    {g.small && (
-                      <span className="mt-2 block" style={{ ...body("rgba(255,255,255,.42)"), fontSize: 12 }}>
-                        Supplied at 334 × 319. Re-export pending from MQS.
-                      </span>
-                    )}
                   </figcaption>
                 </figure>
               ))}
