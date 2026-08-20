@@ -223,14 +223,30 @@ function Photo({ src, alt, fit, ground, ratio, sizes }: {
 function Hero() {
   return (
     <section className="relative flex min-h-[520px] overflow-hidden lg:min-h-[600px] min-[1360px]:min-h-[640px]" style={{ background: NAVY }}>
-      <Slot caption="IMG-01 needed · hero composite of part types across sectors, 2880×1280" faint />
+      {/* The handoff's IMG-01 is a composite of part types across sectors, which
+          MQS have not supplied. This stands in with a real MQS radiograph: a BGA
+          solder ball array, unused elsewhere on the site. Under the scrim
+          (94% falling to 62%) it reads as an abstract technical ground rather
+          than as one sector's part, which suits a page that gives three
+          industries equal weight. IMG-01 stays on the request list. */}
+      <Image
+        src="/assets/ind-elec-bga.jpg"
+        alt=""
+        aria-hidden="true"
+        fill
+        priority
+        quality={90}
+        sizes="100vw"
+        className="object-cover"
+      />
       {/* left-to-right navy scrim, 94% → 86% → 62% */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{ background: "linear-gradient(90deg,rgba(11,42,58,.94) 0%,rgba(11,42,58,.86) 46%,rgba(11,42,58,.62) 100%)" }}
       />
       <div className={`relative flex w-full flex-col justify-center py-18 min-[700px]:py-24 ${SHELL}`}>
-        <p style={eyebrow(CYAN)}>Industries we serve</p>
+        {/* The handoff's "Industries we serve" eyebrow is removed at the
+            client's request; the h1 now opens the page. */}
         <h1
           className="m-0 mt-5 max-w-[20ch]"
           style={{ font: `600 var(--ind-h1)/1 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}
@@ -519,45 +535,11 @@ function Compliance() {
   );
 }
 
-/* ── 7 · closing CTA ──────────────────────────────────────── */
-
-function FinalCta() {
-  return (
-    <section style={{ background: NAVY }}>
-      <div className={`${SHELL} py-16 min-[700px]:py-[110px]`}>
-        <div className="grid grid-cols-1 items-end gap-7 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-20">
-          <div>
-            <p style={eyebrow(CYAN)}>Next step</p>
-            <h2
-              className="m-0 mt-5"
-              style={{ font: `600 var(--ind-h1)/1.08 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}
-            >
-              Not Sure Which Applies to You?
-            </h2>
-            <div className="mt-7 flex flex-wrap gap-x-7 gap-y-3" style={eyebrow("rgba(255,255,255,.72)")}>
-              <span>Part size</span>
-              <span>Material</span>
-              <span>Thickness</span>
-              <span>Defect sought</span>
-            </div>
-          </div>
-          <div>
-            <p style={lead("rgba(255,255,255,.82)")}>
-              Share the part size, material, thickness and what you are trying to find. Our application engineers will
-              recommend the right configuration — and will say so if a simpler system would do the job.
-            </p>
-            <div className="mt-7 flex flex-col gap-3.5 min-[700px]:flex-row">
-              <a href="#contact" style={btn(CYAN, NAVY)} className="hover:!bg-[#0FA6D4] max-[699px]:!w-full">Talk to an Expert</a>
-              <a href="#contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10 max-[699px]:!w-full">
-                Request a Demo
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+/* ── closing CTA ──
+   The handoff closes on a navy "Next step / Not Sure Which Applies to You?"
+   band with the four criteria and two buttons. Removed at the client's
+   request. ContactSection follows this component and carries the enquiry
+   form, so the page still ends on a call to action. */
 
 export default function IndustriesOverview() {
   return (
@@ -568,7 +550,6 @@ export default function IndustriesOverview() {
       <Also />
       <Routing />
       <Compliance />
-      <FinalCta />
     </main>
   );
 }
