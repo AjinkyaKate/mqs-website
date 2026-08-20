@@ -372,9 +372,9 @@ export default function MqxTracE() {
             a hairline ground, but these are light-toned radiographs on a dark
             band, so a light divider between two light images is invisible; the
             dark ground is the divider that works here. */}
-        <div className="mqxt-rows mt-9">
+        <div className="mqs-jrows mt-9">
           {GALLERY_ROWS.map((row, ri) => (
-            <div key={ri} className="mqxt-row">
+            <div key={ri} className="mqs-jrow mqs-jrow--cap">
               {row.map((g) => (
                 <figure
                   key={g.src}

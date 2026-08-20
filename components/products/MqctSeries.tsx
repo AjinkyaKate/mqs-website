@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────
@@ -31,9 +31,11 @@ import Image from "next/image";
      supplied? Four modules are named, which implies a cost to clarify.
    · BATTERY DATA. The cylindrical cell and anode overhang scans are
      commercially sensitive and a cell manufacturer would recognise its own
-     product. The brief is explicit that cropping the licence banner does not
-     address this. Confirm in writing before go-live; the section is
-     self-contained and can be removed by deleting RESULTS below.
+     product. The "VG Partner Demo License" banner has now been cropped from
+     both, but the brief is explicit that removing the banner does not address
+     the confidentiality question. Still needs written confirmation before
+     go-live; the section is self-contained and can be removed by deleting
+     RESULTS below.
    · Confirm the hero's reference to rocket motors can be stated publicly.
    ────────────────────────────────────────────────────────────── */
 
@@ -114,17 +116,24 @@ const MODELS: Model[] = [
   },
 ];
 
-const METROLOGY: [string, string, string, string][] = [
-  ["Wall thickness mapping", "Thickness colour-mapped across the whole part, flagging thin sections before they become leak paths.", "/assets/prod-mqct-wallthickness.jpg", "CT wall thickness analysis of an aluminium casting showing colour-mapped thickness distribution"],
-  ["Porosity analysis", "Every pore segmented, sized and located in 3D, then classified by sphericity and volume against your specification.", "/assets/prod-mqct-porosity.jpg", "CT porosity analysis of an aluminium casting with pores colour-coded by volume"],
-  ["Indication detection", "Automatic flagging of internal defects with position, volume, probability and diameter, across the full volume.", "/assets/prod-mqct-indications.jpg", "CT defect volume analysis of a cast structural bracket with indications colour-coded by volume"],
+/* Dimensions travel with each image because the analysis renders carry their
+   measurement legend at the frame edge. A fixed-aspect cover box was cutting
+   21.8% of the wall thickness map's width, which removed the entire
+   "Wall thickness [mm] 2.72 to 13.59" key, and 15.5% of the indication map's,
+   which removed its "Volume [mm³]" key. The caption promised a thickness map
+   and the page showed a green part with no key to what green meant. */
+type Analysis = { title: string; copy: string; src: string; w: number; h: number; alt: string };
+const METROLOGY: Analysis[] = [
+  { title: "Wall thickness mapping", copy: "Thickness colour-mapped across the whole part, flagging thin sections before they become leak paths.", src: "/assets/prod-mqct-wallthickness.jpg", w: 1363, h: 666, alt: "CT wall thickness analysis of an aluminium casting showing colour-mapped thickness distribution with a 2.72 to 13.59 mm scale" },
+  { title: "Porosity analysis", copy: "Every pore segmented, sized and located in 3D, then classified by sphericity and volume against your specification.", src: "/assets/prod-mqct-porosity.jpg", w: 1363, h: 818, alt: "CT porosity analysis of an aluminium casting with pores colour-coded by volume" },
+  { title: "Indication detection", copy: "Automatic flagging of internal defects with position, volume, probability and diameter, across the full volume.", src: "/assets/prod-mqct-indications.jpg", w: 1600, h: 845, alt: "CT defect volume analysis of a cast structural bracket with indications colour-coded by volume in cubic millimetres" },
 ];
 
 /* Self-contained: delete this array and the Results section to pull the
    battery datasets pending MQS confirmation. */
-const RESULTS: [string, string, string, string][] = [
-  ["Cylindrical cell", "Every winding layer resolved, so spacing, centring and deformation can be checked without opening the cell.", "/assets/prod-mqct-cell.jpg", "CT cross-section of a cylindrical lithium-ion battery cell showing internal winding layers"],
-  ["Electrode overhang", "Anode overhang measured layer by layer and colour-mapped in millimetres, a safety-critical check in cell manufacturing.", "/assets/prod-mqct-overhang.jpg", "CT measurement of anode overhang and electrode alignment in a prismatic battery cell"],
+const RESULTS: Analysis[] = [
+  { title: "Cylindrical cell", copy: "Every winding layer resolved, so spacing, centring and deformation can be checked without opening the cell.", src: "/assets/prod-mqct-cell.jpg", w: 1600, h: 854, alt: "CT cross-section of a cylindrical lithium-ion battery cell showing internal winding layers" },
+  { title: "Electrode overhang", copy: "Anode overhang measured layer by layer and colour-mapped in millimetres, a safety-critical check in cell manufacturing.", src: "/assets/prod-mqct-overhang.jpg", w: 1001, h: 547, alt: "CT measurement of anode overhang and electrode alignment in a prismatic battery cell, colour-mapped in millimetres" },
 ];
 
 type SpecTable = { title: string; colA: string; colB: string; rows: [string, string][]; note?: string };
@@ -179,6 +188,10 @@ const btnGhostDark = {
 };
 
 const SHELL = "mx-auto w-full max-w-[1330px] px-6 md:px-10 lg:px-[55px]";
+
+/* The justified rows use the house 1px hairline rather than the 10px dark gap
+   the tracE gallery wants, on both axes so the stacked view keeps the grid. */
+const JROW_HAIRLINE = { "--jrow-gap": "1px", "--jrow-row-gap": "1px" } as CSSProperties;
 
 /* Three-state dot in the existing palette: solid, half, ring. */
 function Dot({ state }: { state: 0 | 1 | 2 }) {
@@ -423,15 +436,15 @@ export default function MqctSeries() {
           MQCT systems pair with the MQS Imaging Suite and the Volume Graphics toolchain to run structural, porosity and
           metrology analyses directly on CT data, with automatic indication reporting for every defect found.
         </p>
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3" style={{ gap: 1, background: HAIR }}>
-          {METROLOGY.map(([t, d, src, alt]) => (
-            <figure key={t} className="m-0" style={{ background: WHITE }}>
-              <div className="relative aspect-[16/10]" style={{ background: INK }}>
-                <Image src={src} alt={alt} fill quality={90} sizes="(min-width:768px) 33vw, 100vw" className="object-cover" />
+        <div className="mqs-jrow mt-10" style={{ background: HAIR, ...JROW_HAIRLINE }}>
+          {METROLOGY.map((m) => (
+            <figure key={m.title} className="m-0 flex flex-col" style={{ background: WHITE, flex: `${(m.w / m.h).toFixed(4)} 1 0px` }}>
+              <div className="relative" style={{ aspectRatio: `${m.w} / ${m.h}`, background: "#000" }}>
+                <Image src={m.src} alt={m.alt} fill quality={90} sizes="(min-width:1330px) 460px, (min-width:700px) 40vw, 100vw" className="object-cover" />
               </div>
               <figcaption className="p-5">
-                <h3 style={{ ...h3(INK), fontSize: 18 }}>{t}</h3>
-                <p className="mt-2" style={{ ...body(BODY), fontSize: 15 }}>{d}</p>
+                <h3 style={{ ...h3(INK), fontSize: 18 }}>{m.title}</h3>
+                <p className="mt-2" style={{ ...body(BODY), fontSize: 15 }}>{m.copy}</p>
               </figcaption>
             </figure>
           ))}
@@ -445,15 +458,15 @@ export default function MqctSeries() {
           A sample of components inspected with the MQS Imaging Suite, spanning automotive, electronics and energy
           applications.
         </p>
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2" style={{ gap: 1, background: HAIR }}>
-          {RESULTS.map(([t, d, src, alt]) => (
-            <figure key={t} className="m-0" style={{ background: WHITE }}>
-              <div className="relative aspect-[16/10]" style={{ background: INK }}>
-                <Image src={src} alt={alt} fill quality={90} sizes="(min-width:768px) 50vw, 100vw" className="object-cover" />
+        <div className="mqs-jrow mt-10" style={{ background: HAIR, ...JROW_HAIRLINE }}>
+          {RESULTS.map((r) => (
+            <figure key={r.title} className="m-0 flex flex-col" style={{ background: WHITE, flex: `${(r.w / r.h).toFixed(4)} 1 0px` }}>
+              <div className="relative" style={{ aspectRatio: `${r.w} / ${r.h}`, background: "#000" }}>
+                <Image src={r.src} alt={r.alt} fill quality={90} sizes="(min-width:1330px) 620px, (min-width:700px) 50vw, 100vw" className="object-cover" />
               </div>
               <figcaption className="p-5 md:p-6">
-                <h3 style={{ ...h3(INK), fontSize: 19 }}>{t}</h3>
-                <p className="mt-2" style={{ ...body(BODY), fontSize: 15 }}>{d}</p>
+                <h3 style={{ ...h3(INK), fontSize: 19 }}>{r.title}</h3>
+                <p className="mt-2" style={{ ...body(BODY), fontSize: 15 }}>{r.copy}</p>
               </figcaption>
             </figure>
           ))}
