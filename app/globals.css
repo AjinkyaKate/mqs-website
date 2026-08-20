@@ -369,3 +369,13 @@ video::-webkit-media-controls-start-playback-button {
     --svc-finder-q: 19px;
   }
 }
+
+/* /industries/ chapter chip row: scrolls horizontally on small screens without
+   showing a scrollbar. Links stay keyboard reachable and the row still scrolls. */
+.mqs-chapterbar-list {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.mqs-chapterbar-list::-webkit-scrollbar {
+  display: none;
+}
