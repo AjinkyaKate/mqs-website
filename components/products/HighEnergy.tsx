@@ -360,19 +360,16 @@ export default function HighEnergy() {
         </div>
       </section>
 
-      {/* GET IN TOUCH */}
-      <section style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: PAGE }}>
-        <div className="mx-auto flex flex-wrap items-center justify-between" style={{ maxWidth: 1330, background: "#0B2A3A", padding: "clamp(40px,5vw,64px) clamp(28px,4vw,56px)", gap: 32 }}>
-          <div style={{ maxWidth: 640 }}>
-            <h2 style={{ margin: 0, font: `600 clamp(24px,2.6vw,34px)/1.15 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>Tell Us What You Need to See Inside.</h2>
-            <p style={{ margin: "14px 0 0", font: `400 16px/1.6 ${SANS}`, color: "rgba(255,255,255,.78)", textWrap: "pretty" }}>Share the part, the material and the section thickness. Our engineers will size the accelerator, the manipulator and the enclosure around it — and tell you honestly if a lower-energy system would do the job.</p>
-          </div>
-          <div className="flex flex-wrap" style={{ gap: 12 }}>
-            <a href="#contact" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: CYAN, color: "#08283A", font: `500 13px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }} className="hover:!bg-white hover:!text-[#0B2A3A]">Request a Consultation</a>
-            <a href="tel:+914023811122" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: "transparent", border: "1px solid rgba(255,255,255,.42)", color: "#fff", font: `500 13px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }} className="hover:!bg-white/10">+91 40 2381 1122</a>
-          </div>
-        </div>
-      </section>
+      {/* The closing CTA band is removed at the client's request, matching what
+          was done on the MQCT and MQX.tracE pages. ContactSection follows this
+          page and is the enquiry form itself, so the band sat directly above the
+          form it pointed at. Copy retained so it stays traceable:
+            "Tell Us What You Need to See Inside. / Share the part, the material
+             and the section thickness. Our engineers will size the accelerator,
+             the manipulator and the enclosure around it, and tell you honestly
+             if a lower-energy system would do the job." plus Request a
+            Consultation and +91 40 2381 1122. The number is still in the footer
+            and on /contact. */}
     </main>
   );
 }
