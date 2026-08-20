@@ -34,7 +34,7 @@ type NavItem = { name: string; href?: string; children?: string[]; mega?: boolea
 
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
+  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray"] },
   { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "All pages", mega: true, children: ["Company", "Products", "Industries", "Resources"] },
@@ -44,7 +44,7 @@ const NAV: NavItem[] = [
 type MobileItem = { name: string; href?: string; children?: string[] };
 const MOBILE_MENU: MobileItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
+  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray"] },
   { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
@@ -53,7 +53,7 @@ const MOBILE_MENU: MobileItem[] = [
 
 const MEGA: [string, string[]][] = [
   ["Company", ["About", "Recognition", "Clients", "Careers", "Contact"]],
-  ["Products", ["Products overview", "MQXC Series", "High-Energy X-Ray"]],
+  ["Products", ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray"]],
   ["Industries", ["Industries overview"]],
   ["Services", ["Services overview"]],
 ];

@@ -31,6 +31,8 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
     links: [
       { label: "All solutions", href: "/products" },
       { label: "MQXC Series", href: "/products/mqxc-series" },
+      { label: "MQCT Series", href: "/products/mqct-series" },
+      { label: "MQX.tracE", href: "/products/mqx-trace" },
       { label: "High-Energy X-Ray", href: "/products/high-energy-xray" },
     ],
   },
