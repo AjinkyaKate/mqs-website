@@ -1,622 +1,691 @@
 /* ──────────────────────────────────────────────────────────────
-   Services overview — /services
-   Ported from the MACHIN design system template
-   `templates/mqs-services/MqsServices.dc.html` (+ ServicesPage.jsx).
+   Services hub — /services/
+   Recreated from the design handoff "MQS Technologies — Services Overview,
+   direction 1A (Editorial Industrial)" (design project 04e8dda3), whose
+   README states the HTML is a reference prototype and the task is to rebuild
+   it in this codebase's own patterns rather than lift its CSS. So: the site's
+   own SiteHeaderFull and Footer are used instead of the reference's, and the
+   type/spacing scale lives as .svc-page custom properties in globals.css,
+   declared at the design's own breakpoints (1366 / 1024 / 640) because the
+   handoff steps those values discretely and calls them final.
 
-   Hero → three families → service finder → 01 inspection →
-   02 precision manufacturing → [proof strip] → how it works →
-   03 service & support → why PM matters → closing CTA.
+   Page order, per the handoff: hero → service families → 01 inspection →
+   02 precision manufacturing → how manufacturing works → 03 service &
+   support → service finder.
 
-   Deviations from the canvas template, all deliberate:
-   · The template's own sticky header and footer are dropped — this page
-     uses the site-wide SiteHeaderFull + Footer so every page shares one
-     navbar and one footer.
-   · The template's "Handoff annotations" block is a spec sheet for the
-     build, not page content, so it is not shipped.
-   · The proof strip is behind SHOW_PROOF_STRIP (see below).
-   · The breadcrumb (Home / Services) is removed at the client's request, even
-     though their content brief specifies it under "PAGE SETUP".
-   · The template's closing CTA ("Tell Us What You Need.") is not rendered:
-     ContactSection follows this page and already closes it, so the two stacked
-     into a double call to action. Its copy came from the client brief's FINAL
-     CTA section.
-   · The template's `bp` prop (desktop/tablet/mobile trees) becomes fluid
-     clamps + Tailwind breakpoints, matching the rest of this codebase.
-   Palette 2B + site font. Static; only Reveal is client-side.
+   TWO DELIBERATE DEPARTURES, both forced by decisions already taken:
+
+   1 · No detail-page links. The handoff is a hub routing to five service
+       detail pages, and carries roughly seventeen "View ... →" links to them.
+       Phase 1 scope is locked to a single /services/ page, so the per-service
+       links inside each section are dropped (the content they would route to
+       is on the page already), while the family asides and the finder rows
+       keep their routing role as in-page anchors. This matches what was
+       agreed for the previous build of this page.
+
+   2 · No closing CTA band. The handoff ends on a cyan "Tell us what you
+       need." band whose buttons raise a service request. On this site
+       ContactSection follows immediately and *is* the enquiry form, with a
+       real server action behind it, so the band would sit directly above the
+       form it points at. The client has already had closing CTA bands removed
+       from three pages for exactly this reason. The band's copy is kept in
+       CLOSING below so it stays traceable.
+
+   Static server component: the handoff requires no JS beyond the mobile nav
+   drawer, which SiteHeaderFull already owns.
    ────────────────────────────────────────────────────────────── */
 
-import type { CSSProperties } from "react";
-import Reveal from "./Reveal";
+import { Fragment } from "react";
+import Image from "next/image";
 
-/* Handoff, "Proof figures": the 3,500+ / 85,000+ statistics and their monthly
-   capacities are pending public-publication approval. Hold the strip out of any
-   released build until MQS clears them — then flip this to true. */
-const SHOW_PROOF_STRIP = false;
-
+const NAVY = "#0B2A3A";
+const NAVY_2 = "#0E3A52";
+const CYAN = "#16C1F3";
+const CYAN_INK = "#0A6A88";
+const PAGE = "#F4F8FA";
+const WHITE = "#FFFFFF";
+const BODY = "#41586A";
+const MUTED = "#5F7688";
+const HAIR = "#D3DFE7";
+const HAIR_DARK = "rgba(255,255,255,.16)";
+const ON_DARK = "rgba(255,255,255,.74)";
 const EASE = "cubic-bezier(.22,.61,.36,1)";
-const INK = "#0B2A3A", BODY = "#41586A", MUTED = "#5F7688";
-const HAIR = "#D3DFE7", HAIR_DARK = "rgba(255,255,255,.14)";
-const PAGE = "#F4F8FA", INSET = "#E9F0F4", WHITE = "#FFFFFF";
-const NAVY = "#0B2A3A", NAVY_2 = "#0E3A52";
-const CYAN = "#16C1F3", CYAN_L = "#0A6A88", CYAN_D = "#5AD1F7";
+
+/* Archivo (--font-display) is not used here: the handoff reserves it for the
+   wordmark, which belongs to SiteHeaderFull. */
 const SANS = "var(--font-sans)";
-const DISPLAY = "var(--font-display)";
 
-const MAXW = 1330;
-const GUT = "clamp(24px,4vw,55px)";
-const PAD_Y = "clamp(64px,7vw,120px)";
-const PAD_Y_SM = "clamp(56px,6vw,96px)";
+const INSET = "px-[var(--svc-inset)]";
 
-/* The IA in the client content doc is a /services/ hub over five detail pages:
-   /services/ct-inspection/, /services/precision-sub-assemblies/,
-   /services/industrial-electronics/, /services/preventive-maintenance/,
-   /services/repair-support/. Only CT Inspection is built; the other four resolve
-   to the matching section on this page until they land. */
-const ROUTE = {
-  ctInspection: "/services/ct-inspection",
-  subAssemblies: "#precision-manufacturing",
-  electronics: "#precision-manufacturing",
-  maintenance: "#service-support",
-  repair: "#service-support",
+/* ── shared type roles ── */
+const eyebrow = (color = CYAN_INK) => ({
+  margin: 0,
+  font: `500 11px/1 ${SANS}`,
+  letterSpacing: ".16em",
+  textTransform: "uppercase" as const,
+  color,
+});
+const label = (color = MUTED) => ({
+  margin: 0,
+  font: `500 11px/1 ${SANS}`,
+  letterSpacing: ".14em",
+  textTransform: "uppercase" as const,
+  color,
+});
+const h2Style = (color = NAVY) => ({
+  margin: 0,
+  font: `600 var(--svc-h2)/1 ${SANS}`,
+  letterSpacing: "-.03em",
+  color,
+  textWrap: "pretty" as const,
+});
+const linkStyle = (color = CYAN_INK) => ({
+  font: `600 11px/1 ${SANS}`,
+  letterSpacing: ".12em",
+  textTransform: "uppercase" as const,
+  color,
+  display: "inline-block" as const,
+  textDecoration: "none" as const,
+  transition: `color 200ms ${EASE}`,
+});
+
+/* ── content ──────────────────────────────────────────────── */
+
+const HERO = {
+  eyebrow: "Services",
+  title: "More than machines. Capability you can call on.",
+  lead: "Send us the part and we scan it. Send us the drawing and we build it. Already running an MQS system, we keep it running.",
 };
 
-/* ── image slots ──
-   Each slot names the photograph the design calls for. Where no authentic MQS
-   frame exists in /public/assets yet, `src` is left empty and the slot renders
-   a labelled placeholder rather than a stand-in that does not depict it. */
-type Slot = { src?: string; alt?: string; need: string };
+/* Family asides keep their routing role, but as in-page anchors: the handoff's
+   five detail pages are out of Phase 1 scope. */
+const FAMILIES = [
+  {
+    n: "01",
+    family: "Inspection services",
+    statement: "Send us the part.",
+    aside: "Inspection results without buying an inspection system. CT scanning, one-off or recurring.",
+    links: [["CT inspection services", "#inspection-services"]],
+  },
+  {
+    n: "02",
+    family: "Precision manufacturing",
+    statement: "Send us the drawing.",
+    aside: "Build-to-spec manufacturing for defence and industrial programmes.",
+    links: [
+      ["Precision sub-assemblies", "#precision-manufacturing"],
+      ["Industrial electronics", "#precision-manufacturing"],
+    ],
+  },
+  {
+    n: "03",
+    family: "Service & support",
+    statement: "Already running an MQS system?",
+    aside: "Lifecycle support for installed systems, from planned maintenance to breakdown response.",
+    links: [
+      ["AMC plans", "#service-support"],
+      ["Repair & breakdown support", "#service-support"],
+    ],
+  },
+] as const;
 
-const IMG: Record<string, Slot> = {
-  hero: {
-    src: "/assets/photo-dark-hero.jpg",
-    alt: "Engineer on the plant floor beside an industrial system",
-    need: "Engineer servicing an open industrial inspection system. Full-bleed, 2880×1280, no demo-license watermarks.",
-  },
-  inspection: {
-    src: "/assets/mqxc-cutaway.jpg",
-    alt: "MQS inspection cabinet with the manipulator and turntable exposed",
-    need: "CT inspection — part loading or scanned-component visualisation. 4:3 desktop / 16:10 below, 1600×1200.",
-  },
-  subAssemblies: {
-    need: "EM Guide, B3 power supply or another authentic MQS electro-mechanical assembly. 4:3, 1600×1200 minimum.",
-  },
-  electronics: {
-    need: "Authentic MQS industrial electronics: control unit, PCB integration or cabinet wiring. 4:3, 1600×1200 minimum.",
-  },
-  maintenance: {
-    src: "/assets/photo-services.jpg",
-    alt: "Engineer working on an industrial system with tooling in hand",
-    need: "Engineer performing maintenance on an MQS system, panel open, tooling in hand. 3:4 desktop / 16:9 below, 1200×1600.",
-  },
+const CT_SPECS: [string, string][] = [
+  ["X-ray", "Conventional up to 450 kV + CT"],
+  ["Detector", "High-energy digital flat panel"],
+  ["Handling", "Fully automated"],
+  ["Software", "MQS Imaging Suite"],
+  ["Facility", "Lead-shielded cabinet"],
+];
+
+const CT_CAPS = [
+  "Defect detection", "Failure analysis", "Reverse engineering",
+  "Product development", "Dimensional measurement", "Wall-thickness analysis",
+  "CAD comparison", "Casting inspection", "Weld-quality inspection",
+  "Contamination / FOD", "Material characterisation", "Metrology",
+];
+
+type MfgItem = {
+  slot: string;
+  title: string;
+  body: string;
+  caps: readonly string[];
+  image?: { src: string; alt: string };
+  /* set instead of `image` where MQS have not supplied the photograph yet */
+  need?: string;
 };
 
-/* ── shared bits ── */
-
-const h1 = (color: string): CSSProperties => ({
-  margin: 0, font: `600 clamp(30px,4vw,48px)/1.08 ${SANS}`, letterSpacing: "-.025em", color, textWrap: "pretty",
-});
-const h2 = (color: string): CSSProperties => ({
-  margin: 0, font: `600 clamp(26px,3.2vw,38px)/1.12 ${SANS}`, letterSpacing: "-.025em", color, textWrap: "pretty",
-});
-const lead = (color: string): CSSProperties => ({
-  margin: 0, font: `400 clamp(16px,1.5vw,18px)/1.6 ${SANS}`, color, textWrap: "pretty",
-});
-const bodyText = (color: string): CSSProperties => ({
-  margin: 0, font: `400 16px/1.6 ${SANS}`, color, textWrap: "pretty",
-});
-
-const btn = (bg: string, color: string, border?: string): CSSProperties => ({
-  display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10,
-  height: 52, padding: "0 26px", background: bg, color, border: border ?? "0",
-  transition: `background 200ms ${EASE},color 200ms ${EASE}`,
-});
-
-function Arrow({ size = 20, className }: { size?: number; className?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.6" strokeLinecap="square" aria-hidden="true"
-      className={className} style={{ display: "block" }}>
-      <path d="M4 12h14M12 5.5 18.5 12 12 18.5" />
-    </svg>
-  );
-}
-
-function Section({
-  id, tone = "page", padY = PAD_Y, children,
-}: {
-  id?: string; tone?: "page" | "white" | "inset" | "navy"; padY?: string; children: React.ReactNode;
-}) {
-  const bg = { page: PAGE, white: WHITE, inset: INSET, navy: NAVY }[tone];
-  return (
-    <section id={id} style={{ background: bg }}>
-      <div className="mx-auto" style={{ maxWidth: MAXW, padding: `${padY} ${GUT}` }}>{children}</div>
-    </section>
-  );
-}
-
-function Marker({ number, label, onDark = false }: { number: string; label: string; onDark?: boolean }) {
-  return (
-    <div className="flex items-center" style={{ gap: 10 }}>
-      <span className="t-eyebrow" style={{ color: onDark ? CYAN : CYAN_L, fontWeight: 600 }}>{number}</span>
-      <span aria-hidden="true" style={{ width: 18, height: 1, background: onDark ? HAIR_DARK : HAIR }} />
-      <span className="t-eyebrow" style={{ color: onDark ? "rgba(255,255,255,.74)" : MUTED }}>{label}</span>
-    </div>
-  );
-}
-
-/* Uppercase text link with a hairline underline and a nudging arrow. */
-function TextLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a href={href}
-      className="group t-button inline-flex items-center no-underline transition-colors duration-200 hover:!text-[#0B2A3A] hover:!border-[#0B2A3A]"
-      style={{ gap: 10, minHeight: 44, color: CYAN_L, borderBottom: `1px solid ${HAIR}`, width: "fit-content" }}>
-      {children}
-      <Arrow size={16} className="transition-transform duration-200 group-hover:translate-x-[3px]" />
-    </a>
-  );
-}
-
-function CapItem({ children, onDark = false }: { children: React.ReactNode; onDark?: boolean }) {
-  return (
-    <li className="flex" style={{
-      gap: 12, padding: "13px 0", borderTop: `1px solid ${onDark ? HAIR_DARK : HAIR}`,
-      font: `400 15px/1.6 ${SANS}`, color: onDark ? "rgba(255,255,255,.86)" : BODY,
-    }}>
-      <span aria-hidden="true" style={{ flex: "0 0 auto", width: 6, height: 6, marginTop: 8, background: CYAN }} />
-      {children}
-    </li>
-  );
-}
-
-/* Image slot: the photograph if one exists, otherwise a labelled placeholder
-   stating the frame the design asks for. */
-function Photo({ slot, className, style }: { slot: Slot; className?: string; style?: CSSProperties }) {
-  if (slot.src) {
-    return (
-      <div className={className} style={{ background: INSET, overflow: "hidden", ...style }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={slot.src} alt={slot.alt ?? ""} loading="lazy" decoding="async"
-          className="h-full w-full object-cover" />
-      </div>
-    );
-  }
-  return (
-    <div className={className}
-      style={{ background: INSET, border: `1px solid ${HAIR}`, display: "grid", placeItems: "center", padding: "clamp(20px,3vw,32px)", ...style }}>
-      <div className="flex flex-col items-center text-center" style={{ gap: 12, maxWidth: 320 }}>
-        <span aria-hidden="true" style={{ width: 10, height: 10, background: CYAN }} />
-        <span className="t-caption" style={{ color: CYAN_L }}>Photography pending</span>
-        <span style={{ font: `400 13px/1.55 ${SANS}`, color: MUTED }}>{slot.need}</span>
-      </div>
-    </div>
-  );
-}
-
-/* ── 1. hero ── */
-
-function Hero() {
-  return (
-    <section style={{ position: "relative", overflow: "hidden", background: NAVY, minHeight: "clamp(520px,52vw,640px)", display: "flex", alignItems: "center" }}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={IMG.hero.src} alt="" className="absolute inset-0 h-full w-full object-cover"
-        style={{ filter: "grayscale(1)", opacity: 0.3 }} />
-      <div className="absolute inset-0" style={{ background: "#12405C", mixBlendMode: "color" }} />
-      <div className="absolute inset-0" style={{ background: "linear-gradient(90deg,rgba(11,42,58,.94) 0%,rgba(11,42,58,.86) 46%,rgba(11,42,58,.62) 100%)" }} />
-      <div className="relative mx-auto w-full" style={{ maxWidth: MAXW, padding: `clamp(120px,12vw,170px) ${GUT} clamp(56px,6vw,88px)` }}>
-        <div className="flex flex-col" style={{ gap: "clamp(16px,1.8vw,22px)" }}>
-          <div className="t-eyebrow" style={{ color: CYAN_D }}>Services</div>
-          <h1 style={{ ...h1("#fff"), font: `600 clamp(34px,5vw,68px)/1.05 ${SANS}`, maxWidth: "20ch" }}>
-            More Than Machines.<br />Capability You Can Call On.
-          </h1>
-          <p style={{ ...lead("rgba(255,255,255,.82)"), maxWidth: "58ch" }}>
-            Not every requirement means buying a system. Send us the part and we will scan it. Send us the
-            drawing and we will build it. Already own an MQS system, we keep it running.
-          </p>
-          <div className="flex flex-col items-stretch sm:flex-row sm:flex-wrap sm:items-center" style={{ gap: 14, marginTop: 10 }}>
-            <a href="#contact" className="t-button hover:!bg-white hover:!text-[#0B2A3A]" style={btn(CYAN, "#08283A")}>
-              Raise a Service Request
-            </a>
-            <a href="#contact" className="t-button hover:!bg-white/20" style={btn("rgba(255,255,255,.1)", "#fff", "1px solid rgba(255,255,255,.28)")}>
-              Talk to Our Team<Arrow size={16} />
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── 2. three service families ── */
-
-const FAMILIES: [string, string, string, string][] = [
-  ["01", "Inspection Services", "Send us the part.", "#inspection-services"],
-  ["02", "Precision Manufacturing", "Send us the drawing.", "#precision-manufacturing"],
-  ["03", "Service & Support", "Keep the system running.", "#service-support"],
-];
-
-function Families() {
-  return (
-    <Section tone="white" padY={PAD_Y_SM}>
-      <Reveal>
-        <div className="grid items-end" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(420px,100%),1fr))", gap: "clamp(20px,4vw,48px)", marginBottom: "clamp(28px,3.5vw,44px)" }}>
-          <div className="flex flex-col" style={{ gap: 18 }}>
-            <div className="t-eyebrow" style={{ color: CYAN_L }}>Our services</div>
-            <h2 style={{ ...h2(INK), maxWidth: "22ch" }}>Three Ways We Support Your Operation.</h2>
-          </div>
-          <p style={{ ...lead(BODY), maxWidth: "52ch" }}>
-            Whether you need an inspection result, a build-to-spec manufacturing partner or lifecycle support
-            for an installed system, MQS routes your requirement to the right engineering team.
-          </p>
-        </div>
-        {/* 1px gaps over a hairline ground draw the dividers at any column count */}
-        <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 1, background: HAIR, borderTop: `1px solid ${HAIR}` }}>
-          {FAMILIES.map(([n, label, line, href], i) => (
-            <a key={n} href={href}
-              className={`group flex items-start justify-between no-underline transition-shadow duration-200 hover:shadow-[inset_0_3px_0_#16C1F3] ${i > 0 ? "md:pl-7" : ""}`}
-              style={{ gap: 20, background: WHITE, padding: "24px 28px 24px 0", minHeight: 44 }}>
-              <span className="flex flex-col" style={{ gap: 8, paddingRight: 8 }}>
-                <span style={{ font: `600 13px/1 ${DISPLAY}`, letterSpacing: ".08em", color: CYAN_L }}>{n}</span>
-                <span className="transition-colors duration-200 group-hover:!text-[#0A6A88]"
-                  style={{ font: `500 clamp(19px,2vw,22px)/1.25 ${SANS}`, letterSpacing: "-.01em", color: INK }}>{label}</span>
-                <span style={{ font: `400 15px/1.6 ${SANS}`, color: MUTED }}>{line}</span>
-              </span>
-              <span className="transition-transform duration-200 group-hover:translate-y-[2px] group-hover:!text-[#0A6A88]"
-                style={{ color: MUTED, marginTop: 4, transform: "rotate(90deg)" }}>
-                <Arrow size={18} />
-              </span>
-            </a>
-          ))}
-        </div>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ── 3. service finder ── */
-
-const FINDER: [string, string, string][] = [
-  ["Need results but not a system", "CT Inspection Services", ROUTE.ctInspection],
-  ["Have a drawing and need it built", "Precision Sub-Assemblies", ROUTE.subAssemblies],
-  ["Need custom control or power electronics", "Industrial Electronics", ROUTE.electronics],
-  ["Own a system and want it to stay reliable", "Preventive Maintenance Plans", ROUTE.maintenance],
-  ["Have a system that is down right now", "Repair & Breakdown Support", ROUTE.repair],
-];
-
-function ServiceFinder() {
-  return (
-    <Section tone="page" padY={PAD_Y_SM}>
-      <Reveal>
-        <div className="grid items-end" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(400px,100%),1fr))", gap: "clamp(16px,2.5vw,32px)", marginBottom: "clamp(28px,3vw,40px)" }}>
-          <h2 style={{ ...h2(INK), maxWidth: "20ch" }}>Which One Do You Need?</h2>
-          <p style={{ ...lead(BODY), maxWidth: "46ch" }}>
-            Pick the situation that matches yours. Each route goes to the engineers who handle it.
-          </p>
-        </div>
-        <div className="grid" style={{ gap: 1, background: HAIR, borderTop: `1px solid ${HAIR}`, borderBottom: `1px solid ${HAIR}` }}>
-          {FINDER.map(([situation, service, href]) => (
-            <a key={service} href={href}
-              className="group grid items-center no-underline transition-[background-color,box-shadow] duration-200 grid-cols-[1fr_auto] hover:!bg-white hover:shadow-[inset_3px_0_0_#16C1F3] md:grid-cols-[1.1fr_1fr_auto]"
-              style={{ background: PAGE, gap: "6px 16px", padding: "clamp(18px,2vw,26px) clamp(16px,2vw,24px)", minHeight: 44 }}>
-              <span className="col-start-1 md:col-auto" style={{ font: `400 15px/1.6 ${SANS}`, color: MUTED }}>{situation}</span>
-              <span className="col-start-1 transition-colors duration-200 group-hover:!text-[#0A6A88] md:col-auto"
-                style={{ font: `500 clamp(17px,1.8vw,20px)/1.3 ${SANS}`, letterSpacing: "-.01em", color: INK }}>{service}</span>
-              <span className="col-start-2 row-start-1 row-end-3 self-center transition-transform duration-200 group-hover:translate-x-[4px] group-hover:!text-[#0A6A88] md:col-auto md:row-auto"
-                style={{ color: MUTED }}>
-                <Arrow />
-              </span>
-            </a>
-          ))}
-        </div>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ── 4. inspection services ── */
-
-const CAPS = [
-  "2D, 3D and full CT inspection",
-  "Internal and external non-destructive inspection",
-  "Failure and root-cause analysis",
-  "Reverse engineering and product-development support",
-  "Dimensional measurement and CAD comparison",
-  "Wall-thickness analysis",
-  "Casting and weld inspection",
-  "Contamination and FOD screening",
-  "Material characterization and metrology",
-];
-
-const SPECS = [
-  "Conventional X-ray up to 450 kV",
-  "CT system",
-  "High-energy digital flat-panel detector",
-  "Fully automated object handling",
-  "MQS Imaging Suite",
-  "Lead-shielded cabinet",
-];
-
-function Inspection() {
-  return (
-    <Section id="inspection-services" tone="white">
-      <Reveal>
-        <div className="flex flex-col" style={{ gap: 20, marginBottom: "clamp(36px,4.5vw,56px)" }}>
-          <Marker number="01" label="Inspection Services" />
-          <h2 style={h1(INK)}>Send Us the Part.</h2>
-          <p style={{ ...lead(BODY), maxWidth: "58ch" }}>
-            For teams who need CT results before they need a CT system, or who need one-off answers that do
-            not justify capital equipment.
-          </p>
-        </div>
-        <div className="grid items-start lg:grid-cols-[1fr_1.05fr]" style={{ gap: "clamp(36px,5vw,72px)" }}>
-          <div className="flex flex-col" style={{ gap: 22 }}>
-            <h3 className="t-eyebrow" style={{ margin: 0, color: CYAN_L }}>CT Inspection Services</h3>
-            <p style={{ margin: 0, font: `600 clamp(26px,3.4vw,40px)/1.08 ${SANS}`, letterSpacing: "-.02em", color: INK }}>
-              See Inside in 3D.<br />Validate with Confidence.
-            </p>
-            <p style={{ ...lead(BODY), maxWidth: "52ch" }}>
-              Fast, non-destructive CT scanning for defect detection, reverse engineering, metrology and
-              failure analysis, on objects from microns to feet in size.
-            </p>
-            <ul className="m-0 grid list-none p-0 sm:grid-cols-2" style={{ gap: "0 40px", marginTop: 8 }}>
-              {CAPS.map((c) => <CapItem key={c}>{c}</CapItem>)}
-            </ul>
-            <div style={{ marginTop: 8 }}><TextLink href={ROUTE.ctInspection}>View CT Inspection Services</TextLink></div>
-          </div>
-          <div className="flex flex-col">
-            <Photo slot={IMG.inspection} className="aspect-[16/10] w-full lg:aspect-[4/3]" />
-            <div className="grid grid-cols-1 md:grid-cols-3"
-              style={{ gap: 1, background: HAIR, border: `1px solid ${HAIR}`, borderTop: 0 }}>
-              {SPECS.map((s) => (
-                <div key={s} className="t-caption flex items-center" style={{ gap: 10, background: PAGE, padding: "16px 18px", color: INK }}>
-                  <span aria-hidden="true" style={{ flex: "0 0 auto", width: 5, height: 5, background: CYAN }} />{s}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ── 5. precision manufacturing ── */
-
-type Mfg = { title: string; slot: Slot; body: string; caps: string[]; cta: string; href: string };
-
-const MFG: Mfg[] = [
+const MFG: MfgItem[] = [
   {
-    title: "Precision Sub-Assemblies",
-    slot: IMG.subAssemblies,
-    body: "Mission-critical electro-mechanical and electronic assemblies, built in-house and proven in defence programmes.",
-    caps: ["Electro-mechanical sub-assemblies", "Electronic modules and control units", "Indigenization and import substitution",
-      "Testing and qualification support", "Repeatable batch production", "Low-volume through series supply",
-      "Fixtures, tools and test setups"],
-    cta: "View Precision Sub-Assemblies",
-    href: ROUTE.subAssemblies,
+    slot: "Service A",
+    title: "Precision sub-assemblies.",
+    body: "Mission-critical electro-mechanical and electronic assemblies built for demanding defence and industrial applications.",
+    caps: ["Electro-mechanical assemblies", "Electronic modules", "Control units", "Indigenisation",
+      "Import substitution", "Defence-grade qualification", "Batch production", "Fixtures & tooling", "Test setups"],
+    /* The handoff ships this render as final. It is the same rotor rig that
+       carries the aerospace band on /industries/. */
+    image: { src: "/assets/ind-aero-rotor-dr.jpg", alt: "Precision sub-assembly inspection rig" },
   },
   {
-    title: "Industrial Electronics",
-    slot: IMG.electronics,
-    body: "Custom electronics and control systems for mission-critical applications, engineered for reliability, long life and repeatable performance in harsh environments.",
-    caps: ["Custom control units", "Electronic modules", "Power electronics", "Power-supply units",
-      "Wiring and harness integration", "Connectors and enclosures", "Embedded systems", "Microcontroller platforms"],
-    cta: "View Industrial Electronics",
-    href: ROUTE.electronics,
+    slot: "Service B",
+    title: "Industrial electronics.",
+    body: "Custom electronics and control systems engineered for reliability and repeatable performance in demanding environments.",
+    caps: ["Custom control units", "Electronic modules", "Power electronics", "Power supply units",
+      "Wiring", "Harnessing", "Connectors", "Enclosures", "Embedded systems", "Microcontroller platforms"],
+    /* Handoff marks this photograph as still needed from MQS. */
+    need: "Photograph · control unit / power electronics build",
   },
 ];
-
-function Precision() {
-  return (
-    <Section id="precision-manufacturing" tone="inset">
-      <Reveal>
-        <div className="flex flex-col" style={{ gap: 20, marginBottom: "clamp(32px,4vw,48px)" }}>
-          <Marker number="02" label="Precision Manufacturing" />
-          <h2 style={h1(INK)}>Send Us the Drawing.</h2>
-          <p style={{ ...lead(BODY), maxWidth: "56ch" }}>
-            Build-to-spec manufacturing for defence and industrial programmes, from low-volume critical builds
-            to series production.
-          </p>
-        </div>
-        <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(360px,100%),1fr))", gap: "clamp(24px,2.5vw,32px)" }}>
-          {MFG.map((m) => (
-            <article key={m.title}
-              className="flex flex-col transition-[transform,box-shadow] duration-[240ms] hover:-translate-y-0.5 hover:shadow-[0_2px_10px_rgba(11,42,58,.07)]"
-              style={{ background: WHITE, border: `1px solid ${HAIR}`, borderTop: `3px solid ${CYAN}`, boxShadow: "0 1px 2px rgba(11,42,58,.04)" }}>
-              <Photo slot={m.slot} className="aspect-[4/3] w-full" />
-              <div className="flex flex-1 flex-col" style={{ padding: "clamp(24px,2.6vw,36px)", gap: 16 }}>
-                <h3 style={{ margin: 0, font: `600 clamp(22px,2.2vw,26px)/1.2 ${SANS}`, letterSpacing: "-.02em", color: INK }}>{m.title}</h3>
-                <p style={bodyText(BODY)}>{m.body}</p>
-                <ul className="m-0 list-none p-0" style={{ marginTop: 4 }}>
-                  {m.caps.map((c) => <CapItem key={c}>{c}</CapItem>)}
-                </ul>
-                <div style={{ marginTop: "auto", paddingTop: 8 }}><TextLink href={m.href}>{m.cta}</TextLink></div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ── 6. proof strip (gated — see SHOW_PROOF_STRIP) ── */
 
 const PROOF: [string, string, string][] = [
-  ["3,500+", "Missile control sections supplied", "100 units / month"],
-  ["85,000+", "Piezoelectric generators supplied", "5,000 units / month"],
+  ["3,500+", "Missile control sections supplied", "Capacity · 100 units / month"],
+  ["85,000+", "Piezo electric generators supplied", "Capacity · 5,000 units / month"],
 ];
 
-function Proof() {
-  return (
-    <Section tone="navy" padY={PAD_Y_SM}>
-      <div className="grid md:grid-cols-2" style={{ gap: 40 }}>
-        {PROOF.map(([figure, label, rate], i) => (
-          <div key={figure} className={i === 1 ? "md:border-l md:pl-14" : "md:pr-14"}
-            style={i === 1 ? { borderColor: HAIR_DARK } : undefined}>
-            <div style={{ font: `600 clamp(52px,7vw,88px)/1 ${DISPLAY}`, letterSpacing: "-.03em", color: "#fff" }}>{figure}</div>
-            <p style={{ ...lead("rgba(255,255,255,.82)"), margin: "16px 0 0", maxWidth: "26ch" }}>{label}</p>
-            <p className="t-eyebrow" style={{ margin: "10px 0 0", color: CYAN }}>{rate}</p>
-          </div>
-        ))}
-      </div>
-    </Section>
-  );
-}
-
-/* ── 7. how it works ── */
-
 const STEPS: [string, string][] = [
-  ["01", "Share the drawing, BOM or requirement"],
-  ["02", "Design-for-manufacture review and process plan"],
+  ["01", "Share drawing, BOM or requirement"],
+  ["02", "Design-for-manufacture review and process planning"],
   ["03", "Prototype or pilot build and validation"],
   ["04", "Series production, inspection and documentation"],
 ];
 
-function HowItWorks() {
+const SUPPORT = [
+  {
+    slot: "Service A",
+    title: "Preventive maintenance plans.",
+    body: "Maximise uptime, protect performance, extend system life.",
+    caps: ["Scheduled maintenance", "Safety & compliance checks", "Interlock & shielding inspection",
+      "Performance verification", "Calibration support", "Software health checks", "Remote support", "Visit reports"],
+  },
+  {
+    slot: "Service B",
+    title: "Repair & breakdown support.",
+    body: "Fast response, expert diagnostics, reliable restoration of uptime.",
+    caps: ["Remote troubleshooting", "On-site breakdown support", "Root-cause analysis",
+      "Electrical & mechanical repair", "Motion & imaging subsystems", "Control-system repair", "Calibration after repair"],
+  },
+] as const;
+
+const BENEFITS: [string, string][] = [
+  ["Less downtime", "Fewer production interruptions"],
+  ["Consistent image quality", "Stable inspection outcomes"],
+  ["Longer equipment life", "Better return on capital"],
+  ["Audit readiness", "Documented service history"],
+];
+
+const FINDER: [string, string, string][] = [
+  ["I need inspection results but don't need to buy a machine.", "CT inspection services", "#inspection-services"],
+  ["I have a drawing and need the component manufactured.", "Precision sub-assemblies", "#precision-manufacturing"],
+  ["I need custom control or power electronics.", "Industrial electronics", "#precision-manufacturing"],
+  ["I own an MQS system and want to keep it reliable.", "Preventive maintenance", "#service-support"],
+  ["My system is down right now.", "Repair & breakdown support", "#service-support"],
+];
+
+/* Not rendered: ContactSection follows this page and is the service-request
+   form itself. Kept so the handoff's closing copy stays traceable. */
+export const CLOSING = {
+  title: "Tell us what you need.",
+  body: "Whether it is a part to scan, an assembly to build, or a system that has stopped, we route your request to the right engineer.",
+  actions: ["Raise a service request", "Call the service team"],
+};
+
+/* ── pieces ───────────────────────────────────────────────── */
+
+function Btn({ href, children, variant }: { href: string; children: React.ReactNode; variant: "primary" | "outline" }) {
+  const base = {
+    display: "inline-flex" as const,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
+    height: 48,
+    padding: "0 26px",
+    font: `600 11px/1 ${SANS}`,
+    letterSpacing: ".12em",
+    textTransform: "uppercase" as const,
+    textDecoration: "none" as const,
+    transition: `background 200ms ${EASE}, color 200ms ${EASE}`,
+  };
+  const skin =
+    variant === "primary"
+      ? { background: CYAN, color: NAVY }
+      : { background: "transparent", color: "#fff", boxShadow: `inset 0 0 0 1px ${HAIR_DARK}` };
   return (
-    <Section tone="white">
-      <Reveal>
-        <div className="flex flex-col" style={{ gap: 18, marginBottom: "clamp(36px,4.5vw,56px)" }}>
-          <div className="t-eyebrow" style={{ color: CYAN_L }}>How it works</div>
-          <h2 style={h2(INK)}>From Requirement to Repeatable Production.</h2>
-        </div>
-        <ol className="m-0 grid list-none p-0" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(220px,100%),1fr))", gap: "clamp(20px,2.5vw,32px)" }}>
-          {STEPS.map(([n, t]) => (
-            <li key={n} style={{ position: "relative", borderTop: `1px solid ${HAIR}`, paddingTop: 20 }}>
-              <span aria-hidden="true" style={{ position: "absolute", top: -1, left: 0, width: 32, height: 3, background: CYAN }} />
-              <div style={{ font: `600 14px/1 ${DISPLAY}`, letterSpacing: ".06em", color: CYAN_L, marginBottom: 14 }}>{n}</div>
-              <p style={{ margin: 0, font: `500 clamp(16px,1.6vw,18px)/1.45 ${SANS}`, color: INK, textWrap: "pretty" }}>{t}</p>
-            </li>
-          ))}
-        </ol>
-      </Reveal>
-    </Section>
+    <a
+      href={href}
+      style={{ ...base, ...skin }}
+      className={`max-[639px]:h-[52px] max-[639px]:w-full ${variant === "primary" ? "hover:!bg-[#0FA6D4]" : "hover:!bg-white/10"}`}
+    >
+      {children}
+    </a>
   );
 }
 
-/* ── 8. service & support ── */
-
-type Panel = { title: string; lead: string; intro: string; items: string[]; cta: string; href: string; dark?: boolean };
-
-const SUPPORT: Panel[] = [
-  {
-    title: "Preventive Maintenance Plans (AMC)",
-    lead: "Maximize uptime. Protect performance. Extend system life.",
-    intro: "An Annual Maintenance Contract shifts customers from waiting for breakdowns to scheduled health checks, calibration and safety verification.",
-    items: ["Scheduled preventive-maintenance visits", "Safety and compliance checks",
-      "Interlock, shielding and warning-system checks", "Performance verification", "Calibration support",
-      "MIS and workflow health checks", "Remote support and troubleshooting", "Traceable service reports"],
-    cta: "View AMC Plans",
-    href: ROUTE.maintenance,
-  },
-  {
-    title: "Repair & Breakdown Support",
-    lead: "Fast response. Expert diagnostics. Reliable restoration of uptime.",
-    intro: "When a system is down, every minute affects production, dispatch and quality confidence.",
-    items: ["Remote troubleshooting and first response", "On-site diagnosis and repair", "Root-cause analysis",
-      "Electrical subsystem repair", "Mechanical and motion-system repair", "Imaging and control-system repair",
-      "Post-repair calibration", "Performance verification", "Service report with recommendations"],
-    cta: "View Repair & Breakdown Support",
-    href: ROUTE.repair,
-    dark: true,
-  },
-];
-
-function SupportPanel({ panel }: { panel: Panel }) {
-  const dark = !!panel.dark;
+/* Slash-separated capability run. The handoff tints the separators, not the
+   items, so they are rendered as their own elements rather than styled by
+   nth-child. */
+function TagList({ items, onDark = false }: { items: readonly string[]; onDark?: boolean }) {
   return (
-    <div className={dark ? "" : "transition-shadow duration-[240ms] hover:shadow-[0_2px_10px_rgba(11,42,58,.07)]"}
-      style={{
-        background: dark ? NAVY_2 : WHITE,
-        border: `1px solid ${dark ? NAVY_2 : HAIR}`,
-        borderLeft: `3px solid ${CYAN}`,
-        padding: "clamp(24px,2.6vw,32px)",
-        display: "flex", flexDirection: "column", gap: 16,
-      }}>
-      <h3 style={{ margin: 0, font: `500 clamp(20px,2.2vw,24px)/1.25 ${SANS}`, letterSpacing: "-.015em", color: dark ? "#fff" : INK }}>{panel.title}</h3>
-      <p style={{ margin: 0, font: `500 clamp(17px,1.7vw,19px)/1.35 ${SANS}`, letterSpacing: "-.01em", color: dark ? CYAN_D : CYAN_L }}>{panel.lead}</p>
-      <p style={bodyText(dark ? "rgba(255,255,255,.8)" : BODY)}>{panel.intro}</p>
-      <ul className="m-0 list-none p-0">
-        {panel.items.map((i) => <CapItem key={i} onDark={dark}>{i}</CapItem>)}
-      </ul>
-      <div style={{ marginTop: "auto", paddingTop: 8 }}>
-        {dark ? (
-          <a href={panel.href} className="t-button w-full sm:w-auto hover:!bg-white hover:!text-[#0B2A3A]" style={{ ...btn(CYAN, "#08283A"), height: 48 }}>
-            {panel.cta}<Arrow size={16} />
-          </a>
-        ) : (
-          <TextLink href={panel.href}>{panel.cta}</TextLink>
-        )}
-      </div>
+    <div
+      className="flex flex-wrap max-[639px]:gap-x-3 max-[639px]:gap-y-1.5"
+      style={{ gap: "8px 20px", font: `400 14px/1.4 ${SANS}`, color: onDark ? ON_DARK : BODY, marginBottom: 28 }}
+    >
+      {items.map((it, i) => (
+        <Fragment key={it}>
+          {i > 0 && <span style={{ color: onDark ? "rgba(255,255,255,.4)" : HAIR }}>/</span>}
+          <span className="max-[639px]:text-[13px]">{it}</span>
+        </Fragment>
+      ))}
     </div>
   );
 }
 
-function SupportSection() {
+/* The handoff's labelled placeholder: navy-2 ground, a 24px inset hairline and
+   a caption naming the shot it needs. Decorative until real photography lands. */
+function Placeholder({ caption, className, style }: { caption: string; className?: string; style?: React.CSSProperties }) {
   return (
-    <Section id="service-support" tone="page">
-      <Reveal>
-        <div className="flex flex-col" style={{ gap: 20, marginBottom: "clamp(32px,4vw,48px)" }}>
-          <Marker number="03" label="Service & Support" />
-          <h2 style={h1(INK)}>Already Running an MQS System?</h2>
-          <p style={{ ...lead(BODY), maxWidth: "58ch" }}>
-            Lifecycle support for installed systems: planned maintenance to keep them running, and breakdown
-            response when they are not.
-          </p>
+    <div className={`relative flex items-center justify-center overflow-hidden ${className ?? ""}`} style={{ background: NAVY_2, ...style }}>
+      <div className="pointer-events-none absolute inset-6" style={{ border: "1px solid rgba(255,255,255,.12)" }} />
+      <p
+        className="relative m-auto max-w-[380px] p-8 text-center max-[639px]:text-left"
+        style={{ font: `500 11px/1.7 ${SANS}`, letterSpacing: ".16em", textTransform: "uppercase", color: "rgba(255,255,255,.45)" }}
+      >
+        {caption}
+      </p>
+    </div>
+  );
+}
+
+/* Section head: statement left, supporting paragraph right. */
+function SecHead({ n, family, title, lead, onDark = false, className, style }: {
+  n: string; family: string; title: string; lead: string; onDark?: boolean; className?: string; style?: React.CSSProperties;
+}) {
+  return (
+    <div
+      className={`grid items-end gap-20 max-[1365px]:gap-14 max-[1023px]:grid-cols-1 max-[1023px]:items-start max-[1023px]:gap-6 lg:grid-cols-[1fr_480px] max-[1365px]:lg:grid-cols-[1fr_400px] ${INSET} ${className ?? ""}`}
+      style={style}
+    >
+      <div>
+        <p style={{ ...eyebrow(onDark ? CYAN : CYAN_INK), marginBottom: 22 }}>{`${n} · ${family}`}</p>
+        <h2 style={h2Style(onDark ? "#fff" : NAVY)}>{title}</h2>
+      </div>
+      <p style={{ margin: 0, font: `400 17px/1.6 ${SANS}`, color: onDark ? ON_DARK : BODY, textWrap: "pretty" }}>{lead}</p>
+    </div>
+  );
+}
+
+/* ── 1 · hero ─────────────────────────────────────────────── */
+
+function Hero() {
+  return (
+    <section className="relative flex min-h-[660px] max-[1023px]:min-h-[520px] max-[639px]:min-h-0" style={{ background: NAVY_2 }}>
+      {/* Handoff calls for an engineer servicing an open CT system. MQS have not
+          supplied that shot, and every unused candidate wide enough for a hero is
+          a CGI render or a boardroom photograph. This is a different frame cut
+          from the same 7008x4672 original that feeds the /about-us hero: a
+          tighter crop on the machine bay, so the two pages do not open on the
+          same composition. The specified photograph is still on the request
+          list. */}
+      <Image
+        src="/assets/svc-hero-ct-bay.jpg"
+        alt="MQS engineer at an inspection system in the Hyderabad facility"
+        fill
+        priority
+        quality={90}
+        sizes="100vw"
+        className="object-cover"
+      />
+      {/* left-to-right scrim on desktop and tablet, top-to-bottom on mobile */}
+      <div className="absolute inset-0 max-[639px]:hidden" style={{ background: "linear-gradient(90deg,rgba(11,42,58,.92) 0%,rgba(11,42,58,.74) 45%,rgba(11,42,58,.1) 100%)" }} />
+      <div className="absolute inset-0 hidden max-[639px]:block" style={{ background: "linear-gradient(180deg,rgba(11,42,58,.35) 0%,rgba(11,42,58,.9) 55%)" }} />
+
+      <div className={`relative z-[2] w-full self-end pb-[72px] pt-[120px] max-[639px]:pb-10 max-[639px]:pt-[200px] ${INSET}`}>
+        <p style={{ ...eyebrow(CYAN), marginBottom: 26 }}>{HERO.eyebrow}</p>
+        <h1
+          className="max-w-[920px]"
+          style={{ margin: 0, font: `600 var(--svc-h1)/.98 ${SANS}`, letterSpacing: "-.03em", color: "#fff", textWrap: "pretty" }}
+        >
+          {HERO.title}
+        </h1>
+        <p
+          className="max-w-[600px] max-[1023px]:max-w-none"
+          style={{ margin: "26px 0 0", font: `400 var(--svc-lead)/1.6 ${SANS}`, color: "rgba(255,255,255,.78)", textWrap: "pretty" }}
+        >
+          {HERO.lead}
+        </p>
+        <div className="mt-9 flex flex-wrap gap-3.5 max-[639px]:mt-7 max-[639px]:flex-col max-[639px]:gap-2.5">
+          <Btn href="#contact" variant="primary">Raise a service request</Btn>
+          <Btn href="#contact" variant="outline">Talk to our team</Btn>
         </div>
-        <div className="grid items-start lg:grid-cols-[1fr_1.15fr]" style={{ gap: "clamp(28px,3.5vw,48px)" }}>
-          <Photo slot={IMG.maintenance} className="aspect-[16/9] w-full lg:sticky lg:top-[100px] lg:aspect-[3/4] lg:max-h-[620px]" />
-          <div className="grid" style={{ gridTemplateColumns: "1fr", gap: "clamp(20px,2vw,24px)" }}>
-            {SUPPORT.map((p) => <SupportPanel key={p.title} panel={p} />)}
+      </div>
+    </section>
+  );
+}
+
+/* ── 2 · service families ─────────────────────────────────── */
+
+function Families() {
+  return (
+    <section className={INSET} style={{ background: PAGE }} aria-label="Service families">
+      {FAMILIES.map((f, i) => (
+        <div
+          key={f.n}
+          className="grid items-start gap-12 py-16 max-[1023px]:grid-cols-[88px_1fr] max-[1023px]:gap-x-7 max-[1023px]:gap-y-6 max-[1023px]:py-11 max-[639px]:grid-cols-[56px_1fr] max-[639px]:gap-4 max-[639px]:py-8 lg:grid-cols-[200px_1fr_300px]"
+          style={{ borderBottom: i === FAMILIES.length - 1 ? 0 : `1px solid ${HAIR}` }}
+        >
+          <div style={{ font: `600 var(--svc-fam)/.8 ${SANS}`, letterSpacing: "-.04em", color: HAIR }}>{f.n}</div>
+          <div>
+            <p style={{ ...eyebrow(), marginBottom: 16 }}>{f.family}</p>
+            <h3 style={{ margin: 0, font: `600 var(--svc-h3)/1.02 ${SANS}`, letterSpacing: "-.03em", color: NAVY, textWrap: "pretty" }}>
+              {f.statement}
+            </h3>
+          </div>
+          {/* on tablet the aside drops under the statement, in column 2 */}
+          <div className="max-[1023px]:col-start-2" style={{ font: `400 16px/1.6 ${SANS}`, color: BODY }}>
+            <span className="max-[639px]:text-[15px]">{f.aside}</span>
+            <div className="flex flex-col gap-2" style={{ marginTop: 18 }}>
+              {f.links.map(([text, href]) => (
+                <a key={text} href={href} style={linkStyle()} className="hover:!text-[#0B2A3A]">
+                  {text} →
+                </a>
+              ))}
+            </div>
           </div>
         </div>
-      </Reveal>
-    </Section>
+      ))}
+    </section>
   );
 }
 
-/* ── 9. why preventive maintenance matters ── */
+/* ── 3 · 01 inspection services ───────────────────────────── */
 
-const BENEFITS: [string, string, string][] = [
-  ["01", "Less Downtime", "Fewer production interruptions"],
-  ["02", "Consistent Image Quality", "Stable inspection outcomes"],
-  ["03", "Longer Equipment Life", "Better return on capital investment"],
-  ["04", "Audit Readiness", "Documented service history"],
-];
-
-function Benefits() {
+function Inspection() {
   return (
-    <Section tone="white" padY={PAD_Y_SM}>
-      <Reveal>
-        <h2 style={{ ...h2(INK), marginBottom: "clamp(32px,4vw,48px)", maxWidth: "28ch" }}>Why Preventive Maintenance Matters</h2>
-        <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(240px,100%),1fr))", gap: "clamp(24px,2.5vw,32px)" }}>
-          {BENEFITS.map(([n, t, b]) => (
-            <div key={n} style={{ borderTop: `1px solid ${HAIR}`, paddingTop: 20 }}>
-              <div style={{ font: `600 13px/1 ${DISPLAY}`, letterSpacing: ".08em", color: CYAN_L, marginBottom: 14 }}>{n}</div>
-              <h3 style={{ margin: "0 0 10px", font: `500 19px/1.3 ${SANS}`, letterSpacing: "-.01em", color: INK }}>{t}</h3>
-              <p style={{ margin: 0, font: `400 15px/1.6 ${SANS}`, color: MUTED, textWrap: "pretty" }}>{b}</p>
-            </div>
-          ))}
+    <section
+      id="inspection-services"
+      className="scroll-mt-[80px] pt-[var(--svc-sec-y)] md:scroll-mt-[92px] lg:scroll-mt-[96px]"
+      style={{ background: WHITE }}
+      aria-label="Inspection services"
+    >
+      <SecHead
+        n="01"
+        family="Inspection services"
+        title="See inside in 3D. Validate with confidence."
+        lead="For teams who need CT results before they need a CT system, or who require one-off inspection without capital investment."
+        className="mb-16 max-[639px]:mb-8"
+      />
+
+      <div className="grid lg:grid-cols-[1fr_420px] max-[1365px]:lg:grid-cols-[1fr_380px] max-[1023px]:grid-cols-1">
+        <div className="relative min-h-[620px] max-[1023px]:min-h-[420px] max-[639px]:min-h-[300px]" style={{ background: NAVY }}>
+          <Image
+            src="/assets/svc-ct-voids.jpg"
+            alt="CT analysis showing internal voids in a plated through-hole array"
+            fill
+            quality={90}
+            sizes="(min-width:1024px) 70vw, 100vw"
+            className="object-cover"
+          />
         </div>
-      </Reveal>
-    </Section>
+        {/* Content is vertically centred rather than top-aligned. The handoff
+            closed this panel with a "View CT inspection services" link; with
+            that gone (no detail page in Phase 1) top alignment left a band of
+            empty navy under the spec rows. */}
+        <div
+          className="flex flex-col justify-center pb-14 pl-12 pr-[var(--svc-inset)] pt-14 max-[1023px]:pb-10 max-[1023px]:pl-[var(--svc-inset)] max-[1023px]:pt-10 max-[639px]:pb-8 max-[639px]:pt-8"
+          style={{ background: NAVY, color: "#fff" }}
+        >
+          <p style={{ ...eyebrow(CYAN), marginBottom: 28 }}>CT analysis output</p>
+          <p style={{ margin: "0 0 36px", font: `400 15px/1.6 ${SANS}`, color: ON_DARK, textWrap: "pretty" }}>
+            Internal void and defect indication in a plated through-hole array, as a 3D volume, sectioned and measured.
+          </p>
+          <dl className="m-0" style={{ borderTop: `1px solid ${HAIR_DARK}` }}>
+            {CT_SPECS.map(([k, v]) => (
+              <div
+                key={k}
+                className="flex justify-between gap-6 py-3.5 max-[639px]:gap-3 max-[639px]:py-[11px]"
+                style={{ borderBottom: `1px solid ${HAIR_DARK}`, font: `500 11px/1.4 ${SANS}`, letterSpacing: ".1em", textTransform: "uppercase" }}
+              >
+                <dt className="m-0 max-[639px]:text-[10px]" style={{ color: "rgba(255,255,255,.56)" }}>{k}</dt>
+                <dd className="m-0 text-right max-[639px]:text-[10px]">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+
+      <div className={`grid gap-12 pb-[var(--svc-sec-y)] pt-[72px] max-[1023px]:grid-cols-1 max-[1023px]:gap-6 max-[639px]:pt-10 lg:grid-cols-[200px_1fr] ${INSET}`}>
+        <p style={label()}>
+          CT scanning
+          <br />
+          supports
+        </p>
+        <ul className="m-0 grid list-none grid-cols-3 p-0 max-[1023px]:grid-cols-2 max-[639px]:grid-cols-1" style={{ columnGap: 48 }}>
+          {CT_CAPS.map((c) => (
+            <li key={c} className="py-4 max-[639px]:py-3 max-[639px]:text-[15px]" style={{ font: `400 16px/1.4 ${SANS}`, color: NAVY, borderTop: `1px solid ${HAIR}` }}>
+              {c}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
 
-/* ── page ── */
+/* ── 4 · 02 precision manufacturing ───────────────────────── */
+
+function Manufacturing() {
+  return (
+    <section
+      id="precision-manufacturing"
+      className="scroll-mt-[80px] pt-[var(--svc-sec-y)] md:scroll-mt-[92px] lg:scroll-mt-[96px]"
+      style={{ background: PAGE }}
+      aria-label="Precision manufacturing"
+    >
+      <SecHead
+        n="02"
+        family="Precision manufacturing"
+        title="Send us the drawing."
+        lead="Build-to-spec manufacturing for defence and industrial programmes, from low-volume critical builds to repeatable series production."
+        className="pb-[72px] max-[639px]:pb-8"
+        style={{ borderBottom: `1px solid ${HAIR}` }}
+      />
+
+      <div className="mx-[var(--svc-inset)] grid grid-cols-2 max-[1023px]:grid-cols-1" style={{ borderBottom: `1px solid ${HAIR}` }}>
+        {MFG.map((m, i) => (
+          <div
+            key={m.title}
+            className={
+              i === 0
+                ? "pb-16 pr-14 pt-14 max-[1023px]:px-0 max-[1023px]:pb-11 max-[1023px]:pt-0"
+                : "pb-16 pl-14 pt-14 max-[1023px]:px-0 max-[1023px]:py-11"
+            }
+            style={
+              i === 0
+                ? { borderRight: `1px solid ${HAIR}` }
+                : undefined
+            }
+          >
+            {m.image ? (
+              <div className="mb-9 flex h-[300px] items-center justify-center overflow-hidden max-[639px]:mb-6 max-[639px]:h-[200px]" style={{ background: WHITE }}>
+                <Image
+                  src={m.image.src}
+                  alt={m.image.alt}
+                  width={726}
+                  height={810}
+                  quality={90}
+                  sizes="(min-width:1024px) 50vw, 100vw"
+                  className="max-h-[88%] max-w-[82%] object-contain"
+                  style={{ width: "auto", height: "auto" }}
+                />
+              </div>
+            ) : (
+              <Placeholder caption={m.need ?? "Photograph needed"} className="mb-9 h-[300px] max-[639px]:mb-6 max-[639px]:h-[200px]" />
+            )}
+            <p style={label()}>{m.slot}</p>
+            <h3
+              className="max-[639px]:!text-[24px]"
+              style={{ margin: "14px 0 16px", font: `600 var(--svc-service-h3)/1.08 ${SANS}`, letterSpacing: "-.025em", color: NAVY }}
+            >
+              {m.title}
+            </h3>
+            <p className="max-w-[520px] max-[1023px]:max-w-none" style={{ margin: "0 0 24px", font: `400 16px/1.6 ${SANS}`, color: BODY, textWrap: "pretty" }}>
+              {m.body}
+            </p>
+            <TagList items={m.caps} />
+          </div>
+        ))}
+      </div>
+
+      {/* Proof numerals stay large and uncontained at every breakpoint: the
+          handoff calls them the credibility of the page. */}
+      <div className={`grid grid-cols-2 pb-[var(--svc-sec-y)] pt-20 max-[1023px]:grid-cols-1 max-[1023px]:gap-10 max-[1023px]:pt-14 ${INSET}`}>
+        {PROOF.map(([num, cap, cap2], i) => (
+          <div
+            key={num}
+            className={i === 0 ? "pr-14 max-[1023px]:pb-10 max-[1023px]:pr-0" : "pl-14 max-[1023px]:pl-0"}
+            style={i === 0 ? { borderRight: `1px solid ${HAIR}` } : undefined}
+          >
+            <div className="max-[639px]:!tracking-[-.03em]" style={{ font: `600 var(--svc-stat)/.85 ${SANS}`, letterSpacing: "-.045em", color: NAVY }}>
+              {num}
+            </div>
+            <div className="max-[639px]:!text-[17px]" style={{ margin: "12px 0 0", font: `600 20px/1.3 ${SANS}`, color: NAVY }}>{cap}</div>
+            <p style={{ ...label(), marginTop: 16 }}>{cap2}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ── 5 · how manufacturing works ──────────────────────────── */
+
+function Process() {
+  return (
+    <section className={`py-[104px] max-[639px]:py-[var(--svc-sec-y)] ${INSET}`} style={{ background: WHITE }} aria-label="How manufacturing works">
+      <h2 className="mb-16 max-[639px]:mb-8" style={{ margin: 0, font: `600 var(--svc-h3)/1.05 ${SANS}`, letterSpacing: "-.03em", color: NAVY, textWrap: "pretty" }}>
+        From requirement to series production.
+      </h2>
+      <div
+        className="grid grid-cols-4 gap-10 pt-7 max-[1023px]:grid-cols-2 max-[1023px]:gap-8 max-[639px]:grid-cols-1 max-[639px]:gap-0 max-[639px]:border-t-0 max-[639px]:pt-0"
+        style={{ borderTop: `1px solid ${HAIR}` }}
+      >
+        {STEPS.map(([n, text]) => (
+          <div key={n} className="max-[639px]:border-t max-[639px]:border-[#D3DFE7] max-[639px]:py-5">
+            <div className="mb-5 max-[639px]:mb-2" style={{ font: `600 15px/1 ${SANS}`, letterSpacing: ".06em", color: CYAN }}>{n}</div>
+            <p className="max-[639px]:!text-[16px]" style={{ margin: 0, font: `400 18px/1.45 ${SANS}`, color: NAVY, textWrap: "pretty" }}>{text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ── 6 · 03 service & support ─────────────────────────────── */
+
+function Support() {
+  return (
+    <section
+      id="service-support"
+      className="scroll-mt-[80px] pt-[var(--svc-sec-y)] md:scroll-mt-[92px] lg:scroll-mt-[96px]"
+      style={{ background: NAVY, color: "#fff" }}
+      aria-label="Service and support"
+    >
+      <SecHead
+        n="03"
+        family="Service & support"
+        title="Already running an MQS system?"
+        lead="Lifecycle support for installed systems, from planned preventive maintenance to breakdown response."
+        onDark
+        className="mb-16 max-[639px]:mb-8"
+      />
+
+      {/* Handoff asks for an engineer electrical-testing an installed system
+          with a multimeter, which is exactly what this supplied frame shows. */}
+      <div className="relative h-[420px] max-[1023px]:h-[320px] max-[639px]:h-[240px]" style={{ background: NAVY_2 }}>
+        <Image
+          src="/assets/mqs-multimeter-service.jpg"
+          alt="MQS engineer performing electrical testing on a system's control electronics with a digital multimeter"
+          fill
+          quality={90}
+          sizes="100vw"
+          className="object-cover object-[50%_25%]"
+        />
+      </div>
+
+      <div className={`grid grid-cols-2 max-[1023px]:grid-cols-1 ${INSET}`}>
+        {SUPPORT.map((s, i) => (
+          <div
+            key={s.title}
+            className={
+              i === 0
+                ? "pb-[72px] pr-14 pt-16 max-[1023px]:px-0 max-[1023px]:py-11"
+                : "pb-[72px] pl-14 pt-16 max-[1023px]:px-0 max-[1023px]:py-11"
+            }
+            style={i === 0 ? { borderRight: `1px solid ${HAIR_DARK}` } : undefined}
+          >
+            <p style={label("rgba(255,255,255,.56)")}>{s.slot}</p>
+            <h3
+              className="max-[639px]:!text-[24px]"
+              style={{ margin: "14px 0", font: `600 var(--svc-support-h3)/1.1 ${SANS}`, letterSpacing: "-.025em", color: "#fff" }}
+            >
+              {s.title}
+            </h3>
+            <p style={{ margin: "0 0 24px", font: `400 16px/1.6 ${SANS}`, color: ON_DARK, textWrap: "pretty" }}>{s.body}</p>
+            <TagList items={s.caps} onDark />
+          </div>
+        ))}
+      </div>
+
+      <div
+        className={`grid grid-cols-4 gap-10 pb-[104px] pt-7 max-[1023px]:grid-cols-2 max-[1023px]:gap-7 max-[1023px]:pb-20 max-[639px]:grid-cols-1 max-[639px]:gap-5 max-[639px]:pb-16 ${INSET}`}
+        style={{ borderTop: `1px solid ${HAIR_DARK}` }}
+      >
+        {BENEFITS.map(([head, detail]) => (
+          <div key={head}>
+            <b className="block" style={{ font: `600 18px/1.3 ${SANS}`, marginBottom: 8, color: "#fff" }}>{head}</b>
+            <span style={{ font: `400 14px/1.5 ${SANS}`, color: "rgba(255,255,255,.6)" }}>{detail}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ── 7 · service finder ───────────────────────────────────── */
+
+function Finder() {
+  return (
+    <section className={`py-[var(--svc-sec-y)] ${INSET}`} style={{ background: PAGE }} aria-label="Service finder">
+      <div className="mb-14 grid items-end gap-20 max-[1365px]:gap-14 max-[1023px]:grid-cols-1 max-[1023px]:items-start max-[1023px]:gap-6 lg:grid-cols-[1fr_420px] max-[1365px]:lg:grid-cols-[1fr_400px]">
+        <h2 style={h2Style()}>Which one do you need?</h2>
+        <p style={{ margin: 0, font: `400 16px/1.6 ${SANS}`, color: BODY }}>Start from the requirement, not the org chart.</p>
+      </div>
+      <div style={{ borderTop: `1px solid ${HAIR}` }}>
+        {FINDER.map(([question, dest, href]) => (
+          <a
+            key={question}
+            href={href}
+            className="grid items-center gap-12 py-[30px] no-underline transition-colors duration-200 hover:!bg-[#EDF3F6] max-[1365px]:gap-8 max-[1023px]:grid-cols-1 max-[1023px]:items-start max-[1023px]:gap-3 max-[1023px]:py-6 lg:grid-cols-[1fr_380px] max-[1365px]:lg:grid-cols-[1fr_320px]"
+            style={{ borderBottom: `1px solid ${HAIR}` }}
+          >
+            <span style={{ font: `400 var(--svc-finder-q)/1.25 ${SANS}`, letterSpacing: "-.015em", color: NAVY, textWrap: "pretty" }}>
+              {question}
+            </span>
+            <span style={{ ...linkStyle(), fontSize: 12 }}>{dest} →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export default function ServicesOverview() {
   return (
-    <main style={{ background: PAGE, color: INK, fontFamily: SANS }}>
+    <main className="svc-page" style={{ background: PAGE, color: BODY, fontFamily: SANS }}>
       <Hero />
       <Families />
-      <ServiceFinder />
       <Inspection />
-      <Precision />
-      {SHOW_PROOF_STRIP && <Proof />}
-      <HowItWorks />
-      <SupportSection />
-      <Benefits />
+      <Manufacturing />
+      <Process />
+      <Support />
+      <Finder />
     </main>
   );
 }

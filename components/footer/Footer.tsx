@@ -38,16 +38,16 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
     title: "Industries",
     links: [
       { label: "All industries", href: "/industries" },
-      { label: "Aerospace & Defence", href: "/industries/aerospace-defence" },
-      { label: "Automotive", href: "/industries/automotive" },
-      { label: "Electronics", href: "/industries/electronics" },
+      { label: "Aerospace & Defence", href: "/industries#aerospace-defence" },
+      { label: "Automotive", href: "/industries#automotive" },
+      { label: "Electronics", href: "/industries#electronics" },
     ],
   },
   {
     title: "Services",
     links: [
       { label: "Services overview", href: "/services" },
-      { label: "CT Inspection Services", href: "/services/ct-inspection" },
+      { label: "CT Inspection Services", href: "/services#inspection-services" },
       { label: "Precision Manufacturing", href: "/services#precision-manufacturing" },
       { label: "Service & Support", href: "/services#service-support" },
     ],

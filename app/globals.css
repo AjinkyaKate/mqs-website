@@ -306,3 +306,116 @@ video::-webkit-media-controls-start-playback-button {
     animation-duration: 90s;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   /services/ type and spacing scale — from the "Editorial Industrial"
+   (direction 1A) handoff. The design steps these values discretely at
+   1366 / 1024 / 640 rather than fluidly, and the handoff calls the sizes
+   final, so they are declared as custom properties at the design's own
+   breakpoints instead of approximated with clamp(). Layout grids stay in
+   Tailwind; only the scale lives here.
+   ────────────────────────────────────────────────────────────── */
+.svc-page {
+  --svc-inset: 55px;
+  --svc-sec-y: 112px;
+  --svc-h1: 76px;
+  --svc-h2: 60px;
+  --svc-h3: 46px;
+  --svc-stat: 118px;
+  --svc-fam: 96px;
+  --svc-lead: 19px;
+  --svc-service-h3: 32px;
+  --svc-support-h3: 30px;
+  --svc-finder-q: 26px;
+}
+@media (max-width: 1365px) {
+  .svc-page {
+    --svc-inset: 40px;
+    --svc-sec-y: 96px;
+    --svc-h1: 64px;
+    --svc-h2: 52px;
+    --svc-h3: 40px;
+    --svc-stat: 96px;
+    --svc-fam: 80px;
+  }
+}
+@media (max-width: 1023px) {
+  .svc-page {
+    --svc-inset: 32px;
+    --svc-sec-y: 80px;
+    --svc-h1: 52px;
+    --svc-h2: 42px;
+    --svc-h3: 34px;
+    --svc-stat: 84px;
+    --svc-fam: 64px;
+    --svc-lead: 17px;
+    --svc-service-h3: 28px;
+    --svc-support-h3: 28px;
+    --svc-finder-q: 22px;
+  }
+}
+@media (max-width: 639px) {
+  .svc-page {
+    --svc-inset: 20px;
+    --svc-sec-y: 64px;
+    --svc-h1: 36px;
+    --svc-h2: 30px;
+    --svc-h3: 26px;
+    --svc-stat: 64px;
+    --svc-fam: 40px;
+    --svc-lead: 16px;
+    --svc-service-h3: 24px;
+    --svc-support-h3: 24px;
+    --svc-finder-q: 19px;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   /industries/ scale — from the "Concept 1a Alternating" developer handoff.
+   The handoff lists these as measured values at four delivered widths
+   (desktop >=1360, laptop 1024-1359, tablet 700-1023, mobile <700), so they
+   are declared as custom properties at exactly those thresholds rather than
+   approximated with clamp(). Layout stays in Tailwind.
+   ────────────────────────────────────────────────────────────── */
+.ind-page {
+  --ind-gut: 55px;
+  --ind-sect: 120px;
+  --ind-h1: 72px;
+  --ind-h2: 46px;
+  --ind-h3: 40px;
+  --ind-num: 120px;
+  --ind-mark: 168px;
+}
+@media (max-width: 1359px) {
+  .ind-page {
+    --ind-gut: 48px;
+    --ind-sect: 104px;
+    --ind-h1: 62px;
+    --ind-h2: 42px;
+    --ind-h3: 36px;
+    --ind-num: 104px;
+    --ind-mark: 148px;
+  }
+}
+@media (max-width: 1023px) {
+  .ind-page {
+    --ind-gut: 40px;
+    --ind-sect: 88px;
+    --ind-h1: 42px;
+    --ind-h2: 34px;
+    --ind-h3: 30px;
+    --ind-num: 80px;
+    --ind-mark: 92px;
+  }
+}
+@media (max-width: 699px) {
+  .ind-page {
+    --ind-gut: 24px;
+    --ind-sect: 64px;
+    --ind-h1: 32px;
+    --ind-h2: 26px;
+    --ind-h3: 24px;
+    --ind-num: 64px;
+    --ind-mark: 52px;
+  }
+}

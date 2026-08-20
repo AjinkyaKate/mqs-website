@@ -97,7 +97,7 @@ const ROUTES = [
     title: "Inspection as a service",
     body: "You need a CT result but not a CT system. Send us the part and we will scan it, then return documented findings against your drawing.",
     actions: [
-      { label: "CT inspection services", href: "/services/ct-inspection", primary: true },
+      { label: "CT inspection services", href: "/services#inspection-services", primary: true },
     ],
   },
 ];

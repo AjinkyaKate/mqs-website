@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Industries We Serve — X-Ray & CT Inspection for Aerospace, Automotive, Electronics | MQS Technologies",
   description:
     "Industrial X-ray and CT inspection built around your sector. Aerospace and defence, automotive and EV, electronics, energy and foundry — with systems matched to the parts you actually make.",
+  alternates: { canonical: "/industries" },
 };
 
 export default function IndustriesPage() {

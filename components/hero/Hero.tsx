@@ -35,7 +35,7 @@ type NavItem = { name: string; href?: string; children?: string[]; mega?: boolea
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
   { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
-  { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
+  { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "All pages", mega: true, children: ["Company", "Products", "Industries", "Resources"] },
 ];
@@ -45,7 +45,7 @@ type MobileItem = { name: string; href?: string; children?: string[] };
 const MOBILE_MENU: MobileItem[] = [
   { name: "About", href: "/about-us" },
   { name: "Products", children: ["Products overview", "MQXC Series", "High-Energy X-Ray"] },
-  { name: "Industries", children: ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"] },
+  { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
   { name: "Contact", href: "/contact" },
@@ -54,8 +54,8 @@ const MOBILE_MENU: MobileItem[] = [
 const MEGA: [string, string[]][] = [
   ["Company", ["About", "Recognition", "Clients", "Careers", "Contact"]],
   ["Products", ["Products overview", "MQXC Series", "High-Energy X-Ray"]],
-  ["Industries", ["Industries overview", "Aerospace & Defence", "Automotive", "Electronics"]],
-  ["Services", ["Services overview", "CT Inspection Services"]],
+  ["Industries", ["Industries overview"]],
+  ["Services", ["Services overview"]],
 ];
 
 const LABEL: CSSProperties = { font: "var(--type-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase" };
@@ -230,7 +230,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
     >
 
       {/* 1 — background: still poster + video (steel-navy duotone, matches Industries) */}
-      <Image src={bgImage?.src ?? "/assets/hero-poster.jpg"} alt={bgImage?.alt ?? "Precision drive components under inspection"} fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} unoptimized={!!bgImage?.src} />
+      <Image src={bgImage?.src ?? "/assets/hero-mqxc-poster.jpg"} alt={bgImage?.alt ?? "Precision drive components under inspection"} fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} unoptimized={!!bgImage?.src} />
       {!reducedMotion && !videoError && (
         <video
           ref={(el) => {
@@ -249,7 +249,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
           loop
           playsInline
           preload="auto"
-          poster={bgImage?.src ?? "/assets/hero-poster.jpg"}
+          poster={bgImage?.src ?? "/assets/hero-mqxc-poster.jpg"}
           onCanPlay={() => setVideoReady(true)}
           onLoadedData={() => setVideoReady(true)}
           onPlaying={() => setVideoReady(true)}
@@ -257,7 +257,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
           aria-hidden="true"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: videoReady ? 1 : 0, transition: "opacity 600ms ease", filter: "grayscale(1)" }}
         >
-          <source src="/assets/hero.mp4" type="video/mp4" />
+          <source src="/assets/hero-mqxc.mp4" type="video/mp4" />
         </video>
       )}
 
