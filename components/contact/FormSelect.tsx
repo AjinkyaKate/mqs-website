@@ -34,11 +34,20 @@ type Props = {
   placeholder: string;
   options: string[];
   name?: string;
+  /* Seeded so a failed server validation can hand the chosen option back. The
+     /contact build reference requires entered values to survive: "nobody
+     refills this form twice". */
+  defaultValue?: string;
 };
 
-export default function FormSelect({ placeholder, options, name }: Props) {
+export default function FormSelect({ placeholder, options, name, defaultValue }: Props) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<string | null>(null);
+  /* Seeded on mount only. A failed server validation re-renders this component
+     rather than remounting it, so the caller resets it by changing its key when
+     the server hands a value back; see SelectField in ContactForm. Setting state
+     from an effect here would work but is the pattern React tells you not to
+     use, and it would fight the user's own choice on every re-render. */
+  const [value, setValue] = useState<string | null>(defaultValue || null);
   const [hovered, setHovered] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 

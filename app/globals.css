@@ -484,3 +484,105 @@ video::-webkit-media-controls-start-playback-button {
   .mqs-jrow--cap { align-items: center; }
   .mqs-jrow--cap > figure { width: 100%; max-width: 480px; }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   /contact scale — from "MQS-Contact-Responsive.dc.html".
+
+   The handoff drives every layout value from custom properties on the page
+   root and says so explicitly: "swap them in three media queries rather than
+   duplicating markup". Its breakpoints are desktop >= 1100, tablet 700-1099,
+   mobile < 700, delivered at 1440 / 768 / 390, and the values below are its
+   BP table verbatim.
+
+   --lead is resolved rather than pointing at --type-lead, because this file
+   defines --type-lead as a clamp while the design system defines it as a flat
+   18px; borrowing the name would silently retype the page.
+   ────────────────────────────────────────────────────────────── */
+.mqs-contact {
+  --gut: 55px;
+  --secpad: 104px;
+  --h1: 58px;
+  --h2: 40px;
+  --h3: 24px;
+  --lead: 400 18px/1.6 var(--font-sans);
+  --herocols: 1.02fr 0.98fr;
+  --herogap: 64px;
+  --quickcols: 118px 1fr;
+  --fieldcols: 1fr 1fr;
+  --formpad: 40px;
+  --deptcols: repeat(3, 1fr);
+  --visitcols: 1.25fr 0.75fr;
+  --followcols: 1fr auto;
+  --ctadir: row;
+  --btnw: auto;
+  --mapratio: 16 / 10;
+}
+@media (max-width: 1099px) {
+  .mqs-contact {
+    --gut: 40px;
+    --secpad: 72px;
+    --h1: 40px;
+    --h2: 30px;
+    --h3: 22px;
+    --lead: 400 16px/1.6 var(--font-sans);
+    --herocols: 1fr;
+    --herogap: 48px;
+    --deptcols: 1fr;
+    --visitcols: 1fr;
+    --followcols: 1fr;
+    --formpad: 32px;
+    --mapratio: 16 / 9;
+  }
+}
+@media (max-width: 699px) {
+  .mqs-contact {
+    --gut: 24px;
+    --secpad: 56px;
+    --h1: 32px;
+    --h2: 26px;
+    --h3: 20px;
+    --herogap: 40px;
+    --quickcols: 1fr;
+    --fieldcols: 1fr;
+    --formpad: 24px;
+    --ctadir: column;
+    --btnw: 100%;
+    --mapratio: 4 / 3;
+  }
+}
+
+/* Load and reveal motion, per the handoff's motion spec: opacity 0 to 1 with a
+   24px rise over 420-460ms, staggered above the fold, and fired on first
+   intersection below it. ContactMotion applies these from script so that with
+   JavaScript unavailable the content simply renders visible: the reveal can
+   never hide anything. */
+@keyframes mqsRise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes mqsFade { from { opacity: 0; } to { opacity: 1; } }
+.mqs-rise { animation: mqsRise 420ms cubic-bezier(.22, .61, .36, 1) both; }
+.mqs-fade { animation: mqsFade 320ms ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .mqs-rise, .mqs-fade { animation: none !important; }
+}
+
+/* /contact interaction states. The header is position:fixed at 60 / 72 / 76px,
+   so the page clears it; the design's own header was in flow. */
+.mqs-contact { padding-top: 60px; }
+@media (min-width: 768px) { .mqs-contact { padding-top: 72px; } }
+@media (min-width: 1024px) { .mqs-contact { padding-top: 76px; } }
+.mqs-btn--cyan:hover { background: #0fa6d4; }
+.mqs-btn--navy:hover { background: #12496a; }
+.mqs-btn--quiet:hover, .mqs-btn--white:hover { background: #e9f0f4; }
+.mqs-submit:not(:disabled):hover { background: #0fa6d4; }
+/* Fields are bottom-rule only and take the cyan rule on focus, per the handoff's
+   form spec. */
+.mqs-input:focus { border-bottom-color: #16c1f3; }
+.mqs-input::placeholder { color: #8fa6b5; }
+.mqs-attach:hover { background: #dfe9ef; }
+.mqs-contact *:focus-visible { outline: 2px solid #16c1f3; outline-offset: 2px; }
+/* The handoff's form spec requires every control and link to clear 44px on
+   mobile. Standalone links get the height there; links set inline inside a
+   paragraph do not, because a 44px inline box would break the line rhythm of
+   the prose around it. */
+@media (max-width: 699px) {
+  .mqs-tap { min-height: 44px; display: inline-flex; align-items: center; }
+}

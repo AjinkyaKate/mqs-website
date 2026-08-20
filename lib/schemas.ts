@@ -45,3 +45,33 @@ export type ContactFormState = {
 };
 
 export type ProductFormState = ContactFormState;
+
+/* ── /contact enquiry form ──
+   From "CONTACT US — Webpage Build Reference". The reference is explicit that
+   eight fields are required and not eleven: application, part material and part
+   size were moved into an optional group because they are useful to engineering
+   but not worth the submissions they cost. So the three of them are optional
+   here by design, not by omission. */
+export const enquirySchema = z.object({
+  name: z.string().min(1, "Please enter your name"),
+  company: z.string().min(1, "Please enter your company name"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(1, "Please enter a phone number"),
+  cityCountry: z.string().min(1, "Please enter your city and country"),
+  industry: z.string().min(1, "Please choose an industry"),
+  requirementType: z.string().min(1, "Please choose a requirement type"),
+  message: z.string().min(1, "Please tell us what you need to inspect or test"),
+  application: z.string().optional().default(""),
+  partMaterial: z.string().optional().default(""),
+  partSize: z.string().optional().default(""),
+});
+
+export type EnquiryFormState = {
+  success: boolean;
+  errors?: Record<string, string[]>;
+  message?: string;
+  /* The reference requires entered values to survive a failed validation:
+     "nobody refills this form twice". */
+  values?: Record<string, string>;
+};
+

@@ -42,6 +42,26 @@ model Enquiry {
   defectType   String?
   appDetails   String?
   sourcePage   String?
+
+  /// Added for the /contact form built from the Contact Us build reference.
+  /// requirementType is the field the reference asks submissions to be routed
+  /// by, so it is stored rather than folded into the message.
+  cityCountry     String?
+  requirementType String?
+  partSize        String?
+
+  /// The DPDP notice on the form states purpose, retention and a deletion
+  /// route, so the moment consent was given has to be recorded with the record
+  /// it applies to. Null means the row predates the consented form.
+  consentAt DateTime?
+
+  /// Optional drawing or specification. Written to private Blob storage, so the
+  /// pathname is stored rather than a public URL: an attachment here may itself
+  /// be commercially sensitive.
+  attachPath String?
+  attachName String?
+  attachSize Int?
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
