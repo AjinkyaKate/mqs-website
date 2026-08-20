@@ -220,7 +220,7 @@ function Photo({ src, alt, fit, ground, ratio, sizes }: {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-[520px] overflow-hidden lg:min-h-[600px] min-[1360px]:min-h-[640px]" style={{ background: NAVY }}>
+    <section className="relative flex min-h-[660px] overflow-hidden max-[1023px]:min-h-[520px] max-[639px]:min-h-0" style={{ background: NAVY }}>
       {/* The handoff's IMG-01 is a composite of part types across sectors, which
           MQS have not supplied. This stands in with the seven-axis DR LINAC
           system, unused elsewhere on the site: it shows real MQS equipment
@@ -238,30 +238,49 @@ function Hero() {
         sizes="100vw"
         className="object-cover"
       />
-      {/* left-to-right navy scrim, 94% → 86% → 62% */}
+      {/* Scrim matched to the /services hero at the client's request: 92% falling
+          to 10% left-to-right, so the system stays legible on the right instead
+          of being flattened to a tint, and a top-to-bottom variant on mobile
+          where the copy sits over the middle of the frame. Safe on this image,
+          which measures the same mean luminance across its right third as the
+          services photograph does. */}
       <div
-        className="pointer-events-none absolute inset-0"
-        style={{ background: "linear-gradient(90deg,rgba(11,42,58,.94) 0%,rgba(11,42,58,.86) 46%,rgba(11,42,58,.62) 100%)" }}
+        className="pointer-events-none absolute inset-0 max-[639px]:hidden"
+        style={{ background: "linear-gradient(90deg,rgba(11,42,58,.92) 0%,rgba(11,42,58,.74) 45%,rgba(11,42,58,.1) 100%)" }}
       />
-      <div className={`relative flex w-full flex-col justify-center py-18 min-[700px]:py-24 ${SHELL}`}>
-        {/* The handoff's "Industries we serve" eyebrow is removed at the
-            client's request; the h1 now opens the page. */}
+      <div
+        className="pointer-events-none absolute inset-0 hidden max-[639px]:block"
+        style={{ background: "linear-gradient(180deg,rgba(11,42,58,.35) 0%,rgba(11,42,58,.9) 55%)" }}
+      />
+      {/* Copy block matched to the /services hero: bottom-aligned rather than
+          vertically centred, on the same 120/72 padding, so the two pages open
+          the same way. The shell stays capped at 1330 and centred, unlike
+          /services which runs full-bleed off a 55px inset, because every
+          section below this one on this page is on the capped shell and the
+          hero would otherwise sit further left than all of them. */}
+      <div className={`relative z-[2] flex w-full flex-col self-end pb-[72px] pt-[120px] max-[639px]:pb-10 max-[639px]:pt-[200px] ${SHELL}`}>
+        {/* A one-word eyebrow, as on /services. This is not the handoff's
+            "Industries we serve" line, which the client had removed. */}
+        <p style={{ ...eyebrow(CYAN), marginBottom: 26 }}>Industries</p>
         <h1
-          className="m-0 mt-5 max-w-[20ch]"
-          style={{ font: `600 var(--ind-h1)/1 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}
+          className="m-0 max-w-[920px]"
+          style={{ font: `600 var(--ind-h1)/.98 ${SANS}`, letterSpacing: "-.03em", color: "#fff", textWrap: "pretty" }}
         >
           Every Sector Fails Differently.
           <br />
           So Does Every Inspection.
         </h1>
-        <p className="mt-6 max-w-[58ch]" style={lead("rgba(255,255,255,.82)")}>
-          A turbine blade, a brake caliper and a BGA solder joint all hide their defects — but not in the same way, at the
+        <p
+          className="max-w-[600px] max-[1023px]:max-w-none"
+          style={{ ...lead("rgba(255,255,255,.78)"), margin: "26px 0 0" }}
+        >
+          A turbine blade, a brake caliper and a BGA solder joint all hide their defects, but not in the same way, at the
           same scale, or at the same production speed. MQS configures inspection around the part, the defect and the line it
           comes off.
         </p>
-        <div className="mt-9 flex flex-col gap-3.5 min-[700px]:flex-row">
-          <a href="#routing" style={btn(CYAN, NAVY)} className="hover:!bg-[#0FA6D4] max-[699px]:!w-full">Find Your Industry</a>
-          <a href="#contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10 max-[699px]:!w-full">
+        <div className="mt-9 flex flex-wrap gap-3.5 max-[639px]:mt-7 max-[639px]:flex-col max-[639px]:gap-2.5">
+          <a href="#routing" style={btn(CYAN, NAVY)} className="hover:!bg-[#0FA6D4] max-[639px]:!w-full">Find Your Industry</a>
+          <a href="#contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10 max-[639px]:!w-full">
             Talk to an Expert
           </a>
         </div>

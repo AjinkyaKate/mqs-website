@@ -39,7 +39,7 @@ import Image from "next/image";
 
 const EASE = "cubic-bezier(.22,.61,.36,1)";
 const INK = "#0B2A3A", BODY = "#41586A", MUTED = "#5F7688";
-const CYAN = "#16C1F3", CYAN_ON_LIGHT = "#0A6A88", CYAN_ON_DARK = "#5AD1F7";
+const CYAN = "#16C1F3", CYAN_ON_LIGHT = "#0A6A88";
 const HAIR = "#D3DFE7";
 const PAGE = "#F4F8FA", INSET = "#E9F0F4", WHITE = "#FFFFFF";
 const SANS = "var(--font-sans)";
@@ -47,7 +47,7 @@ const SANS = "var(--font-sans)";
 const NAV_ITEMS: [string, string][] = [
   ["Overview", "#overview"], ["Why CT", "#why-ct"], ["Benefits", "#benefits"],
   ["Highlights", "#highlights"], ["Models", "#models"], ["Metrology", "#metrology"],
-  ["Specs", "#specs"], ["Demo", "#demo"],
+  ["Specs", "#specs"],
 ];
 
 const STATS: [string, string][] = [
@@ -532,25 +532,16 @@ export default function MqctSeries() {
         </div>
       </Section>
 
-      {/* ── final CTA ── */}
-      <Section id="demo" tone="navy">
-        <div className="grid grid-cols-1 items-end gap-7 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-16">
-          <div>
-            <p style={eyebrow(CYAN_ON_DARK)}>Next step</p>
-            <h2 className="mt-4" style={h2("#fff")}>Want to see MQCT run on your components?</h2>
-          </div>
-          <div>
-            <p style={lead("rgba(255,255,255,.82)")}>
-              Tell us the component, the material and the throughput you need. Our application engineers will recommend a
-              configuration, and will scan a sample first where that helps.
-            </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a href="#contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
-              <a href="tel:+914023811122" style={btnGhostDark} className="hover:!bg-white/10">+91 40 2381 1122</a>
-            </div>
-          </div>
-        </div>
-      </Section>
+      {/* The closing CTA band is removed at the client's request. ContactSection
+          follows immediately and is the enquiry form itself, with a real server
+          action behind it, so the band sat directly above the form it pointed
+          at. Same reasoning already applied to /services and three other pages.
+          Copy retained here so it stays traceable:
+            "Next step / Want to see MQCT run on your components? / Tell us the
+             component, the material and the throughput you need. Our
+             application engineers will recommend a configuration, and will scan
+             a sample first where that helps." plus Request a demo and
+            +91 40 2381 1122. The number is still in the footer and on /contact. */}
     </main>
   );
 }

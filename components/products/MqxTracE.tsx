@@ -41,7 +41,7 @@ import Image from "next/image";
 
 const EASE = "cubic-bezier(.22,.61,.36,1)";
 const INK = "#0B2A3A", BODY = "#41586A", MUTED = "#5F7688";
-const CYAN = "#16C1F3", CYAN_ON_LIGHT = "#0A6A88", CYAN_ON_DARK = "#5AD1F7";
+const CYAN = "#16C1F3", CYAN_ON_LIGHT = "#0A6A88";
 const HAIR = "#D3DFE7";
 const PAGE = "#F4F8FA", INSET = "#E9F0F4", WHITE = "#FFFFFF";
 const SANS = "var(--font-sans)";
@@ -49,7 +49,7 @@ const SANS = "var(--font-sans)";
 const NAV_ITEMS: [string, string][] = [
   ["Overview", "#overview"], ["Variants", "#variants"], ["2.5D", "#benefits"],
   ["Highlights", "#highlights"], ["CT", "#ct"], ["Gallery", "#gallery"],
-  ["Specs", "#specs"], ["Demo", "#demo"],
+  ["Specs", "#specs"],
 ];
 
 /* The brief's fourth badge is qualified: 7,500x is the CT variant only. */
@@ -408,24 +408,12 @@ export default function MqxTracE() {
         </div>
       </Section>
 
-      {/* ── demo ── */}
-      <Section id="demo" tone="navy">
-        <div className="grid grid-cols-1 items-end gap-7 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-16">
-          <div>
-            <p style={eyebrow(CYAN_ON_DARK)}>Next step</p>
-            <h2 className="mt-4" style={h2("#fff")}>Want to see MQX.tracE find what others miss?</h2>
-          </div>
-          <div>
-            <p style={lead("rgba(255,255,255,.82)")}>
-              Request a demo and see 2.5D and 3D CT inspection run on your own boards and components.
-            </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a href="#contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
-              <a href="#contact" style={btnGhostDark} className="hover:!bg-white/10">Talk to an inspection expert</a>
-            </div>
-          </div>
-        </div>
-      </Section>
+      {/* The closing CTA band is removed at the client's request, for the same
+          reason as on the MQCT page: ContactSection follows and is the enquiry
+          form. Copy retained so it stays traceable:
+            "Next step / Want to see MQX.tracE find what others miss? / Request a
+             demo and see 2.5D and 3D CT inspection run on your own boards and
+             components." plus Request a demo and Talk to an inspection expert. */}
 
       {/* ── lightbox ── */}
       {zoom && (
