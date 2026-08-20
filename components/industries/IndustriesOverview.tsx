@@ -100,8 +100,6 @@ const btn = (bg: string, color: string, border?: string) => ({
 
 /* ── content, from the handoff ─────────────────────────────── */
 
-const HERO_CRITERIA = ["The Part", "The Defect", "The Material", "The Production Requirement"];
-
 type Industry = {
   n: string;
   name: string;
@@ -224,13 +222,14 @@ function Hero() {
   return (
     <section className="relative flex min-h-[520px] overflow-hidden lg:min-h-[600px] min-[1360px]:min-h-[640px]" style={{ background: NAVY }}>
       {/* The handoff's IMG-01 is a composite of part types across sectors, which
-          MQS have not supplied. This stands in with a real MQS radiograph: a BGA
-          solder ball array, unused elsewhere on the site. Under the scrim
-          (94% falling to 62%) it reads as an abstract technical ground rather
-          than as one sector's part, which suits a page that gives three
-          industries equal weight. IMG-01 stays on the request list. */}
+          MQS have not supplied. This stands in with the seven-axis DR LINAC
+          system, unused elsewhere on the site: it shows real MQS equipment
+          rather than an abstract pattern, it is sector-neutral on a page that
+          gives three industries equal weight, and its dark ground survives the
+          scrim (94% falling to 62%) where the lighter product renders wash out.
+          IMG-01 stays on the request list. */}
       <Image
-        src="/assets/ind-elec-bga.jpg"
+        src="/assets/ind-hero-linac.jpg"
         alt=""
         aria-hidden="true"
         fill
@@ -266,21 +265,9 @@ function Hero() {
             Talk to an Expert
           </a>
         </div>
-        {/* the four things an application engineer needs, as a ruled strip */}
-        <div className="mt-10 grid grid-cols-2 min-[700px]:mt-14 min-[700px]:grid-cols-4" style={{ borderTop: "1px solid rgba(255,255,255,.2)" }}>
-          {HERO_CRITERIA.map((t, i) => (
-            <div
-              key={t}
-              className={`py-3.5 min-[700px]:py-5 ${i % 2 === 1 ? "pl-4 min-[700px]:pl-0" : ""} ${i > 0 ? "min-[700px]:pl-7" : ""}`}
-              style={{
-                borderLeft: i % 2 === 1 ? "1px solid rgba(255,255,255,.2)" : 0,
-                ...eyebrow("rgba(255,255,255,.78)"),
-              }}
-            >
-              {t}
-            </div>
-          ))}
-        </div>
+        {/* The handoff's four-criteria strip (The Part / The Defect / The
+            Material / The Production Requirement) is removed at the client's
+            request. */}
       </div>
     </section>
   );
