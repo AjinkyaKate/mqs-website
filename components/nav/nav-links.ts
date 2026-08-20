@@ -19,6 +19,7 @@ export const HREF_MAP: Record<string, string> = {
   "MQCT Series": "/products/mqct-series",
   "MQX.tracE": "/products/mqx-trace",
   "High-Energy X-Ray": "/products/high-energy-xray",
+  "Automated Test Equipment": "/products/automated-test-equipment",
 
   About: "/about-us",
   Careers: "/careers",

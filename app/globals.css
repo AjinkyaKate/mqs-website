@@ -586,3 +586,114 @@ video::-webkit-media-controls-start-playback-button {
 @media (max-width: 699px) {
   .mqs-tap { min-height: 44px; display: inline-flex; align-items: center; }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   /products/automated-test-equipment/ scale — from
+   "ATE Concept 03 Final.dc.html".
+
+   That design is desktop-only: its root sets min-width 1180px and it ships no
+   tablet or mobile spec, unlike the Contact handoff. Its delivered values are
+   the desktop column here; the two narrower steps are derived, holding its
+   proportions and collapsing every two-column split to one at 1024. Every
+   figure it states explicitly (1330 shell, 55 gutter, 112 section padding,
+   62/44/32px headings) is preserved unchanged at desktop.
+   ────────────────────────────────────────────────────────────── */
+.ate-page {
+  --ate-gut: 55px;
+  --ate-sec: 112px;
+  --ate-h1: 62px;
+  --ate-h2: 44px;
+  --ate-h3: 32px;
+  --ate-h4: 24px;
+  --ate-lead: 400 18px/1.6 var(--font-sans);
+  --ate-hero-min: 760px;
+  --ate-hero-copy: 60%;
+  --ate-hero-img: 620px;
+  --ate-cols-intro: 1fr 0.85fr;
+  --ate-cols-a: 1fr 0.62fr;
+  --ate-cols-b: 0.9fr 1fr;
+  --ate-cols-c: 0.5fr 1fr;
+  --ate-cols-kmte: 0.8fr 1fr;
+  --ate-cols-process: 0.75fr 1fr;
+  --ate-grid-3: repeat(3, 1fr);
+  --ate-grid-4: repeat(4, 1fr);
+  --ate-gap-lg: 72px;
+  --ate-gap-md: 32px;
+  --ate-tall: 620px;
+  --ate-case-w: 420px;
+  --ate-pad-box: 48px;
+}
+@media (max-width: 1179px) {
+  .ate-page {
+    --ate-gut: 40px;
+    --ate-sec: 88px;
+    --ate-h1: 46px;
+    --ate-h2: 36px;
+    --ate-h3: 27px;
+    --ate-hero-min: 640px;
+    --ate-hero-copy: 72%;
+    --ate-hero-img: 480px;
+    --ate-gap-lg: 48px;
+    --ate-tall: 500px;
+    --ate-pad-box: 32px;
+  }
+}
+@media (max-width: 1023px) {
+  .ate-page {
+    --ate-h1: 38px;
+    --ate-h2: 30px;
+    --ate-hero-copy: 100%;
+    --ate-hero-img: 380px;
+    --ate-cols-intro: 1fr;
+    --ate-cols-a: 1fr;
+    --ate-cols-b: 1fr;
+    --ate-cols-c: 1fr;
+    --ate-cols-kmte: 1fr;
+    --ate-cols-process: 1fr;
+    --ate-grid-3: repeat(2, 1fr);
+    --ate-grid-4: repeat(2, 1fr);
+    --ate-lead: 400 16px/1.6 var(--font-sans);
+    --ate-tall: 440px;
+  }
+}
+@media (max-width: 699px) {
+  .ate-page {
+    --ate-gut: 24px;
+    --ate-sec: 56px;
+    --ate-h1: 31px;
+    --ate-h2: 25px;
+    --ate-h3: 22px;
+    --ate-h4: 20px;
+    --ate-hero-min: 0px;
+    --ate-hero-img: 300px;
+    --ate-grid-3: 1fr;
+    --ate-grid-4: 1fr;
+    --ate-gap-md: 20px;
+    --ate-tall: 340px;
+    --ate-case-w: 100%;
+    --ate-pad-box: 20px;
+  }
+}
+/* No root padding here, unlike /contact. This page opens on a full-bleed navy
+   hero, so the navy has to run underneath the fixed header for the header's
+   over-dark treatment to have the dark ground it expects; padding the root
+   instead left white behind a white-text navbar. The hero's own top padding
+   clears the header, which is how the other product pages do it. */
+.ate-btn { transition: background 200ms cubic-bezier(.22,.61,.36,1), color 200ms cubic-bezier(.22,.61,.36,1); }
+.ate-btn--cyan:hover { background: #0fa6d4; }
+.ate-btn--outline:hover { background: rgba(255,255,255,.12); }
+.ate-btn--quiet:hover { background: #e9f0f4; }
+/* Applications row: the design rules each column with a left hairline, which
+   only reads as a divider while the columns sit side by side. */
+@media (max-width: 699px) {
+  .ate-app { border-left: 0 !important; border-top: 1px solid #d3dfe7; }
+  .ate-app:first-child { border-top: 0; }
+}
+/* ATE stats strip: one row of four above 1024, two-up below, stacked on phones. */
+.ate-stats { display: flex; flex-wrap: nowrap; }
+@media (max-width: 1023px) {
+  .ate-stats { display: grid; grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 699px) {
+  .ate-stats { grid-template-columns: 1fr; }
+}

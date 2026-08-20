@@ -34,7 +34,7 @@ type NavItem = { name: string; href?: string; children?: string[] };
 
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray"] },
+  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipment"] },
   { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
@@ -44,7 +44,7 @@ const NAV: NavItem[] = [
 type MobileItem = { name: string; href?: string; children?: string[] };
 const MOBILE_MENU: MobileItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray"] },
+  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipment"] },
   { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },

@@ -20,14 +20,14 @@ const LABEL: CSSProperties = { font: "var(--type-label)", letterSpacing: "var(--
 type NavItem = { name: string; href?: string; children?: string[] };
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray"] },
+  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipment"] },
   { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
 ];
 const MOBILE_MENU: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray"] },
+  { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipment"] },
   { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
