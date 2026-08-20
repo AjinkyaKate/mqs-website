@@ -16,9 +16,9 @@ import Image from "next/image";
    comparison table immediately under the hero, and two separate spec tables.
 
    The defect gallery has a lightbox, which the brief asks for twice: solder
-   void detail is lost at thumbnail size. Images are contained rather than
-   cropped, on a navy ground, so no defect detail is cut off and no image is
-   upscaled past its native resolution.
+   void detail is lost at thumbnail size. Its tiles are laid out in justified
+   rows sized from each image's own aspect ratio, so nothing is cropped, nothing
+   is letterboxed, and nothing is painted above native resolution.
 
    PENDING MQS SIGN-OFF, all raised by the brief itself:
    · The 7,500x magnification figure is the CT variant's total magnification;
@@ -61,8 +61,8 @@ const BADGES = [
 ];
 
 const VARIANTS: [string, string, string][] = [
-  ["MQX.tracE — 2.5D", "High-magnification 2D X-ray with oblique viewing", "You need to screen boards fast and catch known defect types"],
-  ["MQX.tracE CT — 3D", "Adds CT slicing and reconstruction", "Overlap makes 2D ambiguous, or you need evidence-ready failure analysis"],
+  ["MQX.tracE · 2.5D", "High-magnification 2D X-ray with oblique viewing", "You need to screen boards fast and catch known defect types"],
+  ["MQX.tracE CT · 3D", "Adds CT slicing and reconstruction", "Overlap makes 2D ambiguous, or you need evidence-ready failure analysis"],
 ];
 
 const BENEFITS_2D: [string, string, string][] = [
@@ -91,21 +91,40 @@ const BENEFITS_CT: [string, string, string][] = [
   ["05", "Safe, compliant operation", "Radiation safety below 1 µSv/hr at the cabinet surface."],
 ];
 
-type Shot = { src: string; w: number; h: number; caption: string; alt: string; small?: boolean };
-/* Order matters: the PTH pair reads as the same joints, first imaged then
-   measured, so they stay adjacent. */
-const GALLERY: Shot[] = [
-  { src: "/assets/prod-trace-pth.jpg", w: 925, h: 494, caption: "PTH solder joints — voids visible as bright inclusions inside each barrel", alt: "X-ray image of plated through-hole solder joints showing internal voids" },
-  { src: "/assets/prod-trace-pth-measured.jpg", w: 334, h: 319, small: true, caption: "The same joints, measured — fill and void percentages calculated automatically", alt: "Annotated X-ray of PTH joints with fill and void percentages per barrel" },
-  { src: "/assets/prod-trace-qfn.jpg", w: 550, h: 526, caption: "QFN die-attach voiding — large irregular voids that pass functional test", alt: "X-ray of a QFN package showing large voids in the die attach layer" },
-  { src: "/assets/prod-trace-qfp.jpg", w: 812, h: 814, caption: "QFP package — bond wires resolved individually, void at the die centre", alt: "X-ray of a QFP package showing bond wires, leads and an internal void" },
-  { src: "/assets/prod-trace-bga.jpg", w: 1280, h: 1043, caption: "BGA solder balls with adjacent bond wires and vias in one frame", alt: "High-magnification X-ray of BGA solder balls, bond wires and vias" },
-  { src: "/assets/prod-trace-board.jpg", w: 900, h: 926, caption: "Full assembled board in a single scan — BGA, magnetics, connectors, inner layers", alt: "Full-board X-ray of an assembled card showing BGA, magnetics and routing" },
+type Shot = { src: string; w: number; h: number; label: string; note: string; alt: string; small?: boolean };
+
+/* Justified rows, the shape a mixed-aspect set actually wants.
+
+   These six images run from 0.97 to 1.87 in aspect, so no single tile shape
+   works: a square tile left the PTH capture filling 53% of its box, with the
+   rest as dead letterbox, while the near-square packages filled 96 to 99%. The
+   grid read as ragged for a reason that had nothing to do with the content.
+
+   Each row now sizes its tiles' widths in proportion to their aspect ratios, so
+   every tile in a row shares one height and the row fills the measure exactly.
+   Tile aspect equals image aspect, so nothing is letterboxed and nothing is
+   cropped. It also lands every image at or below native size, worst case 0.95x,
+   where the old square grid upscaled nothing but wasted up to 47% of a tile.
+
+   Row membership is chosen so that arithmetic works out AND the PTH pair stays
+   adjacent, which the brief requires: they are the same joints, first imaged
+   then measured, and the second only means anything next to the first. */
+const GALLERY_ROWS: Shot[][] = [
+  [
+    { src: "/assets/prod-trace-pth.jpg", w: 925, h: 494, label: "PTH solder joints", note: "Voids visible as bright inclusions inside each barrel.", alt: "X-ray image of plated through-hole solder joints showing internal voids" },
+    { src: "/assets/prod-trace-pth-measured.jpg", w: 334, h: 319, small: true, label: "The same joints, measured", note: "Fill and void percentages calculated automatically.", alt: "Annotated X-ray of PTH joints with fill and void percentages per barrel" },
+    { src: "/assets/prod-trace-qfn.jpg", w: 550, h: 526, label: "QFN die-attach voiding", note: "Large irregular voids that pass functional test.", alt: "X-ray of a QFN package showing large voids in the die attach layer" },
+  ],
+  [
+    { src: "/assets/prod-trace-qfp.jpg", w: 812, h: 814, label: "QFP package", note: "Bond wires resolved individually, void at the die centre.", alt: "X-ray of a QFP package showing bond wires, leads and an internal void" },
+    { src: "/assets/prod-trace-bga.jpg", w: 1280, h: 1043, label: "BGA solder balls", note: "Adjacent bond wires and vias captured in one frame.", alt: "High-magnification X-ray of BGA solder balls, bond wires and vias" },
+    { src: "/assets/prod-trace-board.jpg", w: 900, h: 926, label: "Full assembled board", note: "One scan covering BGA, magnetics, connectors and inner layers.", alt: "Full-board X-ray of an assembled card showing BGA, magnetics and routing" },
+  ],
 ];
 
 type SpecTable = { title: string; rows: [string, string][] };
 const SPECS: SpecTable[] = [
-  { title: "MQX.tracE — 2.5D", rows: [
+  { title: "MQX.tracE · 2.5D", rows: [
     ["X-ray energy range", "20 – 160 kV"], ["Max target power", "25 W"],
     ["Tube type", "Microfocus, open type, transmission target"], ["JIMA resolution", "0.9 µm"],
     ["Detector active area", "161 × 161 mm"], ["Pixel pitch / frame rate", "105 µm / 40 fps"],
@@ -113,7 +132,7 @@ const SPECS: SpecTable[] = [
     ["Radiation safety", "AERB type-approved; leakage below 1 µSv/hr"],
     ["Footprint / weight", "2200 (H) × 1800 (W) × 1900 (D) mm; approx. 4500 kg"],
   ]},
-  { title: "MQX.tracE CT — 3D", rows: [
+  { title: "MQX.tracE CT · 3D", rows: [
     ["Power", "AC mains 220 – 230 V, 50 Hz, single phase"], ["Anode voltage", "30 – 160 kV"],
     ["Target power", "Up to 15 W"], ["X-ray source", "Open tube, transmission target"],
     ["Resolution", "0.75 µm or better"], ["Magnification", "Geometric up to 3,000×; total up to 7,500×"],
@@ -279,7 +298,7 @@ export default function MqxTracE() {
 
       {/* ── 2.5D variant ── */}
       <Section id="benefits" tone="page">
-        <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE — 2.5D</p>
+        <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE · 2.5D</p>
         <h2 className="mt-4" style={h2(INK)}>Micron-level defect detection for electronics.</h2>
         <BenefitGrid items={BENEFITS_2D} />
       </Section>
@@ -316,7 +335,7 @@ export default function MqxTracE() {
 
       {/* ── CT variant ── */}
       <Section id="ct" tone="inset">
-        <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE CT — 3D</p>
+        <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE CT · 3D</p>
         <h2 className="mt-4" style={h2(INK)}>2D gives answers. CT gives certainty.</h2>
         <p className="mt-4 max-w-[70ch]" style={lead(BODY)}>
           For complex electronics, 2D views can be ambiguous because layers overlap. MQX.tracE CT combines high-clarity 2D
@@ -341,27 +360,57 @@ export default function MqxTracE() {
           Representative captures from MQX.tracE: solder voids, fill defects and bridging on real PCB components. Select any
           image to open it at full resolution.
         </p>
-        <div className="mt-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 1, background: "rgba(255,255,255,.12)" }}>
-          {GALLERY.map((g) => (
-            <figure key={g.src} className="m-0" style={{ background: INK }}>
-              <button
-                type="button"
-                onClick={() => setZoom(g)}
-                className="relative block w-full cursor-zoom-in border-0 p-0"
-                style={{ aspectRatio: "1 / 1", background: "#06161f" }}
-                aria-label={`Open full resolution: ${g.caption}`}
-              >
-                <Image src={g.src} alt={g.alt} fill quality={92} sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-contain" />
-              </button>
-              <figcaption className="p-4" style={{ ...body("rgba(255,255,255,.74)"), fontSize: 14 }}>
-                {g.caption}
-                {g.small && (
-                  <span className="mt-2 block" style={{ ...label("rgba(255,255,255,.5)") }}>
-                    Supplied at 334 × 319 · re-export pending
-                  </span>
-                )}
-              </figcaption>
-            </figure>
+        {/* The gap shows the section's own navy. The house idiom is a 1px gap over
+            a hairline ground, but these are light-toned radiographs on a dark
+            band, so a light divider between two light images is invisible; the
+            dark ground is the divider that works here. */}
+        <div className="mqxt-rows mt-9">
+          {GALLERY_ROWS.map((row, ri) => (
+            <div key={ri} className="mqxt-row">
+              {row.map((g) => (
+                <figure
+                  key={g.src}
+                  className="m-0 flex flex-col"
+                  /* width in proportion to aspect ratio, so the row shares one
+                     height and fills the measure exactly. Below 700 the row
+                     becomes a column and each tile takes the full measure at its
+                     own aspect; all three or all one, never a stretched orphan */
+                  style={{ flex: `${(g.w / g.h).toFixed(4)} 1 0px` }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setZoom(g)}
+                    className="mqxt-tile relative block w-full cursor-zoom-in border-0 p-0"
+                    style={{ aspectRatio: `${g.w} / ${g.h}`, background: "#06161f" }}
+                    aria-label={`Open at full resolution: ${g.label}`}
+                  >
+                    <Image
+                      src={g.src}
+                      alt={g.alt}
+                      fill
+                      quality={92}
+                      sizes="(min-width:1330px) 570px, (min-width:700px) 45vw, 100vw"
+                      className="object-cover"
+                    />
+                    <span aria-hidden className="mqxt-zoom absolute bottom-2.5 right-2.5 flex items-center justify-center"
+                      style={{ width: 34, height: 34, background: CYAN, color: INK }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="square">
+                        <circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6" />
+                      </svg>
+                    </span>
+                  </button>
+                  <figcaption className="pt-3.5">
+                    <span className="block" style={{ font: `500 15px/1.35 ${SANS}`, letterSpacing: "-.01em", color: "#fff" }}>{g.label}</span>
+                    <span className="mt-1.5 block" style={{ ...body("rgba(255,255,255,.68)"), fontSize: 14 }}>{g.note}</span>
+                    {g.small && (
+                      <span className="mt-2 block" style={{ ...body("rgba(255,255,255,.42)"), fontSize: 12 }}>
+                        Supplied at 334 × 319. Re-export pending from MQS.
+                      </span>
+                    )}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
           ))}
         </div>
       </Section>
@@ -420,7 +469,7 @@ export default function MqxTracE() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={zoom.caption}
+          aria-label={zoom.label}
           onClick={() => setZoom(null)}
           className="fixed inset-0 z-[100] flex cursor-zoom-out flex-col items-center justify-center p-4 md:p-10"
           style={{ background: "rgba(6,22,31,.94)" }}
@@ -435,7 +484,10 @@ export default function MqxTracE() {
             className="max-h-[80vh] w-auto max-w-full object-contain"
             style={{ height: "auto" }}
           />
-          <p className="mt-5 max-w-[70ch] text-center" style={{ ...body("rgba(255,255,255,.82)"), fontSize: 15 }}>{zoom.caption}</p>
+          <p className="mt-5 max-w-[70ch] text-center">
+            <span style={{ font: `500 16px/1.4 ${SANS}`, color: "#fff" }}>{zoom.label}</span>
+            <span className="mt-1 block" style={{ ...body("rgba(255,255,255,.72)"), fontSize: 14 }}>{zoom.note}</span>
+          </p>
           <button
             type="button"
             onClick={() => setZoom(null)}

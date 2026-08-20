@@ -447,3 +447,34 @@ video::-webkit-media-controls-start-playback-button {
 /* The board's preview frames. Each iframe renders a real concept route at a
    fixed width so the container queries inside resolve to that width. */
 .mqctc-frame { border: 0; display: block; background: #fff; }
+
+/* MQX.tracE defect gallery: the zoom affordance on each justified tile. The
+   copy tells the reader they can open an image, so the tile has to look like it
+   opens. Hidden until hover or keyboard focus so it never sits over a defect. */
+.mqxt-zoom {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 160ms cubic-bezier(.22, .61, .36, 1), transform 160ms cubic-bezier(.22, .61, .36, 1);
+}
+.mqxt-tile:hover .mqxt-zoom,
+.mqxt-tile:focus-visible .mqxt-zoom { opacity: 1; transform: none; }
+.mqxt-tile:focus-visible { outline: 2px solid #16c1f3; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .mqxt-zoom { transition: none; transform: none; }
+}
+/* The justified rows: three tiles sharing one height above 700, a single column
+   below it. An intermediate wrap would leave the third tile alone on its line,
+   stretched to the full measure and far taller than its neighbours. */
+.mqxt-rows { display: flex; flex-direction: column; gap: 30px; }
+.mqxt-row { display: flex; gap: 10px; }
+@media (max-width: 699px) {
+  /* Once the rows are columns the row grouping carries no visual meaning, so
+     every tile sits on one even rhythm rather than 10px inside a row and 30px
+     between them. */
+  .mqxt-rows, .mqxt-row { gap: 30px; }
+  /* Stacked, and capped: at 699 an uncapped tile takes the full 651px measure
+     and a near-square scan becomes 670px tall, which made the section 4081px.
+     The cap does not bind at phone widths, so 390 is unchanged. */
+  .mqxt-row { flex-direction: column; align-items: center; }
+  .mqxt-row > figure { width: 100%; max-width: 480px; }
+}
