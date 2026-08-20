@@ -185,11 +185,17 @@ export default function ServicesSection() {
             className="w-full overflow-hidden aspect-[4/3] md:aspect-[16/9] lg:aspect-[4/3]"
             style={{ background: DARK, position: "relative" }}
           >
+            {/* Was a generic stock plant-floor photograph. Now the client's own
+                cabinet CT system, which is what this section is about. */}
             <Image
-              src="/assets/photo-services.jpg"
-              alt="Plant floor"
+              src="/assets/home-solutions-ct-cabinet.jpg"
+              alt="MQS cabinet CT inspection system with its doors open, showing the internal manipulator"
               fill
-              sizes="(max-width: 1024px) 100vw, 44vw"
+              quality={90}
+              /* 50vw not 44vw: the box is 4:3 but the source is 1.61 wide, so
+                 object-cover has to satisfy the height, which needs ~706px at
+                 1440 rather than the 634px the column measures. */
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
           </div>
