@@ -16,6 +16,8 @@ export const HREF_MAP: Record<string, string> = {
      Add children here as each product page lands. */
   "Products overview": "/products",
   "MQXC Series": "/products/mqxc-series",
+  "MQCT Series": "/products/mqct-series",
+  "MQX.tracE": "/products/mqx-trace",
   "High-Energy X-Ray": "/products/high-energy-xray",
 
   About: "/about-us",
