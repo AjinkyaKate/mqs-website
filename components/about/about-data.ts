@@ -303,7 +303,7 @@ export const IMAGES: Record<"hero" | "team" | "award" | "founder", ImageSlot> = 
     need: "Supplied at 7008 × 4672. Used full bleed for the hero.",
   },
   team: {
-    src: "/assets/about-team-service.jpg",
+    src: "/assets/mqs-multimeter-service.jpg",
     alt: "An MQS engineer testing a system's control electronics with a digital multimeter",
     need:
       "Supplied at 6240 × 4160 as Service Overview/Preventive Maintenance Plans.jpg. " +

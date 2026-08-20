@@ -316,17 +316,21 @@ function SecHead({ n, family, title, lead, onDark = false, className, style }: {
 function Hero() {
   return (
     <section className="relative flex min-h-[660px] max-[1023px]:min-h-[520px] max-[639px]:min-h-0" style={{ background: NAVY_2 }}>
-      {/* Handoff calls for an engineer servicing an open CT system. Using the
-          closest supplied MQS frame; it also carries the /about-us hero, so a
-          distinct photograph is on the request list. */}
+      {/* Handoff calls for an engineer servicing an open CT system. MQS have not
+          supplied that shot, and every unused candidate wide enough for a hero is
+          a CGI render or a boardroom photograph. This is a different frame cut
+          from the same 7008x4672 original that feeds the /about-us hero: a
+          tighter crop on the machine bay, so the two pages do not open on the
+          same composition. The specified photograph is still on the request
+          list. */}
       <Image
-        src="/assets/about-hero.jpg"
-        alt="MQS engineers working at an industrial inspection system"
+        src="/assets/svc-hero-ct-bay.jpg"
+        alt="MQS engineer at an inspection system in the Hyderabad facility"
         fill
         priority
         quality={90}
         sizes="100vw"
-        className="object-cover object-[44%_46%]"
+        className="object-cover"
       />
       {/* left-to-right scrim on desktop and tablet, top-to-bottom on mobile */}
       <div className="absolute inset-0 max-[639px]:hidden" style={{ background: "linear-gradient(90deg,rgba(11,42,58,.92) 0%,rgba(11,42,58,.74) 45%,rgba(11,42,58,.1) 100%)" }} />
@@ -596,7 +600,7 @@ function Support() {
           with a multimeter, which is exactly what this supplied frame shows. */}
       <div className="relative h-[420px] max-[1023px]:h-[320px] max-[639px]:h-[240px]" style={{ background: NAVY_2 }}>
         <Image
-          src="/assets/svc-multimeter.jpg"
+          src="/assets/mqs-multimeter-service.jpg"
           alt="MQS engineer performing electrical testing on a system's control electronics with a digital multimeter"
           fill
           quality={90}
