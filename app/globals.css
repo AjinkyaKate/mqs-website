@@ -419,3 +419,31 @@ video::-webkit-media-controls-start-playback-button {
     --ind-mark: 52px;
   }
 }
+
+/* ── MQCT concept review routes ─────────────────────────────────────────────
+   /products/mqct-series/concepts/* only. The site header is position:fixed at
+   60 / 72 / 76px, so each concept clears it; the Technical Buyer concept's
+   sticky section bar parks directly beneath it. Hover states here replace the
+   design canvas's style-hover attribute, which has no runtime equivalent. */
+.mqctc-page { padding-top: 60px; }
+.mqctc-sticky { position: sticky; z-index: 20; top: 60px; }
+@media (min-width: 768px) {
+  .mqctc-page { padding-top: 72px; }
+  .mqctc-sticky { top: 72px; }
+}
+@media (min-width: 1024px) {
+  .mqctc-page { padding-top: 76px; }
+  .mqctc-sticky { top: 76px; }
+}
+.mqctc-btn { transition: background 180ms cubic-bezier(.22, .61, .36, 1); }
+.mqctc-btn:hover { background: #0fa6d4; }
+.mqctc-ghost { transition: background 180ms cubic-bezier(.22, .61, .36, 1), color 180ms cubic-bezier(.22, .61, .36, 1); }
+.mqctc-ghost:hover { background: #0b2a3a; color: #fff; }
+.mqctc-ghost-dark { transition: background 180ms cubic-bezier(.22, .61, .36, 1); }
+.mqctc-ghost-dark:hover { background: rgba(255, 255, 255, .12); }
+.mqctc-navlink { transition: color 180ms cubic-bezier(.22, .61, .36, 1); }
+.mqctc-navlink:hover { color: #0a6a88; }
+
+/* The board's preview frames. Each iframe renders a real concept route at a
+   fixed width so the container queries inside resolve to that width. */
+.mqctc-frame { border: 0; display: block; background: #fff; }
