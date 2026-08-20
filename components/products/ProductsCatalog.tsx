@@ -29,13 +29,23 @@ const NDT: Item[] = [
   { cat: "Digital Radiography", spec: "160–450 kV · 100% duty", name: "Pipe DR", subtitle: "Pipeline Digital Radiography", desc: "Digital radiography for pipeline welds and corrosion mapping at 100% duty cycle.", brochure: "pipe-inspection-dr.pdf" },
 ];
 
+/* Every card here routes to the single ATE page. Before it existed these were
+   dead tiles: a name, a spec and a brochure, with nothing to click through to.
+
+   NOTE FOR MQS. Two of these names, "Missile Launcher Tester" and "Torpedo
+   Tester", are more disclosive than the ATE page's own policy allows. That page
+   describes every system by test function precisely so the site does not
+   publish which weapons programmes MQS supports, and the build reference lists
+   platform names as held back. "Launcher test panel suite" and a function-led
+   name for the torpedo rig would bring this grid in line with it. Left as found
+   rather than rewritten unasked, because it is client copy. */
 const ATE: Item[] = [
-  { cat: "ATE", spec: "Functional · Continuity", name: "Missile Launcher Tester", subtitle: "Launcher Electronics ATE", desc: "Automated functional and continuity testing of launcher electronics before field release.", brochure: "automated-test-equipment.pdf" },
-  { cat: "ATE", spec: "Balance · Endurance", name: "Spin Test Equipment", subtitle: "Rotating Assembly Rig", desc: "Controlled-spin fixtures for balance, vibration and endurance testing of rotating assemblies.", brochure: "automated-test-equipment.pdf" },
-  { cat: "ATE", spec: "High-channel · Hipot", name: "Wire Harness Tester", subtitle: "Harness Continuity ATE", desc: "Continuity, insulation and hipot testing for aerospace and defence wiring harnesses.", brochure: "automated-test-equipment.pdf" },
-  { cat: "ATE", spec: "Sub-system · Telemetry", name: "Torpedo Tester", subtitle: "Underwater Weapon ATE", desc: "Integrated rack for torpedo sub-system, telemetry and power-train verification.", brochure: "automated-test-equipment.pdf" },
-  { cat: "ATE", spec: "Rate table · Drift", name: "Gyro Test Rack", subtitle: "Inertial Sensor Qualification", desc: "Rate-table and drift measurement rack for gyroscope and IMU qualification.", brochure: "automated-test-equipment.pdf" },
-  { cat: "ATE", spec: "Tension-controlled", name: "Wire Spool Unwinding Test", subtitle: "Spool Qualification Rig", desc: "Tension-controlled unwinding rig for fibre-optic and data-link spool qualification.", brochure: "automated-test-equipment.pdf" },
+  { cat: "ATE", spec: "Functional · Continuity", name: "Missile Launcher Tester", subtitle: "Launcher Electronics ATE", desc: "Automated functional and continuity testing of launcher electronics before field release.", brochure: "automated-test-equipment.pdf", href: "/products/automated-test-equipment" },
+  { cat: "ATE", spec: "Balance · Endurance", name: "Spin Test Equipment", subtitle: "Rotating Assembly Rig", desc: "Controlled-spin fixtures for balance, vibration and endurance testing of rotating assemblies.", brochure: "automated-test-equipment.pdf", href: "/products/automated-test-equipment" },
+  { cat: "ATE", spec: "High-channel · Hipot", name: "Wire Harness Tester", subtitle: "Harness Continuity ATE", desc: "Continuity, insulation and hipot testing for aerospace and defence wiring harnesses.", brochure: "automated-test-equipment.pdf", href: "/products/automated-test-equipment" },
+  { cat: "ATE", spec: "Sub-system · Telemetry", name: "Torpedo Tester", subtitle: "Underwater Weapon ATE", desc: "Integrated rack for torpedo sub-system, telemetry and power-train verification.", brochure: "automated-test-equipment.pdf", href: "/products/automated-test-equipment" },
+  { cat: "ATE", spec: "Rate table · Drift", name: "Gyro Test Rack", subtitle: "Inertial Sensor Qualification", desc: "Rate-table and drift measurement rack for gyroscope and IMU qualification.", brochure: "automated-test-equipment.pdf", href: "/products/automated-test-equipment" },
+  { cat: "ATE", spec: "Tension-controlled", name: "Wire Spool Unwinding Test", subtitle: "Spool Qualification Rig", desc: "Tension-controlled unwinding rig for fibre-optic and data-link spool qualification.", brochure: "automated-test-equipment.pdf", href: "/products/automated-test-equipment" },
 ];
 
 function SectionHead({ title, tag }: { title: string; tag: string }) {

@@ -2,10 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   experimental: {
-    /* The careers form accepts a resume up to 5 MB. Server actions cap the request
-       body at 1 MB by default, and multipart adds boundary and header overhead on
-       top of the file, so this leaves room. */
-    serverActions: { bodySizeLimit: "6mb" },
+    /* Two forms take an upload: careers accepts a 5 MB resume, and /contact
+       accepts a 10 MB drawing or specification per its build reference. Server
+       actions cap the request body at 1 MB by default, and multipart adds
+       boundary and header overhead on top of the file, so this leaves room for
+       the larger of the two. */
+    serverActions: { bodySizeLimit: "12mb" },
   },
   images: {
     formats: ['image/avif', 'image/webp'],
