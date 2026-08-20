@@ -4,7 +4,7 @@ import Image from "next/image";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CTAButton from "./CTAButton";
-import { ArrowRight, ChevronDown } from "./icons";
+import { ChevronDown } from "./icons";
 import { linkFor } from "@/components/nav/nav-links";
 
 const EASE = "cubic-bezier(0.22,0.61,0.36,1)";
@@ -30,14 +30,14 @@ const SCRIM_DESKTOP =
 const SCRIM_SMALL =
   "linear-gradient(180deg, rgba(0,0,0,.34) 0%, rgba(0,0,0,.60) 46%, rgba(0,0,0,.84) 100%)";
 
-type NavItem = { name: string; href?: string; children?: string[]; mega?: boolean };
+type NavItem = { name: string; href?: string; children?: string[] };
 
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
   { name: "Products", children: ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray"] },
   { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
-  { name: "All pages", mega: true, children: ["Company", "Products", "Industries", "Resources"] },
+  { name: "Careers", href: "/careers" },
 ];
 
 // Mobile/tablet menu with expandable submenus.
@@ -51,12 +51,13 @@ const MOBILE_MENU: MobileItem[] = [
   { name: "Contact", href: "/contact" },
 ];
 
-const MEGA: [string, string[]][] = [
-  ["Company", ["About", "Recognition", "Clients", "Careers", "Contact"]],
-  ["Products", ["Products overview", "MQXC Series", "MQCT Series", "MQX.tracE", "High-Energy X-Ray"]],
-  ["Industries", ["Industries overview"]],
-  ["Services", ["Services overview"]],
-];
+/* "All pages" is gone. It was a mega panel repeating About, Products,
+   Industries and Services, all four of which are top-level items already, so the
+   only entries it added were Careers and Contact. Careers is now a top-level
+   link and Contact has always had its own button, which makes the panel pure
+   redundancy on an eleven-page site. It also listed Recognition and Clients as
+   though they were pages when both resolve to /about-us, and declared a
+   "Resources" column that was never rendered. */
 
 const LABEL: CSSProperties = { font: "var(--type-label)", letterSpacing: "var(--tracking-label)", textTransform: "uppercase" };
 const rise = (d: number): CSSProperties => ({ animation: `mqsRise 420ms ${EASE} both`, animationDelay: `${d}ms` });
@@ -175,8 +176,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
   const logoH = isDesktop ? 58 : isTablet ? 46 : 34;
 
   const openItem = NAV.find((n) => n.name === openMenu) || null;
-  const megaOpen = !!(openItem && openItem.mega && isDesktop);
-  const dropdownOpen = !!(openItem && !openItem.mega && openItem.children && isDesktop);
+  const dropdownOpen = !!(openItem?.children && isDesktop);
 
   // menuActive stays true through the panel's open AND its close animation
   // (menuMounted is cleared on AnimatePresence exit-complete), so the header
@@ -394,32 +394,6 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
         )}
       </header>
 
-      {/* 6 — mega panel (desktop) */}
-      {megaOpen && (
-        <div data-mqs-panel onMouseEnter={cancelDropClose} onMouseLeave={scheduleDropClose} style={{ position: "fixed", top: navH, left: 0, right: 0, zIndex: 40, background: "#FFFFFF", borderBottom: `3px solid #0C87AD`, animation: `mqsPanel 200ms ${EASE} both` }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", padding: "48px 55px 44px" }}>
-            {MEGA.map(([title, links], i) => (
-              <div key={title} style={{ padding: "0 32px", borderRight: i < 3 ? "1px solid rgba(16,16,16,.08)" : "none" }}>
-                <div style={{ ...LABEL, color: "#6B6B6B", marginBottom: 20 }}>{title}</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  {links.map((l) => (
-                    <a key={l} href={linkFor(title, l)} style={{ font: "var(--type-body)", color: "#0B2A3A" }} className="transition-colors duration-200 hover:!text-[#0A6A88]">
-                      {l}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, padding: "22px 55px", borderTop: "1px solid rgba(16,16,16,.08)", background: "#F4F8FA" }}>
-            <span style={{ ...LABEL, color: "#6B6B6B" }}>Grouped in four families</span>
-            <a href="/products" style={{ ...LABEL, display: "flex", alignItems: "center", gap: 10, color: "#0A6A88" }}>
-              <span>Explore all systems</span>
-              <ArrowRight size={16} />
-            </a>
-          </div>
-        </div>
-      )}
 
       {/* 7 — dropdown (Services / Equipment) */}
       {dropdownOpen && openItem?.children && (
