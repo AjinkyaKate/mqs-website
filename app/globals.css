@@ -370,12 +370,52 @@ video::-webkit-media-controls-start-playback-button {
   }
 }
 
-/* /industries/ chapter chip row: scrolls horizontally on small screens without
-   showing a scrollbar. Links stay keyboard reachable and the row still scrolls. */
-.mqs-chapterbar-list {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+/* ──────────────────────────────────────────────────────────────
+   /industries/ scale — from the "Concept 1a Alternating" developer handoff.
+   The handoff lists these as measured values at four delivered widths
+   (desktop >=1360, laptop 1024-1359, tablet 700-1023, mobile <700), so they
+   are declared as custom properties at exactly those thresholds rather than
+   approximated with clamp(). Layout stays in Tailwind.
+   ────────────────────────────────────────────────────────────── */
+.ind-page {
+  --ind-gut: 55px;
+  --ind-sect: 120px;
+  --ind-h1: 72px;
+  --ind-h2: 46px;
+  --ind-h3: 40px;
+  --ind-num: 120px;
+  --ind-mark: 168px;
 }
-.mqs-chapterbar-list::-webkit-scrollbar {
-  display: none;
+@media (max-width: 1359px) {
+  .ind-page {
+    --ind-gut: 48px;
+    --ind-sect: 104px;
+    --ind-h1: 62px;
+    --ind-h2: 42px;
+    --ind-h3: 36px;
+    --ind-num: 104px;
+    --ind-mark: 148px;
+  }
+}
+@media (max-width: 1023px) {
+  .ind-page {
+    --ind-gut: 40px;
+    --ind-sect: 88px;
+    --ind-h1: 42px;
+    --ind-h2: 34px;
+    --ind-h3: 30px;
+    --ind-num: 80px;
+    --ind-mark: 92px;
+  }
+}
+@media (max-width: 699px) {
+  .ind-page {
+    --ind-gut: 24px;
+    --ind-sect: 64px;
+    --ind-h1: 32px;
+    --ind-h2: 26px;
+    --ind-h3: 24px;
+    --ind-num: 64px;
+    --ind-mark: 52px;
+  }
 }

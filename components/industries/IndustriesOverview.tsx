@@ -1,38 +1,44 @@
 /* ──────────────────────────────────────────────────────────────
    Industries — /industries/
-   Built from the "Industries V4 Chapters" design (project 2e7d7293), the
-   selected direction of five explored. Structure: navy hero with a three-cell
-   image mosaic, a statement band, then the three primary industries as
-   numbered chapters beside a sticky chapter index, followed by Also Served,
-   the routing matrix, compliance, and the closing enquiry block.
+   Built from the developer handoff "Concept 1a — Alternating layout, final
+   for build" (design project 2e7d7293), whose source of truth is
+   IndustriesPage.jsx.
 
-   The site's own SiteHeaderFull and Footer replace the design's, and
-   ContactSection follows this component, so the design's header and footer are
-   not rebuilt here.
+   This SUPERSEDES the earlier "V4 Chapters" build of this page. The designer
+   re-explored the page from scratch and landed somewhere different, so the
+   sticky chapter index is gone and the three primary industries are now
+   alternating text/image blocks. ChapterNav.tsx is deleted with it.
 
-   THE DESIGN IS DESKTOP-ONLY. It declares min-width:1200px and carries no
-   media queries at all, so every small-screen decision below is ours, not the
-   designer's: fluid clamp() type rather than authored steps, the chapter index
-   becoming a sticky chip row, the three-column spec tables collapsing to one
-   column (the 1px gap over a hairline ground turns the column rules into row
-   rules for free), and each multi-column band stacking.
+   Section order: hero → why inspection matters (with the paired
+   external/internal comparison) → primary industries → also served →
+   routing matrix → compliance → closing CTA. The site's own header, footer
+   and ContactSection replace the handoff's.
+
+   The handoff's scale is measured at four delivered widths (desktop ≥1360,
+   laptop 1024-1359, tablet 700-1023, mobile <700) and called final, so those
+   values live as .ind-page custom properties in globals.css declared at
+   exactly those thresholds. Layout uses the handoff's own breakpoints rather
+   than Tailwind's defaults.
+
+   One structural adaptation: the reference picks its layout in JavaScript,
+   measuring its own width with a ResizeObserver and passing a `bp` prop down.
+   That is a canvas device for showing four fixed frames side by side. Here
+   the layout is chosen by CSS, so the page server-renders correctly at any
+   width with no JS. The only client island is the mobile routing accordion,
+   which genuinely needs state.
 
    TWO DEPARTURES, both carried over from decisions already taken:
 
-   1 · No breadcrumb. The design opens with "Home / Industries" on the navy
-       band, but the client had breadcrumbs removed from /services and
-       /about-us, so one is not reintroduced here.
-   2 · No per-chapter "Explore ..." buttons. The design ends each chapter with
-       a navy button to that industry's detail page. Phase 1 is locked to a
-       single /industries/ page and those routes are deleted, so the buttons
-       are dropped; the chapter itself is the destination. The routing matrix
-       rows are plain rows rather than links for the same reason.
-
-   Server component. ChapterNav is the only client island.
+   1 · No breadcrumb. The handoff puts "Home / Industries" in the hero, but
+       the client had breadcrumbs removed from /services and /about-us.
+   2 · No per-industry "Explore ..." links, and the routing table's rows are
+       not links. Both point at pages Phase 1 does not build. Also Served rows
+       keep their links because /contact/ is real, and the mobile accordion
+       keeps its per-row "Talk to an Expert" for the same reason.
    ────────────────────────────────────────────────────────────── */
 
 import Image from "next/image";
-import ChapterNav, { type Chapter } from "./ChapterNav";
+import RoutingAccordion from "./RoutingAccordion";
 
 const NAVY = "#0B2A3A";
 const NAVY_2 = "#0E3A52";
@@ -48,9 +54,8 @@ const SANS = "var(--font-sans)";
 const DISPLAY = "var(--font-display)";
 const EASE = "cubic-bezier(.22,.61,.36,1)";
 
-/* Page inset, matching the design's 55px at 1440 and easing down from there. */
-const GUT = "px-[var(--ind-inset)]";
-const SHELL = `mx-auto w-full max-w-[1330px] ${GUT}`;
+/* max 1330 centred, inset 55 / 48 / 40 / 24 */
+const SHELL = "mx-auto w-full max-w-[1330px] px-[var(--ind-gut)]";
 
 const eyebrow = (color: string) => ({
   margin: 0,
@@ -67,13 +72,21 @@ const label = (color: string) => ({
   color,
 });
 const lead = (color: string) => ({ margin: 0, font: `400 18px/1.6 ${SANS}`, color, textWrap: "pretty" as const });
-const body = (color: string) => ({ margin: 0, font: `400 16px/1.55 ${SANS}`, color, textWrap: "pretty" as const });
+const bodyType = (color: string) => ({ margin: 0, font: `400 16px/1.55 ${SANS}`, color, textWrap: "pretty" as const });
+const h2Type = (color: string) => ({
+  margin: 0,
+  font: `600 var(--ind-h2)/1.1 ${SANS}`,
+  letterSpacing: "-.015em",
+  color,
+  textWrap: "pretty" as const,
+});
 
 const btn = (bg: string, color: string, border?: string) => ({
   display: "inline-flex" as const,
   alignItems: "center" as const,
   justifyContent: "center" as const,
-  minHeight: 52,
+  gap: 10,
+  height: 52,
   padding: "0 26px",
   background: bg,
   color,
@@ -85,85 +98,73 @@ const btn = (bg: string, color: string, border?: string) => ({
   transition: `background 200ms ${EASE}, color 200ms ${EASE}`,
 });
 
-/* ── content ──────────────────────────────────────────────── */
+/* ── content, from the handoff ─────────────────────────────── */
 
-const HERO = {
-  eyebrow: "Industries we serve",
-  title: "Every Sector Fails Differently. So Does Every Inspection.",
-  lead: "A turbine blade, a brake caliper and a BGA solder joint all hide their defects — but not in the same way, at the same scale, or at the same production speed.",
-};
+const HERO_CRITERIA = ["The Part", "The Defect", "The Material", "The Production Requirement"];
 
-const STATEMENT = {
-  title: "The Defect You Cannot See Is the One That Ships.",
-  paras: [
-    "External inspection catches what is on the surface. Porosity in a casting, a void in a solder joint, a debond inside a composite layup — these pass visual checks and fail in service, usually at the customer.",
-    "Industrial X-ray and CT let you look inside without cutting the part open. Instead of destroying a sample to judge a batch, you inspect the part you are about to ship — and keep the record.",
-  ],
-};
-
-type Col = { head: string; items: string[]; accent?: boolean };
-type Ch = {
-  num: string;
-  label: string;
-  id: string;
-  title: string;
+type Industry = {
+  n: string;
+  name: string;
   lead: string;
-  cols: Col[];
+  systems: string[];
+  image?: { src: string; alt: string; fit: "cover" | "contain"; ground: string };
+  need?: string;
   note?: string;
+  figcaption?: string;
 };
 
-const CHAPTERS: Ch[] = [
+const INDUSTRIES: Industry[] = [
   {
-    num: "01",
-    label: "Aerospace & Defence",
-    id: "ch-aero",
-    title: "Aerospace & Defence",
+    n: "01",
+    name: "Aerospace & Defence",
     lead: "Inspect with confidence, because failure is not an option. Turbine parts, rotor blades, structural assemblies, nozzles and composite layups — where a micro-crack, an inclusion or a bond failure has consequences that reach far beyond the factory.",
-    /* The design keeps this line behind a toggle, defaulting on. It explains
-       why the chapter shows a system rather than a radiograph. */
+    systems: ["High-Energy X-ray", "MQCT", "Microfocus CT", "MQXC Cabinet DR", "Rotor Blade DR"],
+    image: {
+      src: "/assets/ind-aero-rotor-dr.jpg",
+      alt: "MQS rotor blade digital radiography system with long-format gantry, travelling X-ray source and flat panel detector",
+      fit: "contain",
+      ground: INSET,
+    },
     note: "We don't publish aerospace scan results. Our customers' programmes stay their own — which is usually why they chose us.",
-    cols: [
-      { head: "Typical components", items: ["Turbine parts", "Rotor blades", "Structural assemblies", "Nozzles", "Composite layups"] },
-      { head: "Typical defects", items: ["Micro-cracks", "Inclusions", "Bond failure / debond", "Internal structural defects"] },
-      { head: "Systems used", items: ["High-Energy X-ray", "MQCT", "Microfocus CT", "MQXC Cabinet DR", "Rotor Blade DR"], accent: true },
-    ],
   },
   {
-    num: "02",
-    label: "Automotive & EV",
-    id: "ch-auto",
-    title: "Automotive & EV",
+    n: "02",
+    name: "Automotive & EV",
     lead: "Inspect faster. Reduce scrap. Deliver safer vehicles. Cast housings, brake components, powertrain parts and battery assemblies — inspected at production speed, because a zero-defect target means checking parts, not samples.",
-    cols: [
-      { head: "Typical components", items: ["Cast housings", "Brake calipers and discs", "Alloy wheels", "Powertrain and steering parts", "EV cells and modules"] },
-      { head: "Inspection requirements", items: ["Porosity detection", "Casting quality to spec", "Electrode alignment", "High-throughput 100% checks", "Traceability"] },
-      { head: "Systems used", items: ["MQS-PRISM", "MQXC Cabinet DR", "MQCT", "MQWR 160U"], accent: true },
-    ],
+    systems: ["MQS-PRISM", "MQXC Cabinet DR", "MQCT", "MQWR 160U"],
+    image: {
+      src: "/assets/ind-auto-wheel-hub.jpg",
+      alt: "Radiograph of an alloy wheel hub showing internal casting structure",
+      fit: "cover",
+      ground: INSET,
+    },
+    figcaption: "Alloy wheel radiograph — porosity assessment",
   },
   {
-    num: "03",
-    label: "Electronics & Semiconductors",
-    id: "ch-elec",
-    title: "Electronics & Semiconductors",
+    n: "03",
+    name: "Electronics & Semiconductors",
     lead: "Inspect what the eye cannot see. BGA voids, head-in-pillow, bridging and PTH fill issues — defects that pass visual inspection, survive functional test, and come back as field returns.",
-    cols: [
-      { head: "Typical components", items: ["PCB assemblies", "Solder joints and BGAs", "Plated through holes", "SMT assemblies", "Semiconductor packages"] },
-      { head: "Typical defects", items: ["BGA voids", "Head-in-pillow", "Solder bridging", "PTH fill issues", "Hidden package defects"] },
-      { head: "Systems used", items: ["MQX.tracE", "MQX.tracE CT", "MQX.gINti", "Microfocus CT"], accent: true },
-    ],
+    systems: ["MQX.tracE", "MQX.tracE CT", "MQX.gINti", "Microfocus CT"],
+    /* The handoff ships the same PTH radiograph here as in the internal-view
+       figure above. Kept as designed so both captions stay accurate. */
+    image: {
+      src: "/assets/svc-ct-voids.jpg",
+      alt: "CT analysis showing internal voids in a plated through-hole array",
+      fit: "cover",
+      ground: NAVY,
+    },
+    figcaption: "Plated through holes — voids visible in fill",
   },
 ];
 
-const NAV_CHAPTERS: Chapter[] = CHAPTERS.map((c) => ({ num: c.num, label: c.label, id: c.id }));
-
-const ALSO_SERVED: [string, string][] = [
+const ALSO: [string, string][] = [
   ["Energy & Power", "Weld integrity and thick-section castings in pressure-retaining components"],
   ["Foundry & Castings", "Porosity, shrinkage and inclusion classification against customer specification"],
   ["Additive Manufacturing", "Layer integrity, internal lattice validation and CT metrology on printed parts"],
   ["Research & Scientific", "Material characterisation and one-off investigation across mixed sample types"],
 ];
 
-const ROUTES: [string, string, string][] = [
+const ROUTES = [
   ["Turbine and engine components", "Micro-defects in high-value parts", "Microfocus CT · MQCT"],
   ["Thick castings and dense assemblies", "Penetration through the section", "High-Energy X-ray"],
   ["Aluminium castings at volume", "Throughput without missing porosity", "MQS-PRISM · MQXC"],
@@ -172,27 +173,34 @@ const ROUTES: [string, string, string][] = [
   ["PCBs and solder joints", "Hidden voids under packages", "MQX.tracE · MQX.tracE CT"],
   ["SMT component reels", "Inventory count accuracy", "MQX.gINti"],
   ["Welds and pressure components", "Root penetration and weld integrity", "MQXC 320/450 · High-Energy"],
-];
+] as const;
 
 const COMPLIANCE: [string, string][] = [
-  ["AERB", "Type-approved radiation safety"],
-  /* The client's brief flags the E2422 citation as needing confirmation. */
-  ["ASTM", "Aligned workflows, incl. E2422"],
-  ["Traceability", "Audit-ready inspection records"],
-  ["Archive", "Recallable programs and images"],
+  ["AERB", "Compliant and type-approved systems for radiation safety"],
+  /* The content doc flags the E2422 citation as needing confirmation. */
+  ["ASTM", "Aligned inspection workflows, including E2422 where AI software is used"],
+  ["Traceability", "Inspection records and reporting support for customer audits"],
+  ["Digital archive", "Repeatable, recallable inspection programs and image history"],
 ];
 
 /* ── pieces ───────────────────────────────────────────────── */
 
-/* The design's labelled placeholder, for the one hero cell MQS have not
-   supplied a photograph for. */
-function Slot({ caption, className }: { caption: string; className?: string }) {
+/* The handoff's labelled drop target, for the slots MQS have not filled. */
+function Slot({ caption, ratio, faint = false }: { caption: string; ratio?: string; faint?: boolean }) {
   return (
-    <div className={`relative flex items-center justify-center overflow-hidden ${className ?? ""}`} style={{ background: NAVY_2 }}>
+    <div
+      className="relative flex items-center justify-center overflow-hidden"
+      style={{ aspectRatio: ratio, background: NAVY_2, ...(ratio ? {} : { position: "absolute", inset: 0 }) }}
+    >
       <div className="pointer-events-none absolute inset-5" style={{ border: "1px solid rgba(255,255,255,.12)" }} />
       <p
-        className="relative max-w-[300px] p-6 text-center"
-        style={{ font: `500 11px/1.7 ${SANS}`, letterSpacing: ".12em", textTransform: "uppercase", color: "rgba(255,255,255,.45)" }}
+        className="relative max-w-[420px] p-6 text-center"
+        style={{
+          font: `500 11px/1.7 ${SANS}`,
+          letterSpacing: ".12em",
+          textTransform: "uppercase",
+          color: faint ? "rgba(255,255,255,.32)" : "rgba(255,255,255,.45)",
+        }}
       >
         {caption}
       </p>
@@ -200,357 +208,333 @@ function Slot({ caption, className }: { caption: string; className?: string }) {
   );
 }
 
-function MosaicCaption({ children, small = false }: { children: React.ReactNode; small?: boolean }) {
+function Photo({ src, alt, fit, ground, ratio, sizes }: {
+  src: string; alt: string; fit: "cover" | "contain"; ground: string; ratio: string; sizes: string;
+}) {
   return (
-    <div
-      className={`pointer-events-none absolute ${small ? "left-4 bottom-3.5" : "left-6 bottom-5"}`}
-      style={{
-        font: `500 ${small ? 11 : 13}px/1.2 ${SANS}`,
-        letterSpacing: ".09em",
-        textTransform: "uppercase",
-        color: "#fff",
-        textShadow: small ? "0 1px 10px rgba(11,42,58,.9)" : undefined,
-      }}
-    >
-      {children}
+    <div className="relative overflow-hidden" style={{ aspectRatio: ratio, background: ground }}>
+      <Image src={src} alt={alt} fill quality={90} sizes={sizes} className={fit === "contain" ? "object-contain p-4" : "object-cover"} />
     </div>
   );
 }
 
-/* Three columns split by 1px gaps over a hairline ground. Collapsing to one
-   column turns those column rules into row rules with no extra CSS. */
-function SpecTable({ cols }: { cols: Col[] }) {
-  return (
-    <div
-      className="mt-11 grid grid-cols-1 md:grid-cols-3"
-      style={{ gap: 1, background: HAIR }}
-    >
-      {cols.map((c, i) => (
-        <div
-          key={c.head}
-          className={`py-5 md:py-0 ${i === 0 ? "md:pr-6" : i === cols.length - 1 ? "md:pl-6" : "md:px-6"}`}
-          style={{ background: PAGE }}
-        >
-          <div style={{ ...eyebrow(MUTED), paddingBottom: 14 }}>{c.head}</div>
-          <div style={{ font: `400 16px/1.9 ${SANS}`, color: c.accent ? CYAN_INK : NAVY }}>
-            {c.items.map((it) => (
-              <div key={it}>{it}</div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
+/* ── 1 · hero ─────────────────────────────────────────────── */
 
-function ChapterHead({ c }: { c: Ch }) {
+function Hero() {
   return (
-    <div className="flex items-start gap-5 md:gap-7">
+    <section className="relative flex min-h-[520px] overflow-hidden lg:min-h-[600px] min-[1360px]:min-h-[640px]" style={{ background: NAVY }}>
+      <Slot caption="IMG-01 needed · hero composite of part types across sectors, 2880×1280" faint />
+      {/* left-to-right navy scrim, 94% → 86% → 62% */}
       <div
-        style={{
-          font: `600 clamp(44px, 24.7px + 4.95vw, 96px)/.85 ${DISPLAY}`,
-          letterSpacing: "-.04em",
-          color: HAIR,
-        }}
-      >
-        {c.num}
-      </div>
-      <div className="pt-1.5">
-        <p style={eyebrow(CYAN_INK)}>Primary industry</p>
-        <h2
-          className="m-0 mt-3"
-          style={{
-            font: `600 clamp(26px, 19.3px + 1.71vw, 44px)/1.1 ${SANS}`,
-            letterSpacing: "-.022em",
-            color: NAVY,
-            textWrap: "pretty",
-          }}
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "linear-gradient(90deg,rgba(11,42,58,.94) 0%,rgba(11,42,58,.86) 46%,rgba(11,42,58,.62) 100%)" }}
+      />
+      <div className={`relative flex w-full flex-col justify-center py-18 min-[700px]:py-24 ${SHELL}`}>
+        <p style={eyebrow(CYAN)}>Industries we serve</p>
+        <h1
+          className="m-0 mt-5 max-w-[20ch]"
+          style={{ font: `600 var(--ind-h1)/1 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}
         >
-          {c.title}
-        </h2>
-        <p className="mt-3.5 max-w-[56ch]" style={lead(BODY)}>{c.lead}</p>
+          Every Sector Fails Differently.
+          <br />
+          So Does Every Inspection.
+        </h1>
+        <p className="mt-6 max-w-[58ch]" style={lead("rgba(255,255,255,.82)")}>
+          A turbine blade, a brake caliper and a BGA solder joint all hide their defects — but not in the same way, at the
+          same scale, or at the same production speed. MQS configures inspection around the part, the defect and the line it
+          comes off.
+        </p>
+        <div className="mt-9 flex flex-col gap-3.5 min-[700px]:flex-row">
+          <a href="#routing" style={btn(CYAN, NAVY)} className="hover:!bg-[#0FA6D4] max-[699px]:!w-full">Find Your Industry</a>
+          <a href="#contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10 max-[699px]:!w-full">
+            Talk to an Expert
+          </a>
+        </div>
+        {/* the four things an application engineer needs, as a ruled strip */}
+        <div className="mt-10 grid grid-cols-2 min-[700px]:mt-14 min-[700px]:grid-cols-4" style={{ borderTop: "1px solid rgba(255,255,255,.2)" }}>
+          {HERO_CRITERIA.map((t, i) => (
+            <div
+              key={t}
+              className={`py-3.5 min-[700px]:py-5 ${i % 2 === 1 ? "pl-4 min-[700px]:pl-0" : ""} ${i > 0 ? "min-[700px]:pl-7" : ""}`}
+              style={{
+                borderLeft: i % 2 === 1 ? "1px solid rgba(255,255,255,.2)" : 0,
+                ...eyebrow("rgba(255,255,255,.78)"),
+              }}
+            >
+              {t}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-/* ── page ─────────────────────────────────────────────────── */
+/* ── 2 · why inspection matters ───────────────────────────── */
 
-export default function IndustriesOverview() {
+function Why() {
   return (
-    <main
-      style={{ "--ind-inset": "clamp(20px, 3.8vw, 55px)", background: PAGE, color: BODY, fontFamily: SANS } as React.CSSProperties}
-    >
-      {/* ── hero ── */}
-      <section style={{ background: NAVY, paddingTop: 52 }}>
-        <div className={SHELL}>
-          <div className="grid grid-cols-1 items-end gap-8 pb-11 pt-12 lg:grid-cols-[minmax(0,6.5fr)_minmax(0,4.5fr)] lg:gap-16">
-            <div>
-              <p style={eyebrow(CYAN)}>{HERO.eyebrow}</p>
-              <h1
-                className="m-0 mt-5"
-                style={{
-                  font: `600 clamp(32px, 19.4px + 3.24vw, 66px)/1.02 ${SANS}`,
-                  letterSpacing: "-.028em",
-                  color: "#fff",
-                  textWrap: "pretty",
-                }}
-              >
-                {HERO.title}
-              </h1>
-            </div>
-            <div>
-              <p style={lead("rgba(255,255,255,.8)")}>{HERO.lead}</p>
-              <div className="mt-7 flex flex-col gap-3.5 sm:flex-row">
-                <a href="#chapters" style={btn(CYAN, NAVY)} className="hover:!bg-[#0FA6D4]">Find Your Industry</a>
-                <a href="#contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10">
-                  Talk to an Expert
-                </a>
-            </div>
-            </div>
-          </div>
-
-          {/* three-cell mosaic: dominant cell plus two stacked */}
-          <div className="grid grid-cols-1 gap-3 pb-3 lg:h-[520px] lg:grid-cols-[2fr_1fr] lg:grid-rows-2">
-            {/* MQS have not supplied the design's IMG-01, so this keeps the
-                design's labelled placeholder rather than a stand-in. */}
-            <Slot
-              caption="IMG-01 needed · turbine blade or cast part mid-inspection, 1800×1200"
-              className="min-h-[240px] lg:row-span-2 lg:min-h-0"
-            />
-            <div className="relative min-h-[200px] lg:min-h-0" style={{ background: NAVY_2 }}>
-              <Image
-                src="/assets/ind-auto-wheel-hub.jpg"
-                alt="Radiograph of an alloy wheel hub"
-                fill
-                quality={90}
-                sizes="(min-width:1024px) 33vw, 100vw"
-                className="object-cover"
-              />
-              <MosaicCaption small>Automotive</MosaicCaption>
-            </div>
-            <div className="relative min-h-[200px] lg:min-h-0" style={{ background: NAVY_2 }}>
-              <Image
-                src="/assets/ind-elec-bga.jpg"
-                alt="Radiograph of a BGA solder ball array"
-                fill
-                quality={90}
-                sizes="(min-width:1024px) 33vw, 100vw"
-                className="object-cover"
-              />
-              <MosaicCaption small>Electronics</MosaicCaption>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── statement ── */}
-      <section style={{ background: WHITE, borderBottom: `1px solid ${HAIR}` }}>
-        <div className={`${SHELL} grid grid-cols-1 items-start gap-10 py-20 lg:grid-cols-2 lg:gap-[72px] lg:py-24`}>
-          <h2
-            className="m-0"
-            style={{
-              font: `600 clamp(28px, 21.3px + 1.71vw, 46px)/1.1 ${SANS}`,
-              letterSpacing: "-.02em",
-              color: NAVY,
-              textWrap: "pretty",
-            }}
-          >
-            {STATEMENT.title}
-          </h2>
+    <section style={{ background: PAGE }}>
+      <div className={`${SHELL} py-[var(--ind-sect)]`}>
+        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-20">
+          <h2 style={h2Type(NAVY)}>The Defect You Cannot See Is the One That Ships.</h2>
           <div className="flex flex-col gap-[18px]">
-            <p style={lead(BODY)}>{STATEMENT.paras[0]}</p>
-            <p style={body(MUTED)}>{STATEMENT.paras[1]}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── chapters ── */}
-      <section id="chapters" style={{ background: PAGE }}>
-        <div className={`${SHELL} grid grid-cols-1 items-start gap-0 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16`}>
-          <ChapterNav chapters={NAV_CHAPTERS} note="Four further industries are served — listed after the chapters." />
-
-          <div>
-            {CHAPTERS.map((c, i) => (
-              <div
-                key={c.id}
-                id={c.id}
-                className="scroll-mt-[110px] pb-20 pt-14 md:pb-24 md:pt-20"
-                style={{ borderBottom: i === CHAPTERS.length - 1 ? 0 : `1px solid ${HAIR}` }}
-              >
-                <ChapterHead c={c} />
-
-                {/* chapter 01 — the rotor blade DR system, contained on white */}
-                {c.id === "ch-aero" && (
-                  <>
-                    <div className="relative mt-11 aspect-[21/9]" style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
-                      <Image
-                        src="/assets/ind-aero-rotor-dr.jpg"
-                        alt="MQS rotor blade digital radiography system with long-format gantry, travelling X-ray source and flat panel detector"
-                        fill
-                        quality={90}
-                        sizes="(min-width:1024px) 70vw, 100vw"
-                        className="object-contain p-4"
-                      />
-                    </div>
-                    {c.note && (
-                      <p className="mt-4 max-w-[68ch]" style={{ ...body(MUTED), fontStyle: "italic" }}>{c.note}</p>
-                    )}
-                  </>
-                )}
-
-                {/* chapter 02 — a wide radiograph beside a squarer one */}
-                {c.id === "ch-auto" && (
-                  <div className="mt-11 grid grid-cols-1 gap-3 md:grid-cols-[1.6fr_1fr]">
-                    <div className="relative aspect-[16/10]" style={{ background: INSET, border: `1px solid ${HAIR}` }}>
-                      <Image
-                        src="/assets/ind-auto-brake-caliper.jpg"
-                        alt="CT volume of a brake caliper with measurement scale"
-                        fill
-                        quality={90}
-                        sizes="(min-width:768px) 45vw, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="relative aspect-[1/1.02]" style={{ background: INSET, border: `1px solid ${HAIR}` }}>
-                      <Image
-                        src="/assets/ind-auto-battery-module.jpg"
-                        alt="CT cross-section of a cylindrical battery cell showing electrode winding"
-                        fill
-                        quality={90}
-                        sizes="(min-width:768px) 28vw, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* chapter 03 — full-width radiograph with the design's annotation chip */}
-                {c.id === "ch-elec" && (
-                  <div className="relative mt-11 aspect-[21/9]" style={{ background: NAVY }}>
-                    <Image
-                      src="/assets/svc-ct-voids.jpg"
-                      alt="CT analysis showing internal voids in a plated through-hole array"
-                      fill
-                      quality={90}
-                      sizes="(min-width:1024px) 70vw, 100vw"
-                      className="object-cover"
-                    />
-                    <div
-                      className="pointer-events-none absolute left-4 top-4 md:left-6 md:top-5"
-                      style={{
-                        padding: "6px 10px",
-                        background: "rgba(11,42,58,.86)",
-                        border: `1px solid ${CYAN}`,
-                        font: `500 11px/1.2 ${SANS}`,
-                        letterSpacing: ".045em",
-                        textTransform: "uppercase",
-                        color: "#fff",
-                      }}
-                    >
-                      PTH fill — voids in three of four holes
-                    </div>
-                  </div>
-                )}
-
-                <SpecTable cols={c.cols} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── also served ── */}
-      <section style={{ background: WHITE, borderTop: `1px solid ${HAIR}` }}>
-        <div className={`${SHELL} py-16 md:py-[84px]`}>
-          <h2 className="m-0" style={{ font: `500 clamp(24px, 21px + .55vw, 32px)/1.2 ${SANS}`, letterSpacing: "-.015em", color: NAVY }}>
-            Also Served
-          </h2>
-          <div className="mt-7" style={{ borderTop: `1px solid ${HAIR}` }}>
-            {ALSO_SERVED.map(([name, desc]) => (
-              <a
-                key={name}
-                href="/contact"
-                className="grid grid-cols-1 items-center gap-2 py-5 no-underline transition-colors duration-200 hover:bg-[#F4F8FA] md:grid-cols-[minmax(0,3fr)_minmax(0,7fr)_auto] md:gap-8"
-                style={{ borderBottom: `1px solid ${HAIR}` }}
-              >
-                <span style={{ font: `500 20px/1.25 ${SANS}`, color: NAVY }}>{name}</span>
-                <span style={body(MUTED)}>{desc}</span>
-                <span style={label(CYAN_INK)}>Contact →</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── routing matrix ── */}
-      <section id="matrix" style={{ background: NAVY }}>
-        <div className={`${SHELL} py-16 md:py-[100px]`}>
-          <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-[72px]">
-            <h2
-              className="m-0"
-              style={{ font: `600 clamp(26px, 19.3px + 1.71vw, 44px)/1.1 ${SANS}`, letterSpacing: "-.02em", color: "#fff", textWrap: "pretty" }}
-            >
-              Find the System by What You Make.
-            </h2>
-            <p style={lead("rgba(255,255,255,.8)")}>
-              You arrive knowing your part and your problem. This is the shortest route from either to the right configuration.
+            <p style={lead(BODY)}>
+              External inspection catches what is on the surface. Porosity in a casting, a void in a solder joint, a debond
+              inside a composite layup — these pass visual checks and fail in service, usually at the customer.
+            </p>
+            <p style={bodyType(MUTED)}>
+              Industrial X-ray and CT let you look inside without cutting the part open. Instead of destroying a sample to
+              judge a batch, you inspect the part you are about to ship — and keep the record.
             </p>
           </div>
-          <div className="mt-12">
-            <div
-              className="hidden pb-3.5 md:grid md:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,3.4fr)] md:gap-8"
-              style={{ borderBottom: "1px solid rgba(255,255,255,.3)", ...eyebrow("rgba(255,255,255,.7)") }}
-            >
-              <span>If you inspect…</span>
-              <span>The core problem is…</span>
-              <span>Start with</span>
-            </div>
-            {/* Plain rows, not links: the design points each at a detail page and
-                Phase 1 has none. */}
-            {ROUTES.map(([part, problem, system]) => (
-              <div
-                key={part}
-                className="grid grid-cols-1 gap-1.5 py-5 md:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,3.4fr)] md:items-center md:gap-8"
-                style={{ borderBottom: "1px solid rgba(255,255,255,.16)" }}
-              >
-                <span style={{ font: `500 19px/1.3 ${SANS}`, color: "#fff", textWrap: "pretty" }}>{part}</span>
-                <span style={body("rgba(255,255,255,.72)")}>{problem}</span>
-                <span style={{ font: `500 14px/1.4 ${SANS}`, letterSpacing: ".02em", color: CYAN }}>{system}</span>
-              </div>
+        </div>
+
+        {/* the argument made visually: the same class of part, outside then inside */}
+        <div className="mt-8 grid grid-cols-1 min-[700px]:mt-16 min-[700px]:grid-cols-2" style={{ gap: 1, background: HAIR }}>
+          <figure className="m-0" style={{ background: WHITE }}>
+            <Slot caption="fin-external needed · external view of a PCB assembly on the line, 1200×750" ratio="16 / 10" />
+            <figcaption className="flex justify-between gap-4 px-5 py-4" style={label(MUTED)}>
+              <span>External view</span>
+              <span style={{ color: NAVY }}>Passes</span>
+            </figcaption>
+          </figure>
+          <figure className="m-0" style={{ background: WHITE }}>
+            <Photo
+              src="/assets/svc-ct-voids.jpg"
+              alt="Radiograph of a plated through-hole array with voids visible in the fill"
+              fit="cover"
+              ground={NAVY}
+              ratio="16 / 10"
+              sizes="(min-width:700px) 50vw, 100vw"
+            />
+            <figcaption className="flex justify-between gap-4 px-5 py-4" style={label(MUTED)}>
+              <span>Internal view — MQS</span>
+              <span style={{ color: CYAN_INK }}>Voids detected</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── 3 · primary industries, alternating ──────────────────── */
+
+function IndustryBlock({ item, index }: { item: Industry; index: number }) {
+  /* The handoff alternates text | image, image | text, text | image, and only
+     from laptop up; tablet and mobile stack image under text. */
+  const imageFirst = index === 1;
+  const cols = imageFirst
+    ? "lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]"
+    : "lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]";
+
+  return (
+    <div className={`grid grid-cols-1 items-start gap-7 pt-14 lg:gap-[72px] lg:pt-24 ${cols}`}>
+      <div className={imageFirst ? "lg:order-2" : ""}>
+        <div style={{ font: `600 var(--ind-num)/.9 ${DISPLAY}`, letterSpacing: "-.04em", color: INSET }}>{item.n}</div>
+        <p className="mt-2" style={eyebrow(CYAN_INK)}>Primary industry</p>
+        <h3
+          className="m-0 mt-3.5"
+          style={{ font: `600 var(--ind-h3)/1.12 ${SANS}`, letterSpacing: "-.015em", color: NAVY, textWrap: "pretty" }}
+        >
+          {item.name}
+        </h3>
+        <p className="mt-4 max-w-[48ch]" style={lead(BODY)}>{item.lead}</p>
+        <div className="mt-7" style={{ borderTop: `1px solid ${HAIR}`, paddingTop: 18 }}>
+          <p style={eyebrow(MUTED)}>Systems used</p>
+          <div className="mt-3.5 flex flex-wrap gap-2">
+            {item.systems.map((s) => (
+              <span key={s} className="px-3 py-2" style={{ background: INSET, font: `500 14px/1.2 ${SANS}`, letterSpacing: ".02em", color: NAVY }}>
+                {s}
+              </span>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* ── compliance ── */}
-      <section style={{ background: PAGE }}>
-        <div className={`${SHELL} grid grid-cols-1 items-center gap-8 py-16 md:py-[72px] lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-14`}>
-          <h2 className="m-0" style={{ font: `500 clamp(22px, 19px + .55vw, 30px)/1.2 ${SANS}`, letterSpacing: "-.015em", color: NAVY, textWrap: "pretty" }}>
-            Built to Pass the Audit, Not Just the Inspection.
+      <div className={imageFirst ? "lg:order-1" : ""}>
+        {item.image ? (
+          <Photo
+            src={item.image.src}
+            alt={item.image.alt}
+            fit={item.image.fit}
+            ground={item.image.ground}
+            ratio="4 / 3"
+            sizes="(min-width:1024px) 55vw, 100vw"
+          />
+        ) : (
+          <Slot caption={item.need ?? "Photograph needed"} ratio="4 / 3" />
+        )}
+        {item.note && <p className="mt-4 max-w-[58ch]" style={{ ...bodyType(MUTED), fontStyle: "italic" }}>{item.note}</p>}
+        {item.figcaption && <p className="mt-3.5" style={{ ...eyebrow(MUTED), letterSpacing: ".045em" }}>{item.figcaption}</p>}
+      </div>
+    </div>
+  );
+}
+
+function Primary() {
+  return (
+    <section style={{ background: WHITE, borderTop: `1px solid ${HAIR}` }}>
+      <div className={SHELL}>
+        <div className="pt-[var(--ind-sect)]">
+          <div className="flex flex-wrap items-baseline justify-between gap-8 pb-6" style={{ borderBottom: `1px solid ${HAIR}` }}>
+            <h2 style={h2Type(NAVY)}>Where MQS Systems Work.</h2>
+            <span style={eyebrow(MUTED)}>Three primary industries</span>
+          </div>
+        </div>
+        {INDUSTRIES.map((item, i) => (
+          <IndustryBlock key={item.n} item={item} index={i} />
+        ))}
+        <div style={{ height: "var(--ind-sect)" }} />
+      </div>
+    </section>
+  );
+}
+
+/* ── 4 · also served ──────────────────────────────────────── */
+
+function Also() {
+  return (
+    <section style={{ background: PAGE, borderTop: `1px solid ${HAIR}` }}>
+      <div className={`${SHELL} py-12 min-[700px]:py-[100px]`}>
+        <div className="flex flex-wrap items-baseline justify-between gap-8">
+          <h2 className="m-0" style={{ font: `500 var(--ind-h2)/1.2 ${SANS}`, letterSpacing: "-.015em", color: NAVY }}>
+            Also Served
           </h2>
-          <div className="grid grid-cols-2 gap-6 pt-5 lg:grid-cols-4" style={{ borderTop: `1px solid ${HAIR}` }}>
-            {COMPLIANCE.map(([head, detail]) => (
-              <div key={head}>
-                <div style={{ font: `600 14px/1.2 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase", color: CYAN_INK }}>{head}</div>
-                <p className="mt-2.5" style={{ font: `400 15px/1.55 ${SANS}`, color: MUTED }}>{detail}</p>
-              </div>
-            ))}
-          </div>
+          <span className="hidden min-[700px]:inline" style={eyebrow(MUTED)}>
+            Enquiries handled by our application engineers
+          </span>
         </div>
-      </section>
+        <div className="mt-5 min-[700px]:mt-9" style={{ borderBottom: `1px solid ${HAIR}` }}>
+          {ALSO.map(([name, need]) => (
+            <a
+              key={name}
+              href="/contact"
+              className="group grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1.5 py-[18px] no-underline transition-colors duration-200 hover:bg-white min-[700px]:grid-cols-[minmax(0,3fr)_minmax(0,6fr)_auto] min-[700px]:gap-8 min-[700px]:py-[26px]"
+              style={{ borderTop: `1px solid ${HAIR}` }}
+            >
+              <span className="min-[700px]:!text-[22px]" style={{ font: `500 18px/1.2 ${SANS}`, letterSpacing: "-.01em", color: NAVY }}>
+                {name}
+              </span>
+              <span className="col-start-1 min-[700px]:col-auto min-[700px]:!text-[16px]" style={{ font: `400 15px/1.55 ${SANS}`, color: MUTED }}>
+                {need}
+              </span>
+              <span
+                className="col-start-2 row-start-1 flex items-center gap-2 min-[700px]:col-auto min-[700px]:row-auto"
+                style={label(CYAN_INK)}
+              >
+                Contact
+                <span className="transition-transform duration-200 group-hover:translate-x-[3px]">→</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-      {/* ── closing enquiry ── */}
-      <section style={{ background: INSET }}>
-        <div className={`${SHELL} grid grid-cols-1 items-end gap-10 py-20 md:py-24 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-16`}>
+/* ── 5 · routing matrix ───────────────────────────────────── */
+
+function Routing() {
+  return (
+    <section id="routing" style={{ background: WHITE, borderTop: `1px solid ${HAIR}` }}>
+      <div className={`${SHELL} py-[var(--ind-sect)]`}>
+        <div className="grid grid-cols-1 items-end gap-4 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-20">
+          <h2 style={h2Type(NAVY)}>Find the System by What You Make.</h2>
+          <p style={lead(BODY)}>
+            You arrive knowing your part and your problem. This is the shortest route from either one to the right MQS
+            configuration.
+          </p>
+        </div>
+
+        {/* tablet and up: the table. Rows are not links, because the systems
+            they would route to are not Phase 1 pages. */}
+        <div className="mt-7 hidden min-[700px]:mt-14 min-[700px]:block">
+          <div
+            className="grid gap-x-6 gap-y-2 pb-4 min-[700px]:grid-cols-[minmax(0,4fr)_minmax(0,4fr)] min-[1024px]:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,3.4fr)] min-[1024px]:gap-8"
+            style={{ borderBottom: `1px solid ${NAVY}`, ...eyebrow(NAVY) }}
+          >
+            <span>If you inspect…</span>
+            <span>The core problem is…</span>
+            <span className="hidden min-[1024px]:inline">Start with</span>
+          </div>
+          {ROUTES.map(([part, problem, system]) => (
+            <div
+              key={part}
+              className="grid items-center gap-x-6 gap-y-2 py-5 min-[700px]:grid-cols-[minmax(0,4fr)_minmax(0,4fr)] min-[1024px]:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,3.4fr)] min-[1024px]:gap-8"
+              style={{ borderBottom: `1px solid ${HAIR}` }}
+            >
+              <span style={{ font: `500 19px/1.3 ${SANS}`, color: NAVY, textWrap: "pretty" }}>{part}</span>
+              <span style={bodyType(MUTED)}>{problem}</span>
+              <span
+                className="col-span-2 min-[1024px]:col-span-1"
+                style={{ font: `500 14px/1.4 ${SANS}`, letterSpacing: ".02em", color: CYAN_INK }}
+              >
+                {system}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* mobile: the handoff's guided accordion */}
+        <div className="mt-7 min-[700px]:hidden">
+          <RoutingAccordion routes={ROUTES} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── 6 · compliance ───────────────────────────────────────── */
+
+function Compliance() {
+  return (
+    <section style={{ background: PAGE, borderTop: `1px solid ${HAIR}` }}>
+      <div className={`${SHELL} py-12 min-[700px]:py-[88px]`}>
+        <h2
+          className="m-0 max-w-[34ch]"
+          style={{ font: `500 var(--ind-h2)/1.2 ${SANS}`, letterSpacing: "-.015em", color: NAVY, textWrap: "pretty" }}
+        >
+          Built to Pass the Audit, Not Just the Inspection.
+        </h2>
+        <div
+          className="mt-6 grid grid-cols-1 min-[700px]:mt-11 min-[700px]:grid-cols-2 min-[1024px]:grid-cols-4"
+          style={{ borderTop: `1px solid ${HAIR}` }}
+        >
+          {COMPLIANCE.map(([k, v], i) => (
+            <div
+              key={k}
+              className={`py-5 ${i % 2 === 1 ? "min-[700px]:border-l min-[700px]:pl-7" : ""} ${i > 0 ? "min-[1024px]:border-l min-[1024px]:pl-7" : "min-[1024px]:border-l-0 min-[1024px]:pl-0"} min-[700px]:border-b-0`}
+              style={{ borderBottom: `1px solid ${HAIR}`, borderColor: HAIR }}
+            >
+              <div style={{ font: `600 15px/1.2 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase", color: CYAN_INK }}>{k}</div>
+              <p className="mt-3" style={bodyType(MUTED)}>{v}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── 7 · closing CTA ──────────────────────────────────────── */
+
+function FinalCta() {
+  return (
+    <section style={{ background: NAVY }}>
+      <div className={`${SHELL} py-16 min-[700px]:py-[110px]`}>
+        <div className="grid grid-cols-1 items-end gap-7 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-20">
           <div>
+            <p style={eyebrow(CYAN)}>Next step</p>
             <h2
-              className="m-0"
-              style={{ font: `600 clamp(28px, 20.6px + 1.9vw, 48px)/1.08 ${SANS}`, letterSpacing: "-.025em", color: NAVY, textWrap: "pretty" }}
+              className="m-0 mt-5"
+              style={{ font: `600 var(--ind-h1)/1.08 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}
             >
               Not Sure Which Applies to You?
             </h2>
-            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2" style={eyebrow(MUTED)}>
+            <div className="mt-7 flex flex-wrap gap-x-7 gap-y-3" style={eyebrow("rgba(255,255,255,.72)")}>
               <span>Part size</span>
               <span>Material</span>
               <span>Thickness</span>
@@ -558,17 +542,33 @@ export default function IndustriesOverview() {
             </div>
           </div>
           <div>
-            <p style={lead(BODY)}>
-              Share those four and our application engineers will recommend the right configuration — and will say so if a simpler
-              system would do the job.
+            <p style={lead("rgba(255,255,255,.82)")}>
+              Share the part size, material, thickness and what you are trying to find. Our application engineers will
+              recommend the right configuration — and will say so if a simpler system would do the job.
             </p>
-            <div className="mt-7 flex flex-col gap-3.5 sm:flex-row">
-              <a href="#contact" style={btn(NAVY, "#fff")} className="hover:!bg-[#12496A]">Talk to an Expert</a>
-              <a href="#contact" style={btn("transparent", NAVY, `1px solid ${HAIR}`)} className="hover:!bg-white">Request a Demo</a>
+            <div className="mt-7 flex flex-col gap-3.5 min-[700px]:flex-row">
+              <a href="#contact" style={btn(CYAN, NAVY)} className="hover:!bg-[#0FA6D4] max-[699px]:!w-full">Talk to an Expert</a>
+              <a href="#contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10 max-[699px]:!w-full">
+                Request a Demo
+              </a>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
+
+export default function IndustriesOverview() {
+  return (
+    <main className="ind-page" style={{ background: PAGE, color: BODY, fontFamily: SANS }}>
+      <Hero />
+      <Why />
+      <Primary />
+      <Also />
+      <Routing />
+      <Compliance />
+      <FinalCta />
     </main>
   );
 }
