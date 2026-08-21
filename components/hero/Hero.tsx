@@ -230,7 +230,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
     >
 
       {/* 1 — background: still poster + video (steel-navy duotone, matches Industries) */}
-      <Image src={bgImage?.src ?? "/assets/hero-mqxc-poster.jpg"} alt={bgImage?.alt ?? "Precision drive components under inspection"} fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} unoptimized={!!bgImage?.src} />
+      <Image src={bgImage?.src ?? "/assets/hero-mqwr-poster.jpg"} alt={bgImage?.alt ?? "MQWR 160U inline alloy wheel inspection system"} fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} unoptimized={!!bgImage?.src} />
       {!reducedMotion && !videoError && (
         <video
           ref={(el) => {
@@ -249,7 +249,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
           loop
           playsInline
           preload="auto"
-          poster={bgImage?.src ?? "/assets/hero-mqxc-poster.jpg"}
+          poster={bgImage?.src ?? "/assets/hero-mqwr-poster.jpg"}
           onCanPlay={() => setVideoReady(true)}
           onLoadedData={() => setVideoReady(true)}
           onPlaying={() => setVideoReady(true)}
@@ -257,7 +257,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
           aria-hidden="true"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: videoReady ? 1 : 0, transition: "opacity 600ms ease", filter: "grayscale(1)" }}
         >
-          <source src="/assets/hero-mqxc.mp4" type="video/mp4" />
+          <source src="/assets/hero-mqwr.mp4" type="video/mp4" />
         </video>
       )}
 
