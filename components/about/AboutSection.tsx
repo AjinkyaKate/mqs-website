@@ -15,7 +15,7 @@ import BackgroundVideo from "@/components/media/BackgroundVideo";
    in view, and is toggled by the existing play/pause button.
    ────────────────────────────────────────────────────────────── */
 
-const BAND_VIDEO = "/assets/about-band.mp4";
+const BAND_VIDEO = "/assets/hero-mqxc.mp4";
 
 const ACCENT = "#0A6A88"; // cyan-700 — AA on light
 const PRIMARY = "#0E3A52";
