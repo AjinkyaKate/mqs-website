@@ -10,7 +10,8 @@ import { linkFor } from "@/components/nav/nav-links";
 const EASE = "cubic-bezier(0.22,0.61,0.36,1)";
 const EASE_ARR = [0.22, 0.61, 0.36, 1] as const;
 const CYAN = "#16C1F3";
-const RULE = "1px solid rgba(255,255,255,.14)";
+const RULE = "1px solid rgba(255,255,255,.10)";
+const MEDIA_FILTER = "saturate(.72) contrast(1.12) brightness(.82)";
 // Desktop grid geometry (%). These framed the inset photograph and its spec
 // labels, both now removed; the four hairline rules on the desktop hero still
 // derive from them, so the numbers stay until the rules are re-cut.
@@ -26,9 +27,9 @@ const IMG_BOTTOM = `calc(${INSET_TOP}vh + ${IMG_H})`;
 const SMALL_HEADER_GRADIENT =
   "linear-gradient(180deg, rgba(11,42,58,.90) 0%, rgba(11,42,58,.62) 60%, rgba(11,42,58,.28) 100%)";
 const SCRIM_DESKTOP =
-  "linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.46) 46%, rgba(0,0,0,.20) 100%)";
+  "linear-gradient(100deg, rgba(2,16,24,.82) 0%, rgba(3,24,34,.60) 45%, rgba(3,18,26,.20) 78%, rgba(3,15,22,.30) 100%)";
 const SCRIM_SMALL =
-  "linear-gradient(180deg, rgba(0,0,0,.34) 0%, rgba(0,0,0,.60) 46%, rgba(0,0,0,.84) 100%)";
+  "linear-gradient(180deg, rgba(3,22,32,.30) 0%, rgba(3,24,34,.58) 44%, rgba(2,15,23,.90) 100%)";
 
 type NavItem = { name: string; href?: string; children?: string[] };
 
@@ -229,8 +230,8 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
       }}
     >
 
-      {/* 1 — background: still poster + video (steel-navy duotone, matches Industries) */}
-      <Image src={bgImage?.src ?? "/assets/hero-mqwr-poster.jpg"} alt={bgImage?.alt ?? "MQWR 160U inline alloy wheel inspection system"} fill priority sizes="100vw" className="object-cover" style={{ filter: "grayscale(1)" }} unoptimized={!!bgImage?.src} />
+      {/* 1 — cinematic background: retain material colour while keeping MQS' steel-navy tone */}
+      <Image src={bgImage?.src ?? "/assets/hero-mqwr-poster.jpg"} alt={bgImage?.alt ?? "MQWR 160U inline alloy wheel inspection system"} fill priority sizes="100vw" className="object-cover" style={{ filter: MEDIA_FILTER, transform: "scale(1.025)", objectPosition: isPhone ? "56% center" : "center" }} unoptimized={!!bgImage?.src} />
       {!reducedMotion && !videoError && (
         <video
           ref={(el) => {
@@ -255,17 +256,20 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
           onPlaying={() => setVideoReady(true)}
           onError={() => setVideoError(true)}
           aria-hidden="true"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: videoReady ? 1 : 0, transition: "opacity 600ms ease", filter: "grayscale(1)" }}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: isPhone ? "56% center" : "center", opacity: videoReady ? 1 : 0, transition: "opacity 900ms ease", filter: MEDIA_FILTER, transform: "scale(1.025)" }}
         >
           <source src="/assets/hero-mqwr.mp4" type="video/mp4" />
         </video>
       )}
 
-      {/* 1b — steel-navy duotone tint over the background (grayscale above + navy mix-blend-color) */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "#12405C", mixBlendMode: "color" }} />
+      {/* 1b — layered grade: restrained cyan light, deep vignette and a soft lower fade */}
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "linear-gradient(125deg, rgba(10,86,116,.32) 0%, rgba(7,50,69,.16) 48%, rgba(3,20,28,.04) 100%)", mixBlendMode: "color" }} />
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(circle at 78% 24%, rgba(22,193,243,.15), transparent 34%)" }} />
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse at center, transparent 36%, rgba(1,10,15,.46) 100%)" }} />
 
       {/* 2 — scrim */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: isDesktop ? SCRIM_DESKTOP : SCRIM_SMALL }} />
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "24%", pointerEvents: "none", background: "linear-gradient(180deg, transparent, rgba(2,13,20,.44))" }} />
 
       {/* 3 — hairline grid */}
       {gridRules.map((s, i) => (
@@ -505,11 +509,14 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
               : { position: "relative", zIndex: 5, display: "flex", flexDirection: "column", flex: "1 1 auto", minHeight: 0 }
           }
         >
-          <div className="t-eyebrow" style={{ color: "#FFFFFF", ...(isDesktop ? { fontSize: 13 } : isPhone ? { fontSize: 11 } : {}) }}>Precision inspection since 1994</div>
-          <h1 className="t-display" style={{ color: "#FFFFFF", textWrap: "balance", margin: isPhone ? "18px 0 0" : "26px 0 0", ...(isDesktop ? { fontSize: "clamp(56px, 4.7vw, 72px)" } : isPhone ? { fontSize: 40 } : {}), ...rise(60) }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <span aria-hidden="true" style={{ width: isPhone ? 24 : 34, height: 2, background: CYAN, boxShadow: "0 0 18px rgba(22,193,243,.45)" }} />
+            <div className="t-eyebrow" style={{ color: "rgba(255,255,255,.92)", ...(isDesktop ? { fontSize: 13 } : isPhone ? { fontSize: 11 } : {}) }}>Precision inspection since 1994</div>
+          </div>
+          <h1 className="t-display" style={{ color: "#FFFFFF", textWrap: "balance", textShadow: "0 8px 30px rgba(0,0,0,.22)", margin: isPhone ? "18px 0 0" : "26px 0 0", ...(isDesktop ? { fontSize: "clamp(56px, 4.7vw, 72px)" } : isPhone ? { fontSize: 40 } : {}), ...rise(60) }}>
             See beyond. Test beyond. Build beyond.
           </h1>
-          <p className="t-lead" style={{ margin: isDesktop ? "28px 0 0" : "24px 0 0", maxWidth: isDesktop ? 640 : 520, color: "rgba(255,255,255,.72)", ...(isDesktop ? { fontSize: "clamp(19px, 1.45vw, 22px)" } : {}), ...rise(140) }}>
+          <p className="t-lead" style={{ margin: isDesktop ? "28px 0 0" : "24px 0 0", maxWidth: isDesktop ? 640 : 520, color: "rgba(255,255,255,.82)", textShadow: "0 3px 18px rgba(0,0,0,.24)", ...(isDesktop ? { fontSize: "clamp(19px, 1.45vw, 22px)" } : {}), ...rise(140) }}>
             Advanced non-destructive testing, automated inspection and electrical test validation for mission-critical industries.
           </p>
           <div

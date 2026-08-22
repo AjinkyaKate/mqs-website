@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
-   Stats strip — MQS proof numbers. Light band, 5 stats, hairline-
+   Stats strip — MQS proof numbers. Light band, 4 stats, hairline-
    divided on desktop.
 
    Motion: `Stats Motion Study.dc.html` → 01 · Count-up.
@@ -35,10 +35,9 @@ const YEARS = new Date().getFullYear() - FOUNDED;
 
 const STATS = [
   { target: YEARS, suffix: "+", label: "Years" },
-  { target: 150, suffix: "+", label: "Engineers" },
-  { target: 100, suffix: "+", label: "Installations" },
+  { target: 100, suffix: "+", label: "Engineers" },
+  { target: 200, suffix: "+", label: "Installations" },
   { target: 8, suffix: "", label: "Cities" },
-  { target: 40, suffix: "+", label: "AERB approvals" },
 ];
 
 const FINALS = STATS.map((s) => s.target);
@@ -54,10 +53,12 @@ export default function StatsStrip() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setReduced(true);
-      setCounts(FINALS);
-      setStarted(true);
-      return;
+      const frame = requestAnimationFrame(() => {
+        setReduced(true);
+        setCounts(FINALS);
+        setStarted(true);
+      });
+      return () => cancelAnimationFrame(frame);
     }
     const el = ref.current;
     if (!el) return;
@@ -98,12 +99,12 @@ export default function StatsStrip() {
 
   return (
     <section ref={ref} className="bg-white px-6 py-14 md:px-10 md:py-16 lg:px-[55px] lg:py-20">
-      <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-5 lg:gap-0">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 lg:grid-cols-4 lg:gap-0">
         {STATS.map((s, i) => {
           const numberDelay = reduced ? 0 : i * STAGGER;
           // column-rule: show a divider only when this cell is NOT the first
-          // column of its row — grid is 2-col mobile / 3-col tablet / 5-col desktop.
-          const divVis = `${i % 2 !== 0 ? "block" : "hidden"} ${i % 3 !== 0 ? "md:block" : "md:hidden"} lg:block`;
+          // column of its row — grid is 2-col mobile / 4-col tablet and desktop.
+          const divVis = `${i % 2 !== 0 ? "block" : "hidden"} md:block`;
           return (
             <div
               key={s.label}

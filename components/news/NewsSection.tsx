@@ -22,7 +22,7 @@ const AWARDS: Award[] = [
   },
   {
     tag: "FTCCI Excellence Award",
-    image: "/assets/award-ftcci.jpg",
+    image: "/assets/award-ftcci-2025.jpg",
     title: "Product Innovation — SME",
     desc: "For the inline wheel inspection system — a first-of-its-kind indigenous solution.",
   },

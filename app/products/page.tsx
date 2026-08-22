@@ -20,7 +20,14 @@ export default function ProductsPage() {
 
       {/* hero band */}
       <section className="relative overflow-hidden" style={{ background: "#0B2A3A" }}>
-        <Image src="/assets/products-hero.jpg" alt="" fill sizes="100vw" className="object-cover opacity-[.28]" />
+        <Image
+          src="/assets/products-overview-hero.png"
+          alt="Engineer reviewing an industrial CT scan beside an inspection system"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-[.36]"
+        />
         <div className="relative flex flex-col gap-5 px-6 pt-[84px] md:gap-[26px] md:px-10 md:pt-[104px] lg:gap-[34px] lg:px-[55px] lg:pt-[128px]">
           <div className="t-eyebrow" style={{ color: "#5AD1F7" }}>
             All solutions

@@ -36,11 +36,8 @@ const HEADLINE = (
 );
 const PARAGRAPH =
   "MQS Technologies builds advanced non-destructive testing, automated inspection and electrical test systems for mission-critical industries.";
-const BAND_HEADLINE = "Designed, built and supported in-house.";
-const BAND_LABEL = "Made in Hyderabad";
 const BAND_PARAGRAPH =
   "Every MQS system is engineered, assembled and validated at our Hyderabad facility before installation.";
-const BAND_CAPTION = "Inside the MQS plant";
 
 function PlayPauseButton({
   playing,
@@ -123,7 +120,7 @@ export default function AboutSection() {
             <div className="flex flex-col gap-6">
               <div className="overflow-hidden" style={{ aspectRatio: "3 / 4.5", background: DARK }}>
                 <Image
-                  src="/assets/about-entrance.jpg"
+                  src="/assets/about-entrance-clean.jpg"
                   alt="MQS Technologies office entrance"
                   width={400}
                   height={600}
@@ -136,8 +133,8 @@ export default function AboutSection() {
             {/* col 2 — large centre */}
             <div className="overflow-hidden" style={{ aspectRatio: "1 / 1.08", background: DARK }}>
               <Image
-                src="/assets/about-banner.jpg"
-                alt="Engineers operating an MQS X-ray and CT inspection system"
+                src="/assets/about-stall.jpg"
+                alt="MQS Technologies exhibition stall showcasing industrial X-ray and CT solutions"
                 width={800}
                 height={864}
                 className="h-full w-full object-cover"
@@ -167,37 +164,13 @@ export default function AboutSection() {
           <BackgroundVideo src={BAND_VIDEO} playing={playing} className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0" style={{ background: "rgba(11,42,58,.6)" }} />
           <div className="absolute inset-0 flex flex-col justify-between" style={{ padding: "72px 55px" }}>
-            <div className="flex items-start justify-between gap-20">
-              <h3
-                className="t-h2 m-0 text-white"
-                style={{ maxWidth: 740 }}
-              >
-                {BAND_HEADLINE}
-              </h3>
-              <div
-                className="t-caption whitespace-nowrap"
-                style={{ color: "rgba(255,255,255,.7)", paddingTop: 14 }}
-              >
-                {BAND_LABEL}
-              </div>
-            </div>
-            <div className="flex items-end justify-between gap-20">
-              <div className="flex items-center gap-5">
-                <PlayPauseButton playing={playing} onClick={toggle} />
-                <div
-                  className="t-caption"
-                  style={{ color: "rgba(255,255,255,.7)", maxWidth: 240 }}
-                >
-                  {BAND_CAPTION}
-                </div>
-              </div>
-              <p
-                className="t-body m-0 text-right"
-                style={{ color: "rgba(255,255,255,.66)", maxWidth: 340 }}
-              >
-                {BAND_PARAGRAPH}
-              </p>
-            </div>
+            <p
+              className="t-h3 m-0 text-white"
+              style={{ maxWidth: 720, textWrap: "balance", textShadow: "0 4px 24px rgba(0,0,0,.28)" }}
+            >
+              {BAND_PARAGRAPH}
+            </p>
+            <PlayPauseButton playing={playing} onClick={toggle} />
           </div>
         </div>
       </div>
@@ -249,33 +222,14 @@ export default function AboutSection() {
         <div className="relative h-[600px] overflow-hidden md:h-[620px]" style={{ background: DARK }}>
           <BackgroundVideo src={BAND_VIDEO} playing={playing} className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0" style={{ background: "rgba(11,42,58,.64)" }} />
-          <div className="absolute inset-0 flex flex-col gap-6 px-6 py-12 md:gap-8 md:px-10 md:py-14">
-            <div
-              className="t-caption"
-              style={{ color: "rgba(255,255,255,.7)" }}
-            >
-              {BAND_LABEL}
-            </div>
-            <h3
-              className="t-h2 m-0 text-white"
-            >
-              {BAND_HEADLINE}
-            </h3>
+          <div className="absolute inset-0 flex flex-col px-6 py-12 md:px-10 md:py-14">
             <p
-              className="t-body m-0 md:max-w-[520px]"
-              style={{ color: "rgba(255,255,255,.66)" }}
+              className="t-h3 m-0 text-white md:max-w-[620px]"
+              style={{ textWrap: "balance", textShadow: "0 4px 24px rgba(0,0,0,.28)" }}
             >
               {BAND_PARAGRAPH}
             </p>
-            <div className="mt-auto flex items-center gap-4">
-              <PlayPauseButton playing={playing} onClick={toggle} />
-              <div
-                className="t-caption"
-                style={{ color: "rgba(255,255,255,.7)" }}
-              >
-                {BAND_CAPTION}
-              </div>
-            </div>
+            <PlayPauseButton playing={playing} onClick={toggle} className="mt-auto" />
           </div>
         </div>
       </div>
