@@ -68,7 +68,7 @@ export default function IndustriesSection() {
         {CARDS.map((c) => (
           <a
             key={c.title}
-            href="/products"
+            href="/industries"
             aria-label={c.title}
             className={`group relative block aspect-[4/3] overflow-hidden border-t-2 border-[#16C1F3] bg-[#0B2A3A] no-underline outline-none transition-colors duration-200 ${EASE} sm:aspect-[4/5] sm:border-[rgba(255,255,255,.14)] sm:group-hover:border-[#16C1F3] sm:group-focus:border-[#16C1F3]`}
           >

@@ -120,7 +120,7 @@ function FeatureCard({ icon, title, description }: Feat) {
 function WorkWithUs({ className = "" }: { className?: string }) {
   return (
     <a
-      href="#contact"
+      href="/careers"
       className={`box-border h-12 items-center gap-3 rounded-none bg-white t-button no-underline transition-colors duration-200 hover:!bg-[#16C1F3] hover:!text-[#08283A] ${className}`}
       style={{ color: PRIMARY }}
     >
