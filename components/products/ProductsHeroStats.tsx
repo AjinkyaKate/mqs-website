@@ -23,10 +23,9 @@ const DURATION = 1100;
 const STAGGER = 80;
 
 const STATS = [
-  { target: 12, suffix: "+", label: "NDT product lines" },
-  { target: 6, suffix: "", label: "ATE solutions" },
-  { target: 100, suffix: "+", label: "Installations" },
-  { target: 40, suffix: "+", label: "AERB approvals" },
+  { target: 14, suffix: "", label: "NDT product lines" },
+  { target: 3, suffix: "", label: "ATE categories" },
+  { target: 200, suffix: "+", label: "Installations" },
 ];
 const FINALS = STATS.map((s) => s.target);
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -40,10 +39,12 @@ export default function ProductsHeroStats() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setReduced(true);
-      setCounts(FINALS);
-      setStarted(true);
-      return;
+      const frame = requestAnimationFrame(() => {
+        setReduced(true);
+        setCounts(FINALS);
+        setStarted(true);
+      });
+      return () => cancelAnimationFrame(frame);
     }
     const el = ref.current;
     if (!el) return;
@@ -84,19 +85,16 @@ export default function ProductsHeroStats() {
   return (
     <div
       ref={ref}
-      className="relative mt-10 grid grid-cols-2 border-t md:mt-14 lg:mt-20 lg:grid-cols-4"
+      className="relative mt-10 grid grid-cols-1 border-t sm:grid-cols-3 md:mt-14 lg:mt-20"
       style={{ borderColor: RULE_DARK }}
     >
       {STATS.map((s, i) => {
-        // column-rule: grid is 2-col (mobile/tablet) → 4-col (desktop);
-        // show a divider only when this cell isn't the first of its row.
-        const divVis = `${i % 2 !== 0 ? "block" : "hidden"} lg:block`;
         return (
         <div key={s.label} className="relative px-6 py-5 md:px-10 md:py-6 lg:py-8">
           {i > 0 && (
             <span
               aria-hidden
-              className={`absolute left-0 top-0 bottom-0 w-px ${divVis}`}
+              className="absolute bottom-0 left-0 top-0 hidden w-px sm:block"
               style={{
                 background: RULE_DARK,
                 transformOrigin: "center",
