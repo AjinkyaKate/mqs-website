@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import XRayTorch from "@/components/application/ApplicationVisualPreview";
 
 /* ──────────────────────────────────────────────────────────────
    MQXC Series product detail page — ported from
@@ -283,14 +284,12 @@ export default function MqxcSeries() {
         <div className="mx-auto" style={{ maxWidth: 1330 }}>
           <div style={eyebrow(CYAN_ON_DARK)}>Industries &amp; applications</div>
           <h2 style={{ margin: "14px 0 44px", font: "600 clamp(28px,3.2vw,40px)/1.1 var(--font-sans)", letterSpacing: "-.025em", color: "#fff" }}>Where MQXC is used.</h2>
-          <figure className="m-0 mb-10 grid overflow-hidden border lg:grid-cols-[minmax(300px,.72fr)_minmax(0,1.28fr)]" style={{ borderColor: HAIR_DARK, background: "rgba(255,255,255,.04)" }}>
-            <div className="relative min-h-[320px] bg-white lg:min-h-[420px]">
-              <Image src="/assets/product-mqxc.jpg" alt="MQXC 102 cabinet X-ray system installed on the production floor" fill sizes="(max-width: 1024px) 100vw, 40vw" className="object-contain p-6" />
-            </div>
+          <figure className="m-0 mb-10 grid overflow-hidden border lg:grid-cols-[minmax(0,1.05fr)_minmax(380px,.95fr)]" style={{ borderColor: HAIR_DARK, background: "rgba(255,255,255,.04)" }}>
+            <XRayTorch />
             <figcaption className="flex flex-col justify-center px-6 py-8 md:px-9 lg:px-12">
-              <div style={eyebrow(CYAN_ON_DARK)}>Application-ready platform</div>
-              <h3 style={{ margin: "12px 0 0", font: "600 clamp(24px,2.7vw,34px)/1.12 var(--font-sans)", letterSpacing: "-.025em", color: "#fff" }}>From electronics to production castings.</h3>
-              <p style={{ margin: "16px 0 0", font: "400 16px/1.65 var(--font-sans)", color: "rgba(255,255,255,.72)", textWrap: "pretty" }}>The MQXC platform combines a shielded cabinet, high-resolution detector and configurable part handling so one system can support inspection development, production qualification and repeatable shop-floor testing.</p>
+              <div style={eyebrow(CYAN_ON_DARK)}>See beneath the surface</div>
+              <h3 style={{ margin: "12px 0 0", font: "600 clamp(24px,2.7vw,34px)/1.12 var(--font-sans)", letterSpacing: "-.025em", color: "#fff" }}>What visual inspection cannot reveal.</h3>
+              <p style={{ margin: "16px 0 0", font: "400 16px/1.65 var(--font-sans)", color: "rgba(255,255,255,.72)", textWrap: "pretty" }}>Move the inspection beam across the casting to reveal its internal geometry. MQXC digital radiography exposes hidden voids, wall sections and internal features without damaging the component.</p>
             </figcaption>
           </figure>
           <div className="grid" style={{ gridTemplateColumns: compact ? "1fr" : "1fr 1fr", gap: "clamp(32px,4vw,64px)" }}>

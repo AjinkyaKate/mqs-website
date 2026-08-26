@@ -197,12 +197,12 @@ export default function AboutSection() {
           >
             {PARAGRAPH}
           </p>
-          <div className="mt-1 aspect-[3/4] overflow-hidden md:mt-2 md:aspect-[16/9]" style={{ background: DARK }}>
+          <div className="mt-1 aspect-[4/3] overflow-hidden md:mt-2" style={{ background: DARK }}>
             <Image
-              src="/assets/about-banner.jpg"
-              alt="Engineers operating an MQS X-ray and CT inspection system"
+              src="/assets/about-stall.jpg"
+              alt="MQS Technologies exhibition stall showcasing industrial X-ray and CT solutions"
               width={800}
-              height={864}
+              height={600}
               className="h-full w-full object-cover"
             />
           </div>
