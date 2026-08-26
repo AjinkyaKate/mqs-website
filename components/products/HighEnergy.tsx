@@ -92,7 +92,21 @@ const SPEC_TABLES: SpecTable[] = [
   { title: "Beam Characteristics", rows: [["Focal spot size", "Does not exceed 2.0 mm, measured by Full Width Half Max"], ["Small focal spot", "1.0–1.5 mm on Mi-9 only, at reduced maximum dose rate"], ["Field flatness", "Measured at 1 m from target, ±7.5° off the central axis"], ["Field symmetry", "Beam asymmetry does not exceed 5% at 1 m from target"], ["Shielding", "Low leakage 1.0 × 10⁻³ (fraction)"], ["Alignment laser", "533 nm Class II, 0.5 mW — not with the ULLP leakage option"]] },
 ];
 
-const CLIENTS = ["ISRO", "BHEL", "Bharat Dynamics", "Bharat Electronics", "HAL", "IGCAR", "NFC", "BrahMos Aerospace", "Ratnamani Metals", "Gulf", "Indian Air Force", "Ordnance Factories"];
+type Client = { name: string; src?: string; width?: number; height?: number };
+const CLIENTS: Client[] = [
+  { name: "ISRO", src: "/assets/logos/isro.png", width: 123, height: 118 },
+  { name: "BHEL", src: "/assets/logos/bhel.png", width: 124, height: 97 },
+  { name: "Bharat Dynamics", src: "/assets/logos/bdl.png", width: 143, height: 71 },
+  { name: "Bharat Electronics", src: "/assets/logos/bel.png", width: 163, height: 52 },
+  { name: "HAL", src: "/assets/logos/hal.png", width: 482, height: 190 },
+  { name: "IGCAR", src: "/assets/logos/igcar.png", width: 200, height: 200 },
+  { name: "NFC" },
+  { name: "BrahMos Aerospace", src: "/assets/logos/brahmos.png", width: 202, height: 200 },
+  { name: "Ratnamani Metals", src: "/assets/logos/ratnamani.png", width: 253, height: 100 },
+  { name: "Gulf", src: "/assets/logos/gulf.png", width: 112, height: 102 },
+  { name: "Indian Air Force", src: "/assets/logos/indian-air-force.png", width: 98, height: 111 },
+  { name: "Ordnance Factories", src: "/assets/logos/ordnance-factory-board.png", width: 136, height: 200 },
+];
 
 const eyebrow = (color: string) => ({ font: `500 11px/1 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase" as const, color });
 const h2 = { margin: "14px 0 0", font: `600 clamp(28px,3.2vw,40px)/1.1 ${SANS}`, letterSpacing: "-.025em", color: INK, textWrap: "pretty" as const };
@@ -347,14 +361,30 @@ export default function HighEnergy() {
       </section>
 
       {/* INSTALLED BASE */}
-      <section id="clients" style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: NAVY, color: "#fff" }}>
+      <section id="clients" style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: PAGE, color: INK, borderTop: `1px solid ${HAIR}` }}>
         <div className="mx-auto" style={{ maxWidth: 1330 }}>
-          <div style={eyebrow(CYAN_ON_DARK)}>Installed base</div>
-          <h2 style={{ ...h2, color: "#fff" }}>Trusted Where Failure Is Not an Option.</h2>
-          <p style={{ margin: "16px 0 40px", maxWidth: 640, font: `400 clamp(15px,1.3vw,17px)/1.6 ${SANS}`, color: "rgba(255,255,255,.72)" }}>High-energy systems delivered to India&apos;s aerospace, defence, nuclear and heavy-engineering programmes.</p>
-          <div className="grid" style={{ gridTemplateColumns: mobile ? "1fr 1fr" : desktop ? "repeat(4,1fr)" : "repeat(3,1fr)", gap: 1, background: HAIR_DARK, border: `1px solid ${HAIR_DARK}` }}>
-            {CLIENTS.map((c) => (
-              <div key={c} className="flex items-center justify-center text-center" style={{ background: NAVY, minHeight: 74, padding: "16px", font: `600 15px/1.3 ${SANS}`, letterSpacing: "-.01em", color: "#fff" }}>{c}</div>
+          <div style={eyebrow(CYAN_ON_LIGHT)}>Installed base</div>
+          <h2 style={h2}>Trusted Where Failure Is Not an Option.</h2>
+          <p style={{ margin: "16px 0 40px", maxWidth: 640, font: `400 clamp(15px,1.3vw,17px)/1.6 ${SANS}`, color: BODY }}>High-energy systems delivered to India&apos;s aerospace, defence, nuclear and heavy-engineering programmes.</p>
+          <div className="grid" style={{ gridTemplateColumns: mobile ? "1fr 1fr" : desktop ? "repeat(4,1fr)" : "repeat(3,1fr)", gap: 1, background: HAIR, border: `1px solid ${HAIR}` }}>
+            {CLIENTS.map((client) => (
+              <div
+                key={client.name}
+                className="flex items-center justify-center text-center"
+                style={{ background: "#fff", minHeight: mobile ? 104 : 126, padding: mobile ? "18px 14px" : "22px 24px" }}
+              >
+                {client.src && client.width && client.height ? (
+                  <Image
+                    src={client.src}
+                    alt={`${client.name} logo`}
+                    width={client.width}
+                    height={client.height}
+                    style={{ width: "auto", height: "auto", maxWidth: "100%", maxHeight: mobile ? 58 : 72, objectFit: "contain" }}
+                  />
+                ) : (
+                  <span style={{ font: `700 24px/1 ${SANS}`, letterSpacing: ".08em", color: NAVY }}>{client.name}</span>
+                )}
+              </div>
             ))}
           </div>
         </div>

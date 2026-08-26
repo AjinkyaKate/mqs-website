@@ -2,6 +2,7 @@ import { Fragment, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
 import ContactForm from "./ContactForm";
 import ContactMotion from "./ContactMotion";
+import ContactMap from "./ContactMap";
 
 /* ──────────────────────────────────────────────────────────────
    Contact page — /contact
@@ -41,10 +42,8 @@ import ContactMotion from "./ContactMotion";
        /services/repair-support/. Phase 1 scope is locked to a single /services/
        page with no sub-pages, so that path will not exist; the anchor does.
 
-   5 · The map is a labelled placeholder. The design specifies a static map
-       image that loads the interactive embed on click, which needs a Maps key
-       and a 2000x1250 asset, neither of which exists yet. Get Directions works
-       today, so the section is useful without it.
+   5 · The Google Maps embed loads with the page using the exact corporate-office
+       address as its query, so no Maps API key or static-map asset is required.
 
    PENDING SIGN-OFF, all raised by the reference itself:
    · RESPONSE TIME. "We reply within one working day" is not in the source
@@ -295,23 +294,7 @@ function Visit() {
         </div>
 
         <div data-reveal="80" style={{ display: "grid", gridTemplateColumns: "var(--visitcols)", border: `1px solid ${HAIR}` }}>
-          {/* The design calls for a static map that loads the interactive embed
-              on click, so the Google iframe never costs this page its load time.
-              Neither the static asset nor a Maps key exists yet, so this is the
-              labelled slot until one does. Directions work regardless. */}
-          <div style={{
-            position: "relative", aspectRatio: "var(--mapratio)", background: INSET,
-            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-            gap: 12, padding: "clamp(20px,3vw,36px)", textAlign: "center",
-          }}>
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={MUTED} strokeWidth="1.4" strokeLinecap="square" aria-hidden="true">
-              <path d="M12 21s7-6.3 7-11a7 7 0 10-14 0c0 4.7 7 11 7 11z" /><circle cx="12" cy="10" r="2.5" />
-            </svg>
-            <p style={{ ...bodyText(MUTED, 13), maxWidth: "42ch" }}>
-              Static map of Sanathnagar, Hyderabad. Click-to-load Google Maps embed, 2000 × 1250 asset pending.
-            </p>
-            <span style={microLabel("#8FA6B5")}>Image slot</span>
-          </div>
+          <ContactMap />
 
           <div style={{ background: NAVY, color: WHITE, padding: "44px 40px", display: "flex", flexDirection: "column", gap: 8 }}>
             <p style={eyebrow(CYAN)}>Hyderabad</p>

@@ -474,6 +474,13 @@ video::-webkit-media-controls-start-playback-button {
    MQCT. */
 .mqs-jrows { display: flex; flex-direction: column; gap: var(--jrow-row-gap, 30px); }
 .mqs-jrow { display: flex; gap: var(--jrow-gap, 10px); }
+/* MQCT analysis legends become illegible when three wide scan exports are
+   compressed into a single tablet row. Give every analysis its full measure
+   through tablet widths; restore the justified shared-height row on desktop. */
+@media (max-width: 1023px) {
+  .mqct-analysis-row { flex-direction: column; align-items: stretch; }
+  .mqct-analysis-row > figure { width: 100%; flex: none !important; }
+}
 @media (max-width: 699px) {
   /* Three tiles or one, never a stretched orphan on its own line. Once stacked
      the row grouping carries no visual meaning, so every tile sits on the row

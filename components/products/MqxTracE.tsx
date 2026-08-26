@@ -81,6 +81,13 @@ const HIGHLIGHTS: [string, string, string][] = [
   ["4", "Inspection and analysis software suite", "Filters, measurements, annotations, automatic report generation and layer analysis for full traceability."],
   ["5", "Safety systems", "Door interlocks, emergency stop and caution light, enforcing automatic X-ray shutoff."],
 ];
+const HIGHLIGHT_POSITIONS: [number, number][] = [
+  [26, 35], // shielded inspection enclosure
+  [21, 53], // manipulator visible through the viewing window
+  [59, 57], // operator console and physical controls
+  [56, 43], // inspection and analysis software on screen
+  [44, 62], // emergency stop and safety controls
+];
 
 const WORKFLOW = ["Acquire (2D)", "Slice (CT)", "Analyze", "Report"];
 
@@ -205,6 +212,7 @@ export default function MqxTracE() {
   const [w, setW] = useState(1440);
   const [open, setOpen] = useState<string | null>(SPECS[0].title);
   const [zoom, setZoom] = useState<Shot | null>(null);
+  const [activeHighlight, setActiveHighlight] = useState(0);
 
   useEffect(() => {
     const read = () => setW(window.innerWidth);
@@ -324,21 +332,67 @@ export default function MqxTracE() {
               sizes="(min-width:1024px) 55vw, 100vw"
               className="object-cover"
             />
+            {HIGHLIGHTS.map(([number, title], index) => {
+              const active = activeHighlight === index;
+              const [x, y] = HIGHLIGHT_POSITIONS[index];
+              return (
+                <button
+                  key={number}
+                  type="button"
+                  aria-label={`${number}: ${title}`}
+                  aria-pressed={active}
+                  onMouseEnter={() => setActiveHighlight(index)}
+                  onFocus={() => setActiveHighlight(index)}
+                  onClick={() => setActiveHighlight(index)}
+                  className="absolute z-[4] grid h-[30px] w-[30px] -translate-x-1/2 -translate-y-1/2 cursor-pointer place-items-center p-0"
+                  style={{
+                    left: `${x}%`, top: `${y}%`,
+                    border: `1px solid ${active ? CYAN : INK}`,
+                    background: active ? CYAN : "rgba(255,255,255,.94)",
+                    color: active ? "#08283A" : INK,
+                    font: `600 12px/1 ${SANS}`,
+                    boxShadow: "0 3px 12px rgba(8,40,58,.18)",
+                    transition: `background 200ms ${EASE}, border-color 200ms ${EASE}, color 200ms ${EASE}`,
+                  }}
+                >
+                  {number}
+                </button>
+              );
+            })}
           </div>
           <div style={{ borderTop: `1px solid ${HAIR}` }}>
-            {HIGHLIGHTS.map(([n, t, d]) => (
-              <div key={n} className="grid grid-cols-[24px_1fr] gap-4 py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                <span style={{ font: `600 15px/1.2 ${SANS}`, color: CYAN_ON_LIGHT }}>{n}</span>
-                <div>
-                  <h3 style={{ ...h3(INK), fontSize: 18 }}>{t}</h3>
-                  <p className="mt-2" style={{ ...body(BODY), fontSize: 15 }}>{d}</p>
-                </div>
-              </div>
-            ))}
+            {HIGHLIGHTS.map(([number, title, description], index) => {
+              const active = activeHighlight === index;
+              return (
+                <button
+                  key={number}
+                  type="button"
+                  aria-pressed={active}
+                  onMouseEnter={() => setActiveHighlight(index)}
+                  onFocus={() => setActiveHighlight(index)}
+                  onClick={() => setActiveHighlight(index)}
+                  className="grid w-full cursor-pointer grid-cols-[30px_1fr] gap-4 border-0 px-4 py-5 text-left"
+                  style={{
+                    borderBottom: `1px solid ${HAIR}`,
+                    background: active ? "#EAF6FB" : "transparent",
+                    transition: `background 200ms ${EASE}`,
+                  }}
+                >
+                  <span className="grid h-[30px] w-[30px] place-items-center" style={{
+                    border: `1px solid ${active ? CYAN : HAIR}`,
+                    background: active ? CYAN : "transparent",
+                    color: active ? "#08283A" : CYAN_ON_LIGHT,
+                    font: `600 13px/1 ${SANS}`,
+                  }}>{number}</span>
+                  <span>
+                    <span className="block" style={{ ...h3(INK), fontSize: 18 }}>{title}</span>
+                    {(!accordion || active) && <span className="mt-2 block" style={{ ...body(BODY), fontSize: 15 }}>{description}</span>}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
-        {/* The brief specifies callouts 1–5 overlaid on this photograph. Until
-            that artwork lands the numbers key the list only. */}
       </Section>
 
       {/* ── CT variant ── */}

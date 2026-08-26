@@ -86,6 +86,13 @@ const HIGHLIGHTS: [string, string, string, string][] = [
   ["D", "Safety", "Shielded X-ray cabinet", "Steel, lead and steel construction with leakage below 1 µSv, motorized sliding doors, light curtains, door limit switches and CCTV monitoring."],
   ["E", "Software", "MQS Imaging Suite", "2D acquisition modes, automated CT projection capture for 3D reconstruction, plus macros and processing tools for repeatable inspection."],
 ];
+const HIGHLIGHT_POSITIONS: [number, number][] = [
+  [32, 43], // source inside the left side of the inspection chamber
+  [46, 45], // detector opposite the source
+  [39, 56], // central multi-axis manipulator
+  [22, 50], // shielded door and safety interlock area
+  [58, 79], // integrated imaging and system-control area
+];
 
 type Model = { id: string; name: string; source: string; energy: string; best: string; title: string; desc: string; img?: string; alt?: string };
 const MODELS: Model[] = [
@@ -93,7 +100,7 @@ const MODELS: Model[] = [
     id: "MQCT-M", name: "Microfocus", source: "Microfocus to 300 kV", energy: "Up to 300 kV",
     best: "PCBs, connectors, small castings", title: "High detail on small parts",
     desc: "Short source-to-object distance gives the geometric magnification needed to resolve features measured in tens of microns.",
-    img: "/assets/prod-mqct-microfocus.jpg", alt: "Microfocus computed tomography system with open frame, rotary stage and large-area flat panel detector",
+    img: "/assets/prod-mqct-microfocus-transparent.png", alt: "Microfocus computed tomography system with open frame, rotary stage and large-area flat panel detector",
   },
   {
     id: "MQCT-X", name: "Minifocus", source: "Minifocus to 450 kV", energy: "Up to 450 kV",
@@ -124,7 +131,7 @@ const MODELS: Model[] = [
    and the page showed a green part with no key to what green meant. */
 type Analysis = { title: string; copy: string; src: string; w: number; h: number; alt: string };
 const METROLOGY: Analysis[] = [
-  { title: "Wall thickness mapping", copy: "Thickness colour-mapped across the whole part, flagging thin sections before they become leak paths.", src: "/assets/prod-mqct-wallthickness.jpg", w: 1363, h: 666, alt: "CT wall thickness analysis of an aluminium casting showing colour-mapped thickness distribution with a 2.72 to 13.59 mm scale" },
+  { title: "Wall thickness mapping", copy: "Thickness colour-mapped across the whole part, flagging thin sections before they become leak paths.", src: "/assets/prod-mqct-wallthickness-complete.png", w: 1792, h: 878, alt: "Complete CT wall thickness analysis of an aluminium casting showing colour-mapped thickness distribution with a 2.72 to 13.59 mm scale" },
   { title: "Porosity analysis", copy: "Every pore segmented, sized and located in 3D, then classified by sphericity and volume against your specification.", src: "/assets/prod-mqct-porosity.jpg", w: 1363, h: 818, alt: "CT porosity analysis of an aluminium casting with pores colour-coded by volume" },
   { title: "Indication detection", copy: "Automatic flagging of internal defects with position, volume, probability and diameter, across the full volume.", src: "/assets/prod-mqct-indications.jpg", w: 1600, h: 845, alt: "CT defect volume analysis of a cast structural bracket with indications colour-coded by volume in cubic millimetres" },
 ];
@@ -214,6 +221,7 @@ function Section({ id, tone = "page", children, className }: { id?: string; tone
 export default function MqctSeries() {
   const [w, setW] = useState(1440);
   const [open, setOpen] = useState<string | null>(SPEC_TABLES[0].title);
+  const [activeHighlight, setActiveHighlight] = useState(0);
   useEffect(() => {
     const read = () => setW(window.innerWidth);
     read();
@@ -228,18 +236,18 @@ export default function MqctSeries() {
     <main style={{ background: PAGE, color: BODY, fontFamily: SANS }}>
       {/* ── hero ── */}
       <section id="overview" className="relative overflow-hidden scroll-mt-[76px]" style={{ background: INK }}>
+        <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 82% 48%,rgba(22,193,243,.16),transparent 38%),linear-gradient(135deg,#0B2A3A 0%,#103D55 100%)" }} />
         <Image
-          src="/assets/prod-mqct-hero.jpg"
+          src="/assets/prod-mqct-hero-transparent.png"
           alt="MQCT microfocus computed tomography system with open frame, rotary stage and flat panel detector"
           fill
           priority
           quality={88}
           sizes="100vw"
-          className="object-cover"
-          style={{ filter: "grayscale(1)" }}
+          className="object-contain"
+          style={{ objectPosition: mobile ? "center 42%" : "right center", opacity: mobile ? .25 : tablet ? .48 : .72, transform: mobile ? "scale(1.08)" : "translateX(5%) scale(1.02)" }}
         />
-        <div className="absolute inset-0" style={{ background: "#12405C", mixBlendMode: "color" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg,rgba(11,42,58,.94) 0%,rgba(11,42,58,.78) 46%,rgba(11,42,58,.34) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: mobile ? "rgba(11,42,58,.62)" : "linear-gradient(90deg,rgba(11,42,58,.98) 0%,rgba(11,42,58,.90) 38%,rgba(11,42,58,.34) 72%,rgba(11,42,58,.12) 100%)" }} />
         <div
           className={`relative flex flex-col justify-end ${SHELL}`}
           style={{ zIndex: 3, minHeight: mobile ? 520 : tablet ? 560 : 640, gap: 18, paddingTop: 120, paddingBottom: mobile ? 48 : 72 }}
@@ -277,13 +285,15 @@ export default function MqctSeries() {
 
       {/* ── stats strip ── */}
       <section style={{ background: WHITE, borderBottom: `1px solid ${HAIR}` }}>
-        <div className={`${SHELL} grid grid-cols-2 lg:grid-cols-4`} style={{ gap: 1, background: HAIR }}>
-          {STATS.map(([fig, lab]) => (
-            <div key={lab} className="py-7" style={{ background: WHITE, paddingLeft: 0 }}>
-              <div style={{ font: `600 clamp(24px,2.6vw,34px)/1 ${SANS}`, letterSpacing: "-.03em", color: INK }}>{fig}</div>
-              <div className="mt-2" style={label(MUTED)}>{lab}</div>
-            </div>
-          ))}
+        <div className={SHELL}>
+          <div className="grid grid-cols-2 lg:grid-cols-4" style={{ gap: 1, background: HAIR }}>
+            {STATS.map(([fig, lab]) => (
+              <div key={lab} className="py-7 pl-4 md:pl-6" style={{ background: WHITE }}>
+                <div style={{ font: `600 clamp(24px,2.6vw,34px)/1 ${SANS}`, letterSpacing: "-.03em", color: INK }}>{fig}</div>
+                <div className="mt-2" style={label(MUTED)}>{lab}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -353,22 +363,68 @@ export default function MqctSeries() {
               sizes="(min-width:1024px) 55vw, 100vw"
               className="object-cover"
             />
+            {HIGHLIGHTS.map(([key, area], index) => {
+              const active = activeHighlight === index;
+              const [x, y] = HIGHLIGHT_POSITIONS[index];
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  aria-label={`${key}: ${area}`}
+                  aria-pressed={active}
+                  onMouseEnter={() => setActiveHighlight(index)}
+                  onFocus={() => setActiveHighlight(index)}
+                  onClick={() => setActiveHighlight(index)}
+                  className="absolute z-[4] grid h-[30px] w-[30px] -translate-x-1/2 -translate-y-1/2 cursor-pointer place-items-center p-0"
+                  style={{
+                    left: `${x}%`, top: `${y}%`,
+                    border: `1px solid ${active ? CYAN : INK}`,
+                    background: active ? CYAN : "rgba(255,255,255,.94)",
+                    color: active ? "#08283A" : INK,
+                    font: `600 12px/1 ${SANS}`,
+                    boxShadow: "0 3px 12px rgba(8,40,58,.18)",
+                    transition: `background 200ms ${EASE}, border-color 200ms ${EASE}, color 200ms ${EASE}`,
+                  }}
+                >
+                  {key}
+                </button>
+              );
+            })}
           </div>
           <div style={{ borderTop: `1px solid ${HAIR}` }}>
-            {HIGHLIGHTS.map(([k, area, t, d]) => (
-              <div key={k} className="grid grid-cols-[28px_1fr] gap-4 py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                <span style={{ font: `600 15px/1.2 ${SANS}`, color: CYAN_ON_LIGHT }}>{k}</span>
-                <div>
-                  <div style={label(MUTED)}>{area}</div>
-                  <h3 className="mt-2" style={{ ...h3(INK), fontSize: 18 }}>{t}</h3>
-                  <p className="mt-2" style={{ ...body(BODY), fontSize: 15 }}>{d}</p>
-                </div>
-              </div>
-            ))}
+            {HIGHLIGHTS.map(([k, area, t, d], index) => {
+              const active = activeHighlight === index;
+              return (
+                <button
+                  key={k}
+                  type="button"
+                  aria-pressed={active}
+                  onMouseEnter={() => setActiveHighlight(index)}
+                  onFocus={() => setActiveHighlight(index)}
+                  onClick={() => setActiveHighlight(index)}
+                  className="grid w-full cursor-pointer grid-cols-[30px_1fr] gap-4 border-0 px-4 py-5 text-left"
+                  style={{
+                    borderBottom: `1px solid ${HAIR}`,
+                    background: active ? "#EAF6FB" : "transparent",
+                    transition: `background 200ms ${EASE}`,
+                  }}
+                >
+                  <span className="grid h-[30px] w-[30px] place-items-center" style={{
+                    border: `1px solid ${active ? CYAN : HAIR}`,
+                    background: active ? CYAN : "transparent",
+                    color: active ? "#08283A" : CYAN_ON_LIGHT,
+                    font: `600 13px/1 ${SANS}`,
+                  }}>{k}</span>
+                  <span>
+                    <span className="block" style={label(MUTED)}>{area}</span>
+                    <span className="mt-2 block" style={{ ...h3(INK), fontSize: 18 }}>{t}</span>
+                    {(!accordion || active) && <span className="mt-2 block" style={{ ...body(BODY), fontSize: 15 }}>{d}</span>}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
-        {/* The brief lists callout markers A–E overlaid on this photograph as
-            still to be produced; until then the letters key the list only. */}
       </Section>
 
       {/* ── model line-up ── */}
@@ -400,7 +456,14 @@ export default function MqctSeries() {
               <div className={i % 2 === 1 ? "lg:order-2" : ""}>
                 {m.img ? (
                   <div className="relative aspect-[16/9]" style={{ background: INSET }}>
-                    <Image src={m.img} alt={m.alt ?? ""} fill quality={90} sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" />
+                    <Image
+                      src={m.img}
+                      alt={m.alt ?? ""}
+                      fill
+                      quality={90}
+                      sizes="(min-width:1024px) 45vw, 100vw"
+                      className={m.id === "MQCT-M" ? "object-contain p-4 md:p-6" : "object-cover"}
+                    />
                   </div>
                 ) : (
                   <div className="flex aspect-[16/9] items-center justify-center p-6 text-center" style={{ background: INSET }}>
@@ -436,11 +499,11 @@ export default function MqctSeries() {
           MQCT systems pair with the MQS Imaging Suite and the Volume Graphics toolchain to run structural, porosity and
           metrology analyses directly on CT data, with automatic indication reporting for every defect found.
         </p>
-        <div className="mqs-jrow mt-10" style={{ background: HAIR, ...JROW_HAIRLINE }}>
+        <div className="mqs-jrow mqct-analysis-row mt-10" style={{ background: HAIR, ...JROW_HAIRLINE }}>
           {METROLOGY.map((m) => (
             <figure key={m.title} className="m-0 flex flex-col" style={{ background: WHITE, flex: `${(m.w / m.h).toFixed(4)} 1 0px` }}>
               <div className="relative" style={{ aspectRatio: `${m.w} / ${m.h}`, background: "#000" }}>
-                <Image src={m.src} alt={m.alt} fill quality={90} sizes="(min-width:1330px) 460px, (min-width:700px) 40vw, 100vw" className="object-cover" />
+                <Image src={m.src} alt={m.alt} fill quality={90} sizes="(min-width:1330px) 460px, (min-width:700px) 40vw, 100vw" className="object-contain" />
               </div>
               <figcaption className="p-5">
                 <h3 style={{ ...h3(INK), fontSize: 18 }}>{m.title}</h3>

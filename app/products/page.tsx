@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import SiteHeaderFull from "@/components/nav/SiteHeaderFull";
 import Footer from "@/components/footer/Footer";
 import ProductsCatalog from "@/components/products/ProductsCatalog";
@@ -30,12 +29,6 @@ export default function ProductsPage() {
           className="object-cover opacity-[.36]"
         />
         <div className="relative flex flex-col gap-5 px-6 pt-[84px] md:gap-[26px] md:px-10 md:pt-[104px] lg:gap-[34px] lg:px-[55px] lg:pt-[128px]">
-          <nav aria-label="Breadcrumb" className="t-caption" style={{ color: "rgba(255,255,255,.62)" }}>
-            <Link href="/" className="no-underline hover:!text-white">Home</Link>
-            <span aria-hidden="true" className="px-2">/</span>
-            <span style={{ color: "#5AD1F7" }}>Products</span>
-          </nav>
-          <div className="t-eyebrow" style={{ color: "#5AD1F7" }}>Products</div>
           <h1
             className="t-h2 m-0 max-w-[17ch] text-white"
           >

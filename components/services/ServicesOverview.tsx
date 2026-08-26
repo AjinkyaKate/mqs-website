@@ -559,7 +559,7 @@ function Manufacturing() {
 function Process() {
   return (
     <section className={`py-[104px] max-[639px]:py-[var(--svc-sec-y)] ${INSET}`} style={{ background: WHITE }} aria-label="How manufacturing works">
-      <h2 className="mb-16 max-[639px]:mb-8" style={{ margin: 0, font: `600 var(--svc-h3)/1.05 ${SANS}`, letterSpacing: "-.03em", color: NAVY, textWrap: "pretty" }}>
+      <h2 style={{ margin: "0 0 clamp(32px,5vw,64px)", font: `600 var(--svc-h3)/1.05 ${SANS}`, letterSpacing: "-.03em", color: NAVY, textWrap: "pretty" }}>
         From requirement to series production.
       </h2>
       <div
