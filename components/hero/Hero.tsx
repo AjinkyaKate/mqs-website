@@ -237,7 +237,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
     >
 
       {/* 1 — cinematic background: retain material colour while keeping MQS' steel-navy tone */}
-      <Image src={bgImage?.src ?? "/assets/hero-mqwr-poster.jpg"} alt={bgImage?.alt ?? "MQWR 160U inline alloy wheel inspection system"} fill priority sizes="100vw" className="object-cover" style={{ filter: MEDIA_FILTER, transform: "scale(1.025)", objectPosition: isPhone ? "56% center" : "center" }} unoptimized={!!bgImage?.src} />
+      <Image src={bgImage?.src ?? "/assets/hero-mqwr-61-70-poster.jpg"} alt={bgImage?.alt ?? "MQWR 160U inline alloy wheel inspection system"} fill priority sizes="100vw" className="object-cover" style={{ filter: MEDIA_FILTER, transform: "scale(1.025)", objectPosition: isPhone ? "56% center" : "center" }} unoptimized={!!bgImage?.src} />
       {!reducedMotion && !videoError && (
         <video
           ref={(el) => {
@@ -256,7 +256,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
           loop
           playsInline
           preload="auto"
-          poster={bgImage?.src ?? "/assets/hero-mqwr-poster.jpg"}
+          poster={bgImage?.src ?? "/assets/hero-mqwr-61-70-poster.jpg"}
           onCanPlay={() => setVideoReady(true)}
           onLoadedData={() => setVideoReady(true)}
           onPlaying={() => setVideoReady(true)}
@@ -264,7 +264,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
           aria-hidden="true"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: isPhone ? "56% center" : "center", opacity: videoReady ? 1 : 0, transition: "opacity 900ms ease", filter: MEDIA_FILTER, transform: "scale(1.025)" }}
         >
-          <source src="/assets/hero-mqwr.mp4" type="video/mp4" />
+          <source src="/assets/hero-mqwr-61-70.mp4" type="video/mp4" />
         </video>
       )}
 
