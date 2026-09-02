@@ -56,10 +56,12 @@ export default function AboutStats() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setReduced(true);
-      setCounts(STATS.map(targetOf));
-      setStarted(true);
-      return;
+      const frame = requestAnimationFrame(() => {
+        setReduced(true);
+        setCounts(STATS.map(targetOf));
+        setStarted(true);
+      });
+      return () => cancelAnimationFrame(frame);
     }
     const el = ref.current;
     if (!el) return;
@@ -101,7 +103,7 @@ export default function AboutStats() {
   return (
     <div
       ref={ref}
-      className="grid grid-cols-2 border-t border-white/18 md:grid-cols-3 md:border-t-0 lg:grid-cols-5 lg:border-t lg:border-white/28"
+      className="grid grid-cols-2 border-t border-white/18 md:grid-cols-4 md:border-t-0 lg:grid-cols-4 lg:border-t lg:border-white/28"
     >
       {STATS.map((s, i) => (
         <div

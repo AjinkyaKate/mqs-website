@@ -13,7 +13,6 @@ import Image from "next/image";
 
 const ACCENT = "#0A6A88";
 const INK = "#0B2A3A";
-const PRIMARY = "#0E3A52";
 const HAIRLINE = "#D3DFE7";
 const EASE = "cubic-bezier(.22,.61,.36,1)";
 

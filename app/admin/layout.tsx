@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { verifySession } from "@/lib/auth";
 import { logoutAction } from "@/lib/actions/auth";
 import AdminNav from "@/components/admin/AdminNav";
@@ -43,13 +44,13 @@ export default async function AdminLayout({
 
         {/* Footer */}
         <div className="border-t border-white/10 p-3">
-          <a
+          <Link
             href="/"
             className="flex items-center gap-2 rounded px-3 py-2 text-xs text-white/40 transition-colors hover:bg-white/5 hover:text-white/70"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             View site
-          </a>
+          </Link>
           <form action={logoutAction}>
             <button
               type="submit"

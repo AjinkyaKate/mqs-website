@@ -53,8 +53,7 @@ export const STATS: Stat[] = [
   { target: null, fromYear: FOUNDED, suffix: "+", label: "Years" },
   { target: 150, suffix: "+", label: "Employees" },
   { target: 8, suffix: "", label: "Cities" },
-  { target: 100, suffix: "+", label: "Installations" },
-  { target: 40, suffix: "+", label: "AERB approvals" },
+  { target: 200, suffix: "+", label: "Installations" },
 ];
 
 export const ORIGIN = {
@@ -93,10 +92,10 @@ export const AWARD = {
 export const PORTFOLIO = {
   eyebrow: "What we build",
   heading: "MQS solution portfolio.",
-  flow: "Design → Inspection → Testing → Compliance",
+  flow: "Non-Destructive Testing · ATE · Contract Manufacturing",
   items: [
     {
-      n: "01",
+      n: "NDT · 01",
       name: "Digital Radiography Systems",
       desc: "Real-time and static DR for castings, welds and assemblies, with simultaneous loading and inspection.",
       short: "Real-time and static DR for castings, welds and assemblies.",
@@ -107,7 +106,7 @@ export const PORTFOLIO = {
       alt: "MQXC 102 digital radiography system",
     },
     {
-      n: "02",
+      n: "NDT · 02",
       name: "Industrial CT Systems",
       desc: "High-energy computed tomography for internal geometry, porosity and density mapping.",
       short: "High-energy CT for internal geometry and porosity.",
@@ -115,7 +114,7 @@ export const PORTFOLIO = {
       alt: "Industrial CT system",
     },
     {
-      n: "03",
+      n: "ATE · 01",
       name: "Automated Test Equipment",
       desc: "Functional and environmental test rigs, built to spec.",
       short: "Functional and environmental test rigs, built to spec.",
@@ -123,7 +122,7 @@ export const PORTFOLIO = {
       alt: "Automated test equipment racks",
     },
     {
-      n: "04",
+      n: "NDT · 03",
       name: "ADR Software",
       desc: "Automated defect recognition and ASTM reporting.",
       short: "Automated defect recognition and ASTM reporting.",
@@ -135,7 +134,7 @@ export const PORTFOLIO = {
       alt: "Radiograph of a machined linkage, the kind of image MQS ADR software inspects",
     },
     {
-      n: "05",
+      n: "CM · 01",
       name: "Precision Sub-Assemblies",
       desc: "Close-tolerance assemblies for defence programmes.",
       short: "Close-tolerance assemblies for defence programmes.",
@@ -143,7 +142,7 @@ export const PORTFOLIO = {
       alt: "Precision sub-assembly",
     },
     {
-      n: "06",
+      n: "CM · 02",
       name: "Industrial Electronics",
       desc: "Custom boards and control electronics, built in-house.",
       short: "Custom boards and control electronics, built in-house.",
@@ -215,7 +214,7 @@ export const TIMELINE = {
     },
     {
       year: "2025",
-      title: "150+ employees. 8 cities. 100+ installations.",
+      title: "150+ employees. 8 cities. 200+ installations.",
       desc: "SIDM Champion Award for indigenization in High-Energy CT Systems.",
       major: true,
     },
@@ -229,7 +228,7 @@ export const PILLARS = {
     { n: "02", name: "Uncompromising Quality", desc: "A documented quality system across design, build, installation and service.", proof: "ISO 9001 · ISO 13485" },
     { n: "03", name: "Tailored Innovation", desc: "Every system specified against the customer's own test method and part geometry.", proof: "In-house design office" },
     { n: "04", name: "Low Downtime by Design", desc: "Serviceable architecture, spares planning and remote diagnostics from day one.", proof: "Remote troubleshooting" },
-    { n: "05", name: "Regulatory Mastery", desc: "Radiation, materials and safety codes handled as part of delivery, not afterwards.", proof: "40+ AERB approvals" },
+    { n: "05", name: "Regulatory Mastery", desc: "Radiation, materials and safety codes handled as part of delivery, not afterwards.", proof: "Compliance-led delivery" },
     { n: "06", name: "Proven Track Record", desc: "Three decades of installations still in service across eight cities.", proof: "AMC & lifecycle support" },
   ] as Pillar[],
 };

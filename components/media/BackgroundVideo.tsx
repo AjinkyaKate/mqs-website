@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    BackgroundVideo — a muted, looping, cover-filled local <video>
@@ -29,9 +29,8 @@ export default function BackgroundVideo({
   const ref = useRef<HTMLVideoElement>(null);
   const inView = useRef(false);
   const want = useRef(playing);
-  want.current = playing;
 
-  const apply = () => {
+  const apply = useCallback(() => {
     const v = ref.current;
     if (!v) return;
     if (want.current && inView.current) {
@@ -40,7 +39,7 @@ export default function BackgroundVideo({
     } else {
       v.pause();
     }
-  };
+  }, []);
 
   useEffect(() => {
     const v = ref.current;
@@ -64,13 +63,12 @@ export default function BackgroundVideo({
     );
     io.observe(v);
     return () => io.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [apply]);
 
   useEffect(() => {
+    want.current = playing;
     apply();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playing]);
+  }, [apply, playing]);
 
   return (
     <video

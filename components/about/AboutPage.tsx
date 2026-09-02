@@ -46,7 +46,7 @@ import AboutMotion from "./AboutMotion";
 import AboutStats from "./AboutStats";
 import {
   AWARD, CLIENT_LOGOS, CLIENTS, HERO, IMAGES, LEADERSHIP, ORIGIN, PILLARS,
-  PORTFOLIO, PURPOSE, STATS, TEAM, TIMELINE,
+  PORTFOLIO, PURPOSE, TEAM, TIMELINE,
 } from "./about-data";
 
 const INK = "#0B2A3A", BODY = "#41586A";
@@ -54,7 +54,7 @@ const HAIR = "#D3DFE7", HAIR_2 = "#C3D2DB";
 const PAGE = "#F4F8FA", INSET = "#E9F0F4", WHITE = "#FFFFFF";
 const NAVY = "#0B2A3A", NAVY_2 = "#0E3A52";
 const CYAN = "#16C1F3", CYAN_L = "#0A6A88";
-const GHOST = "#E9F0F4", CLIENT_TYPE = "#C3D2DB", CLIENT_GRID = "#8FA6B4";
+const GHOST = "#E9F0F4";
 
 const SANS = "var(--font-sans)";
 const DISPLAY = "var(--font-display)";

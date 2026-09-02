@@ -2,6 +2,7 @@
    Logo · nav links · Get a quote. Palette 2B. */
 
 import Image from "next/image";
+import Link from "next/link";
 
 const INK = "#0B2A3A";
 
@@ -18,9 +19,9 @@ export default function SiteHeader() {
       className="sticky top-0 z-50 flex h-[64px] items-center border-b bg-white px-6 md:h-[72px] md:px-10 lg:px-[55px]"
       style={{ borderColor: "rgba(16,16,16,.08)" }}
     >
-      <a href="/" className="flex items-center" aria-label="MQS Technologies — home">
+      <Link href="/" className="flex items-center" aria-label="MQS Technologies — home">
         <Image src="/assets/mqs-logo-2a-light.png" alt="MQS Technologies" width={124} height={36} priority className="h-8 w-auto md:h-9" />
-      </a>
+      </Link>
 
       <nav className="ml-auto hidden items-center gap-9 lg:flex">
         {LINKS.map(([label, href]) => (
@@ -35,13 +36,13 @@ export default function SiteHeader() {
         ))}
       </nav>
 
-      <a
+      <Link
         href="/#contact"
         className="ml-auto flex h-11 items-center rounded-none px-6 uppercase no-underline transition-colors duration-200 hover:!bg-[#0A2B3D] md:h-12 lg:ml-9"
         style={{ background: "#0E3A52", color: "#fff", font: "500 13px/1 var(--font-sans)", letterSpacing: ".045em" }}
       >
         Get a quote
-      </a>
+      </Link>
     </header>
   );
 }

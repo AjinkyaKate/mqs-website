@@ -122,17 +122,24 @@ export default function HighEnergy() {
 
   useEffect(() => {
     const onResize = () => setW(window.innerWidth);
-    onResize();
+    const initialFrame = requestAnimationFrame(onResize);
     window.addEventListener("resize", onResize);
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    return () => window.removeEventListener("resize", onResize);
+    const motionFrame = requestAnimationFrame(() => setReduced(mq.matches));
+    return () => {
+      cancelAnimationFrame(initialFrame);
+      cancelAnimationFrame(motionFrame);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   useEffect(() => {
     const el = barsRef.current;
     if (!el) return;
-    if (reduced) { setBarsIn(true); return; }
+    if (reduced) {
+      const frame = requestAnimationFrame(() => setBarsIn(true));
+      return () => cancelAnimationFrame(frame);
+    }
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setBarsIn(true); io.disconnect(); } }, { threshold: 0.25 });
     io.observe(el);
     return () => io.disconnect();
@@ -192,7 +199,7 @@ export default function HighEnergy() {
             </div>
             <div className="flex flex-col" style={{ gap: 18 }}>
               <p style={{ margin: 0, font: `400 clamp(16px,1.2vw,18px)/1.6 ${SANS}`, color: BODY, textWrap: "pretty" }}>A 450 kV tube stops at roughly 80 mm of steel. Beyond that the beam is absorbed before it reaches the detector and the image goes dark — not because the defect is invisible, but because nothing got through.</p>
-              <p style={{ margin: 0, font: `400 16px/1.6 ${SANS}`, color: BODY, textWrap: "pretty" }}>Linear accelerators produce photons energetic enough to pass through half a metre of steel, or two and a half metres of solid propellant. For more than a decade MQS has delivered off-the-shelf and fully customised turnkey systems built on this principle, for some of the country's most demanding aerospace, defence, energy and heavy-engineering programmes.</p>
+              <p style={{ margin: 0, font: `400 16px/1.6 ${SANS}`, color: BODY, textWrap: "pretty" }}>Linear accelerators produce photons energetic enough to pass through half a metre of steel, or two and a half metres of solid propellant. For more than a decade MQS has delivered off-the-shelf and fully customised turnkey systems built on this principle, for some of the country&apos;s most demanding aerospace, defence, energy and heavy-engineering programmes.</p>
             </div>
           </div>
           <div className="grid" style={{ gridTemplateColumns: mobile ? "1fr" : "repeat(3,1fr)", gap: 1, background: HAIR, border: `1px solid ${HAIR}` }}>

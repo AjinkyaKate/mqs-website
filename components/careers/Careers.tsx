@@ -150,11 +150,11 @@ function LocationField() {
         onFocus={() => q && setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 120)}
         onKeyDown={onKey}
-        role="combobox" aria-expanded={open && matches.length > 0} aria-autocomplete="list"
+        role="combobox" aria-controls="location-suggestions" aria-expanded={Boolean(open && matches.length > 0)} aria-autocomplete="list"
         className="careers-field"
       />
       {open && matches.length > 0 && (
-        <div role="listbox" style={{ position: "absolute", top: "100%", left: 0, right: 0, zIndex: 20, marginTop: 2, background: "#fff", border: `1px solid ${HAIR}`, boxShadow: "0 12px 28px rgba(11,42,58,.14)", maxHeight: 240, overflowY: "auto" }}>
+        <div id="location-suggestions" role="listbox" style={{ position: "absolute", top: "100%", left: 0, right: 0, zIndex: 20, marginTop: 2, background: "#fff", border: `1px solid ${HAIR}`, boxShadow: "0 12px 28px rgba(11,42,58,.14)", maxHeight: 240, overflowY: "auto" }}>
           {matches.map((c, i) => (
             <div
               key={c} role="option" aria-selected={i === active}

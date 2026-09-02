@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "../hero/icons";
@@ -73,7 +74,7 @@ export default function SiteHeaderFull() {
       if ((t as Element)?.closest?.("[data-mqs-panel]")) return;
       setOpenMenu(null);
     };
-    setW(window.innerWidth || 1440);
+    const initialFrame = requestAnimationFrame(() => setW(window.innerWidth || 1440));
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onDown);
@@ -81,6 +82,7 @@ export default function SiteHeaderFull() {
       window.removeEventListener("resize", onResize);
       window.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onDown);
+      cancelAnimationFrame(initialFrame);
     };
   }, []);
 
@@ -105,9 +107,10 @@ export default function SiteHeaderFull() {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
-    if (!mobileOpen) setExpanded(null);
+    const frame = !mobileOpen ? requestAnimationFrame(() => setExpanded(null)) : 0;
     return () => {
       document.body.style.overflow = "";
+      if (frame) cancelAnimationFrame(frame);
     };
   }, [mobileOpen]);
 
@@ -173,7 +176,7 @@ export default function SiteHeaderFull() {
           transition: `transform 320ms ${EASE}, background 240ms ease, border-color 240ms ease`,
         }}
       >
-        <a href="/" style={{ display: "flex", alignItems: "center", paddingLeft: gut, flex: "none" }} aria-label="MQS Technologies">
+        <Link href="/" style={{ display: "flex", alignItems: "center", paddingLeft: gut, flex: "none" }} aria-label="MQS Technologies">
           <Image
             unoptimized
             src={inkHeader ? "/assets/mqs-logo-2a-light.png" : "/assets/mqs-logo-2a-dark.png"}
@@ -183,7 +186,7 @@ export default function SiteHeaderFull() {
             priority
             style={{ height: logoH, width: "auto", display: "block" }}
           />
-        </a>
+        </Link>
 
         {isDesktop && (
           <nav style={{ flex: "1 1 auto", minWidth: 0, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "clamp(18px, 2.2vw, 36px)", paddingRight: "clamp(18px, 2.5vw, 36px)" }}>

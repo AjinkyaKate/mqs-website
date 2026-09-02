@@ -37,7 +37,6 @@ const STATS = [
   { target: YEARS, suffix: "+", label: "Years" },
   { target: 100, suffix: "+", label: "Engineers" },
   { target: 200, suffix: "+", label: "Installations" },
-  { target: 8, suffix: "", label: "Cities" },
 ];
 
 const FINALS = STATS.map((s) => s.target);
@@ -99,7 +98,7 @@ export default function StatsStrip() {
 
   return (
     <section ref={ref} className="bg-white px-6 py-14 md:px-10 md:py-16 lg:px-[55px] lg:py-20">
-      <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 lg:grid-cols-4 lg:gap-0">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-3 lg:gap-0">
         {STATS.map((s, i) => {
           const numberDelay = reduced ? 0 : i * STAGGER;
           // column-rule: show a divider only when this cell is NOT the first

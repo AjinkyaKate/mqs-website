@@ -67,7 +67,7 @@ const ROWS: Row[] = [
     title: "High-Energy X-ray",
     description: "LINAC-based deep penetration up to 500 mm steel for turbine blades, rocket casings and thick forgings.",
     chips: ["0.9–15 MeV", "500 mm steel", "LINAC"],
-    image: "/assets/prod-highenergy.jpg",
+    image: "/assets/prod-highenergy-branded.png",
     imageAlt: "MQS high-energy X-ray inspection installation",
     imageBackground: "#EEF3F6",
     imageClassName: "object-contain p-4 md:p-6",

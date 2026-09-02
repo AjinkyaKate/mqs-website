@@ -133,8 +133,8 @@ export default function AboutSection() {
             {/* col 2 — large centre */}
             <div className="overflow-hidden" style={{ aspectRatio: "1 / 1.08", background: DARK }}>
               <Image
-                src="/assets/about-stall.jpg"
-                alt="MQS Technologies exhibition stall showcasing industrial X-ray and CT solutions"
+                src="/assets/about-office-people.jpg"
+                alt="MQS engineers collaborating in the Hyderabad office"
                 width={800}
                 height={864}
                 className="h-full w-full object-cover"
@@ -199,8 +199,8 @@ export default function AboutSection() {
           </p>
           <div className="mt-1 aspect-[4/3] overflow-hidden md:mt-2" style={{ background: DARK }}>
             <Image
-              src="/assets/about-stall.jpg"
-              alt="MQS Technologies exhibition stall showcasing industrial X-ray and CT solutions"
+              src="/assets/about-office-people.jpg"
+              alt="MQS engineers collaborating in the Hyderabad office"
               width={800}
               height={600}
               className="h-full w-full object-cover"

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CTAButton from "./CTAButton";
@@ -100,7 +101,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
       if ((t as Element)?.closest?.("[data-mqs-panel]")) return;
       setOpenMenu(null);
     };
-    setW(window.innerWidth || 1440);
+    const initialFrame = requestAnimationFrame(() => setW(window.innerWidth || 1440));
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onDown);
@@ -108,6 +109,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
       window.removeEventListener("resize", onResize);
       window.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onDown);
+      cancelAnimationFrame(initialFrame);
     };
   }, []);
 
@@ -133,18 +135,22 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
-    if (!mobileOpen) setExpanded(null);
+    const frame = !mobileOpen ? requestAnimationFrame(() => setExpanded(null)) : 0;
     return () => {
       document.body.style.overflow = "";
+      if (frame) cancelAnimationFrame(frame);
     };
   }, [mobileOpen]);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
+    const frame = requestAnimationFrame(() => setReducedMotion(mq.matches));
     const on = () => setReducedMotion(mq.matches);
     mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
+    return () => {
+      cancelAnimationFrame(frame);
+      mq.removeEventListener("change", on);
+    };
   }, []);
 
   useEffect(() => {
@@ -299,7 +305,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
           transition: `transform 320ms ${EASE}, background 240ms ease, border-color 240ms ease`,
         }}
       >
-        <a href="/" style={{ display: "flex", alignItems: "center", paddingLeft: gut, flex: "none" }} aria-label="MQS Technologies">
+        <Link href="/" style={{ display: "flex", alignItems: "center", paddingLeft: gut, flex: "none" }} aria-label="MQS Technologies">
           <Image
             unoptimized
             src={inkHeader ? "/assets/mqs-logo-2a-light.png" : "/assets/mqs-logo-2a-dark.png"}
@@ -309,7 +315,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
             priority
             style={{ height: logoH, width: "auto", display: "block" }}
           />
-        </a>
+        </Link>
 
         {isDesktop && (
           <nav style={{ flex: "1 1 auto", minWidth: 0, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "clamp(18px, 2.2vw, 36px)", paddingRight: "clamp(18px, 2.5vw, 36px)" }}>

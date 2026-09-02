@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 const EVENTS = [
@@ -8,24 +9,28 @@ const EVENTS = [
     event: "Productronica India 2026",
     city: "BIEC, Bengaluru",
     showing: "MQX.tracE 2D and 3D CT, and MQX.gINTi reel counting",
+    logo: "/assets/event-productronica.svg",
   },
   {
     dates: "15–17 Nov 2026",
     event: "ISNT 2026",
     city: "Hyderabad",
     showing: "The full MQS NDT portfolio, presented on home ground",
+    logo: "/assets/event-isnt.png",
   },
   {
     dates: "30 Nov–2 Dec 2026",
     event: "Tube India 2026",
     city: "Mumbai",
     showing: "Pipe and tube inspection, including weld-integrity solutions",
+    logo: "/assets/event-tube-india.png",
   },
   {
     dates: "10–12 Dec 2026",
     event: "ALUCAST 2026",
     city: "Yashobhoomi, New Delhi",
     showing: "MQX.PRISM, MQWR 160U wheel inspection and ADR software",
+    logo: "/assets/event-alucast.png",
   },
 ];
 
@@ -83,12 +88,17 @@ export default function UpcomingEvents() {
           </div>
 
           <div className="flex flex-col gap-4">
-            {visibleEvents.map((item, index) => (
-              <article key={item.event} className="group relative grid overflow-hidden border bg-white shadow-[0_8px_28px_rgba(9,40,58,0.05)] transition duration-300 hover:-translate-y-0.5 hover:border-[#AFCBD6] hover:shadow-[0_14px_36px_rgba(9,40,58,0.10)] sm:grid-cols-[150px_1fr]" style={{ borderColor: HAIRLINE }}>
+            {visibleEvents.map((item) => (
+              <article key={item.event} className="group relative grid overflow-hidden border bg-white shadow-[0_8px_28px_rgba(9,40,58,0.05)] transition duration-300 hover:-translate-y-0.5 hover:border-[#AFCBD6] hover:shadow-[0_14px_36px_rgba(9,40,58,0.10)] sm:grid-cols-[190px_1fr]" style={{ borderColor: HAIRLINE }}>
                 <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0.5 origin-bottom scale-y-0 transition-transform duration-300 group-hover:scale-y-100" style={{ background: CYAN }} />
-                <div className="flex flex-row items-center justify-between gap-5 border-b px-5 py-5 sm:flex-col sm:items-start sm:justify-center sm:border-b-0 sm:border-r sm:px-6" style={{ borderColor: HAIRLINE }}>
-                  <span className="t-caption" style={{ color: index === 0 ? "#087FA4" : "#8798A1" }}>0{index + 1}</span>
-                  <p className="t-body m-0 font-semibold" style={{ color: INK }}>{item.dates}</p>
+                <div className="flex flex-row items-center justify-between gap-4 border-b px-5 py-5 sm:flex-col sm:items-start sm:justify-center sm:gap-3 sm:border-b-0 sm:border-r sm:px-6 sm:py-5" style={{ borderColor: HAIRLINE }}>
+                  <div className="relative h-12 w-[145px] shrink-0 sm:h-14 sm:w-full">
+                    <Image src={item.logo} alt={`${item.event} logo`} fill sizes="(min-width: 640px) 142px, 145px" className="object-contain object-left" />
+                  </div>
+                  <div className="min-w-fit sm:w-full">
+                    <div className="mb-1 h-0.5 w-7" style={{ background: CYAN }} aria-hidden="true" />
+                    <p className="m-0 text-[15px] font-semibold leading-5" style={{ color: INK }}>{item.dates}</p>
+                  </div>
                 </div>
                 <div className="flex flex-col gap-4 px-5 py-6 sm:px-7">
                   <div className="flex flex-wrap items-center justify-between gap-3">
