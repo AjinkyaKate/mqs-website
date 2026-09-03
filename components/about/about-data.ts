@@ -266,7 +266,6 @@ export const CLIENT_LOGOS: ClientLogo[] = [
   { name: "Bharat Dynamics Limited", src: "/assets/logos/bdl.png", w: 143, h: 71 },
   { name: "Bharat Electronics Limited", src: "/assets/logos/bel.png", w: 163, h: 52 },
   { name: "BHEL", src: "/assets/logos/bhel.png", w: 124, h: 97 },
-  { name: "Boeing", src: "/assets/logos/boeing.png", w: 600, h: 137 },
   { name: "BrahMos Aerospace", src: "/assets/logos/brahmos.png", w: 202, h: 200 },
   { name: "Department of Atomic Energy", src: "/assets/logos/dae.png", w: 196, h: 200 },
   { name: "DRDO", src: "/assets/logos/drdo.png", w: 199, h: 200 },

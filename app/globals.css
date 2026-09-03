@@ -565,6 +565,30 @@ video::-webkit-media-controls-start-playback-button {
    never hide anything. */
 @keyframes mqsRise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 @keyframes mqsFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Homepage hero: a restrained X-ray inspection pass over the live machinery. */
+@keyframes mqsHeroScan {
+  0%, 12% { left: 52%; opacity: 0; }
+  22% { opacity: .22; }
+  72% { opacity: .14; }
+  84%, 100% { left: 91%; opacity: 0; }
+}
+
+.mqs-hero-scan {
+  position: absolute;
+  left: 52%;
+  z-index: 4;
+  width: 1px;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(180deg, transparent 5%, rgba(116,224,255,.55) 30%, rgba(22,193,243,.75) 58%, transparent 92%);
+  box-shadow: 0 0 24px 5px rgba(22,193,243,.1);
+  animation: mqsHeroScan 8s cubic-bezier(.4,0,.2,1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mqs-hero-scan { animation: none; }
+}
 .mqs-rise { animation: mqsRise 420ms cubic-bezier(.22, .61, .36, 1) both; }
 .mqs-fade { animation: mqsFade 320ms ease-out both; }
 @media (prefers-reduced-motion: reduce) {

@@ -282,6 +282,11 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
         <div key={i} style={s} />
       ))}
 
+      {/* Subtle inspection-beam pass: adds motion depth without competing with copy. */}
+      {!reducedMotion && (
+        <div className="mqs-hero-scan" aria-hidden="true" style={{ top: navH, bottom: 0 }} />
+      )}
+
       {/* 4 — the desktop inset photograph was removed: it was a full-colour stock
              frame sitting inside a greyscale duotone hero. The hairline grid and
              the spec labels that framed it stay, now reading as a rule overlay on
