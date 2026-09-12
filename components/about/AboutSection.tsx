@@ -159,10 +159,11 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* dark video band */}
-        <div className="relative overflow-hidden" style={{ background: DARK, height: 660 }}>
+        {/* full-width video band with a restrained technical frame */}
+        <div className="relative overflow-hidden border-y" style={{ background: DARK, height: 660, borderColor: "rgba(22,193,243,.5)" }}>
           <BackgroundVideo src={BAND_VIDEO} playing={playing} className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0" style={{ background: "rgba(11,42,58,.6)" }} />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-4 border" style={{ borderColor: "rgba(255,255,255,.22)" }} />
           <div className="absolute inset-0 flex flex-col justify-between" style={{ padding: "72px 55px" }}>
             <p
               className="t-h3 m-0 text-white"
@@ -219,9 +220,10 @@ export default function AboutSection() {
         </div>
 
         {/* dark video band — stacked */}
-        <div className="relative h-[600px] overflow-hidden md:h-[620px]" style={{ background: DARK }}>
+        <div className="relative h-[600px] overflow-hidden border-y md:h-[620px]" style={{ background: DARK, borderColor: "rgba(22,193,243,.5)" }}>
           <BackgroundVideo src={BAND_VIDEO} playing={playing} className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0" style={{ background: "rgba(11,42,58,.64)" }} />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-3 border md:inset-4" style={{ borderColor: "rgba(255,255,255,.22)" }} />
           <div className="absolute inset-0 flex flex-col px-6 py-12 md:px-10 md:py-14">
             <p
               className="t-h3 m-0 text-white md:max-w-[620px]"

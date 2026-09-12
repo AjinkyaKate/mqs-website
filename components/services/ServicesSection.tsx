@@ -108,13 +108,27 @@ function ServiceRow({ title, description, chips, image, imageAlt, imageBackgroun
       className="group flex h-full flex-col overflow-hidden border bg-white"
       style={{ borderColor: hovered ? "rgba(10,106,136,.35)" : HAIRLINE, transition: `border-color 200ms ${EASE}, transform 260ms ${EASE}`, transform: hovered ? "translateY(-4px)" : "none" }}
     >
-      <div className="relative aspect-[4/3] overflow-hidden" style={{ background: imageBackground }}>
+      <div className="relative aspect-video overflow-hidden" style={{ background: imageBackground }}>
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(10,106,136,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(10,106,136,.055) 1px, transparent 1px), radial-gradient(circle at 50% 52%, rgba(22,193,243,.13), transparent 48%)",
+            backgroundSize: "32px 32px, 32px 32px, 100% 100%",
+          }}
+        />
         <Image
           src={image}
           alt={imageAlt}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
-          className={`${imageClassName} transition-transform duration-[420ms] group-hover:scale-[1.025]`}
+          className={imageClassName}
+          style={{
+            transform: hovered ? "scale(.88) translateY(-1.5%)" : "scale(.84)",
+            filter: hovered ? "drop-shadow(0 18px 22px rgba(9,40,58,.16))" : "drop-shadow(0 12px 18px rgba(9,40,58,.10))",
+            transition: `transform 420ms ${EASE}, filter 420ms ${EASE}`,
+          }}
         />
       </div>
       <div className="flex flex-1 flex-col items-start gap-5 p-6 md:p-7">

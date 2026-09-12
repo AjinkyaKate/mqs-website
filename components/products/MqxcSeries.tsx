@@ -145,7 +145,7 @@ export default function MqxcSeries() {
               <h2 style={{ margin: "14px 0 0", font: "600 clamp(28px,3.2vw,42px)/1.08 var(--font-sans)", letterSpacing: "-.025em", color: INK, textWrap: "pretty" }}>Built for the part you actually inspect.</h2>
             </div>
             <div style={{ border: `1px solid ${HAIR}`, aspectRatio: compact ? "16/9" : "4/3", overflow: "hidden", background: "#fff" }}>
-              <Image src="/assets/mqxc-hero.jpg" alt="MQXC cabinet X-ray system" width={800} height={600} className="h-full w-full object-cover" />
+              <Image src="/assets/mqxc-hero.jpg" alt="MQXC cabinet X-ray system" width={800} height={600} className="h-full w-full scale-[.84] object-contain" />
             </div>
           </div>
           <div className="flex flex-col" style={{ gap: 20 }}>

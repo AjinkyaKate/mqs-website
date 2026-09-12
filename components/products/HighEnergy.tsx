@@ -19,7 +19,7 @@ const HAIR = "#D3DFE7", HAIR_DARK = "rgba(255,255,255,.14)";
 const PAGE = "#F4F8FA", NAVY = "#0E3A52";
 const SANS = "var(--font-sans)";
 
-const NAV_ITEMS: [string, string][] = [["Overview", "#overview"], ["Energy range", "#range"], ["Systems", "#systems"], ["Applications", "#applications"], ["Specs", "#specs"], ["Installed base", "#clients"]];
+const NAV_ITEMS: [string, string][] = [["Overview", "#overview"], ["Energy range", "#range"], ["Systems", "#systems"], ["Applications", "#applications"], ["Specs", "#specs"]];
 
 const STATS: [string, string, string][] = [
   ["0.9 – 15 MeV", "X-ray energy range", "M13 2 3 14h7l-1 8 11-12h-7z"],
@@ -57,7 +57,7 @@ const CONFIGS: Config[] = [
     no: "01", sector: "Aerospace & heavy engineering", title: "K15 Dual Energy LINAC System",
     desc: "Built around the K15 dual energy accelerator for rocket motors, solid propellants, castings and heavy engineering products — detecting cracks, porosity, inhomogeneities, inclusions and foreign bodies. An EOT crane-mounted head manipulator carries the accelerator, so large objects can be inspected from multiple angles without being repositioned.",
     specs: [["Energy", "9 / 15 MeV"], ["Penetration in steel", "Up to 500 mm at 15 MeV · up to 380 mm at 9 MeV"], ["Focal spot", "Less than 2 mm"], ["Dose rate", "15 MeV: 40–120 Gy/min-m · 9 MeV: 12–40 Gy/min-m"], ["Beam symmetry", "Within ±5%"], ["Solid propellant", "Up to 2500 mm thickness"]],
-    image: "/assets/he-k15.jpg",
+    image: "/assets/he-k15-light.png",
   },
   {
     no: "02", sector: "Real-time inspection", title: "Digital Radiography with Linear Accelerators",
@@ -75,7 +75,7 @@ const CONFIGS: Config[] = [
     no: "04", sector: "Volumetric analysis", title: "MQHCT Series — High Energy Computed Tomography",
     desc: "High-energy CT for large, intricate parts — producing a measurable 3D volume rather than a projection, so porosity can be sized and located rather than estimated. Energy is chosen against the application, and the cell is configured around multi-axial manipulators, accelerators, detectors and imaging software.",
     specs: [["X-ray source", "Dual energy Linatron, with optional dual-focus 450 kV industrial X-ray"], ["Imaging system", "Digital flat panel detector to 16 MeV, with optional line detector"], ["Handling", "Custom multi-axial manipulators for tube, flat panel and object"], ["Imaging software", "MQS Imaging Suite, VG Studio Max, Varex CBCT tools"], ["Control station", "Control unit, operator workstation and image visualisation workstation"]],
-    image: "/assets/he-hero.jpg",
+    image: "/assets/he-hero-light.png",
   },
 ];
 
@@ -90,22 +90,6 @@ type SpecTable = { title: string; rows: [string, string][] };
 const SPEC_TABLES: SpecTable[] = [
   { title: "Digital Flat Panel Detector", rows: [["Operational energy range", "40 kV – 16 MeV"], ["Active pixel area", "42.7 × 42.7 cm"], ["Pixel pitch", "139 µm"], ["Frame rate", "4 fps (1×1) · 15 fps (2×2)"]] },
   { title: "Beam Characteristics", rows: [["Focal spot size", "Does not exceed 2.0 mm, measured by Full Width Half Max"], ["Small focal spot", "1.0–1.5 mm on Mi-9 only, at reduced maximum dose rate"], ["Field flatness", "Measured at 1 m from target, ±7.5° off the central axis"], ["Field symmetry", "Beam asymmetry does not exceed 5% at 1 m from target"], ["Shielding", "Low leakage 1.0 × 10⁻³ (fraction)"], ["Alignment laser", "533 nm Class II, 0.5 mW — not with the ULLP leakage option"]] },
-];
-
-type Client = { name: string; src?: string; width?: number; height?: number };
-const CLIENTS: Client[] = [
-  { name: "ISRO", src: "/assets/logos/isro.png", width: 123, height: 118 },
-  { name: "BHEL", src: "/assets/logos/bhel.png", width: 124, height: 97 },
-  { name: "Bharat Dynamics", src: "/assets/logos/bdl.png", width: 143, height: 71 },
-  { name: "Bharat Electronics", src: "/assets/logos/bel.png", width: 163, height: 52 },
-  { name: "HAL", src: "/assets/logos/hal.png", width: 482, height: 190 },
-  { name: "IGCAR", src: "/assets/logos/igcar.png", width: 200, height: 200 },
-  { name: "NFC" },
-  { name: "BrahMos Aerospace", src: "/assets/logos/brahmos.png", width: 202, height: 200 },
-  { name: "Ratnamani Metals", src: "/assets/logos/ratnamani.png", width: 253, height: 100 },
-  { name: "Gulf", src: "/assets/logos/gulf.png", width: 112, height: 102 },
-  { name: "Indian Air Force", src: "/assets/logos/indian-air-force.png", width: 98, height: 111 },
-  { name: "Ordnance Factories", src: "/assets/logos/ordnance-factory-board.png", width: 136, height: 200 },
 ];
 
 const eyebrow = (color: string) => ({ font: `500 11px/1 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase" as const, color });
@@ -161,8 +145,8 @@ export default function HighEnergy() {
               <a href="#specs" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: "transparent", border: "1px solid rgba(255,255,255,.42)", color: "#fff", font: `500 13px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }} className="hover:!bg-white/10">See Specifications</a>
             </div>
           </div>
-          <div style={{ position: "relative", border: `1px solid ${HAIR_DARK}`, background: "#0A1016", aspectRatio: "16/11", overflow: "hidden" }}>
-            <Image src="/assets/he-hero.jpg" alt="High-energy dual-head multi-energy CT system with linear accelerator, object manipulator and flat panel detector" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain" />
+          <div style={{ position: "relative", border: `1px solid ${HAIR_DARK}`, background: PAGE, aspectRatio: "16/11", overflow: "hidden" }}>
+            <Image src="/assets/he-hero-light.png" alt="High-energy dual-head multi-energy CT system with linear accelerator, object manipulator and flat panel detector" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain" />
           </div>
         </div>
       </section>
@@ -238,8 +222,7 @@ export default function HighEnergy() {
           <p style={{ margin: "16px 0 40px", maxWidth: 640, font: `400 clamp(15px,1.3vw,17px)/1.6 ${SANS}`, color: BODY }}>Every model is defined by one number that matters more than the rest: how much steel it can penetrate. Bars show each model&apos;s usable window against a 500 mm scale.</p>
           <div ref={barsRef} className="flex flex-col" style={{ background: "#fff", border: `1px solid ${HAIR}` }}>
             {MODELS.map((m, i) => {
-              const leftPct = (m.min / SCALE_MAX) * 100;
-              const widthPct = ((m.max - m.min) / SCALE_MAX) * 100;
+              const widthPct = (m.max / SCALE_MAX) * 100;
               return (
                 <div key={m.name} className="grid items-center" style={{ gridTemplateColumns: mobile ? "1fr" : "150px 1fr 120px", gap: mobile ? 10 : "clamp(16px,2vw,28px)", padding: "clamp(18px,2vw,24px) clamp(18px,2vw,26px)", borderBottom: i < MODELS.length - 1 ? `1px solid ${HAIR}` : "none" }}>
                   <div className="flex flex-col" style={{ gap: 3 }}>
@@ -247,7 +230,7 @@ export default function HighEnergy() {
                     <span style={{ font: `400 12px/1.3 ${SANS}`, color: MUTED }}>{m.energy}</span>
                   </div>
                   <div style={{ position: "relative", height: 30, background: "#EAF1F5", overflow: "hidden" }}>
-                    <div style={{ position: "absolute", top: 0, bottom: 0, left: `${leftPct}%`, width: barsIn ? `${widthPct}%` : 0, background: `linear-gradient(90deg,${CYAN_ON_LIGHT},${CYAN})`, transition: `width 900ms ${EASE}`, transitionDelay: `${i * 90}ms` }}>
+                    <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: barsIn ? `${widthPct}%` : 0, background: `linear-gradient(90deg,${CYAN_ON_LIGHT},${CYAN})`, transition: `width 900ms ${EASE}`, transitionDelay: `${i * 90}ms` }}>
                       <span className="flex h-full items-center justify-end" style={{ padding: "0 10px", font: `600 12px/1 ${SANS}`, color: "#08283A", whiteSpace: "nowrap" }}>{m.max} mm</span>
                     </div>
                   </div>
@@ -270,8 +253,8 @@ export default function HighEnergy() {
             {CONFIGS.map((c, i) => {
               const imgFirst = desktop && i % 2 === 0;
               const media = (
-                <div style={{ position: "relative", background: "#0A1016", border: `1px solid ${HAIR}`, aspectRatio: "4/3", overflow: "hidden" }}>
-                  <Image src={c.image} alt={c.title} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain" />
+                <div style={{ position: "relative", background: PAGE, border: `1px solid ${HAIR}`, aspectRatio: "4/3", overflow: "hidden" }}>
+                  <Image src={c.image} alt={c.title} fill sizes="(max-width: 1024px) 100vw, 50vw" className="scale-[.84] object-contain" />
                 </div>
               );
               const body = (
@@ -364,36 +347,6 @@ export default function HighEnergy() {
             })}
           </div>
           <p style={{ margin: "28px 0 0", maxWidth: 760, font: `400 13px/1.6 ${SANS}`, color: MUTED }}>All Linatron models from Varex Imaging Corporation are designed and manufactured in accordance with EMC Directive 89/336/EEC and Low Voltage Directive 73/23/EEC.</p>
-        </div>
-      </section>
-
-      {/* INSTALLED BASE */}
-      <section id="clients" style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: PAGE, color: INK, borderTop: `1px solid ${HAIR}` }}>
-        <div className="mx-auto" style={{ maxWidth: 1330 }}>
-          <div style={eyebrow(CYAN_ON_LIGHT)}>Installed base</div>
-          <h2 style={h2}>Trusted Where Failure Is Not an Option.</h2>
-          <p style={{ margin: "16px 0 40px", maxWidth: 640, font: `400 clamp(15px,1.3vw,17px)/1.6 ${SANS}`, color: BODY }}>High-energy systems delivered to India&apos;s aerospace, defence, nuclear and heavy-engineering programmes.</p>
-          <div className="grid" style={{ gridTemplateColumns: mobile ? "1fr 1fr" : desktop ? "repeat(4,1fr)" : "repeat(3,1fr)", gap: 1, background: HAIR, border: `1px solid ${HAIR}` }}>
-            {CLIENTS.map((client) => (
-              <div
-                key={client.name}
-                className="flex items-center justify-center text-center"
-                style={{ background: "#fff", minHeight: mobile ? 104 : 126, padding: mobile ? "18px 14px" : "22px 24px" }}
-              >
-                {client.src && client.width && client.height ? (
-                  <Image
-                    src={client.src}
-                    alt={`${client.name} logo`}
-                    width={client.width}
-                    height={client.height}
-                    style={{ width: "auto", height: "auto", maxWidth: "100%", maxHeight: mobile ? 58 : 72, objectFit: "contain" }}
-                  />
-                ) : (
-                  <span style={{ font: `700 24px/1 ${SANS}`, letterSpacing: ".08em", color: NAVY }}>{client.name}</span>
-                )}
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

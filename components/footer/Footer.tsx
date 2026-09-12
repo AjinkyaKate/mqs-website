@@ -156,8 +156,8 @@ export default function Footer() {
             MQS Technologies Pvt. Ltd., KK House, Plot B-35/1, Industrial Estate, Sanathnagar, Hyderabad 500018
           </address>
           <div className="t-body-sm flex flex-col gap-1.5">
-            <a href="mailto:sales@mqstechnologies.in" className={link}>
-              sales@mqstechnologies.in
+            <a href="mailto:info@mqstechnologies.in" className={link}>
+              info@mqstechnologies.in
             </a>
             <a href="tel:+914023811122" className={link}>
               +91 40 2381 1122

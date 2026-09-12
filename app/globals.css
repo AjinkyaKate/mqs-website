@@ -639,7 +639,7 @@ video::-webkit-media-controls-start-playback-button {
   --ate-lead: 400 18px/1.6 var(--font-sans);
   --ate-hero-min: 760px;
   --ate-hero-copy: 60%;
-  --ate-hero-img: 620px;
+  --ate-hero-img: 540px;
   --ate-cols-intro: 1fr 0.85fr;
   --ate-cols-a: 1fr 0.62fr;
   --ate-cols-b: 0.9fr 1fr;
@@ -663,7 +663,7 @@ video::-webkit-media-controls-start-playback-button {
     --ate-h3: 27px;
     --ate-hero-min: 640px;
     --ate-hero-copy: 72%;
-    --ate-hero-img: 480px;
+    --ate-hero-img: 430px;
     --ate-gap-lg: 48px;
     --ate-tall: 500px;
     --ate-pad-box: 32px;
@@ -674,7 +674,7 @@ video::-webkit-media-controls-start-playback-button {
     --ate-h1: 38px;
     --ate-h2: 30px;
     --ate-hero-copy: 100%;
-    --ate-hero-img: 380px;
+    --ate-hero-img: 340px;
     --ate-cols-intro: 1fr;
     --ate-cols-a: 1fr;
     --ate-cols-b: 1fr;
@@ -696,7 +696,7 @@ video::-webkit-media-controls-start-playback-button {
     --ate-h3: 22px;
     --ate-h4: 20px;
     --ate-hero-min: 0px;
-    --ate-hero-img: 300px;
+    --ate-hero-img: 270px;
     --ate-grid-3: 1fr;
     --ate-grid-4: 1fr;
     --ate-gap-md: 20px;

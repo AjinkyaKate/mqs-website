@@ -249,7 +249,7 @@ export default function ContactForm() {
             moment /privacy-policy ships. */}
         <p style={{ margin: 0, font: `400 13px/1.6 ${SANS}`, color: MUTED, textWrap: "pretty" }}>
           We use these details only to respond to your enquiry and retain them for 24 months. You can ask us to delete them
-          at any time by writing to <a href="mailto:sales@mqstechnologies.in" style={{ color: CYAN_L }}>sales@mqstechnologies.in</a>.
+          at any time by writing to <a href="mailto:info@mqstechnologies.in" style={{ color: CYAN_L }}>info@mqstechnologies.in</a>.
           Full details are in our privacy policy.
         </p>
       </div>

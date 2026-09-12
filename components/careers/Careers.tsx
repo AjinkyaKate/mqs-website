@@ -389,7 +389,7 @@ export default function Careers() {
                 </span>
               </label>
               <p style={{ margin: 0, paddingLeft: 36, maxWidth: 660, font: `400 13px/1.6 ${SANS}`, color: MUTED }}>
-                We collect the details and resume you submit only to assess your application, keep them for 12 months, and delete them after that. You can ask us to delete your data at any time by emailing <a href="mailto:sales@mqstechnologies.in" style={{ color: CYAN_L }}>sales@mqstechnologies.in</a>. Full details are in our privacy policy.
+                We collect the details and resume you submit only to assess your application, keep them for 12 months, and delete them after that. You can ask us to delete your data at any time by emailing <a href="mailto:info@mqstechnologies.in" style={{ color: CYAN_L }}>info@mqstechnologies.in</a>. Full details are in our privacy policy.
               </p>
               {err("consent") && <div className="flex items-center" style={{ gap: 8, paddingLeft: 36, font: `400 13px/1.4 ${SANS}`, color: ERROR }}><span style={{ width: 6, height: 6, background: ERROR }} />{err("consent")}</div>}
             </div>

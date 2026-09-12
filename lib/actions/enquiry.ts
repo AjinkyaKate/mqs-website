@@ -185,7 +185,7 @@ export async function submitEnquiry(
       success: false,
       values: raw,
       message:
-        "Something went wrong sending your enquiry. Please email sales@mqstechnologies.in and we will pick it up from there.",
+        "Something went wrong sending your enquiry. Please email info@mqstechnologies.in and we will pick it up from there.",
     };
   }
 

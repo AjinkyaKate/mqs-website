@@ -7,6 +7,7 @@
    ────────────────────────────────────────────────────────────── */
 
 import Image from "next/image";
+import SectionLabel from "@/components/ui/SectionLabel";
 
 const DARK = "#0B2A3A";
 const PRIMARY = "#0E3A52";
@@ -149,9 +150,7 @@ export default function WhyChooseUs() {
         {/* intro */}
         <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
           <div className="flex max-w-[820px] flex-col gap-6 md:gap-7">
-            <div className="t-eyebrow text-white">
-              Why choose us
-            </div>
+            <SectionLabel tone="dark">Why choose us</SectionLabel>
             <h2 className="m-0 t-h2 text-white md:max-w-[660px] lg:max-w-none">
               Built for accuracy. Trusted for compliance.
             </h2>

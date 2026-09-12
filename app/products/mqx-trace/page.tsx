@@ -8,7 +8,7 @@ import MqxTracE from "@/components/products/MqxTracE";
 export const metadata: Metadata = {
   title: "MQX.tracE — 2D & 3D CT X-Ray Inspection for Electronics | MQS Technologies",
   description:
-    "India's first indigenous 2.5D PCB X-ray inspection system. Micron-level detection of solder voids, bridging, PTH fill and BGA defects, with optional 3D CT slicing. AERB type-approved.",
+    "MQX.tracE 2.5D, 3D and Inline 3D PCB X-ray inspection systems. Micron-level detection of solder voids, bridging, PTH fill and BGA defects, with optional 3D slicing. AERB type-approved.",
   alternates: { canonical: "/products/mqx-trace" },
 };
 

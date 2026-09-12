@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import SectionLabel from "@/components/ui/SectionLabel";
 import Link from "next/link";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -520,10 +521,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
               : { position: "relative", zIndex: 5, display: "flex", flexDirection: "column", flex: "1 1 auto", minHeight: 0 }
           }
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span aria-hidden="true" style={{ width: isPhone ? 24 : 34, height: 2, background: CYAN, boxShadow: "0 0 18px rgba(22,193,243,.45)" }} />
-            <div className="t-eyebrow" style={{ color: "rgba(255,255,255,.92)", ...(isDesktop ? { fontSize: 13 } : isPhone ? { fontSize: 11 } : {}) }}>Precision inspection since 1994</div>
-          </div>
+          <SectionLabel tone="dark" detail="Since 1994">Precision inspection</SectionLabel>
           <h1 className="t-display" style={{ color: "#FFFFFF", textWrap: "balance", textShadow: "0 8px 30px rgba(0,0,0,.22)", margin: isPhone ? "18px 0 0" : "26px 0 0", ...(isDesktop ? { fontSize: "clamp(56px, 4.7vw, 72px)" } : isPhone ? { fontSize: 40 } : {}), ...rise(60) }}>
             See beyond. Test beyond. Build beyond.
           </h1>

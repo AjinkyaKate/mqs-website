@@ -87,7 +87,7 @@ export async function submitApplication(
   } catch {
     return {
       success: false,
-      message: "Something went wrong saving your application. Please email sales@mqstechnologies.in and we will pick it up.",
+      message: "Something went wrong saving your application. Please email info@mqstechnologies.in and we will pick it up.",
     };
   }
 

@@ -46,9 +46,6 @@ import ContactMap from "./ContactMap";
        address as its query, so no Maps API key or static-map asset is required.
 
    PENDING SIGN-OFF, all raised by the reference itself:
-   · RESPONSE TIME. "We reply within one working day" is not in the source
-     document. The reference calls it the cheapest improvement on the page and
-     also warns to publish only a figure the team can hold to.
    · RETENTION. The notice says 24 months. The careers form already says 12.
      One of the two is wrong.
    · SERVICE REQUEST. Confirm a service request route exists before this page
@@ -66,7 +63,7 @@ const EASE = "cubic-bezier(.22,.61,.36,1)";
 
 export const PHONE = "+91 40 2381 1122";
 export const TEL = "tel:+914023811122";
-export const EMAIL = "sales@mqstechnologies.in";
+export const EMAIL = "info@mqstechnologies.in";
 export const ADDRESS_LINES = [
   "KK House, Plot No. B-35/1, Industrial Estate",
   "Sanathnagar, Hyderabad – 500018",
@@ -122,11 +119,6 @@ function Btn({ children, href, tone, external }: { children: ReactNode; href: st
 /* ── 1 · hero, quick contact ledger, and the form beside it ── */
 
 const QUICK: { label: string; value: ReactNode; sub: string }[] = [
-  {
-    label: "Response",
-    value: <span style={{ font: `500 20px/1.3 ${SANS}`, letterSpacing: "-.01em", color: INK }}>We reply within one working day</span>,
-    sub: HOURS,
-  },
   {
     label: "Call",
     value: <a href={TEL} style={{ font: `500 20px/1.3 ${SANS}`, letterSpacing: "-.01em", color: INK, minHeight: 44, display: "flex", alignItems: "center" }}>{PHONE}</a>,
@@ -210,8 +202,8 @@ const DEPARTMENTS: { eyebrow: string; title: string; copy: string; emails: strin
   {
     eyebrow: "Sales", title: "New systems & enquiries",
     copy: "Product selection, demonstrations, quotations and application advice across X-ray, CT and ATE.",
-    emails: ["sales@mqstechnologies.in", "bdev@mqstechnologies.in"],
-    cta: "Email Sales", href: "mailto:sales@mqstechnologies.in", tone: "navy",
+    emails: ["info@mqstechnologies.in", "bdev@mqstechnologies.in"],
+    cta: "Email Sales", href: "mailto:info@mqstechnologies.in", tone: "navy",
   },
   {
     eyebrow: "Contract manufacturing", title: "Build to your drawing",

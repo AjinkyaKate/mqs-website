@@ -142,7 +142,7 @@ const INDUSTRIES: Industry[] = [
     n: "03",
     name: "Electronics & Semiconductors",
     lead: "Inspect what the eye cannot see. BGA voids, head-in-pillow, bridging and PTH fill issues — defects that pass visual inspection, survive functional test, and come back as field returns.",
-    systems: ["MQX.tracE", "MQX.tracE CT", "MQX.gINti", "Microfocus CT"],
+    systems: ["MQX.tracE 2.5D", "MQX.tracE 3D", "MQX.tracE Inline 3D", "MQX.gINti", "Microfocus CT"],
     /* The handoff ships the same PTH radiograph here as in the internal-view
        figure above. Kept as designed so both captions stay accurate. */
     image: {
@@ -168,7 +168,7 @@ const ROUTES = [
   ["Aluminium castings at volume", "Throughput without missing porosity", "MQS-PRISM · MQXC"],
   ["Brake, steering and safety parts", "100% inspection with traceability", "MQXC Cabinet DR · MQCT"],
   ["EV battery cells and modules", "Electrode alignment and internal defects", "MQCT · Microfocus CT"],
-  ["PCBs and solder joints", "Hidden voids under packages", "MQX.tracE · MQX.tracE CT"],
+  ["PCBs and solder joints", "Hidden voids under packages", "MQX.tracE 2.5D · MQX.tracE 3D · MQX.tracE Inline 3D"],
   ["SMT component reels", "Inventory count accuracy", "MQX.gINti"],
   ["Welds and pressure components", "Root penetration and weld integrity", "MQXC 320/450 · High-Energy"],
 ] as const;

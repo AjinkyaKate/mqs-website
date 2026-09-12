@@ -10,7 +10,9 @@ import Image from "next/image";
    MqctSeries.tsx. Site header, footer and ContactSection come from the
    route wrapper.
 
-   The page covers TWO variants, and the brief is emphatic that the split
+   The page covers THREE variants. Detailed specifications supplied by MQS
+   currently cover the 2.5D and 3D variants; approved Inline 3D technical data
+   and a dedicated image are still pending.
    must be explicit early, because a visitor who misses it will read
    contradictory specifications further down and lose confidence. Hence the
    comparison table immediately under the hero, and two separate spec tables.
@@ -49,7 +51,7 @@ const SANS = "var(--font-sans)";
 
 const NAV_ITEMS: [string, string][] = [
   ["Overview", "#overview"], ["Variants", "#variants"], ["2.5D", "#benefits"],
-  ["Highlights", "#highlights"], ["CT", "#ct"], ["Gallery", "#gallery"],
+  ["Highlights", "#highlights"], ["3D", "#ct"], ["Gallery", "#gallery"],
   ["Specs", "#specs"],
 ];
 
@@ -63,7 +65,8 @@ const BADGES = [
 
 const VARIANTS: [string, string, string][] = [
   ["MQX.tracE · 2.5D", "High-magnification 2D X-ray with oblique viewing", "You need to screen boards fast and catch known defect types"],
-  ["MQX.tracE CT · 3D", "Adds CT slicing and reconstruction", "Overlap makes 2D ambiguous, or you need evidence-ready failure analysis"],
+  ["MQX.tracE · 3D", "Adds CT slicing and reconstruction", "Overlap makes 2D ambiguous, or you need evidence-ready failure analysis"],
+  ["MQX.tracE · Inline 3D", "Inline 3D inspection", "You need 3D inspection integrated into the production line"],
 ];
 
 const BENEFITS_2D: [string, string, string][] = [
@@ -147,7 +150,7 @@ const SPECS: SpecTable[] = [
     ["Radiation safety", "AERB type-approved; leakage below 1 µSv/hr"],
     ["Footprint / weight", "2200 (H) × 1800 (W) × 1900 (D) mm; approx. 4500 kg"],
   ]},
-  { title: "MQX.tracE CT · 3D", rows: [
+  { title: "MQX.tracE · 3D", rows: [
     ["Power", "AC mains 220 – 230 V, 50 Hz, single phase"], ["Anode voltage", "30 – 160 kV"],
     ["Target power", "Up to 15 W"], ["X-ray source", "Open tube, transmission target"],
     ["Resolution", "0.75 µm or better"], ["Magnification", "Geometric up to 3,000×; total up to 7,500×"],
@@ -290,13 +293,13 @@ export default function MqxTracE() {
         </div>
       </div>
 
-      {/* ── the two variants, stated up front ── */}
+      {/* ── the three variants, stated up front ── */}
       <Section id="variants" tone="white">
-        <h2 style={h2(INK)}>One platform. Two depths of answer.</h2>
+        <h2 style={h2(INK)}>One platform. Three depths of answer.</h2>
         <p className="mt-4 max-w-[62ch]" style={lead(BODY)}>
-          Where 2D leaves ambiguity, MQX.tracE CT adds 3D slicing and reconstruction to isolate layers, verify internal
-          geometry and generate evidence-ready reports, without destructive sectioning. Both variants share an AI-powered
-          imaging suite.
+          Where 2D leaves ambiguity, MQX.tracE 3D adds slicing and reconstruction to isolate layers, verify internal
+          geometry and generate evidence-ready reports without destructive sectioning, while MQX.tracE Inline 3D brings
+          that depth into the production line. All three variants share an AI-powered imaging suite.
         </p>
         <div className="mt-9" style={{ borderTop: `1px solid ${INK}` }}>
           <div className="hidden md:grid md:grid-cols-3 md:gap-6 md:py-3" style={{ borderBottom: `1px solid ${HAIR}` }}>
@@ -397,10 +400,10 @@ export default function MqxTracE() {
 
       {/* ── CT variant ── */}
       <Section id="ct" tone="inset">
-        <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE CT · 3D</p>
+        <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE · 3D</p>
         <h2 className="mt-4" style={h2(INK)}>2D gives answers. CT gives certainty.</h2>
         <p className="mt-4 max-w-[70ch]" style={lead(BODY)}>
-          For complex electronics, 2D views can be ambiguous because layers overlap. MQX.tracE CT combines high-clarity 2D
+          For complex electronics, 2D views can be ambiguous because layers overlap. MQX.tracE 3D combines high-clarity 2D
           screening with 3D slicing and reconstruction, so teams can isolate layers, verify internal geometry, confirm root
           cause and generate evidence-ready reports, without cutting a board apart.
         </p>

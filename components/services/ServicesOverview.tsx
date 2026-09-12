@@ -9,9 +9,9 @@
    declared at the design's own breakpoints (1366 / 1024 / 640) because the
    handoff steps those values discretely and calls them final.
 
-   Page order, per the handoff: hero → service families → 01 inspection →
-   02 precision manufacturing → how manufacturing works → 03 service &
-   support → service finder.
+   Page order after the phase-one content review: hero → service families →
+   01 inspection → 02 service & support → service finder. The precision
+   manufacturing pathway was removed in full at the client's request.
 
    TWO DELIBERATE DEPARTURES, both forced by decisions already taken:
 
@@ -94,7 +94,7 @@ const linkStyle = (color = CYAN_INK) => ({
 const HERO = {
   eyebrow: "Services",
   title: "More than machines. Capability you can call on.",
-  lead: "Send us the part and we scan it. Send us the drawing and we build it. Already running an MQS system, we keep it running.",
+  lead: "Send us the part and we scan it. Already running an MQS system, we keep it running.",
 };
 
 /* Family asides keep their routing role, but as in-page anchors: the handoff's
@@ -109,16 +109,6 @@ const FAMILIES = [
   },
   {
     n: "02",
-    family: "Precision manufacturing",
-    statement: "Send us the drawing.",
-    aside: "Build-to-spec manufacturing for defence and industrial programmes.",
-    links: [
-      ["Precision sub-assemblies", "#precision-manufacturing"],
-      ["Industrial electronics", "#precision-manufacturing"],
-    ],
-  },
-  {
-    n: "03",
     family: "Service & support",
     statement: "Already running an MQS system?",
     aside: "Lifecycle support for installed systems, from planned maintenance to breakdown response.",
@@ -142,50 +132,6 @@ const CT_CAPS = [
   "Product development", "Dimensional measurement", "Wall-thickness analysis",
   "CAD comparison", "Casting inspection", "Weld-quality inspection",
   "Contamination / FOD", "Material characterisation", "Metrology",
-];
-
-type MfgItem = {
-  slot: string;
-  title: string;
-  body: string;
-  caps: readonly string[];
-  image?: { src: string; alt: string };
-  /* set instead of `image` where MQS have not supplied the photograph yet */
-  need?: string;
-};
-
-const MFG: MfgItem[] = [
-  {
-    slot: "Service A",
-    title: "Precision sub-assemblies.",
-    body: "Mission-critical electro-mechanical and electronic assemblies built for demanding defence and industrial applications.",
-    caps: ["Electro-mechanical assemblies", "Electronic modules", "Control units", "Indigenisation",
-      "Import substitution", "Defence-grade qualification", "Batch production", "Fixtures & tooling", "Test setups"],
-    /* The handoff ships this render as final. It is the same rotor rig that
-       carries the aerospace band on /industries/. */
-    image: { src: "/assets/ind-aero-rotor-dr.jpg", alt: "Precision sub-assembly inspection rig" },
-  },
-  {
-    slot: "Service B",
-    title: "Industrial electronics.",
-    body: "Custom electronics and control systems engineered for reliability and repeatable performance in demanding environments.",
-    caps: ["Custom control units", "Electronic modules", "Power electronics", "Power supply units",
-      "Wiring", "Harnessing", "Connectors", "Enclosures", "Embedded systems", "Microcontroller platforms"],
-    /* Handoff marks this photograph as still needed from MQS. */
-    need: "Photograph · control unit / power electronics build",
-  },
-];
-
-const PROOF: [string, string, string][] = [
-  ["3,500+", "Missile control sections supplied", "Capacity · 100 units / month"],
-  ["85,000+", "Piezo electric generators supplied", "Capacity · 5,000 units / month"],
-];
-
-const STEPS: [string, string][] = [
-  ["01", "Share drawing, BOM or requirement"],
-  ["02", "Design-for-manufacture review and process planning"],
-  ["03", "Prototype or pilot build and validation"],
-  ["04", "Series production, inspection and documentation"],
 ];
 
 const SUPPORT = [
@@ -214,8 +160,6 @@ const BENEFITS: [string, string][] = [
 
 const FINDER: [string, string, string][] = [
   ["I need inspection results but don't need to buy a machine.", "CT inspection services", "#inspection-services"],
-  ["I have a drawing and need the component manufactured.", "Precision sub-assemblies", "#precision-manufacturing"],
-  ["I need custom control or power electronics.", "Industrial electronics", "#precision-manufacturing"],
   ["I own an MQS system and want to keep it reliable.", "Preventive maintenance", "#service-support"],
   ["My system is down right now.", "Repair & breakdown support", "#service-support"],
 ];
@@ -224,7 +168,7 @@ const FINDER: [string, string, string][] = [
    form itself. Kept so the handoff's closing copy stays traceable. */
 export const CLOSING = {
   title: "Tell us what you need.",
-  body: "Whether it is a part to scan, an assembly to build, or a system that has stopped, we route your request to the right engineer.",
+  body: "Whether it is a part to scan or a system that has stopped, we route your request to the right engineer.",
   actions: ["Raise a service request", "Call the service team"],
 };
 
@@ -273,22 +217,6 @@ function TagList({ items, onDark = false }: { items: readonly string[]; onDark?:
           <span className="max-[639px]:text-[13px]">{it}</span>
         </Fragment>
       ))}
-    </div>
-  );
-}
-
-/* The handoff's labelled placeholder: navy-2 ground, a 24px inset hairline and
-   a caption naming the shot it needs. Decorative until real photography lands. */
-function Placeholder({ caption, className, style }: { caption: string; className?: string; style?: React.CSSProperties }) {
-  return (
-    <div className={`relative flex items-center justify-center overflow-hidden ${className ?? ""}`} style={{ background: NAVY_2, ...style }}>
-      <div className="pointer-events-none absolute inset-6" style={{ border: "1px solid rgba(255,255,255,.12)" }} />
-      <p
-        className="relative m-auto max-w-[380px] p-8 text-center max-[639px]:text-left"
-        style={{ font: `500 11px/1.7 ${SANS}`, letterSpacing: ".16em", textTransform: "uppercase", color: "rgba(255,255,255,.45)" }}
-      >
-        {caption}
-      </p>
     </div>
   );
 }
@@ -468,116 +396,7 @@ function Inspection() {
   );
 }
 
-/* ── 4 · 02 precision manufacturing ───────────────────────── */
-
-function Manufacturing() {
-  return (
-    <section
-      id="precision-manufacturing"
-      className="scroll-mt-[80px] pt-[var(--svc-sec-y)] md:scroll-mt-[92px] lg:scroll-mt-[96px]"
-      style={{ background: PAGE }}
-      aria-label="Precision manufacturing"
-    >
-      <SecHead
-        n="02"
-        family="Precision manufacturing"
-        title="Send us the drawing."
-        lead="Build-to-spec manufacturing for defence and industrial programmes, from low-volume critical builds to repeatable series production."
-        className="pb-[72px] max-[639px]:pb-8"
-        style={{ borderBottom: `1px solid ${HAIR}` }}
-      />
-
-      <div className="mx-[var(--svc-inset)] grid grid-cols-2 max-[1023px]:grid-cols-1" style={{ borderBottom: `1px solid ${HAIR}` }}>
-        {MFG.map((m, i) => (
-          <div
-            key={m.title}
-            className={
-              i === 0
-                ? "pb-16 pr-14 pt-14 max-[1023px]:px-0 max-[1023px]:pb-11 max-[1023px]:pt-0"
-                : "pb-16 pl-14 pt-14 max-[1023px]:px-0 max-[1023px]:py-11"
-            }
-            style={
-              i === 0
-                ? { borderRight: `1px solid ${HAIR}` }
-                : undefined
-            }
-          >
-            {m.image ? (
-              <div className="mb-9 flex h-[300px] items-center justify-center overflow-hidden max-[639px]:mb-6 max-[639px]:h-[200px]" style={{ background: WHITE }}>
-                <Image
-                  src={m.image.src}
-                  alt={m.image.alt}
-                  width={726}
-                  height={810}
-                  quality={90}
-                  sizes="(min-width:1024px) 50vw, 100vw"
-                  className="max-h-[88%] max-w-[82%] object-contain"
-                  style={{ width: "auto", height: "auto" }}
-                />
-              </div>
-            ) : (
-              <Placeholder caption={m.need ?? "Photograph needed"} className="mb-9 h-[300px] max-[639px]:mb-6 max-[639px]:h-[200px]" />
-            )}
-            <p style={label()}>{m.slot}</p>
-            <h3
-              className="max-[639px]:!text-[24px]"
-              style={{ margin: "14px 0 16px", font: `600 var(--svc-service-h3)/1.08 ${SANS}`, letterSpacing: "-.025em", color: NAVY }}
-            >
-              {m.title}
-            </h3>
-            <p className="max-w-[520px] max-[1023px]:max-w-none" style={{ margin: "0 0 24px", font: `400 16px/1.6 ${SANS}`, color: BODY, textWrap: "pretty" }}>
-              {m.body}
-            </p>
-            <TagList items={m.caps} />
-          </div>
-        ))}
-      </div>
-
-      {/* Proof numerals stay large and uncontained at every breakpoint: the
-          handoff calls them the credibility of the page. */}
-      <div className={`grid grid-cols-2 pb-[var(--svc-sec-y)] pt-20 max-[1023px]:grid-cols-1 max-[1023px]:gap-10 max-[1023px]:pt-14 ${INSET}`}>
-        {PROOF.map(([num, cap, cap2], i) => (
-          <div
-            key={num}
-            className={i === 0 ? "pr-14 max-[1023px]:pb-10 max-[1023px]:pr-0" : "pl-14 max-[1023px]:pl-0"}
-            style={i === 0 ? { borderRight: `1px solid ${HAIR}` } : undefined}
-          >
-            <div className="max-[639px]:!tracking-[-.03em]" style={{ font: `600 var(--svc-stat)/.85 ${SANS}`, letterSpacing: "-.045em", color: NAVY }}>
-              {num}
-            </div>
-            <div className="max-[639px]:!text-[17px]" style={{ margin: "12px 0 0", font: `600 20px/1.3 ${SANS}`, color: NAVY }}>{cap}</div>
-            <p style={{ ...label(), marginTop: 16 }}>{cap2}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ── 5 · how manufacturing works ──────────────────────────── */
-
-function Process() {
-  return (
-    <section className={`py-[104px] max-[639px]:py-[var(--svc-sec-y)] ${INSET}`} style={{ background: WHITE }} aria-label="How manufacturing works">
-      <h2 style={{ margin: "0 0 clamp(32px,5vw,64px)", font: `600 var(--svc-h3)/1.05 ${SANS}`, letterSpacing: "-.03em", color: NAVY, textWrap: "pretty" }}>
-        From requirement to series production.
-      </h2>
-      <div
-        className="grid grid-cols-4 gap-10 pt-7 max-[1023px]:grid-cols-2 max-[1023px]:gap-8 max-[639px]:grid-cols-1 max-[639px]:gap-0 max-[639px]:border-t-0 max-[639px]:pt-0"
-        style={{ borderTop: `1px solid ${HAIR}` }}
-      >
-        {STEPS.map(([n, text]) => (
-          <div key={n} className="max-[639px]:border-t max-[639px]:border-[#D3DFE7] max-[639px]:py-5">
-            <div className="mb-5 max-[639px]:mb-2" style={{ font: `600 15px/1 ${SANS}`, letterSpacing: ".06em", color: CYAN }}>{n}</div>
-            <p className="max-[639px]:!text-[16px]" style={{ margin: 0, font: `400 18px/1.45 ${SANS}`, color: NAVY, textWrap: "pretty" }}>{text}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ── 6 · 03 service & support ─────────────────────────────── */
+/* ── 4 · 02 service & support ─────────────────────────────── */
 
 function Support() {
   return (
@@ -588,7 +407,7 @@ function Support() {
       aria-label="Service and support"
     >
       <SecHead
-        n="03"
+        n="02"
         family="Service & support"
         title="Already running an MQS system?"
         lead="Lifecycle support for installed systems, from planned preventive maintenance to breakdown response."
@@ -648,7 +467,7 @@ function Support() {
   );
 }
 
-/* ── 7 · service finder ───────────────────────────────────── */
+/* ── 5 · service finder ───────────────────────────────────── */
 
 function Finder() {
   return (
@@ -682,8 +501,6 @@ export default function ServicesOverview() {
       <Hero />
       <Families />
       <Inspection />
-      <Manufacturing />
-      <Process />
       <Support />
       <Finder />
     </main>
