@@ -23,9 +23,9 @@ const DURATION = 1100;
 const STAGGER = 80;
 
 const STATS = [
-  { target: 14, suffix: "", label: "NDT product lines" },
+  { target: 15, suffix: "", label: "NDT product lines" },
   { target: 3, suffix: "", label: "ATE categories" },
-  { target: 200, suffix: "+", label: "Installations" },
+  { target: 350, suffix: "+", label: "Installations" },
 ];
 const FINALS = STATS.map((s) => s.target);
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);

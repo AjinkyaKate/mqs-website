@@ -35,8 +35,8 @@ const YEARS = new Date().getFullYear() - FOUNDED;
 
 const STATS = [
   { target: YEARS, suffix: "+", label: "Years" },
-  { target: 100, suffix: "+", label: "Engineers" },
-  { target: 200, suffix: "+", label: "Installations" },
+  { target: 150, suffix: "+", label: "Employees" },
+  { target: 350, suffix: "+", label: "Installations" },
 ];
 
 const FINALS = STATS.map((s) => s.target);

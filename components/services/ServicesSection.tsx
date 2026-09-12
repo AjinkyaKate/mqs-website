@@ -26,19 +26,20 @@ const EASE = "cubic-bezier(.22,.61,.36,1)";
 type Row = {
   title: string;
   description: string;
-  chips: [string, string, string];
+  chips: string[];
   image: string;
   imageAlt: string;
   imageBackground: string;
   imageClassName: string;
+  focusLabel?: string;
   active?: boolean;
 };
 
 const ROWS: Row[] = [
   {
-    title: "Digital Radiography",
+    title: "MQX.drIS",
     description: "Real-time, high-resolution X-ray inspection of castings, welds, assemblies and safety-critical components.",
-    chips: ["Castings", "Welds", "Assemblies"],
+    chips: ["Castings", "Welds", "PCB Assemblies"],
     image: "/assets/prod-mqxc.jpg",
     imageAlt: "MQS MQXC 102 digital radiography inspection system",
     imageBackground: "#EEF3F6",
@@ -46,31 +47,33 @@ const ROWS: Row[] = [
     active: true,
   },
   {
-    title: "Industrial CT",
+    title: "MQX.NeVa",
     description: "3D imaging for internal flaw detection, dimensional metrology and reverse engineering of complex parts.",
     chips: ["3D imaging", "Metrology", "Porosity"],
     image: "/assets/home-solutions-ct-cabinet.jpg",
-    imageAlt: "MQS MQCT 225AB industrial CT inspection cabinet",
+    imageAlt: "MQS MQX.NeVa industrial CT inspection cabinet",
     imageBackground: "#EEF3F6",
     imageClassName: "object-contain p-4 md:p-6",
   },
   {
     title: "Automated Test Equipment",
     description: "Custom electrical and functional validation of mission-critical assemblies for aerospace and defence.",
-    chips: ["Functional test", "Wire harness", "Fuze / spin"],
-    image: "/assets/ate-acpu-rig.png",
+    chips: ["Aerospace LRUs", "Defence Assemblies"],
+    image: "/assets/product-ate.png",
     imageAlt: "MQS automated test rig for electrical and functional validation",
     imageBackground: "#EEF3F6",
     imageClassName: "object-contain p-5 md:p-7",
+    focusLabel: "Applications:",
   },
   {
     title: "High-Energy X-ray",
-    description: "LINAC-based deep penetration up to 500 mm steel for turbine blades, rocket casings and thick forgings.",
-    chips: ["0.9–15 MeV", "500 mm steel", "LINAC"],
+    description: "LINAC-based deep penetration for rocket motors, heavy castings and other dense, safety-critical components.",
+    chips: ["Rocket Motors", "0.9–15 MeV", "2D / 3D"],
     image: "/assets/prod-highenergy-branded.png",
     imageAlt: "MQS high-energy X-ray inspection installation",
     imageBackground: "#EEF3F6",
     imageClassName: "object-contain p-4 md:p-6",
+    focusLabel: "Applications:",
   },
 ];
 
@@ -97,7 +100,7 @@ function LearnMore() {
   );
 }
 
-function ServiceRow({ title, description, chips, image, imageAlt, imageBackground, imageClassName, active }: Row) {
+function ServiceRow({ title, description, chips, image, imageAlt, imageBackground, imageClassName, focusLabel = "Service focus:", active }: Row) {
   const [hovered, setHovered] = useState(false);
   const titleColor = active || hovered ? ACCENT : INK;
 
@@ -142,7 +145,7 @@ function ServiceRow({ title, description, chips, image, imageAlt, imageBackgroun
           {description}
         </p>
         <div className="flex flex-wrap items-center gap-2.5">
-          <span className="t-caption" style={{ ...focusLabelStyle, width: "100%" }}>Service focus:</span>
+          <span className="t-caption" style={{ ...focusLabelStyle, width: "100%" }}>{focusLabel}</span>
           {chips.map((c) => (
             <span key={c} className="t-caption" style={chipStyle}>
               {c}

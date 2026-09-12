@@ -177,7 +177,7 @@ function ExploreButton({ className = "" }: { className?: string }) {
 }
 
 const CARD_A: CardProps = {
-  category: "MQXC Series",
+  category: "MQX.drIS",
   specOneLabel: "VOLTAGE",
   specOneValue: "160–450 kV",
   specTwoLabel: "MODALITY",

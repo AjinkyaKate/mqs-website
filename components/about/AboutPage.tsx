@@ -73,7 +73,6 @@ const GRAD_HERO_T = "linear-gradient(15deg,rgba(11,42,58,.94) 0%,rgba(11,42,58,.
 const GRAD_HERO_M = "linear-gradient(to top,rgba(11,42,58,.96) 0%,rgba(11,42,58,.5) 70%,rgba(11,42,58,.28) 100%)";
 const GRAD_AWARD_D = "linear-gradient(to top,rgba(11,42,58,.92) 0%,rgba(11,42,58,.1) 62%)";
 const GRAD_AWARD_T = "linear-gradient(to top,rgba(11,42,58,.94) 0%,rgba(11,42,58,.1) 68%)";
-const GRAD_CARD = "linear-gradient(to top,rgba(11,42,58,.92),rgba(11,42,58,0) 60%)";
 /* Team band. The award band weights its gradient to the bottom because its text
    sits there; this band's text is vertically centred, so the weight is centred
    too: heavy through the middle where the copy sits, easing off at both edges so
@@ -309,114 +308,41 @@ function PortfolioHead() {
 }
 
 function Portfolio() {
-  const [i1, i2, i3, i4, i5, i6] = PORTFOLIO.items;
-  const cardBox = "flex flex-col justify-between p-[30px]";
-  const cardNum = `m-0 mb-2.5 text-[11px] ${LABEL} leading-none`;
-  const cardH = "m-0 mb-2 text-[22px] leading-[1.18] font-semibold tracking-[-.018em]";
-  const cardP = "m-0 text-[15px] leading-[1.55]";
+  const groups = [
+    { title: "Non-Destructive Testing Solutions", items: PORTFOLIO.items.filter((item) => item.n.startsWith("NDT")) },
+    { title: "Automated Test Equipment", items: PORTFOLIO.items.filter((item) => item.n.startsWith("ATE")) },
+    { title: "Contract Manufacturing", items: PORTFOLIO.items.filter((item) => item.n.startsWith("CM")) },
+  ];
 
   return (
     <section id="portfolio" className={SCROLL_MT} style={{ background: PAGE }}>
       <div className={`${INNER} py-14 md:py-20 lg:py-[110px]`} style={{ maxWidth: MAXW }}>
         <PortfolioHead />
 
-        {/* ── desktop: six-cell bento ── */}
-        <div
-          className="hidden lg:grid gap-4"
-          style={{ gridTemplateColumns: "2fr 1fr 1fr", gridTemplateRows: "340px 300px 300px" }}
-        >
-          {/* 01 — tall photograph, spans two rows */}
-          <div className="relative overflow-hidden" style={{ gridRow: "span 2", background: NAVY }}>
-            {/* The render is portrait, so cover trims 235px vertically and
-                nothing horizontally. Biased to the top so the hood and the
-                "MQXC 102 / MQS" branding keep clear air above them; the base it
-                gives up is the area the heading overlays anyway. */}
-            <Image src={i1.src} alt={i1.alt} fill quality={90} sizes="(min-width:1024px) 660px, 50vw" className="object-cover object-[50%_12%]" />
-            <div className="absolute inset-0" style={{ background: GRAD_CARD }} />
-            <div className="absolute inset-x-9 bottom-[34px]">
-              <p className={`m-0 mb-2.5 text-[11px] ${LABEL} leading-none`} style={{ fontFamily: SANS, color: CYAN }}>{i1.n}</p>
-              <h3 className="m-0 mb-2.5 text-[32px] leading-[1.14] font-semibold tracking-[-.022em] text-white" style={{ fontFamily: SANS }}>{i1.name}</h3>
-              <p className="m-0 max-w-[460px] text-[16px] leading-[1.55] text-white/80" style={{ fontFamily: SANS }}>{i1.desc}</p>
-            </div>
-          </div>
-
-          {/* 02 — wide, spans two columns */}
-          <div
-            className="grid grid-cols-[1fr_300px] items-center gap-6 p-9"
-            style={{ gridColumn: "span 2", background: WHITE, border: `1px solid ${HAIR}` }}
-          >
-            <div>
-              <p className={`m-0 mb-2.5 text-[11px] ${LABEL} leading-none`} style={{ fontFamily: SANS, color: CYAN_L }}>{i2.n}</p>
-              <h3 className="m-0 mb-2.5 text-[30px] leading-[1.14] font-semibold tracking-[-.022em]" style={{ fontFamily: SANS, color: INK }}>{i2.name}</h3>
-              <p className="m-0 text-[16px] leading-[1.55] text-pretty" style={{ fontFamily: SANS, color: BODY }}>{i2.desc}</p>
-            </div>
-            <Image src={i2.src} alt={i2.alt} width={605} height={557} quality={90} sizes="300px" className="block w-[300px] h-[230px] object-contain" />
-          </div>
-
-          {/* 03 */}
-          <div className={cardBox} style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
-            <div>
-              <p className={cardNum} style={{ fontFamily: SANS, color: CYAN_L }}>{i3.n}</p>
-              <h3 className={cardH} style={{ fontFamily: SANS, color: INK }}>{i3.name}</h3>
-              <p className={cardP} style={{ fontFamily: SANS, color: BODY }}>{i3.short}</p>
-            </div>
-            <Image src={i3.src} alt={i3.alt} width={846} height={1200} quality={90} sizes="320px" className="block w-full h-[120px] object-contain" />
-          </div>
-
-          {/* 04 — photograph at low opacity */}
-          <div className="relative overflow-hidden" style={{ background: NAVY }}>
-            {/* The design faded this cell's image to .55 to knock back a busy
-                software screenshot. The asset is now an actual radiograph, which
-                is the cell's subject rather than texture, so it runs at full
-                opacity. The bottom scrim stays for the heading. */}
-            <Image src={i4.src} alt={i4.alt} fill quality={90} sizes="(min-width:1024px) 640px, 25vw" className="object-cover object-[50%_30%]" />
-            <div className="absolute inset-0" style={{ background: GRAD_CARD }} />
-            <div className="absolute inset-x-[30px] bottom-7">
-              <p className={`m-0 mb-2.5 text-[11px] ${LABEL} leading-none`} style={{ fontFamily: SANS, color: CYAN }}>{i4.n}</p>
-              <h3 className="m-0 mb-2 text-[22px] leading-[1.18] font-semibold tracking-[-.018em] text-white" style={{ fontFamily: SANS }}>{i4.name}</h3>
-              <p className="m-0 text-[15px] leading-[1.5] text-white/82" style={{ fontFamily: SANS }}>{i4.short}</p>
-            </div>
-          </div>
-
-          {/* 05 */}
-          <div className={cardBox} style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
-            <div>
-              <p className={cardNum} style={{ fontFamily: SANS, color: CYAN_L }}>{i5.n}</p>
-              <h3 className={cardH} style={{ fontFamily: SANS, color: INK }}>{i5.name}</h3>
-              <p className={cardP} style={{ fontFamily: SANS, color: BODY }}>{i5.short}</p>
-            </div>
-            <Image src={i5.src} alt={i5.alt} width={354} height={570} quality={90} sizes="320px" className="block w-full h-[120px] object-contain" />
-          </div>
-
-          {/* 06 */}
-          <div className={cardBox} style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
-            <div>
-              <p className={cardNum} style={{ fontFamily: SANS, color: CYAN_L }}>{i6.n}</p>
-              <h3 className={cardH} style={{ fontFamily: SANS, color: INK }}>{i6.name}</h3>
-              <p className={cardP} style={{ fontFamily: SANS, color: BODY }}>{i6.short}</p>
-            </div>
-            <Image src={i6.src} alt={i6.alt} width={415} height={409} quality={90} sizes="320px" className="block w-full h-[120px] object-contain" />
-          </div>
-        </div>
-
-        {/* ── tablet + mobile: uniform cards ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-3.5 lg:hidden">
-          {PORTFOLIO.items.map((p) => (
-            <div key={p.n} className="flex min-w-0 flex-col" style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
-              <Image
-                src={p.src}
-                alt={p.alt}
-                width={846}
-                height={1200}
-                quality={90}
-                sizes="(min-width:768px) 50vw, 100vw"
-                className="block w-full h-[170px] md:h-[160px] object-contain"
-                style={{ background: PAGE, borderBottom: `1px solid ${HAIR}` }}
-              />
-              <div className="px-5 pt-5 pb-6 md:px-6 md:pt-[22px] md:pb-[26px]">
-                <p className={`m-0 mb-2 md:mb-2.5 text-[11px] ${LABEL} leading-none`} style={{ fontFamily: SANS, color: CYAN_L }}>{p.n}</p>
-                <h3 className="m-0 mb-2 text-[20px] md:text-[21px] leading-[1.2] font-semibold tracking-[-.018em]" style={{ fontFamily: SANS, color: INK }}>{p.name}</h3>
-                <p className="m-0 text-[15px] leading-[1.55] text-pretty" style={{ fontFamily: SANS, color: BODY }}>{p.short}</p>
+        <div className="flex flex-col gap-12 md:gap-14 lg:gap-16">
+          {groups.map((group) => (
+            <div key={group.title}>
+              <div className="mb-5 flex items-center gap-5 border-b pb-4 md:mb-6" style={{ borderColor: HAIR }}>
+                <h3 className="m-0 text-[18px] font-semibold leading-[1.25] tracking-[-.01em] md:text-[20px]" style={{ fontFamily: SANS, color: INK }}>
+                  {group.title}
+                </h3>
+                <span className={`text-[11px] ${LABEL}`} style={{ fontFamily: SANS, color: CYAN_L }}>
+                  {group.items.length} {group.items.length === 1 ? "Solution" : "Solutions"}
+                </span>
+              </div>
+              <div className={`grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:gap-4 ${group.items.length >= 3 ? "lg:grid-cols-3" : ""}`}>
+                {group.items.map((p) => (
+                  <article key={p.n} className="flex min-w-0 flex-col overflow-hidden" style={{ background: WHITE, border: `1px solid ${HAIR}` }}>
+                    <div className="relative h-[190px] md:h-[220px]" style={{ background: PAGE, borderBottom: `1px solid ${HAIR}` }}>
+                      <Image src={p.src} alt={p.alt} fill quality={90} sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw" className="object-contain p-4" />
+                    </div>
+                    <div className="flex flex-1 flex-col px-5 pb-6 pt-5 md:px-6 md:pb-[26px] md:pt-[22px]">
+                      <p className={`m-0 mb-2 text-[11px] ${LABEL} leading-[1.3]`} style={{ fontFamily: SANS, color: CYAN_L }}>{p.n}</p>
+                      <h4 className="m-0 mb-2 text-[20px] font-semibold leading-[1.2] tracking-[-.018em] md:text-[21px]" style={{ fontFamily: SANS, color: INK }}>{p.name}</h4>
+                      <p className="m-0 text-[15px] leading-[1.55] text-pretty" style={{ fontFamily: SANS, color: BODY }}>{p.short}</p>
+                    </div>
+                  </article>
+                ))}
               </div>
             </div>
           ))}

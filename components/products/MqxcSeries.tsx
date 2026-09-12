@@ -38,8 +38,8 @@ const STATS: [string, string, string][] = [
 ];
 
 const GALLERY: [string, string, string][] = [
-  ["/assets/mqxc-app-wheel.jpg", "Alloy wheel — porosity mapping", "Sample result — MQXC 225"],
-  ["/assets/mqxc-app-bracket.jpg", "Cast bracket — shrinkage voids", "Sample result — MQXC 320"],
+  ["/assets/mqxc-app-wheel.jpg", "Alloy wheel — porosity mapping", "Sample result — MQX.drIS 225"],
+  ["/assets/mqxc-app-bracket.jpg", "Cast bracket — shrinkage voids", "Sample result — MQX.drIS 320"],
 ];
 
 const CALLOUTS: [string, string, string, number, number][] = [
@@ -52,10 +52,10 @@ const CALLOUTS: [string, string, string, number, number][] = [
 
 type Model = { id: string; name: string; voltage: string; best: string; materials: string; img: string; shot: string; desc: string; tech: string[]; bestFor: string };
 const MODELS: Model[] = [
-  { id: "160", name: "MQXC 160", voltage: "160 kV", best: "Electronics, light alloys, small castings", materials: "PCBs, aluminium, plastics, composites", img: "/assets/mqxc-160.jpg", shot: "Aluminium die-cast housing — wall & fill", desc: "The compact bench-class cabinet. A microfocus source and short source-to-object distance give the geometric magnification needed for solder joints, wire bonds and thin-wall alloy parts.", tech: ["Microfocus source", "150 µm DFPD", "2D DR", "Geometric magnification"], bestFor: "PCB and BGA void analysis, connector verification, small aluminium and magnesium castings, plastic and composite mouldings." },
-  { id: "225", name: "MQXC 225", voltage: "225 kV", best: "Automotive castings, sub-assemblies", materials: "Aluminium, magnesium, thin steel", img: "/assets/mqxc-225.jpg", shot: "Welded pipe joint — root penetration (ASTM IQI)", desc: "The volume workhorse. Enough energy for production aluminium castings with a manipulator envelope sized for wheels, housings and manifolds, and CT reconstruction on the same platform.", tech: ["Mini-focus source", "2D DR + CT", "100 µm DFPD option", "360° manipulator"], bestFor: "Wheels, knuckles, housings and manifolds; pressure-tight castings requiring porosity classification to ASTM E505." },
-  { id: "320", name: "MQXC 320", voltage: "320 kV", best: "Thick steel castings, valve bodies", materials: "Steel, ductile iron, bronze", img: "/assets/mqxc-320.jpg", shot: "Thick-walled cylindrical assembly (ASTM IQI)", desc: "Raised penetration for ferrous work. Suited to valve bodies, pump housings and pressure components where wall thickness defeats a 225 kV source.", tech: ["320 kV / 1800 W", "2D DR + CT", "Extended stand-off", "Heavy-load stage"], bestFor: "Valve and pump bodies, ductile-iron castings, thick-wall steel components and pressure-retaining parts." },
-  { id: "450", name: "MQXC 450", voltage: "450 kV", best: "Heavy castings, thick welds, turbine parts", materials: "Heavy steel, superalloys, forgings", img: "/assets/mqxc-450.jpg", shot: "High-density component with central bore", desc: "The high-energy platform. A 4500 W source with a reinforced cabinet and stage for the heaviest parts that still belong in a cabinet rather than a vault.", tech: ["450 kV / 4500 W", "5.5 mm focal spot", "CT reconstruction", "100 kg stage"], bestFor: "Turbine and superalloy components, heavy steel castings, thick weld sections and forged assemblies up to 100 kg." },
+  { id: "160", name: "MQX.drIS 160", voltage: "160 kV", best: "Electronics, light alloys, small castings", materials: "PCBs, aluminium, plastics, composites", img: "/assets/mqxc-160.jpg", shot: "Aluminium die-cast housing — wall & fill", desc: "The compact bench-class cabinet. A microfocus source and short source-to-object distance give the geometric magnification needed for solder joints, wire bonds and thin-wall alloy parts.", tech: ["Microfocus source", "150 µm DFPD", "2D DR", "Geometric magnification"], bestFor: "PCB and BGA void analysis, connector verification, small aluminium and magnesium castings, plastic and composite mouldings." },
+  { id: "225", name: "MQX.drIS 225", voltage: "225 kV", best: "Automotive castings, sub-assemblies", materials: "Aluminium, magnesium, thin steel", img: "/assets/mqxc-225.jpg", shot: "Welded pipe joint — root penetration (ASTM IQI)", desc: "The volume workhorse. Enough energy for production aluminium castings with a manipulator envelope sized for wheels, housings and manifolds, and CT reconstruction on the same platform.", tech: ["Mini-focus source", "2D DR + CT", "100 µm DFPD option", "360° manipulator"], bestFor: "Wheels, knuckles, housings and manifolds; pressure-tight castings requiring porosity classification to ASTM E505." },
+  { id: "320", name: "MQX.drIS 320", voltage: "320 kV", best: "Thick steel castings, valve bodies", materials: "Steel, ductile iron, bronze", img: "/assets/mqxc-320.jpg", shot: "Thick-walled cylindrical assembly (ASTM IQI)", desc: "Raised penetration for ferrous work. Suited to valve bodies, pump housings and pressure components where wall thickness defeats a 225 kV source.", tech: ["320 kV / 1800 W", "2D DR + CT", "Extended stand-off", "Heavy-load stage"], bestFor: "Valve and pump bodies, ductile-iron castings, thick-wall steel components and pressure-retaining parts." },
+  { id: "450", name: "MQX.drIS 450", voltage: "450 kV", best: "Heavy castings, thick welds, turbine parts", materials: "Heavy steel, superalloys, forgings", img: "/assets/mqxc-450.jpg", shot: "High-density component with central bore", desc: "The high-energy platform. A 4500 W source with a reinforced cabinet and stage for the heaviest parts that still belong in a cabinet rather than a vault.", tech: ["450 kV / 4500 W", "5.5 mm focal spot", "CT reconstruction", "100 kg stage"], bestFor: "Turbine and superalloy components, heavy steel castings, thick weld sections and forged assemblies up to 100 kg." },
 ];
 
 const INDUSTRIES = ["Aerospace & defence", "Automotive & EV", "Electronics & semiconductor", "Energy & power generation", "Foundry & castings", "Oil, gas & pipelines"];
@@ -74,7 +74,7 @@ type SpecTable = { title: string; colA: string; colB: string; rows: [string, str
 const SPEC_TABLES: SpecTable[] = [
   { title: "Manipulator", colA: "Axis", colB: "Specification", rows: [["Y travel", "≈ 1100 mm"], ["Z travel", "≈ 1500 mm"], ["X axis", "Linear travel with ±45° tilt"], ["Rotation", "360° continuous"], ["Maximum load", "≤ 100 kg"]] },
   { title: "Detector — DFPD options", colA: "Parameter", colB: "Range", rows: [["Pixel pitch", "150 µm / 100 µm / 75 µm"], ["Active area", "430 × 430 mm or 300 × 250 mm"], ["Frame rate", "Up to 30 fps"], ["Scintillator", "CsI or GOS"]] },
-  { title: "X-ray source range", colA: "Parameter", colB: "Range", rows: [["Tube voltage", "160 – 450 kV"], ["Tube power", "640 – 4500 W"], ["Source type", "Mini-focus / microfocus"], ["Focal spot", "0.4 – 5.5 mm"], ["Modality", "2D DR / CT"]] },
+  { title: "X-ray source range", colA: "Parameter", colB: "Range", rows: [["Source type", "Mini-focus / Microfocus"], ["Tube voltage — Mini-focus", "Up to 450 kV"], ["Tube voltage — Microfocus", "Up to 300 kV"], ["Tube power", "Depends on Source Configuration"], ["Focal spot", "0.4 – 5.5 mm"], ["Modality", "2D DR / CT"]] },
 ];
 
 const NAV_ITEMS: [string, string][] = [["Overview", "#overview"], ["Highlights", "#highlights"], ["Models", "#models"], ["Applications", "#applications"], ["Specs", "#specs"], ["Video", "#video"], ["Demo", "#demo"]];
@@ -82,7 +82,7 @@ const NAV_ITEMS: [string, string][] = [["Overview", "#overview"], ["Highlights",
    "AERB compliance certificate · PDF · 0.8 MB" row is gone: no such document was
    supplied, and both rows pointed at #contact while showing a download icon. */
 const DOWNLOADS: { title: string; meta: string; file: string }[] = [
-  { title: "MQXC Series brochure", meta: "PDF · 1.2 MB · Cabinet-based DR solutions", file: "mqxc-cabinet-dr.pdf" },
+  { title: "MQX.drIS brochure", meta: "PDF · 1.2 MB · Cabinet-based DR solutions", file: "mqxc-cabinet-dr.pdf" },
   { title: "Digital radiography systems", meta: "PDF · 1.3 MB · Range overview", file: "digital-radiography.pdf" },
 ];
 
@@ -118,6 +118,7 @@ export default function MqxcSeries() {
         <div className="absolute inset-0" style={{ background: "#12405C", mixBlendMode: "color" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(90deg,rgba(11,42,58,.94) 0%,rgba(11,42,58,.78) 46%,rgba(11,42,58,.34) 100%)" }} />
         <div className="relative flex flex-col justify-end" style={{ zIndex: 3, minHeight: mobile ? 520 : tablet ? 560 : 640, maxWidth: 760, gap: 18, padding: heroPad }}>
+          <div style={eyebrow(CYAN_ON_DARK)}>MQX.drIS · Cabinet-based digital radiography</div>
           <h1 style={{ margin: 0, font: "600 clamp(30px,4.2vw,58px)/1.04 var(--font-sans)", letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>See inside every part. Safely. Repeatably. On your floor.</h1>
           <p style={{ margin: 0, font: "400 clamp(15px,1.3vw,19px)/1.55 var(--font-sans)", color: "rgba(255,255,255,.80)", maxWidth: 600, textWrap: "pretty" }}>Self-contained DR &amp; CT-ready platforms with AERB-compliant shielding, high-resolution detectors and multi-axis part handling — installed on your production floor, not in a bunker.</p>
           <div className="flex flex-wrap" style={{ gap: 12, marginTop: 8 }}>
@@ -145,11 +146,11 @@ export default function MqxcSeries() {
               <h2 style={{ margin: "14px 0 0", font: "600 clamp(28px,3.2vw,42px)/1.08 var(--font-sans)", letterSpacing: "-.025em", color: INK, textWrap: "pretty" }}>Built for the part you actually inspect.</h2>
             </div>
             <div style={{ border: `1px solid ${HAIR}`, aspectRatio: compact ? "16/9" : "4/3", overflow: "hidden", background: "#fff" }}>
-              <Image src="/assets/mqxc-hero.jpg" alt="MQXC cabinet X-ray system" width={800} height={600} className="h-full w-full scale-[.84] object-contain" />
+              <Image src="/assets/mqxc-hero.jpg" alt="MQX.drIS cabinet X-ray system" width={800} height={600} className="h-full w-full scale-[.84] object-contain" />
             </div>
           </div>
           <div className="flex flex-col" style={{ gap: 20 }}>
-            <p style={{ margin: 0, font: "400 clamp(16px,1.2vw,19px)/1.55 var(--font-sans)", color: BODY, textWrap: "pretty" }}>Castings, welds, electronics, composites and assemblies rarely share a geometry. The MQXC series is built around the part — cabinet volume, manipulator travel and source energy are specified together so the system matches what leaves your line, not a catalogue average.</p>
+            <p style={{ margin: 0, font: "400 clamp(16px,1.2vw,19px)/1.55 var(--font-sans)", color: BODY, textWrap: "pretty" }}>Castings, welds, electronics, composites and assemblies rarely share a geometry. MQX.drIS is built around the part — cabinet volume, manipulator travel and source energy are specified together so the system matches what leaves your line, not a catalogue average.</p>
             <p style={{ margin: 0, font: "400 16px/1.6 var(--font-sans)", color: BODY, textWrap: "pretty" }}>Every model shares one architecture: an AERB-compliant shielded cabinet, interlocked motorised doors, a digital flat-panel detector and the MQS Imaging Suite. You choose the energy and handling envelope; the operating procedure, training and audit trail stay the same across the fleet.</p>
             <h3 style={{ margin: "12px 0 0", font: "600 20px/1.25 var(--font-sans)", letterSpacing: "-.02em", color: INK }}>Key features</h3>
             <ul className="m-0 flex list-none flex-col p-0" style={{ borderTop: `1px solid ${HAIR}` }}>
@@ -198,7 +199,7 @@ export default function MqxcSeries() {
       <section id="highlights" style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: "#fff", borderTop: `1px solid ${HAIR}` }}>
         <div className="mx-auto" style={{ maxWidth: 1330 }}>
           <div style={eyebrow(CYAN_ON_LIGHT)}>Product highlights</div>
-          <h2 style={{ ...h2, marginBottom: 40 }}>What makes up an MQXC system.</h2>
+          <h2 style={{ ...h2, marginBottom: 40 }}>What makes up an MQX.drIS system.</h2>
           <div className="grid items-start" style={{ gridTemplateColumns: desktop ? "1fr 1fr" : "1fr", gap: "clamp(32px,4vw,56px)" }}>
             <div style={{ position: "relative", border: `1px solid ${HAIR}`, aspectRatio: compact ? "16/9" : "4/3", minHeight: compact ? undefined : 320, overflow: "hidden", background: PAGE }}>
               <Image src="/assets/mqxc-cutaway.jpg" alt="Cabinet cutaway showing shielding, door, detector, manipulator and control station" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
@@ -232,7 +233,7 @@ export default function MqxcSeries() {
       <section id="models" style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: PAGE, borderTop: `1px solid ${HAIR}` }}>
         <div className="mx-auto" style={{ maxWidth: 1330 }}>
           <div style={eyebrow(CYAN_ON_LIGHT)}>Model lineup</div>
-          <h2 style={{ ...h2, marginBottom: 40 }}>Four models. One architecture.</h2>
+          <h2 style={{ ...h2, marginBottom: 40 }}>MQX.drIS: Four models. One architecture.</h2>
           <div className="overflow-x-auto" style={{ background: "#fff", border: `1px solid ${HAIR}` }}>
             <table style={{ borderCollapse: "collapse", width: "100%", minWidth: 720 }}>
               <thead><tr><th style={th}>Model</th><th style={th}>Voltage</th><th style={th}>Best for</th><th style={th}>Materials</th></tr></thead>
@@ -250,7 +251,7 @@ export default function MqxcSeries() {
           </div>
 
           <p style={{ margin: "16px 0 0", font: "400 13px/1.6 var(--font-sans)", color: MUTED, textWrap: "pretty", maxWidth: 720 }}>
-            The <strong style={{ fontWeight: 600, color: INK }}>MQXC 102</strong> featured above is a customer-specific custom build. The four models below make up the standard MQXC lineup — all share the same cabinet architecture, imaging suite and safety design, differing only in penetration.
+            The <strong style={{ fontWeight: 600, color: INK }}>MQX.drIS 102</strong> featured above is a customer-specific custom build. The four models below make up the standard MQX.drIS lineup — all share the same cabinet architecture, imaging suite and safety design, differing only in penetration.
           </p>
 
           {compact ? (
@@ -283,13 +284,13 @@ export default function MqxcSeries() {
       <section id="applications" style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: NAVY, color: "#fff" }}>
         <div className="mx-auto" style={{ maxWidth: 1330 }}>
           <div style={eyebrow(CYAN_ON_DARK)}>Industries &amp; applications</div>
-          <h2 style={{ margin: "14px 0 44px", font: "600 clamp(28px,3.2vw,40px)/1.1 var(--font-sans)", letterSpacing: "-.025em", color: "#fff" }}>Where MQXC is used.</h2>
+          <h2 style={{ margin: "14px 0 44px", font: "600 clamp(28px,3.2vw,40px)/1.1 var(--font-sans)", letterSpacing: "-.025em", color: "#fff" }}>Where MQX.drIS is used.</h2>
           <figure className="m-0 mb-10 grid overflow-hidden border lg:grid-cols-[minmax(0,1.05fr)_minmax(380px,.95fr)]" style={{ borderColor: HAIR_DARK, background: "rgba(255,255,255,.04)" }}>
             <XRayTorch />
             <figcaption className="flex flex-col justify-center px-6 py-8 md:px-9 lg:px-12">
               <div style={eyebrow(CYAN_ON_DARK)}>See beneath the surface</div>
               <h3 style={{ margin: "12px 0 0", font: "600 clamp(24px,2.7vw,34px)/1.12 var(--font-sans)", letterSpacing: "-.025em", color: "#fff" }}>What visual inspection cannot reveal.</h3>
-              <p style={{ margin: "16px 0 0", font: "400 16px/1.65 var(--font-sans)", color: "rgba(255,255,255,.72)", textWrap: "pretty" }}>Move the inspection beam across the casting to reveal its internal geometry. MQXC digital radiography exposes hidden voids, wall sections and internal features without damaging the component.</p>
+              <p style={{ margin: "16px 0 0", font: "400 16px/1.65 var(--font-sans)", color: "rgba(255,255,255,.72)", textWrap: "pretty" }}>Move the inspection beam across the casting to reveal its internal geometry. MQX.drIS digital radiography exposes hidden voids, wall sections and internal features without damaging the component.</p>
             </figcaption>
           </figure>
           <div className="grid" style={{ gridTemplateColumns: compact ? "1fr" : "1fr 1fr", gap: "clamp(32px,4vw,64px)" }}>
@@ -365,10 +366,10 @@ export default function MqxcSeries() {
           <h2 style={{ ...h2, marginBottom: 40 }}>See the system in operation.</h2>
           <div style={{ position: "relative", aspectRatio: "16/9", background: "#111417", border: `1px solid ${HAIR}`, overflow: "hidden" }}>
             {playing ? (
-              <iframe title="MQXC product video" className="absolute inset-0 h-full w-full" style={{ border: 0 }} allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`} />
+              <iframe title="MQX.drIS product video" className="absolute inset-0 h-full w-full" style={{ border: 0 }} allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`} />
             ) : (
               <>
-                <Image src="/assets/mqxc-hero.jpg" alt="MQXC in operation" fill sizes="100vw" className="object-cover" style={{ opacity: 0.5 }} />
+                <Image src="/assets/mqxc-hero.jpg" alt="MQX.drIS in operation" fill sizes="100vw" className="object-cover" style={{ opacity: 0.5 }} />
                 <button type="button" onClick={() => setPlaying(true)} aria-label="Play product video" className="absolute inset-0 flex items-center justify-center hover:!bg-black/20" style={{ background: "transparent" }}>
                   <span className="flex items-center justify-center hover:!bg-[#16C1F3] hover:!border-[#16C1F3]" style={{ width: 68, height: 68, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.42)", color: "#fff", transition: `background 200ms ${EASE},border-color 200ms ${EASE}` }}>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z" /></svg>

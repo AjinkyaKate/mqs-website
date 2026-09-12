@@ -266,9 +266,7 @@ function Hero() {
           className="m-0 max-w-[920px]"
           style={{ font: `600 var(--ind-h1)/.98 ${SANS}`, letterSpacing: "-.03em", color: "#fff", textWrap: "pretty" }}
         >
-          Every Sector Fails Differently.
-          <br />
-          So Does Every Inspection.
+          No two sectors fail the same, why inspect them the same way?
         </h1>
         <p
           className="max-w-[600px] max-[1023px]:max-w-none"
@@ -312,16 +310,8 @@ function Why() {
           </div>
         </div>
 
-        {/* the argument made visually: the same class of part, outside then inside */}
-        <div className="mt-8 grid grid-cols-1 min-[700px]:mt-16 min-[700px]:grid-cols-2" style={{ gap: 1, background: HAIR }}>
-          <figure className="m-0" style={{ background: WHITE }}>
-            <Slot caption="fin-external needed · external view of a PCB assembly on the line, 1200×750" ratio="16 / 10" />
-            <figcaption className="flex justify-between gap-4 px-5 py-4" style={label(MUTED)}>
-              <span>External view</span>
-              <span style={{ color: NAVY }}>Passes</span>
-            </figcaption>
-          </figure>
-          <figure className="m-0" style={{ background: WHITE }}>
+        <div className="mt-8 min-[700px]:mt-16">
+          <figure className="m-0 max-w-[820px]" style={{ background: WHITE }}>
             <Photo
               src="/assets/svc-ct-voids.jpg"
               alt="Radiograph of a plated through-hole array with voids visible in the fill"

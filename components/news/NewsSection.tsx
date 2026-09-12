@@ -21,10 +21,10 @@ const AWARDS: Award[] = [
     desc: "Recognised by the Hon'ble Defence Minister for indigenisation of High-Energy CT systems.",
   },
   {
-    tag: "FTCCI Excellence Award",
-    image: "/assets/award-ftcci-2025.jpg",
-    title: "Product Innovation — SME",
-    desc: "For the inline wheel inspection system — a first-of-its-kind indigenous solution.",
+    tag: "FTCCI Excellence Award · 2023",
+    image: "/assets/award-ftcci-2023.png",
+    title: "Outstanding Contribution to Aerospace & Defence",
+    desc: "Recognised by FTCCI for excellence and outstanding contribution to the aerospace and defence industry.",
   },
 ];
 

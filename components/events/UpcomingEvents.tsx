@@ -8,28 +8,25 @@ const EVENTS = [
     dates: "16–18 Sept 2026",
     event: "Productronica India 2026",
     city: "BIEC, Bengaluru",
-    showing: "MQX.tracE 2D and 3D CT, and MQX.gINTi reel counting",
+    showing: "MQX.tracE Inline Inspection System",
     logo: "/assets/event-productronica.svg",
   },
   {
     dates: "15–17 Nov 2026",
     event: "ISNT 2026",
     city: "Hyderabad",
-    showing: "The full MQS NDT portfolio, presented on home ground",
     logo: "/assets/event-isnt.png",
   },
   {
     dates: "30 Nov–2 Dec 2026",
     event: "Tube India 2026",
     city: "Mumbai",
-    showing: "Pipe and tube inspection, including weld-integrity solutions",
     logo: "/assets/event-tube-india.png",
   },
   {
     dates: "10–12 Dec 2026",
     event: "ALUCAST 2026",
     city: "Yashobhoomi, New Delhi",
-    showing: "MQX.PRISM, MQWR 160U wheel inspection and ADR software",
     logo: "/assets/event-alucast.png",
   },
 ];
@@ -57,10 +54,10 @@ export default function UpcomingEvents() {
             <div className="t-eyebrow" style={{ color: CYAN }}>Upcoming events</div>
           </div>
           <h2 className="t-h2 m-0 max-w-[650px]" style={{ color: INK }}>
-            Meet MQS at the next <span style={{ color: "#087FA4" }}>industry exhibition</span>.
+            Meet MQS at <span style={{ color: "#087FA4" }}>Upcoming Industry Exhibitions</span>.
           </h2>
           <p className="t-body m-0 max-w-[560px]" style={{ color: MUTED }}>
-            Can’t make it to a show? We can bring a demonstration to you, or scan a sample part and send you the results.
+            Can’t make it to a show? We can arrange a demonstration based on your sample and inspection requirement.
           </p>
           <div className="t-caption inline-flex items-center gap-2 border bg-white px-3 py-2" style={{ color: INK, borderColor: HAIRLINE }}>
             <span aria-hidden="true" className="h-2 w-2" style={{ background: CYAN }} />
@@ -105,10 +102,12 @@ export default function UpcomingEvents() {
                     <h3 className="t-h4 m-0" style={{ color: INK }}>{item.event}</h3>
                     <span className="t-caption border px-3 py-1.5" style={{ color: "#425D6A", borderColor: HAIRLINE, background: "#F5F9FA" }}>{item.city}</span>
                   </div>
-                  <div>
-                    <div className="t-caption mb-1.5" style={{ color: "#087FA4" }}>On display</div>
-                    <p className="t-body m-0" style={{ color: MUTED }}>{item.showing}</p>
-                  </div>
+                  {item.showing && (
+                    <div>
+                      <div className="t-caption mb-1.5" style={{ color: "#087FA4" }}>On display</div>
+                      <p className="t-body m-0" style={{ color: MUTED }}>{item.showing}</p>
+                    </div>
+                  )}
                 </div>
               </article>
             ))}
@@ -119,7 +118,7 @@ export default function UpcomingEvents() {
               {expanded ? "Show fewer events" : "View all events"}
             </button>
           )}
-          <p className="t-caption m-0 mt-7" style={{ color: "#71848E" }}>Confirmed MQS participation · All dates 2026</p>
+          <p className="t-caption m-0 mt-7" style={{ color: "#71848E" }}>All dates 2026</p>
         </div>
       </div>
     </section>

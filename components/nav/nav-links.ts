@@ -15,8 +15,8 @@ export const HREF_MAP: Record<string, string> = {
      /products; category labels with no page behind them are not in the nav.
      Add children here as each product page lands. */
   "Products overview": "/products",
-  "MQXC Series": "/products/mqxc-series",
-  "MQCT Series": "/products/mqct-series",
+  "MQX.drIS": "/products/mqx-dris",
+  "MQX.NeVa": "/products/mqx-neva",
   "MQX.tracE": "/products/mqx-trace",
   "High-Energy X-Ray": "/products/high-energy-xray",
   "Automated Test Equipment": "/products/automated-test-equipment",

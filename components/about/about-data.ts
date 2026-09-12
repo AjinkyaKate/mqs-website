@@ -40,7 +40,7 @@ export const HERO = {
   eyebrow: "About MQS Technologies",
   title: "Our story.",
   lead:
-    "Test, measurement and inspection solutions for mission-critical industries — ensuring product quality, process reliability and regulatory compliance since 1994.",
+    "Test, measurement and inspection solutions for mission-critical industries, ensuring product quality, process reliability and regulatory compliance since 1994.",
 };
 
 /* Founded 1994. Years is derived in the browser rather than written as a
@@ -53,7 +53,7 @@ export const STATS: Stat[] = [
   { target: null, fromYear: FOUNDED, suffix: "+", label: "Years" },
   { target: 150, suffix: "+", label: "Employees" },
   { target: 8, suffix: "", label: "Cities" },
-  { target: 200, suffix: "+", label: "Installations" },
+  { target: 350, suffix: "+", label: "Installations" },
 ];
 
 export const ORIGIN = {
@@ -61,21 +61,21 @@ export const ORIGIN = {
   caption: "Hyderabad. A service contract and a workshop.",
   heading: "From repairing instruments to building them.",
   paras: [
-    "MQS started inside other people's machines — servicing healthcare diagnostic equipment. That is where the company learned what fails, why it fails, and what a serviceable machine looks like.",
-    "Aerospace and defence customers brought problems with no catalogue answer. Custom engineering became X-ray inspection, then industrial CT, then automated test equipment — and MQS became a design and manufacturing company.",
+    "MQS started inside other people's machines, servicing healthcare diagnostic equipment. That is where the company learned what fails, why it fails, and what a serviceable machine looks like.",
+    "Aerospace and defence customers brought problems with no catalogue answer. Custom engineering evolved into X-ray inspection, then industrial CT, then automated test equipment. Over time, MQS became a design and manufacturing company.",
   ],
   /* Shorter second paragraph, authored for the mobile composition. */
   paraMobile:
-    "Custom engineering became X-ray inspection, then industrial CT, then automated test equipment — and MQS became a design and manufacturing company.",
+    "Custom engineering evolved into X-ray inspection, then industrial CT, then automated test equipment. Over time, MQS became a design and manufacturing company.",
   paraMobileFirst:
-    "MQS started inside other people's machines — servicing healthcare diagnostic equipment. That is where the company learned what fails, and what a serviceable machine looks like.",
+    "MQS started inside other people's machines, servicing healthcare diagnostic equipment. That is where the company learned what fails and what a serviceable machine looks like.",
 };
 
 export const LEADERSHIP = {
   /* The claim is set with "Ph.D. in Tomography" in cyan. */
   claimBefore: "A ",
   claimAccent: "Ph.D. in Tomography",
-  claimAfter: " — and a factory that builds tomography systems.",
+  claimAfter: ", and a factory that builds tomography systems.",
   people: [
     { name: "Dr. K. Srinivasa Rao Kollu", role: "Managing Director" },
     { name: "Mr. Kotnis Kollu", role: "Chief Executive Officer" },
@@ -86,7 +86,7 @@ export const AWARD = {
   eyebrow: "Recognition · October 2025",
   title: "SIDM Champion Award 2025.",
   body:
-    "For indigenization in High-Energy CT Systems — capability previously imported, now designed and manufactured in India.",
+    "For indigenization in High-Energy CT Systems, a capability previously imported and now designed and manufactured in India.",
 };
 
 export const PORTFOLIO = {
@@ -96,18 +96,18 @@ export const PORTFOLIO = {
   items: [
     {
       n: "NDT · 01",
-      name: "Digital Radiography Systems",
+      name: "MQX.drIS",
       desc: "Real-time and static DR for castings, welds and assemblies, with simultaneous loading and inspection.",
       short: "Real-time and static DR for castings, welds and assemblies.",
       /* Studio render supplied by the client, replacing the factory floor
          photograph (about-line-dr.jpg, still on disk) whose shed background
          and roof structure competed with the overlaid heading. */
       src: "/assets/about-dr-mqxc102.jpg",
-      alt: "MQXC 102 digital radiography system",
+      alt: "MQX.drIS digital radiography system",
     },
     {
       n: "NDT · 02",
-      name: "Industrial CT Systems",
+      name: "MQX.NeVa",
       desc: "High-energy computed tomography for internal geometry, porosity and density mapping.",
       short: "High-energy CT for internal geometry and porosity.",
       src: "/assets/about-line-ct.png",
@@ -160,7 +160,7 @@ export const TEAM = {
   statementMobile:
     "Every system here was designed, built, installed and is serviced by our own engineers.",
   note:
-    "Mechanics, radiation enclosure, motion control, electronics and acquisition software — all developed under one roof in Hyderabad.",
+    "Mechanics, radiation enclosure, motion control, electronics and acquisition software are all developed under one roof in Hyderabad.",
 };
 
 export const TIMELINE = {
@@ -173,7 +173,7 @@ export const TIMELINE = {
     {
       year: "1994",
       title: "MQS is founded in Hyderabad.",
-      desc: "Servicing healthcare diagnostic equipment — the apprenticeship that taught the company how instruments fail.",
+      desc: "Servicing healthcare diagnostic equipment was the apprenticeship that taught the company how instruments fail.",
       major: true,
     },
     {
@@ -214,7 +214,7 @@ export const TIMELINE = {
     },
     {
       year: "2025",
-      title: "150+ employees. 8 cities. 200+ installations.",
+      title: "150+ employees. 8 cities. 350+ installations.",
       desc: "SIDM Champion Award for indigenization in High-Energy CT Systems.",
       major: true,
     },

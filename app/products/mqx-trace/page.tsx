@@ -4,11 +4,10 @@ import Footer from "@/components/footer/Footer";
 import ContactSection from "@/components/contact/ContactSection";
 import MqxTracE from "@/components/products/MqxTracE";
 
-/* Title and description verbatim from the client's MQX.tracE brief. */
 export const metadata: Metadata = {
-  title: "MQX.tracE — 2D & 3D CT X-Ray Inspection for Electronics | MQS Technologies",
+  title: "MQX.tracE — 2.5D, CT & IN-3D PCB X-Ray Inspection | MQS Technologies",
   description:
-    "MQX.tracE 2.5D, 3D and Inline 3D PCB X-ray inspection systems. Micron-level detection of solder voids, bridging, PTH fill and BGA defects, with optional 3D slicing. AERB type-approved.",
+    "MQX.tracE 2.5D, CT and IN-3D PCB X-ray inspection systems for micron-level defect detection, 3D slicing and inline automated analysis.",
   alternates: { canonical: "/products/mqx-trace" },
 };
 

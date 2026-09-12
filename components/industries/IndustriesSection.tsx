@@ -31,13 +31,13 @@ const CARDS = [
     title: "Automotive",
     src: "/assets/ind-automotive.jpg",
     alt: "Automotive engine assembly — castings and safety-critical parts inspected by MQS systems",
-    body: "High-throughput digital radiography and CT for fast, repeatable defect detection in castings and safety-critical parts.",
+    body: "High-throughput 2D Digital Radiography and CT for fast, repeatable defect detection in castings and safety-critical parts.",
   },
   {
     title: "Electronics",
     src: "/assets/ind-electronics.jpg",
     alt: "Printed circuit board close-up — PCB X-ray and CT inspection subject",
-    body: "PCB X-ray, 3D CT slicing and AI reel counting to reduce escapes and improve SMT quality and traceability.",
+    body: "PCB X-ray – 2D / 2.5D, 3D CT slicing and AI reel counting to improve quality and traceability in SMT lines.",
   },
 ];
 

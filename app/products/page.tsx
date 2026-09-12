@@ -35,7 +35,7 @@ export default function ProductsPage() {
             Everything We Build, in One Place.
           </h1>
           <p className="t-lead m-0 md:max-w-[58ch] lg:max-w-[62ch]" style={{ color: "rgba(255,255,255,.72)" }}>
-            From a cabinet that inspects a circuit board to a linear accelerator that sees through half a metre of steel — and the test equipment that verifies what comes off the line. All designed and manufactured in Hyderabad.
+            Our portfolio spans cabinet systems that inspect circuit boards, linear accelerators capable of seeing through half a meter of steel, and test equipment that verifies what comes off the line. Every system is designed and manufactured in Hyderabad.
           </p>
           <div className="flex flex-wrap gap-3">
             <a href="#catalog" className="t-button inline-flex h-12 items-center bg-[#16C1F3] px-6 no-underline transition-colors hover:!bg-white" style={{ color: "#08283A" }}>Find the Right System <span aria-hidden="true" className="ml-3">→</span></a>

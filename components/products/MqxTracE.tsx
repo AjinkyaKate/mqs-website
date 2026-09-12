@@ -51,7 +51,7 @@ const SANS = "var(--font-sans)";
 
 const NAV_ITEMS: [string, string][] = [
   ["Overview", "#overview"], ["Variants", "#variants"], ["2.5D", "#benefits"],
-  ["Highlights", "#highlights"], ["3D", "#ct"], ["Gallery", "#gallery"],
+  ["Highlights", "#highlights"], ["CT", "#ct"], ["IN-3D", "#in-3d"], ["Gallery", "#gallery"],
   ["Specs", "#specs"],
 ];
 
@@ -64,9 +64,9 @@ const BADGES = [
 ];
 
 const VARIANTS: [string, string, string][] = [
-  ["MQX.tracE · 2.5D", "High-magnification 2D X-ray with oblique viewing", "You need to screen boards fast and catch known defect types"],
-  ["MQX.tracE · 3D", "Adds CT slicing and reconstruction", "Overlap makes 2D ambiguous, or you need evidence-ready failure analysis"],
-  ["MQX.tracE · Inline 3D", "Inline 3D inspection", "You need 3D inspection integrated into the production line"],
+  ["MQX.tracE · 2.5D", "High-magnification X-ray inspection with oblique viewing", "Fast PCB screening and detection of known solder and assembly defects are required"],
+  ["MQX.tracE CT", "Adds CT slicing and reconstruction for layer-by-layer analysis", "Overlapping structures make conventional X-ray views ambiguous or detailed failure analysis is required"],
+  ["MQX.tracE IN-3D", "Inline 2D / 2.5D / 3D X-ray inspection with automated defect analysis and production-line board handling", "Inspection must happen directly within the SMT production flow without moving boards to an offline inspection station"],
 ];
 
 const BENEFITS_2D: [string, string, string][] = [
@@ -100,6 +100,13 @@ const BENEFITS_CT: [string, string, string][] = [
   ["03", "Standardized inspection workflows", "Manual, semi-automatic and automatic modes, plus macros."],
   ["04", "Advanced measurement tools", "Package and semiconductor analysis with pass/fail support."],
   ["05", "Safe, compliant operation", "Radiation safety below 1 µSv/hr at the cabinet surface."],
+];
+
+const IN3D_FEATURES: [string, string, string][] = [
+  ["01", "Inline multimode inspection", "Run routine 2D screening, oblique 2.5D inspection and full 3D analysis on one production-line platform."],
+  ["02", "Automated defect analysis", "Standardize defect detection and retain inspection results and per-joint measurements for production traceability."],
+  ["03", "Production-line board handling", "A linear motor and pneumatic clamping move boards through inspection without transferring them to an offline station."],
+  ["04", "Industry 4.0 integration", "Write inspection results back to ERP and SPC systems for closed-loop quality monitoring."],
 ];
 
 type Shot = { src: string; w: number; h: number; label: string; note: string; alt: string };
@@ -150,7 +157,7 @@ const SPECS: SpecTable[] = [
     ["Radiation safety", "AERB type-approved; leakage below 1 µSv/hr"],
     ["Footprint / weight", "2200 (H) × 1800 (W) × 1900 (D) mm; approx. 4500 kg"],
   ]},
-  { title: "MQX.tracE · 3D", rows: [
+  { title: "MQX.tracE CT", rows: [
     ["Power", "AC mains 220 – 230 V, 50 Hz, single phase"], ["Anode voltage", "30 – 160 kV"],
     ["Target power", "Up to 15 W"], ["X-ray source", "Open tube, transmission target"],
     ["Resolution", "0.75 µm or better"], ["Magnification", "Geometric up to 3,000×; total up to 7,500×"],
@@ -161,6 +168,20 @@ const SPECS: SpecTable[] = [
     ["Radiation safety", "Below 1 µSv/hr at cabinet surface"],
     ["Image export", "RAW / JPEG / TIFF / GIF / BMP"],
     ["Vibration mitigation", "Anti-vibration supports for stability"],
+  ]},
+  { title: "MQX.tracE IN-3D", rows: [
+    ["X-ray source", "Sealed microfocus source, 130 kV, 39 W, 11 µm focal spot"],
+    ["Detector", "High-resolution flat panel detector, 105 µm pixel pitch, 16-bit depth, 40 fps, real-time acquisition"],
+    ["Imaging modes", "2D / 2.5D / 3D"],
+    ["PCB capacity", "Minimum 50 × 50 mm; maximum 610 × 510 mm"],
+    ["PCB thickness", "0.4 – 6 mm"],
+    ["Maximum board weight", "5 – 8 kg"],
+    ["Board handling", "Linear motor with pneumatic clamping"],
+    ["Dimensions with conveyor", "3000 × 2186 × 1860 mm"],
+    ["Dimensions without conveyor", "1600 × 2186 × 1860 mm"],
+    ["System weight", "2500 kg"],
+    ["Software", "MQS Imaging Suite on Windows, with acquisition, review and manipulator control"],
+    ["Production integration", "Results and per-joint measurements written back to ERP and SPC"],
   ]},
 ];
 
@@ -297,9 +318,10 @@ export default function MqxTracE() {
       <Section id="variants" tone="white">
         <h2 style={h2(INK)}>One platform. Three depths of answer.</h2>
         <p className="mt-4 max-w-[62ch]" style={lead(BODY)}>
-          Where 2D leaves ambiguity, MQX.tracE 3D adds slicing and reconstruction to isolate layers, verify internal
-          geometry and generate evidence-ready reports without destructive sectioning, while MQX.tracE Inline 3D brings
-          that depth into the production line. All three variants share an AI-powered imaging suite.
+          Where 2D leaves ambiguity, MQX.tracE CT adds 3D slicing and reconstruction to isolate layers, verify internal
+          geometry and generate evidence-ready reports without destructive sectioning. MQX.tracE IN-3D brings inline
+          2D / 2.5D / 3D inspection and automated defect analysis directly into the production line. All three systems
+          share an AI-powered imaging suite.
         </p>
         <div className="mt-9" style={{ borderTop: `1px solid ${INK}` }}>
           <div className="hidden md:grid md:grid-cols-3 md:gap-6 md:py-3" style={{ borderBottom: `1px solid ${HAIR}` }}>
@@ -400,10 +422,10 @@ export default function MqxTracE() {
 
       {/* ── CT variant ── */}
       <Section id="ct" tone="inset">
-        <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE · 3D</p>
+        <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE CT</p>
         <h2 className="mt-4" style={h2(INK)}>2D gives answers. CT gives certainty.</h2>
         <p className="mt-4 max-w-[70ch]" style={lead(BODY)}>
-          For complex electronics, 2D views can be ambiguous because layers overlap. MQX.tracE 3D combines high-clarity 2D
+          For complex electronics, 2D views can be ambiguous because layers overlap. MQX.tracE CT combines high-clarity 2D
           screening with 3D slicing and reconstruction, so teams can isolate layers, verify internal geometry, confirm root
           cause and generate evidence-ready reports, without cutting a board apart.
         </p>
@@ -416,6 +438,31 @@ export default function MqxTracE() {
           ))}
         </div>
         <BenefitGrid items={BENEFITS_CT} />
+      </Section>
+
+      {/* ── IN-3D inline variant ── */}
+      <Section id="in-3d" tone="white">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-14">
+          <div className="relative aspect-[1402/1122] overflow-hidden" style={{ background: INSET }}>
+            <Image
+              src="/assets/product-trace-in3d.png"
+              alt="MQX.tracE IN-3D inline X-ray inspection system"
+              fill
+              quality={92}
+              sizes="(min-width:1024px) 55vw, 100vw"
+              className="object-contain p-5 md:p-7"
+            />
+          </div>
+          <div>
+            <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE IN-3D</p>
+            <h2 className="mt-4" style={h2(INK)}>Inspection built into the SMT production flow.</h2>
+            <p className="mt-4 max-w-[58ch]" style={lead(BODY)}>
+              An inline X-ray solution for PCB and electronic assemblies, combining 2D / 2.5D / 3D inspection, automated
+              defect analysis, in-line board handling and Industry 4.0 integration without moving boards to an offline station.
+            </p>
+          </div>
+        </div>
+        <BenefitGrid items={IN3D_FEATURES} />
       </Section>
 
       {/* ── defect gallery, with lightbox ── */}
@@ -477,12 +524,12 @@ export default function MqxTracE() {
 
       {/* ── specifications ── */}
       <Section id="specs" tone="page">
-        <h2 style={h2(INK)}>Specifications.</h2>
+        <h2 style={h2(INK)}>Specifications – 2.5D, CT &amp; IN-3D.</h2>
         <p className="mt-4 max-w-[64ch]" style={lead(BODY)}>
-          Two variants, quoted separately. Note that resolution here is JIMA resolution, the smallest feature the system can
-          resolve, which is a different measure from the detector pixel pitch quoted on the MQXC and MQCT pages.
+          Three systems, quoted separately. For 2.5D and CT, JIMA resolution describes the smallest feature the system can
+          resolve. IN-3D detector resolution is stated as pixel pitch.
         </p>
-        <div className="mt-9 flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-8">
+        <div className="mt-9 flex flex-col gap-6 lg:grid lg:grid-cols-3 lg:gap-6">
           {SPECS.map((t) => {
             const isOpen = !accordion || open === t.title;
             return (
@@ -517,12 +564,27 @@ export default function MqxTracE() {
         </div>
       </Section>
 
-      {/* The closing CTA band is removed at the client's request, for the same
-          reason as on the MQCT page: ContactSection follows and is the enquiry
-          form. Copy retained so it stays traceable:
-            "Next step / Want to see MQX.tracE find what others miss? / Request a
-             demo and see 2.5D and 3D CT inspection run on your own boards and
-             components." plus Request a demo and Talk to an inspection expert. */}
+      <Section tone="white">
+        <div className="grid grid-cols-1 gap-7 border-y py-8 md:py-10 lg:grid-cols-[minmax(0,7fr)_minmax(280px,4fr)] lg:items-center lg:gap-16" style={{ borderColor: HAIR }}>
+          <div>
+            <h2 style={h2(INK)}>Compare all three on your own boards.</h2>
+            <p className="mt-4 max-w-[62ch]" style={lead(BODY)}>
+              Request a demonstration of MQX.tracE 2.5D, MQX.tracE CT and MQX.tracE IN-3D against your inspection requirement.
+            </p>
+          </div>
+          <div className="lg:border-l lg:pl-10" style={{ borderColor: HAIR }}>
+            <a href="#contact" style={{ ...btnPrimary, width: "100%" }} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a demo</a>
+            <a
+              href="/assets/product-trace-in3d.png"
+              download
+              className="mt-3 flex h-12 w-full items-center justify-center border no-underline transition-colors hover:!border-[#0B2A3A] hover:!bg-[#0B2A3A] hover:!text-white"
+              style={{ borderColor: HAIR, color: INK, font: `500 12px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }}
+            >
+              Download IN-3D image (PNG)
+            </a>
+          </div>
+        </div>
+      </Section>
 
       {/* ── lightbox ── */}
       {zoom && (

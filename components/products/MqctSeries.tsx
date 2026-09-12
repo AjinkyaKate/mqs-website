@@ -97,25 +97,25 @@ const HIGHLIGHT_POSITIONS: [number, number][] = [
 type Model = { id: string; name: string; source: string; energy: string; best: string; title: string; desc: string; img?: string; alt?: string };
 const MODELS: Model[] = [
   {
-    id: "MQCT-M", name: "Microfocus", source: "Microfocus to 300 kV", energy: "Up to 300 kV",
+    id: "MQX.NeVa-M", name: "Microfocus", source: "Microfocus to 300 kV", energy: "Up to 300 kV",
     best: "PCBs, connectors, small castings", title: "High detail on small parts",
     desc: "Short source-to-object distance gives the geometric magnification needed to resolve features measured in tens of microns.",
     img: "/assets/prod-mqct-microfocus-transparent.png", alt: "Microfocus computed tomography system with open frame, rotary stage and large-area flat panel detector",
   },
   {
-    id: "MQCT-X", name: "Minifocus", source: "Minifocus to 450 kV", energy: "Up to 450 kV",
+    id: "MQX.NeVa-X", name: "Minifocus", source: "Minifocus to 450 kV", energy: "Up to 450 kV",
     best: "Automotive castings, welds, composites", title: "The mixed-portfolio workhorse",
     desc: "Balanced penetration and resolution for industrial QA and production R&D, where one system has to cover many part types.",
     img: "/assets/prod-mqct-pcb.jpg", alt: "CT scan of a populated printed circuit board showing internal traces, vias and solder joints",
   },
   {
-    id: "MQCT-H", name: "LINAC", source: "LINAC 0.95 to 15 MeV", energy: "0.95 – 15 MeV",
+    id: "MQX.NeVa-H", name: "LINAC", source: "LINAC 0.95 to 15 MeV", energy: "0.95 – 15 MeV",
     best: "Large castings, thick steel, rocket hardware", title: "Deep penetration CT",
     desc: "For parts where a 450 kV source will not pass through the section: heavy engineering, defence and aerospace.",
     img: "/assets/prod-mqct-linac.jpg", alt: "LINAC-based high energy CT system with travelling source and detector towers on rail-mounted stages",
   },
   {
-    id: "MQCT-D", name: "Dual detector", source: "Configurable, dual or multi-tube", energy: "Configurable",
+    id: "MQX.NeVa-D", name: "Dual detector", source: "Configurable, dual or multi-tube", energy: "Configurable",
     best: "Larger components, production lines", title: "Speed and coverage",
     desc: "Flat panel combined with line detector arrays for optimised scanning and large-field imaging, when throughput is the constraint.",
     /* The brief asks for text-only cards where no publishable scan exists,
@@ -174,7 +174,7 @@ const APPLICATIONS = [
 
 /* ── shared bits ── */
 
-const eyebrow = (color: string) => ({ margin: 0, font: `500 12px/1 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase" as const, color });
+const eyebrow = (color: string) => ({ margin: 0, font: `500 12px/1.3 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase" as const, color });
 const label = (color: string) => ({ margin: 0, font: `500 11px/1.3 ${SANS}`, letterSpacing: ".08em", textTransform: "uppercase" as const, color });
 const h2 = (color: string) => ({ margin: 0, font: `600 clamp(26px,3.2vw,42px)/1.08 ${SANS}`, letterSpacing: "-.025em", color, textWrap: "pretty" as const });
 const h3 = (color: string) => ({ margin: 0, font: `600 clamp(19px,1.9vw,24px)/1.2 ${SANS}`, letterSpacing: "-.018em", color, textWrap: "pretty" as const });
@@ -239,7 +239,7 @@ export default function MqctSeries() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 82% 48%,rgba(22,193,243,.16),transparent 38%),linear-gradient(135deg,#0B2A3A 0%,#103D55 100%)" }} />
         <Image
           src="/assets/prod-mqct-hero-transparent.png"
-          alt="MQCT microfocus computed tomography system with open frame, rotary stage and flat panel detector"
+          alt="MQX.NeVa microfocus computed tomography system with open frame, rotary stage and flat panel detector"
           fill
           priority
           quality={88}
@@ -252,7 +252,7 @@ export default function MqctSeries() {
           className={`relative flex flex-col justify-end ${SHELL}`}
           style={{ zIndex: 3, minHeight: mobile ? 520 : tablet ? 560 : 640, gap: 18, paddingTop: 120, paddingBottom: mobile ? 48 : 72 }}
         >
-          <p style={{ ...eyebrow(CYAN), maxWidth: 760 }}>MQCT Series · Computed tomography solutions</p>
+          <p style={{ ...eyebrow(CYAN), maxWidth: 760 }}>MQX.NeVa · Computed tomography solutions</p>
           <h1 className="max-w-[760px]" style={{ margin: 0, font: `600 clamp(30px,4.2vw,58px)/1.04 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>
             See inside in 3D. Measure with <span style={{ color: CYAN }}>confidence</span>.
           </h1>
@@ -338,7 +338,7 @@ export default function MqctSeries() {
 
       {/* ── benefits ── */}
       <Section id="benefits" tone="white">
-        <h2 style={h2(INK)}>Why choose the MQCT Series.</h2>
+        <h2 style={h2(INK)}>Why choose MQX.NeVa.</h2>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: 1, background: HAIR }}>
           {BENEFITS.map(([n, t, d]) => (
             <div key={n} className="p-6 lg:p-7" style={{ background: WHITE }}>
@@ -352,12 +352,12 @@ export default function MqctSeries() {
 
       {/* ── product highlights ── */}
       <Section id="highlights" tone="page">
-        <h2 style={h2(INK)}>What makes up an MQCT system.</h2>
+        <h2 style={h2(INK)}>What makes up an MQX.NeVa system.</h2>
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-14">
           <div className="relative aspect-[805/502]" style={{ background: INSET }}>
             <Image
               src="/assets/home-solutions-ct-cabinet.jpg"
-              alt="MQCT industrial CT cabinet with motorized doors open, showing the internal tube, detector and object manipulators"
+              alt="MQX.NeVa industrial CT cabinet with motorized doors open, showing the internal tube, detector and object manipulators"
               fill
               quality={90}
               sizes="(min-width:1024px) 55vw, 100vw"
@@ -428,7 +428,7 @@ export default function MqctSeries() {
       </Section>
 
       {/* ── model line-up ── */}
-      <Section id="models" tone="white">
+      <Section id="models" tone="white" className="!pb-12 md:!pb-14 lg:!pb-16">
         <h2 style={h2(INK)}>A model for every inspection need.</h2>
         <p className="mt-4 max-w-[62ch]" style={lead(BODY)}>
           Choose by the density and size of what you inspect. Every model shares the same imaging suite, safety architecture
@@ -452,9 +452,13 @@ export default function MqctSeries() {
 
         <div className="mt-12 flex flex-col gap-10 lg:gap-14">
           {MODELS.map((m, i) => (
-            <div key={m.id} className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-14">
-              <div className={i % 2 === 1 ? "lg:order-2" : ""}>
-                {m.img ? (
+            <div
+              key={m.id}
+              className={`grid grid-cols-1 items-start gap-6 ${m.img ? "lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-14" : "border-y py-6 md:py-8"}`}
+              style={m.img ? undefined : { background: WHITE, borderColor: HAIR }}
+            >
+              {m.img && (
+                <div className={i % 2 === 1 ? "lg:order-2" : ""}>
                   <div className="relative aspect-[16/9]" style={{ background: INSET }}>
                     <Image
                       src={m.img}
@@ -462,29 +466,34 @@ export default function MqctSeries() {
                       fill
                       quality={90}
                       sizes="(min-width:1024px) 45vw, 100vw"
-                      className={m.id === "MQCT-M" ? "object-contain p-4 md:p-6" : "object-cover"}
+                      className={m.id === "MQX.NeVa-M" ? "object-contain p-4 md:p-6" : "object-cover"}
                     />
                   </div>
-                ) : (
-                  <div className="flex aspect-[16/9] items-center justify-center p-6 text-center" style={{ background: INSET }}>
-                    <p style={{ ...label(MUTED), maxWidth: "34ch" }}>
-                      Sample result for this configuration not yet available for publication
-                    </p>
-                  </div>
-                )}
-              </div>
-              <div className={i % 2 === 1 ? "lg:order-1" : ""}>
-                <div style={label(CYAN_ON_LIGHT)}>{m.id} · {m.name}</div>
-                <h3 className="mt-3" style={h3(INK)}>{m.title}</h3>
+                </div>
+              )}
+              <div className={i % 2 === 1 && m.img ? "lg:order-1" : ""}>
+                {m.img && <div style={label(CYAN_ON_LIGHT)}>{m.id} · {m.name}</div>}
+                <h3 className={m.img ? "mt-3" : "mt-0"} style={h3(INK)}>{m.title}</h3>
                 <p className="mt-3 max-w-[52ch]" style={body(BODY)}>{m.desc}</p>
-                <dl className="mt-5" style={{ borderTop: `1px solid ${HAIR}` }}>
-                  <div className="flex justify-between gap-4 py-3" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                    <dt style={label(MUTED)}>Source</dt><dd style={{ ...body(INK), margin: 0, fontSize: 15 }}>{m.source}</dd>
-                  </div>
-                  <div className="flex justify-between gap-4 py-3" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                    <dt style={label(MUTED)}>Best for</dt><dd style={{ ...body(INK), margin: 0, fontSize: 15 }}>{m.best}</dd>
-                  </div>
-                </dl>
+                {m.img ? (
+                  <dl className="mt-5" style={{ borderTop: `1px solid ${HAIR}` }}>
+                    <div className="flex justify-between gap-4 py-3" style={{ borderBottom: `1px solid ${HAIR}` }}>
+                      <dt style={label(MUTED)}>Source</dt><dd style={{ ...body(INK), margin: 0, fontSize: 15 }}>{m.source}</dd>
+                    </div>
+                    <div className="flex justify-between gap-4 py-3" style={{ borderBottom: `1px solid ${HAIR}` }}>
+                      <dt style={label(MUTED)}>Best for</dt><dd style={{ ...body(INK), margin: 0, fontSize: 15 }}>{m.best}</dd>
+                    </div>
+                  </dl>
+                ) : (
+                <dl className="mt-6 grid grid-cols-1 sm:grid-cols-3" style={{ borderTop: `1px solid ${HAIR}` }}>
+                  {[["Source", m.source], ["Best for", m.best], ["Coverage", "Flat panel + line detector"]].map(([term, value], index) => (
+                      <div key={term} className={`flex flex-col gap-2 py-4 sm:px-5 sm:first:pl-0 sm:last:pr-0 ${index === 0 ? "" : "border-t sm:border-l sm:border-t-0"}`} style={{ borderColor: HAIR }}>
+                        <dt style={label(MUTED)}>{term}</dt>
+                        <dd style={{ ...body(INK), margin: 0, fontSize: 15 }}>{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
               </div>
             </div>
           ))}
@@ -492,11 +501,11 @@ export default function MqctSeries() {
       </Section>
 
       {/* ── reconstruction and metrology ── */}
-      <Section id="metrology" tone="page">
+      <Section id="metrology" tone="page" className="!pt-12 md:!pt-14 lg:!pt-16">
         <p style={eyebrow(CYAN_ON_LIGHT)}>Reconstruction and metrology</p>
-        <h2 className="mt-4" style={h2(INK)}>From scan to actionable defect data.</h2>
-        <p className="mt-4 max-w-[70ch]" style={lead(BODY)}>
-          MQCT systems pair with the MQS Imaging Suite and the Volume Graphics toolchain to run structural, porosity and
+        <h2 className="mt-5" style={h2(INK)}>From scan to actionable defect data.</h2>
+        <p className="mt-5 max-w-[70ch]" style={lead(BODY)}>
+          MQX.NeVa systems pair with the MQS Imaging Suite and the Volume Graphics toolchain to run structural, porosity and
           metrology analyses directly on CT data, with automatic indication reporting for every defect found.
         </p>
         <div className="mqs-jrow mqct-analysis-row mt-10" style={{ background: HAIR, ...JROW_HAIRLINE }}>
@@ -580,29 +589,37 @@ export default function MqctSeries() {
       </Section>
 
       {/* ── applications ── */}
-      <Section id="applications" tone="white">
-        <h2 style={h2(INK)}>Where MQCT delivers value.</h2>
+      <Section id="applications" tone="white" className="!pb-12 md:!pb-14 lg:!pb-16">
+        <h2 style={h2(INK)}>Where MQX.NeVa delivers value.</h2>
         <div className="mt-8 flex flex-wrap gap-2.5">
           {APPLICATIONS.map((a) => (
-            <span key={a} className="px-3.5 py-2.5" style={{ background: INSET, font: `500 14px/1.2 ${SANS}`, color: INK }}>{a}</span>
+            <span key={a} className="px-4 py-2.5" style={{ background: INSET, font: `500 14px/1.45 ${SANS}`, color: INK }}>{a}</span>
           ))}
         </div>
       </Section>
 
       {/* ── services cross-link ── */}
-      <Section tone="inset">
-        <div className="grid grid-cols-1 items-end gap-7 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-16">
+      <Section tone="white" className="!pt-12 md:!pt-14 lg:!pt-16">
+        <div className="grid grid-cols-1 gap-8 border-y py-8 md:py-10 lg:grid-cols-[minmax(0,7fr)_minmax(280px,4fr)] lg:items-center lg:gap-16" style={{ borderColor: HAIR }}>
           <div>
             <h2 style={h2(INK)}>Send us the part instead.</h2>
-            <p className="mt-4 max-w-[58ch]" style={lead(BODY)}>
+            <p className="mt-5 max-w-[62ch]" style={lead(BODY)}>
               If you need CT results before you need a CT system, MQS runs scanning as a service: defect analysis, metrology,
               CAD comparison and reverse engineering on your components, delivered as measured reports. It is also how most
               CT purchases begin, by scanning the parts that are failing and sizing the system against real data.
             </p>
           </div>
-          <div>
-            <a href="/services#inspection-services" style={{ ...btnPrimary, background: INK, color: "#fff" }} className="hover:!bg-[#12496A]">
-              Explore CT inspection services
+          <div className="lg:border-l lg:pl-10" style={{ borderColor: HAIR }}>
+            <ul className="mb-8 grid list-none grid-cols-2 gap-x-6 gap-y-4 p-0">
+              {["Defect analysis", "Metrology", "CAD comparison", "Reverse engineering"].map((service) => (
+                <li key={service} className="border-t pt-3" style={{ borderColor: HAIR, font: `500 14px/1.4 ${SANS}`, color: BODY }}>
+                  {service}
+                </li>
+              ))}
+            </ul>
+            <a href="/services#inspection-services" style={{ ...btnPrimary, background: INK, color: WHITE, width: "100%", padding: "0 18px", fontSize: 12 }} className="group whitespace-nowrap hover:!bg-[#12496A]">
+              <span>Explore CT inspection services</span>
+              <span aria-hidden className="ml-3 transition-transform duration-200 group-hover:translate-x-1">→</span>
             </a>
           </div>
         </div>

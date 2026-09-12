@@ -30,8 +30,8 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
     title: "Products",
     links: [
       { label: "All solutions", href: "/products" },
-      { label: "MQXC Series", href: "/products/mqxc-series" },
-      { label: "MQCT Series", href: "/products/mqct-series" },
+      { label: "MQX.drIS", href: "/products/mqx-dris" },
+      { label: "MQX.NeVa", href: "/products/mqx-neva" },
       { label: "MQX.tracE", href: "/products/mqx-trace" },
       { label: "High-Energy X-Ray", href: "/products/high-energy-xray" },
       { label: "Automated Test Equipment", href: "/products/automated-test-equipment" },
@@ -158,6 +158,9 @@ export default function Footer() {
           <div className="t-body-sm flex flex-col gap-1.5">
             <a href="mailto:info@mqstechnologies.in" className={link}>
               info@mqstechnologies.in
+            </a>
+            <a href="mailto:sales@mqstechnologies.in" className={link}>
+              sales@mqstechnologies.in
             </a>
             <a href="tel:+914023811122" className={link}>
               +91 40 2381 1122
