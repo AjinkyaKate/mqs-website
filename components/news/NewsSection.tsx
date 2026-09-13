@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-/* Recognition — MQS awards. Two cards (photo · award tag · title · description),
+/* Recognition — MQS awards. Three cards (photo · award tag · title · description),
    hover 4px cyan inset frame + accent title + slow zoom. Palette 2B. */
 
 const ACCENT = "#0A6A88";
@@ -25,6 +25,12 @@ const AWARDS: Award[] = [
     image: "/assets/award-ftcci-2023.png",
     title: "Outstanding Contribution to Aerospace & Defence",
     desc: "Recognised by FTCCI for excellence and outstanding contribution to the aerospace and defence industry.",
+  },
+  {
+    tag: "FTCCI Excellence Award",
+    image: "/assets/award-ftcci-2025.jpg",
+    title: "Product Innovation — SME",
+    desc: "For the inline wheel inspection system — a first-of-its-kind indigenous solution.",
   },
 ];
 
@@ -88,7 +94,7 @@ export default function NewsSection() {
         </h2>
       </div>
 
-      <div className="mt-11 grid grid-cols-1 gap-10 md:mt-16 md:grid-cols-2 md:gap-8 lg:mt-20 lg:gap-10">
+      <div className="mt-11 grid grid-cols-1 gap-10 md:mt-16 md:grid-cols-2 md:gap-8 lg:mt-20 lg:grid-cols-3 lg:gap-10">
         {AWARDS.map((a) => (
           <AwardCard key={a.title} {...a} />
         ))}
