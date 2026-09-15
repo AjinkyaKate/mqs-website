@@ -95,7 +95,7 @@ export const PORTFOLIO = {
   flow: "X-ray/CT Testing · ATE · Contract Manufacturing",
   items: [
     {
-      n: "NDT · 1",
+      n: "1",
       name: "MQX.drIS",
       desc: "Real-time and static DR for castings, welds and assemblies, with simultaneous loading and inspection.",
       short: "Real-time and static DR for castings, welds and assemblies.",
@@ -106,7 +106,7 @@ export const PORTFOLIO = {
       alt: "MQX.drIS digital radiography system",
     },
     {
-      n: "NDT · 2",
+      n: "2",
       name: "MQX.NeVa",
       desc: "High-energy computed tomography for internal geometry, porosity and density mapping.",
       short: "High-energy CT for internal geometry and porosity.",
@@ -122,7 +122,7 @@ export const PORTFOLIO = {
       alt: "Automated test equipment racks",
     },
     {
-      n: "NDT · 3",
+      n: "3",
       name: "MQS Imaging Suite",
       desc: "Automated defect recognition and ASTM reporting.",
       short: "Automated defect recognition and ASTM reporting.",

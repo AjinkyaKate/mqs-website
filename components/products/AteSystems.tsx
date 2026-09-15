@@ -208,17 +208,17 @@ export default function AteSystems() {
         position: "relative", background: NAVY, overflow: "hidden",
         minHeight: "var(--ate-hero-min)", display: "flex", alignItems: "center",
       }}>
-        {/* Two layers, as drawn: a luminosity pass that lets the cabinet take the
-            navy's hue, and a lower-opacity straight copy over it to bring some of
-            the panel colour back. */}
+        {/* Two layers, as drawn: a luminosity pass that lets the equipment take
+            the navy's hue, and a lower-opacity straight copy over it to bring
+            some of the panel colour back. */}
         <div aria-hidden className="ate-hero-img" style={{
           position: "absolute", right: "7%", top: "50%", transform: "translateY(-50%)",
-          height: "var(--ate-hero-img)", aspectRatio: "774 / 1240",
+          height: "var(--ate-hero-img)", aspectRatio: "1053 / 1493",
         }}>
-          <Image src="/assets/ate-acpu-rig.png" alt="" fill priority quality={90}
+          <Image src="/assets/product-ate.png" alt="" fill priority quality={90}
             sizes="(min-width:1180px) 400px, 300px"
             style={{ objectFit: "contain", opacity: .92, mixBlendMode: "luminosity", filter: "saturate(.55) contrast(1.05)" }} />
-          <Image src="/assets/ate-acpu-rig.png" alt="" fill priority quality={90}
+          <Image src="/assets/product-ate.png" alt="" fill priority quality={90}
             sizes="(min-width:1180px) 400px, 300px"
             style={{ objectFit: "contain", opacity: .55 }} />
         </div>

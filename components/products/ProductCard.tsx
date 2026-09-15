@@ -74,7 +74,7 @@ export default function ProductCard({ spec, name, subtitle, desc, image, imageCl
           className="t-button no-underline transition-colors duration-200 group-hover:!text-[#16C1F3]"
           style={{ color: ACCENT }}
         >
-          View solution →
+          View solutions →
         </a>
         {brochure && (
           <a

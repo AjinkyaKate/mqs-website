@@ -309,7 +309,7 @@ function PortfolioHead() {
 
 function Portfolio() {
   const groups = [
-    { title: "X-ray/CT Solutions", items: PORTFOLIO.items.filter((item) => item.n.startsWith("NDT")) },
+    { title: "X-ray/CT Solutions", items: PORTFOLIO.items.filter((item) => ["1", "2", "3"].includes(item.n)) },
     { title: "ATE", items: PORTFOLIO.items.filter((item) => item.n.startsWith("ATE")) },
     { title: "Contract Manufacturing", items: PORTFOLIO.items.filter((item) => item.n.startsWith("CM")) },
   ];

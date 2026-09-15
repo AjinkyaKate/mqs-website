@@ -46,10 +46,7 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
   {
     title: "Services",
     links: [
-      { label: "Services overview", href: "/services" },
-      { label: "CT Inspection Services", href: "/services#inspection-services" },
-      { label: "Precision Manufacturing", href: "/services#precision-manufacturing" },
-      { label: "Service & Support", href: "/services#service-support" },
+      { label: "Services Overview", href: "/services" },
     ],
   },
 ];
@@ -118,7 +115,7 @@ export default function Footer() {
         <div className="mqs-footer-brand">
           <Image src="/assets/mqs-logo-2a-dark.png" unoptimized alt="MQS Technologies" width={124} height={38} className="h-8 w-auto self-start sm:h-[34px] lg:h-[38px]" />
           <div className="t-h4" style={{ color: "#fff" }}>
-            Industrial X-ray, CT &amp; NDT inspection systems.
+            Industrial X-ray &amp; CT inspection solutions.
           </div>
           <p className="t-body-sm m-0" style={{ color: MUTED }}>
             Precision inspection equipment engineered in Hyderabad for aerospace, defence, automotive and electronics.

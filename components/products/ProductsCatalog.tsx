@@ -86,7 +86,7 @@ export default function ProductsCatalog() {
 
       {ndt.length > 0 && (
         <section className="px-6 pt-16 md:px-10 md:pt-[72px] lg:px-[55px] lg:pt-24">
-          <SectionHead title="Non-Destructive Testing" tag={`${ndt.length} Product${ndt.length === 1 ? "" : "s"}`} />
+          <SectionHead title="X-Ray & CT Solutions" tag={`${ndt.length} Product${ndt.length === 1 ? "" : "s"}`} />
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-7 lg:mt-10 lg:grid-cols-3 lg:gap-8">
             {ndt.map((p) => (
               <ProductCard key={p.name} {...p} />

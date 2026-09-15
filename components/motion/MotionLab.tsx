@@ -204,8 +204,8 @@ export default function MotionLab() {
         cost="Very subtle, to the point where it is fair to ask whether it earns its code. Worth comparing directly against 05 and against plain 01."
       >
         <ImageWipe mode="scale" style={{ background: INSET, border: `1px solid ${HAIR}`, padding: "clamp(20px,4vw,44px)", display: "flex", justifyContent: "center" }}>
-          <Image src="/assets/ate-acpu-rig.png" width={774} height={1240} quality={90} sizes="340px"
-            alt="MQS ACPU test rig cabinet"
+          <Image src="/assets/product-ate.png" width={1053} height={1493} quality={90} sizes="340px"
+            alt="MQS automated test equipment racks"
             style={{ display: "block", height: "clamp(280px,40vw,420px)", width: "auto" }} />
         </ImageWipe>
       </Demo>
@@ -270,7 +270,7 @@ export default function MotionLab() {
             </p>
           </div>
           <Parallax amount={40}>
-            <Image src="/assets/ate-acpu-rig.png" width={774} height={1240} quality={88} sizes="220px"
+            <Image src="/assets/product-ate.png" width={1053} height={1493} quality={88} sizes="220px"
               alt="" aria-hidden="true"
               style={{ display: "block", height: "clamp(200px,26vw,300px)", width: "auto", opacity: .9 }} />
           </Parallax>
