@@ -137,7 +137,7 @@ const INDUSTRIES: Industry[] = [
     name: "Automotive & EV",
     lead: "Inspect faster. Reduce scrap. Deliver safer vehicles. Cast housings, brake components, powertrain parts and battery assemblies — inspected at production speed, because a zero-defect target means checking parts, not samples.",
     systems: [
-      { label: "MQS.PRISM", href: "/products#catalog" },
+      { label: "MQS.PRISM", href: "/brochures/mqs-prism.pdf" },
       { label: "MQX.drIS", href: "/products/mqx-dris" },
       { label: "MQX.NeVa", href: "/products/mqx-neva" },
       { label: "MQWR 160U", href: "/brochures/mqwr-160u-wheel-inspection.pdf" },
@@ -189,7 +189,7 @@ const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
     { label: "High Energy X-ray and CT", href: "/products/high-energy-xray" },
   ]],
   ["Aluminium castings at volume", "Throughput without missing porosity", [
-    { label: "MQS.PRISM", href: "/products#catalog" },
+    { label: "MQS.PRISM", href: "/brochures/mqs-prism.pdf" },
     { label: "MQX.drIS", href: "/products/mqx-dris" },
   ]],
   ["Brake, steering and safety parts", "100% inspection with traceability", [

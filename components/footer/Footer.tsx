@@ -150,7 +150,9 @@ export default function Footer() {
             Contact
           </div>
           <address className="t-body-sm m-0 not-italic" style={{ color: MUTED }}>
-            MQS Technologies Pvt. Ltd., KK House, Plot B-35/1, Industrial Estate, Sanathnagar, Hyderabad 500018
+            MQS Technologies Pvt. Ltd.
+            <br />
+            KK House, Plot B-35/1, Industrial Estate, Sanathnagar, Hyderabad 500018
           </address>
           <div className="t-body-sm flex flex-col gap-1.5">
             <a href="mailto:info@mqstechnologies.in" className={link}>
