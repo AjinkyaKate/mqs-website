@@ -56,7 +56,7 @@ const ROWS: Row[] = [
     imageClassName: "object-contain p-4 md:p-6",
   },
   {
-    title: "Automated Test Equipment",
+    title: "Automated Test Equipments",
     description: "Custom electrical and functional validation of mission-critical assemblies for aerospace and defence.",
     chips: ["Aerospace LRUs", "Defence Assemblies"],
     image: "/assets/product-ate.png",
@@ -195,7 +195,7 @@ export default function ServicesSection() {
             className="t-h2 m-0 md:max-w-[660px] lg:max-w-none"
             style={{ color: INK }}
           >
-            End-to-end inspection and <span style={{ color: ACCENT }}>test systems</span>.
+            End-to-end inspection and <span style={{ color: ACCENT }}>test systems</span>
           </h2>
           </div>
           <AllServices className="hidden px-7 lg:inline-flex" />

@@ -37,10 +37,9 @@ import ContactMap from "./ContactMap";
        on this site. The reference lists it as a launch blocker under the DPDP
        Act, and it applies to the careers form and every product form too.
 
-   4 · The service card and the hero's "system down" row point at
-       /services#service-support rather than the reference's
-       /services/repair-support/. Phase 1 scope is locked to a single /services/
-       page with no sub-pages, so that path will not exist; the anchor does.
+   4 · The service card and the hero's "system down" row point directly at the
+       live enquiry form. There is no separate service-request route in Phase 1,
+       so this is the only verified form destination in the current site.
 
    5 · The Google Maps embed loads with the page using the exact corporate-office
        address as its query, so no Maps API key or static-map asset is required.
@@ -74,7 +73,7 @@ export const HOURS = "Mon–Sat, 9:30 AM – 6:30 PM IST";
 const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=" +
   encodeURIComponent("MQS Technologies, KK House, Plot No B-35/1, Industrial Estate, Sanathnagar, Hyderabad 500018, Telangana, India");
-const SERVICE_HREF = "/services#service-support";
+const SERVICE_HREF = "/contact#enquiry-form";
 
 const SHELL: CSSProperties = { maxWidth: 1330, margin: "0 auto", padding: "0 var(--gut)" };
 
@@ -155,7 +154,7 @@ function Hero() {
               margin: 0, font: `600 var(--h1)/1.04 ${SANS}`, letterSpacing: "-.025em",
               color: INK, maxWidth: "17ch", textWrap: "pretty",
             }}>
-              Let&rsquo;s discuss your <span style={{ color: CYAN_L }}>inspection requirement</span>.
+              Let&rsquo;s Discuss Your <span style={{ color: CYAN_L }}>Inspection Requirements.</span>
             </h1>
             <p style={{ ...lead(), maxWidth: "46ch" }}>
               Tell us what you need to inspect and our team will recommend the right X-ray, CT or ATE solution.

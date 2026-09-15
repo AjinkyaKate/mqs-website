@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { SystemLink } from "./IndustriesOverview";
 
 /* ──────────────────────────────────────────────────────────────
    Mobile routing matrix — from the "Concept 1a Alternating" handoff, whose
@@ -25,11 +26,11 @@ const eyebrow = {
   color: MUTED,
 };
 
-export default function RoutingAccordion({ routes }: { routes: readonly (readonly [string, string, string])[] }) {
+export default function RoutingAccordion({ routes }: { routes: readonly (readonly [string, string, readonly SystemLink[]])[] }) {
   const [open, setOpen] = useState<string | null>(null);
   return (
     <div style={{ borderTop: `1px solid ${NAVY}` }}>
-      {routes.map(([part, problem, system]) => {
+      {routes.map(([part, problem, systems]) => {
         const on = open === part;
         return (
           <div key={part} style={{ borderBottom: `1px solid ${HAIR}` }}>
@@ -55,7 +56,14 @@ export default function RoutingAccordion({ routes }: { routes: readonly (readonl
                 <div style={eyebrow}>The core problem</div>
                 <div className="mt-1.5" style={{ font: `400 16px/1.55 ${SANS}`, color: BODY }}>{problem}</div>
                 <div className="mt-3.5" style={eyebrow}>Start with</div>
-                <div className="mt-1.5" style={{ font: `500 17px/1.35 ${SANS}`, color: CYAN_INK }}>{system}</div>
+                <div className="mt-1.5 flex flex-wrap gap-x-2 gap-y-1">
+                  {systems.map((system, index) => (
+                    <span key={system.label} className="inline-flex items-baseline gap-2">
+                      {index > 0 && <span aria-hidden style={{ color: HAIR }}>·</span>}
+                      <a href={system.href} style={{ font: `500 17px/1.35 ${SANS}`, color: CYAN_INK }}>{system.label}</a>
+                    </span>
+                  ))}
+                </div>
                 <a
                   href="#contact"
                   className="mt-4 flex w-full items-center justify-center transition-colors duration-200 hover:!bg-[#12496A]"

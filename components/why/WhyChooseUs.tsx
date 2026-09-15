@@ -152,7 +152,7 @@ export default function WhyChooseUs() {
           <div className="flex max-w-[820px] flex-col gap-6 md:gap-7">
             <SectionLabel tone="dark">Why choose us</SectionLabel>
             <h2 className="m-0 t-h2 text-white md:max-w-[660px] lg:max-w-none">
-              Built for accuracy. Trusted for compliance.
+              Built for accuracy. Trusted for compliance
             </h2>
           </div>
           <WorkWithUs className="hidden flex-none px-[26px] lg:inline-flex" />

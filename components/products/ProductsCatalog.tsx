@@ -22,10 +22,10 @@ const NDT: Item[] = [
   { cat: "Wheel / Shell", spec: "Multi-calibre · Dual station", name: "Shell / Ammunition Inspection Solutions", subtitle: "Automated Ordnance Radiography", desc: "Dual-station multi-calibre radiography for filled shells, rockets and pyrotechnic assemblies.", image: "/assets/product-shell.png", brochure: "shell-ammunition-inspection.pdf" },
   { cat: "Wheel / Shell", spec: "10″–26″ · Inline", name: "MQWR 160U Inline Wheel Inspection Solution", subtitle: "Production Wheel Radiography", desc: "Inline radiography for alloy and steel wheels with automated defect recognition at line speed.", image: "/assets/product-wheel.png", brochure: "mqwr-160u-wheel-inspection.pdf" },
   { cat: "Digital Radiography", spec: "AI ADR · Production DR", name: "MQS.PRISM", subtitle: "Production Radiography", desc: "Production digital radiography with AI-assisted defect recognition and pass/fail calling.", image: "/assets/product-prism.png", brochure: "digital-radiography.pdf" },
-  { cat: "Digital Radiography", spec: "Entry-level · Compact", name: "MQX.OptimaXis", subtitle: "Affordable In-House X-Ray", desc: "Compact inspection for small-batch electronics and precision machined parts.", image: "/assets/product-optimaxis.jpg", brochure: "mqx-optimaxis.pdf" },
+  { cat: "Digital Radiography", spec: "Entry-level · Compact", name: "MQX.OptimaXis", subtitle: "Affordable In-House X-Ray", desc: "Compact inspection for small-batch electronics and precision machined parts.", image: "/assets/product-optimaxis.jpg", imageClassName: "scale-[1.14] group-hover:scale-[1.18]", brochure: "mqx-optimaxis.pdf" },
   { cat: "PCB X-ray", spec: "≤0.75 µm · 2.5D", name: "MQX.tracE", subtitle: "2.5D PCB X-Ray Inspection", desc: "India’s first indigenous 2.5D PCB X-ray system for solder voids, bridging and PTH fill.", image: "/assets/product-trace.png", href: "/products/mqx-trace" },
   { cat: "PCB X-ray", spec: "Volumetric 3D", name: "MQX.tracE CT", subtitle: "3D PCB Inspection", desc: "Layer-by-layer analysis of populated boards for buried-via and interconnect failure analysis.", image: "/assets/product-trace.png", href: "/products/mqx-trace" },
-  { cat: "PCB X-ray", spec: "Inline · 2D / 2.5D / 3D", name: "MQX.tracE | IN - 3D", subtitle: "Inline PCB X-Ray Inspection", desc: "Inline 2D / 2.5D / 3D X-ray inspection for PCB and electronic assemblies, combining high-resolution imaging and automated defect analysis directly in the production flow.", image: "/assets/product-trace-in3d.png", href: "/products/mqx-trace" },
+  { cat: "PCB X-ray", spec: "Inline · 2D / 2.5D / 3D", name: "MQX.tracE | IN-3D", subtitle: "Inline PCB X-Ray Inspection", desc: "Inline 2D / 2.5D / 3D X-ray inspection for PCB and electronic assemblies, combining high-resolution imaging and automated defect analysis directly in the production flow.", image: "/assets/product-trace-in3d.png", href: "/products/mqx-trace" },
   { cat: "PCB X-ray", spec: "AI counter · 99%", name: "MQX.gINti", subtitle: "Component Reel Counting", desc: "Fast, accurate X-ray inventory verification of SMT component reels without unspooling.", image: "/assets/product-ginti.jpg", brochure: "mqx-ginti.pdf" },
   { cat: "Microfocus", spec: "0.5 µm · 160–300 kV", name: "Microfocus X-Ray Solutions", subtitle: "Sub-Micron Imaging Systems", desc: "Half-micron focal spot inspection for micro-castings, connectors and additive-manufactured parts.", image: "/assets/product-microfocus.png", brochure: "microfocus-xray.pdf" },
   { cat: "Digital Radiography", spec: "160–450 kV · 100% duty", name: "Digital Radiography Solutions for Pipe Inspection", subtitle: "Pipe and Weld Inspection", desc: "Digital radiography for pipeline weld integrity and corrosion mapping at 100% duty cycle.", image: "/assets/product-pipe.png", brochure: "pipe-inspection-dr.pdf" },
@@ -97,7 +97,7 @@ export default function ProductsCatalog() {
 
       {showAte && (
         <section className="px-6 pt-14 pb-16 md:px-10 md:pt-20 md:pb-[72px] lg:px-[55px] lg:pt-[104px] lg:pb-24">
-          <SectionHead title="Automated Test Equipment" tag="3 Categories · Custom Solutions" />
+          <SectionHead title="Automated Test Equipments" tag="3 Categories · Custom Solutions" />
           <article className="group mt-8 grid overflow-hidden border bg-white transition-shadow duration-300 hover:shadow-[0_18px_48px_rgba(11,42,58,.10)] lg:mt-10 lg:grid-cols-[minmax(320px,.85fr)_minmax(0,1.15fr)]" style={{ borderColor: HAIRLINE }}>
             <div className="relative min-h-[320px] overflow-hidden border-b lg:min-h-[540px] lg:border-b-0 lg:border-r" style={{ borderColor: HAIRLINE, background: "linear-gradient(145deg,#E9F2F6 0%,#F8FBFC 72%)" }}>
               <div className="absolute left-5 top-5 z-[1] border bg-white/90 px-3 py-2 backdrop-blur-sm" style={{ borderColor: HAIRLINE }}>
@@ -109,7 +109,7 @@ export default function ProductsCatalog() {
               </div>
             </div>
             <div className="flex flex-col justify-center px-6 py-8 md:px-10 md:py-11 lg:px-12 lg:py-14">
-              <div className="t-eyebrow" style={{ color: ACCENT }}>Automated Test Equipment</div>
+              <div className="t-eyebrow" style={{ color: ACCENT }}>Automated Test Equipments</div>
               <h3 className="t-h3 m-0 mt-3 max-w-[650px]" style={{ color: INK }}>Purpose-built testing, matched to your workflow.</h3>
               <p className="t-body m-0 mt-4 max-w-[680px]" style={{ color: BODY }}>MQS builds test systems for assemblies that catalogue instruments cannot verify. Each solution is configured around the operator, test speed and data complexity—without exposing sensitive programme details.</p>
 

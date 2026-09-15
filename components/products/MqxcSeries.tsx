@@ -32,7 +32,7 @@ const BENEFITS: [string, string][] = [
 
 const STATS: [string, string, string][] = [
   ["Voltage range", "160 – 450 kV", "M12 2v20M4 7l8-5 8 5v10l-8 5-8-5z"],
-  ["Modality", "2D DR + CT", "M12 3a9 9 0 1 0 9 9M12 3v9l7 4"],
+  ["Modality", "2D, DR & CT", "M12 3a9 9 0 1 0 9 9M12 3v9l7 4"],
   ["Detector", "Down to 150 µm", "M3 5h18v14H3zM8 5v14M16 5v14M3 12h18"],
   ["Load capacity", "≤ 100 kg", "M4 20h16M6 20V9l6-5 6 5v11M9 20v-6h6v6"],
 ];
@@ -74,7 +74,7 @@ type SpecTable = { title: string; colA: string; colB: string; rows: [string, str
 const SPEC_TABLES: SpecTable[] = [
   { title: "Manipulator", colA: "Axis", colB: "Specification", rows: [["Y travel", "≈ 1100 mm"], ["Z travel", "≈ 1500 mm"], ["X axis", "Linear travel with ±45° tilt"], ["Rotation", "360° continuous"], ["Maximum load", "≤ 100 kg"]] },
   { title: "Detector — DFPD options", colA: "Parameter", colB: "Range", rows: [["Pixel pitch", "150 µm / 100 µm / 75 µm"], ["Active area", "430 × 430 mm or 300 × 250 mm"], ["Frame rate", "Up to 30 fps"], ["Scintillator", "CsI or GOS"]] },
-  { title: "X-ray source range", colA: "Parameter", colB: "Range", rows: [["Source type", "Mini-focus / Microfocus"], ["Tube voltage — Mini-focus", "Up to 450 kV"], ["Tube voltage — Microfocus", "Up to 300 kV"], ["Tube power", "Depends on Source Configuration"], ["Focal spot", "0.4 – 5.5 mm"], ["Modality", "2D DR / CT"]] },
+  { title: "X-ray source range", colA: "Parameter", colB: "Range", rows: [["Source type", "Mini-focus / Microfocus"], ["Tube voltage — Mini-focus", "Up to 450 kV"], ["Tube voltage — Microfocus", "Up to 300 kV"], ["Tube power", "Depends on Source Configuration"], ["Focal spot", "0.4 – 5.5 mm"], ["Modality", "2D, DR & CT"]] },
 ];
 
 const NAV_ITEMS: [string, string][] = [["Overview", "#overview"], ["Highlights", "#highlights"], ["Models", "#models"], ["Applications", "#applications"], ["Specs", "#specs"], ["Video", "#video"], ["Demo", "#demo"]];
@@ -146,7 +146,7 @@ export default function MqxcSeries() {
               <h2 style={{ margin: "14px 0 0", font: "600 clamp(28px,3.2vw,42px)/1.08 var(--font-sans)", letterSpacing: "-.025em", color: INK, textWrap: "pretty" }}>Built for the part you actually inspect.</h2>
             </div>
             <div style={{ border: `1px solid ${HAIR}`, aspectRatio: compact ? "16/9" : "4/3", overflow: "hidden", background: "#fff" }}>
-              <Image src="/assets/mqxc-hero.jpg" alt="MQX.drIS cabinet X-ray system" width={800} height={600} className="h-full w-full scale-[.84] object-contain" />
+              <Image src="/assets/mqxc-hero.jpg" alt="MQX.drIS cabinet X-ray system" width={800} height={600} className="h-full w-full scale-[.76] object-contain" />
             </div>
           </div>
           <div className="flex flex-col" style={{ gap: 20 }}>
@@ -202,7 +202,7 @@ export default function MqxcSeries() {
           <h2 style={{ ...h2, marginBottom: 40 }}>What makes up an MQX.drIS system.</h2>
           <div className="grid items-start" style={{ gridTemplateColumns: desktop ? "1fr 1fr" : "1fr", gap: "clamp(32px,4vw,56px)" }}>
             <div style={{ position: "relative", border: `1px solid ${HAIR}`, aspectRatio: compact ? "16/9" : "4/3", minHeight: compact ? undefined : 320, overflow: "hidden", background: PAGE }}>
-              <Image src="/assets/mqxc-cutaway.jpg" alt="Cabinet cutaway showing shielding, door, detector, manipulator and control station" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+              <Image src="/assets/mqxc-cutaway.jpg" alt="Cabinet cutaway showing shielding, door, detector, manipulator and control station" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain p-3 md:p-5" />
               {CALLOUTS.map(([letter, label, , x, y], i) => {
                 const on = activeCallout === i;
                 return (
@@ -251,7 +251,7 @@ export default function MqxcSeries() {
           </div>
 
           <p style={{ margin: "16px 0 0", font: "400 13px/1.6 var(--font-sans)", color: MUTED, textWrap: "pretty", maxWidth: 720 }}>
-            The <strong style={{ fontWeight: 600, color: INK }}>MQX.drIS 102</strong> featured above is a customer-specific custom build. The four models below make up the standard MQX.drIS lineup — all share the same cabinet architecture, imaging suite and safety design, differing only in penetration.
+            The four models below make up the standard MQX.drIS lineup — all share the same cabinet architecture, imaging suite and safety design, differing only in penetration.
           </p>
 
           {compact ? (
@@ -314,7 +314,7 @@ export default function MqxcSeries() {
       <section id="specs" style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: "#fff" }}>
         <div className="mx-auto" style={{ maxWidth: 1330 }}>
           <div style={eyebrow(CYAN_ON_LIGHT)}>Technical data</div>
-          <h2 style={{ ...h2, marginBottom: 44 }}>Specifications.</h2>
+          <h2 style={{ ...h2, marginBottom: 44 }}>Technical Specifications</h2>
           <div style={{ marginBottom: 48 }}>
             <h3 style={{ margin: "0 0 18px", font: "600 20px/1.25 var(--font-sans)", letterSpacing: "-.02em", color: INK }}>Cabinet design</h3>
             <ul className="m-0 grid list-none p-0" style={{ gridTemplateColumns: mobile ? "1fr" : tablet ? "1fr 1fr" : "repeat(auto-fit,minmax(min(300px,100%),1fr))", gap: "0 40px", borderTop: `1px solid ${HAIR}` }}>

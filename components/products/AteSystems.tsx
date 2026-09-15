@@ -227,7 +227,7 @@ export default function AteSystems() {
 
         <div style={{ position: "relative", ...SHELL, width: "100%", padding: "clamp(116px,9vw,140px) var(--ate-gut) clamp(72px,7vw,104px)" }}>
           <div style={{ maxWidth: "var(--ate-hero-copy)" }}>
-            <p style={eyebrow(CYAN)}>Automated Test Equipment</p>
+            <p style={eyebrow(CYAN)}>Automated Test Equipments</p>
             <h1 style={{
               margin: "24px 0 0", font: `600 var(--ate-h1)/1.03 ${SANS}`, letterSpacing: "-.028em",
               color: WHITE, maxWidth: "18ch", textWrap: "pretty",
@@ -241,12 +241,7 @@ export default function AteSystems() {
             </p>
             <div className="ate-cta" style={{ display: "flex", flexWrap: "wrap", gap: 16, marginTop: 38 }}>
               <Btn href="#contact" tone="cyan">Talk to an Engineer</Btn>
-              <Btn href="#portfolio" tone="outline">See Systems We&rsquo;ve Built</Btn>
             </div>
-            <p style={{ ...caption("rgba(255,255,255,.62)"), fontSize: 13.5, marginTop: 32 }}>
-              IMG-01 · Alternator Control &amp; Protection Unit test rig, a full-cabinet functional verification system
-              simulating aircraft electrical conditions.
-            </p>
           </div>
         </div>
       </section>
@@ -520,10 +515,6 @@ export default function AteSystems() {
           </p>
           <div className="ate-cta" style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center", justifyContent: "center", marginTop: 12 }}>
             <Btn href="/contact" tone="cyan">Talk to an Engineer</Btn>
-            <a href="tel:+914023811122" style={{
-              font: `500 22px/1 ${DISPLAY}`, color: WHITE, letterSpacing: "-.01em",
-              minHeight: 44, display: "inline-flex", alignItems: "center", padding: "0 16px", textDecoration: "none",
-            }}>+91 40 2381 1122</a>
           </div>
         </div>
       </section>

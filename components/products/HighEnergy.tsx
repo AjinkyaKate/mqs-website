@@ -138,7 +138,7 @@ export default function HighEnergy() {
         <div className="mx-auto grid items-center" style={{ maxWidth: 1330, gridTemplateColumns: desktop ? "1fr 0.92fr" : "1fr", gap: "clamp(28px,4vw,56px)", padding: mobile ? "120px 24px 48px" : desktop ? "150px 55px 88px" : "132px 40px 64px" }}>
           <div className="flex flex-col" style={{ gap: 20, maxWidth: 620 }}>
             <div style={eyebrow(CYAN_ON_DARK)}>High energy radiography &amp; CT · 0.9–15 MeV</div>
-            <h1 style={{ margin: 0, font: `600 clamp(32px,4.4vw,58px)/1.04 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>See Through <span style={{ color: CYAN_ON_DARK }}>500 mm</span> of Steel.</h1>
+            <h1 style={{ margin: 0, font: `600 clamp(32px,4.4vw,58px)/1.04 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>High Energy X-ray and CT</h1>
             <p style={{ margin: 0, font: `400 clamp(15px,1.3vw,18px)/1.6 ${SANS}`, color: "rgba(255,255,255,.80)", textWrap: "pretty" }}>When a part is too dense for an X-ray tube, a linear accelerator is the only way in. MQS builds turnkey high-energy inspection systems for rocket motors, solid propellants, heavy castings and pressure vessels — installed, shielded and supported in India.</p>
             <div className="flex flex-wrap" style={{ gap: 12, marginTop: 6 }}>
               <a href="#contact" style={btnPrimary} className="hover:!bg-white hover:!text-[#0B2A3A]">Talk to an Engineer</a>
@@ -314,7 +314,7 @@ export default function HighEnergy() {
       <section id="specs" style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: "#fff", borderTop: `1px solid ${HAIR}` }}>
         <div className="mx-auto" style={{ maxWidth: 1330 }}>
           <div style={eyebrow(CYAN_ON_LIGHT)}>Technical data</div>
-          <h2 style={{ ...h2, marginBottom: 44 }}>Specifications.</h2>
+          <h2 style={{ ...h2, marginBottom: 44 }}>Technical Specifications</h2>
           <div className="flex flex-col" style={{ gap: 44 }}>
             {SPEC_TABLES.map((t, ti) => {
               const open = compact ? openSpec === ti : true;

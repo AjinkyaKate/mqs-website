@@ -31,11 +31,11 @@ const EYEBROW = "About MQS";
 const LEARN_MORE = "Learn more";
 const HEADLINE = (
   <>
-    Precision inspection, <span style={{ color: ACCENT }}>engineered in-house</span> since 1994.
+    Precision inspection, <span style={{ color: ACCENT }}>engineered in-house</span> since 1994
   </>
 );
 const PARAGRAPH =
-  "MQS Technologies builds advanced non-destructive testing, automated inspection and electrical test systems for mission-critical industries.";
+  "MQS Technologies builds advanced X-ray, automated inspection and electrical test systems for mission-critical industries.";
 const BAND_PARAGRAPH =
   "Every MQS system is engineered, assembled and validated at our Hyderabad facility before installation.";
 

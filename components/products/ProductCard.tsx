@@ -15,6 +15,7 @@ export type Product = {
   subtitle: string;
   desc: string;
   image?: string;
+  imageClassName?: string;
   href?: string;
   /* Filename under /public/brochures. The button only renders when a file
      exists: it used to point every product at #contact while showing a download
@@ -22,7 +23,7 @@ export type Product = {
   brochure?: string;
 };
 
-export default function ProductCard({ spec, name, subtitle, desc, image, href, brochure }: Product) {
+export default function ProductCard({ spec, name, subtitle, desc, image, imageClassName = "", href, brochure }: Product) {
   return (
     <div
       className="group flex h-full flex-col bg-white transition-shadow duration-200 hover:shadow-[inset_0_0_0_1px_#16C1F3]"
@@ -36,7 +37,7 @@ export default function ProductCard({ spec, name, subtitle, desc, image, href, b
               alt={name}
               width={400}
               height={200}
-              className="max-h-full max-w-full object-contain transition-transform duration-[420ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.04]"
+              className={`max-h-full max-w-full object-contain transition-transform duration-[420ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.04] ${imageClassName}`}
             />
           ) : (
             <div

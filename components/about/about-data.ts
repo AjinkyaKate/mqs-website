@@ -92,10 +92,10 @@ export const AWARD = {
 export const PORTFOLIO = {
   eyebrow: "What we build",
   heading: "MQS solution portfolio.",
-  flow: "Non-Destructive Testing · ATE · Contract Manufacturing",
+  flow: "X-ray/CT Testing · ATE · Contract Manufacturing",
   items: [
     {
-      n: "NDT · 01",
+      n: "NDT · 1",
       name: "MQX.drIS",
       desc: "Real-time and static DR for castings, welds and assemblies, with simultaneous loading and inspection.",
       short: "Real-time and static DR for castings, welds and assemblies.",
@@ -106,7 +106,7 @@ export const PORTFOLIO = {
       alt: "MQX.drIS digital radiography system",
     },
     {
-      n: "NDT · 02",
+      n: "NDT · 2",
       name: "MQX.NeVa",
       desc: "High-energy computed tomography for internal geometry, porosity and density mapping.",
       short: "High-energy CT for internal geometry and porosity.",
@@ -115,15 +115,15 @@ export const PORTFOLIO = {
     },
     {
       n: "ATE · 01",
-      name: "Automated Test Equipment",
+      name: "Automated Test Equipments",
       desc: "Functional and environmental test rigs, built to spec.",
       short: "Functional and environmental test rigs, built to spec.",
       src: "/assets/about-line-ate.jpg",
       alt: "Automated test equipment racks",
     },
     {
-      n: "NDT · 03",
-      name: "ADR Software",
+      n: "NDT · 3",
+      name: "MQS Imaging Suite",
       desc: "Automated defect recognition and ASTM reporting.",
       short: "Automated defect recognition and ASTM reporting.",
       /* An actual radiograph rather than a screenshot of the software UI: it

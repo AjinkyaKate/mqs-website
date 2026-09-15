@@ -59,7 +59,7 @@ export default function IndustriesSection() {
           className="m-0 max-w-[22ch] t-h2"
           style={{ color: "#0B2A3A", textWrap: "pretty" }}
         >
-          Trusted in <span style={{ color: "#0A6A88" }}>mission-critical</span> sectors.
+          Trusted in <span style={{ color: "#0A6A88" }}>mission-critical</span> sectors
         </h2>
       </div>
 

@@ -100,11 +100,13 @@ const btn = (bg: string, color: string, border?: string) => ({
 
 /* ── content, from the handoff ─────────────────────────────── */
 
+export type SystemLink = { label: string; href: string };
+
 type Industry = {
   n: string;
   name: string;
   lead: string;
-  systems: string[];
+  systems: SystemLink[];
   image?: { src: string; alt: string; fit: "cover" | "contain"; ground: string };
   need?: string;
   note?: string;
@@ -116,7 +118,12 @@ const INDUSTRIES: Industry[] = [
     n: "01",
     name: "Aerospace & Defence",
     lead: "Inspect with confidence, because failure is not an option. Turbine parts, rotor blades, structural assemblies, nozzles and composite layups — where a micro-crack, an inclusion or a bond failure has consequences that reach far beyond the factory.",
-    systems: ["High-Energy X-ray", "MQCT", "Microfocus CT", "MQXC Cabinet DR", "Rotor Blade DR"],
+    systems: [
+      { label: "High Energy X-ray and CT", href: "/products/high-energy-xray" },
+      { label: "MQX.NeVa", href: "/products/mqx-neva" },
+      { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+      { label: "MQX.drIS", href: "/products/mqx-dris" },
+    ],
     image: {
       src: "/assets/ind-aero-rotor-dr.jpg",
       alt: "MQS rotor blade digital radiography system with long-format gantry, travelling X-ray source and flat panel detector",
@@ -129,7 +136,12 @@ const INDUSTRIES: Industry[] = [
     n: "02",
     name: "Automotive & EV",
     lead: "Inspect faster. Reduce scrap. Deliver safer vehicles. Cast housings, brake components, powertrain parts and battery assemblies — inspected at production speed, because a zero-defect target means checking parts, not samples.",
-    systems: ["MQS-PRISM", "MQXC Cabinet DR", "MQCT", "MQWR 160U"],
+    systems: [
+      { label: "MQS.PRISM", href: "/products#catalog" },
+      { label: "MQX.drIS", href: "/products/mqx-dris" },
+      { label: "MQX.NeVa", href: "/products/mqx-neva" },
+      { label: "MQWR 160U", href: "/brochures/mqwr-160u-wheel-inspection.pdf" },
+    ],
     image: {
       src: "/assets/ind-auto-wheel-hub.jpg",
       alt: "Radiograph of an alloy wheel hub showing internal casting structure",
@@ -142,7 +154,13 @@ const INDUSTRIES: Industry[] = [
     n: "03",
     name: "Electronics & Semiconductors",
     lead: "Inspect what the eye cannot see. BGA voids, head-in-pillow, bridging and PTH fill issues — defects that pass visual inspection, survive functional test, and come back as field returns.",
-    systems: ["MQX.tracE 2.5D", "MQX.tracE 3D", "MQX.tracE Inline 3D", "MQX.gINti", "Microfocus CT"],
+    systems: [
+      { label: "MQX.tracE", href: "/products/mqx-trace" },
+      { label: "MQX.tracE CT", href: "/products/mqx-trace" },
+      { label: "MQX.tracE | IN-3D", href: "/products/mqx-trace" },
+      { label: "MQX.gINti", href: "/brochures/mqx-ginti.pdf" },
+      { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+    ],
     /* The handoff ships the same PTH radiograph here as in the internal-view
        figure above. Kept as designed so both captions stay accurate. */
     image: {
@@ -162,15 +180,38 @@ const ALSO: [string, string][] = [
   ["Research & Scientific", "Material characterisation and one-off investigation across mixed sample types"],
 ];
 
-const ROUTES = [
-  ["Turbine and engine components", "Micro-defects in high-value parts", "Microfocus CT · MQCT"],
-  ["Thick castings and dense assemblies", "Penetration through the section", "High-Energy X-ray"],
-  ["Aluminium castings at volume", "Throughput without missing porosity", "MQS-PRISM · MQXC"],
-  ["Brake, steering and safety parts", "100% inspection with traceability", "MQXC Cabinet DR · MQCT"],
-  ["EV battery cells and modules", "Electrode alignment and internal defects", "MQCT · Microfocus CT"],
-  ["PCBs and solder joints", "Hidden voids under packages", "MQX.tracE 2.5D · MQX.tracE 3D · MQX.tracE Inline 3D"],
-  ["SMT component reels", "Inventory count accuracy", "MQX.gINti"],
-  ["Welds and pressure components", "Root penetration and weld integrity", "MQXC 320/450 · High-Energy"],
+const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
+  ["Turbine and engine components", "Micro-defects in high-value parts", [
+    { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+    { label: "MQX.NeVa", href: "/products/mqx-neva" },
+  ]],
+  ["Thick castings and dense assemblies", "Penetration through the section", [
+    { label: "High Energy X-ray and CT", href: "/products/high-energy-xray" },
+  ]],
+  ["Aluminium castings at volume", "Throughput without missing porosity", [
+    { label: "MQS.PRISM", href: "/products#catalog" },
+    { label: "MQX.drIS", href: "/products/mqx-dris" },
+  ]],
+  ["Brake, steering and safety parts", "100% inspection with traceability", [
+    { label: "MQX.drIS", href: "/products/mqx-dris" },
+    { label: "MQX.NeVa", href: "/products/mqx-neva" },
+  ]],
+  ["EV battery cells and modules", "Electrode alignment and internal defects", [
+    { label: "MQX.NeVa", href: "/products/mqx-neva" },
+    { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+  ]],
+  ["PCBs and solder joints", "Hidden voids under packages", [
+    { label: "MQX.tracE", href: "/products/mqx-trace" },
+    { label: "MQX.tracE CT", href: "/products/mqx-trace" },
+    { label: "MQX.tracE | IN-3D", href: "/products/mqx-trace" },
+  ]],
+  ["SMT component reels", "Inventory count accuracy", [
+    { label: "MQX.gINti", href: "/brochures/mqx-ginti.pdf" },
+  ]],
+  ["Welds and pressure components", "Root penetration and weld integrity", [
+    { label: "MQX.drIS 320 / 450", href: "/products/mqx-dris" },
+    { label: "High Energy X-ray Systems", href: "/products/high-energy-xray" },
+  ]],
 ] as const;
 
 const COMPLIANCE: [string, string][] = [
@@ -357,9 +398,9 @@ function IndustryBlock({ item, index }: { item: Industry; index: number }) {
           <p style={eyebrow(MUTED)}>Systems used</p>
           <div className="mt-3.5 flex flex-wrap gap-2">
             {item.systems.map((s) => (
-              <span key={s} className="px-3 py-2" style={{ background: INSET, font: `500 14px/1.2 ${SANS}`, letterSpacing: ".02em", color: NAVY }}>
-                {s}
-              </span>
+              <a key={s.label} href={s.href} className="px-3 py-2 no-underline transition-colors hover:!bg-[#D8EEF6] hover:!text-[#0A6A88]" style={{ background: INSET, font: `500 14px/1.2 ${SANS}`, letterSpacing: ".02em", color: NAVY }}>
+                {s.label}
+              </a>
             ))}
           </div>
         </div>
@@ -472,7 +513,7 @@ function Routing() {
             <span>The core problem is…</span>
             <span className="hidden min-[1024px]:inline">Start with</span>
           </div>
-          {ROUTES.map(([part, problem, system]) => (
+          {ROUTES.map(([part, problem, systems]) => (
             <div
               key={part}
               className="grid items-center gap-x-6 gap-y-2 py-5 min-[700px]:grid-cols-[minmax(0,4fr)_minmax(0,4fr)] min-[1024px]:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,3.4fr)] min-[1024px]:gap-8"
@@ -480,11 +521,15 @@ function Routing() {
             >
               <span style={{ font: `500 19px/1.3 ${SANS}`, color: NAVY, textWrap: "pretty" }}>{part}</span>
               <span style={bodyType(MUTED)}>{problem}</span>
-              <span
-                className="col-span-2 min-[1024px]:col-span-1"
-                style={{ font: `500 14px/1.4 ${SANS}`, letterSpacing: ".02em", color: CYAN_INK }}
-              >
-                {system}
+              <span className="col-span-2 flex flex-wrap gap-x-2 gap-y-1 min-[1024px]:col-span-1">
+                {systems.map((system, index) => (
+                  <span key={system.label} className="inline-flex items-baseline gap-2">
+                    {index > 0 && <span aria-hidden style={{ color: HAIR }}>·</span>}
+                    <a href={system.href} className="no-underline hover:underline" style={{ font: `500 14px/1.4 ${SANS}`, letterSpacing: ".02em", color: CYAN_INK }}>
+                      {system.label}
+                    </a>
+                  </span>
+                ))}
               </span>
             </div>
           ))}

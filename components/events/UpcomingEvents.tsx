@@ -8,7 +8,7 @@ const EVENTS = [
     dates: "16–18 Sept 2026",
     event: "Productronica India 2026",
     city: "BIEC, Bengaluru",
-    showing: "MQX.tracE Inline Inspection System",
+    showing: "MQX.tracE | IN-3D",
     logo: "/assets/event-productronica.svg",
   },
   {
@@ -43,7 +43,7 @@ export default function UpcomingEvents() {
   const hasMore = EVENTS.length > VISIBLE_LIMIT;
 
   return (
-    <section id="events" className="relative overflow-hidden px-6 py-20 md:px-10 md:py-24 lg:px-[55px] lg:py-[120px]" style={{ background: "#F4F8FA" }}>
+    <section id="events" className="relative overflow-hidden px-6 pt-14 pb-20 md:px-10 md:pt-16 md:pb-24 lg:px-[55px] lg:pt-20 lg:pb-[120px]" style={{ background: "#F4F8FA" }}>
       <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(circle at 9% 12%, rgba(22,193,243,.11), transparent 28%), radial-gradient(circle at 94% 88%, rgba(10,106,136,.08), transparent 30%)" }} />
       <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[42%] hidden w-px lg:block" style={{ background: "linear-gradient(180deg, transparent, rgba(9,40,58,.12) 18%, rgba(9,40,58,.12) 82%, transparent)" }} />
 
@@ -54,7 +54,7 @@ export default function UpcomingEvents() {
             <div className="t-eyebrow" style={{ color: CYAN }}>Upcoming events</div>
           </div>
           <h2 className="t-h2 m-0 max-w-[650px]" style={{ color: INK }}>
-            Meet MQS at <span style={{ color: "#087FA4" }}>Upcoming Industry Exhibitions</span>.
+            Meet MQS at <span style={{ color: "#087FA4" }}>Upcoming Industry Exhibitions</span>
           </h2>
           <p className="t-body m-0 max-w-[560px]" style={{ color: MUTED }}>
             Can’t make it to a show? We can arrange a demonstration based on your sample and inspection requirement.

@@ -37,7 +37,7 @@ type NavItem = { name: string; href?: string; children?: string[] };
 
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipment"] },
+  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipments"] },
   { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
@@ -47,7 +47,7 @@ const NAV: NavItem[] = [
 type MobileItem = { name: string; href?: string; children?: string[] };
 const MOBILE_MENU: MobileItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipment"] },
+  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipments"] },
   { name: "Industries", href: "/industries" },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
@@ -523,10 +523,10 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
         >
           <SectionLabel tone="dark" detail="Since 1994">Precision inspection</SectionLabel>
           <h1 className="t-display" style={{ color: "#FFFFFF", textWrap: "balance", textShadow: "0 8px 30px rgba(0,0,0,.22)", margin: isPhone ? "18px 0 0" : "26px 0 0", ...(isDesktop ? { fontSize: "clamp(56px, 4.7vw, 72px)" } : isPhone ? { fontSize: 40 } : {}), ...rise(60) }}>
-            See beyond. Test beyond. Build beyond.
+            See beyond. Test beyond. Build beyond
           </h1>
           <p className="t-lead" style={{ margin: isDesktop ? "28px 0 0" : "24px 0 0", maxWidth: isDesktop ? 640 : 520, color: "rgba(255,255,255,.82)", textShadow: "0 3px 18px rgba(0,0,0,.24)", ...(isDesktop ? { fontSize: "clamp(19px, 1.45vw, 22px)" } : {}), ...rise(140) }}>
-            Advanced non-destructive testing, automated inspection and electrical test validation for mission-critical industries.
+            Advanced X-ray, automated inspection and electrical test validation for mission-critical industries.
           </p>
           <div
             style={

@@ -15,22 +15,22 @@ const EASE = "cubic-bezier(.22,.61,.36,1)";
 type Award = { tag: string; image: string; title: string; desc: string };
 const AWARDS: Award[] = [
   {
-    tag: "SIDM Champions · 2025",
-    image: "/assets/award-sidm.jpg",
-    title: "SIDM Champions Award 2025",
-    desc: "Recognised by the Hon'ble Defence Minister for indigenisation of High-Energy CT systems.",
-  },
-  {
     tag: "FTCCI Excellence Award · 2023",
     image: "/assets/award-ftcci-2023.png",
     title: "Outstanding Contribution to Aerospace & Defence",
     desc: "Recognised by FTCCI for excellence and outstanding contribution to the aerospace and defence industry.",
   },
   {
-    tag: "FTCCI Excellence Award",
+    tag: "FTCCI Excellence Award · 2025",
     image: "/assets/award-ftcci-2025.jpg",
     title: "Product Innovation — SME",
     desc: "For the inline wheel inspection system — a first-of-its-kind indigenous solution.",
+  },
+  {
+    tag: "SIDM Champions · 2025",
+    image: "/assets/award-sidm.jpg",
+    title: "SIDM Champions Award 2025",
+    desc: "Recognised by the Hon'ble Defence Minister for indigenisation of High-Energy CT systems.",
   },
 ];
 
@@ -81,7 +81,7 @@ function AwardCard({ tag, image, title, desc }: Award) {
 
 export default function NewsSection() {
   return (
-    <section id="recognition" className="px-6 py-20 md:px-10 md:py-24 lg:px-[55px] lg:py-[120px]" style={{ background: "#F4F8FA" }}>
+    <section id="recognition" className="px-6 pt-20 pb-14 md:px-10 md:pt-24 md:pb-16 lg:px-[55px] lg:pt-[120px] lg:pb-20" style={{ background: "#F4F8FA" }}>
       <div className="flex flex-col gap-5 md:gap-6 lg:gap-7">
         <div className="t-eyebrow" style={{ color: ACCENT }}>
           Recognition
@@ -90,7 +90,7 @@ export default function NewsSection() {
           className="m-0 max-w-[720px] t-h2"
           style={{ color: INK }}
         >
-          Awards &amp; <span style={{ color: ACCENT }}>recognition</span>.
+          Awards &amp; <span style={{ color: ACCENT }}>recognition</span>
         </h2>
       </div>
 

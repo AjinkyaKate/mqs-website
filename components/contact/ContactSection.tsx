@@ -164,7 +164,7 @@ export default function ContactSection({ showChips = true }: { showChips?: boole
           <h2
             className="t-h2 m-0 text-white md:max-w-[18ch] lg:max-w-[14ch]"
           >
-            Tell us what you need to inspect.
+            Tell us what you need to inspect
           </h2>
           <p
             className="t-body m-0 md:max-w-[60ch] lg:max-w-[48ch]"

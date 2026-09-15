@@ -4,7 +4,6 @@ import SiteHeaderFull from "@/components/nav/SiteHeaderFull";
 import Footer from "@/components/footer/Footer";
 import ProductsCatalog from "@/components/products/ProductsCatalog";
 import ProductsHeroStats from "@/components/products/ProductsHeroStats";
-import Testimonials from "@/components/products/Testimonials";
 import ContactSection from "@/components/contact/ContactSection";
 
 export const metadata: Metadata = {
@@ -47,9 +46,6 @@ export default function ProductsPage() {
 
       {/* filterable catalog (chips + NDT + ATE) */}
       <ProductsCatalog />
-
-      {/* testimonials */}
-      <Testimonials />
 
       {/* single shared contact form (same as home) */}
       <ContactSection showChips={false} />

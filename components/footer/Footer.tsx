@@ -34,16 +34,13 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
       { label: "MQX.NeVa", href: "/products/mqx-neva" },
       { label: "MQX.tracE", href: "/products/mqx-trace" },
       { label: "High-Energy X-Ray", href: "/products/high-energy-xray" },
-      { label: "Automated Test Equipment", href: "/products/automated-test-equipment" },
+      { label: "Automated Test Equipments", href: "/products/automated-test-equipment" },
     ],
   },
   {
     title: "Industries",
     links: [
-      { label: "All industries", href: "/industries" },
-      { label: "Aerospace & Defence", href: "/industries#aerospace-defence" },
-      { label: "Automotive", href: "/industries#automotive" },
-      { label: "Electronics", href: "/industries#electronics" },
+      { label: "Industry Overview", href: "/industries" },
     ],
   },
   {

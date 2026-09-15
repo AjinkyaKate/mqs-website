@@ -66,7 +66,7 @@ const BADGES = [
 const VARIANTS: [string, string, string][] = [
   ["MQX.tracE · 2.5D", "High-magnification X-ray inspection with oblique viewing", "Fast PCB screening and detection of known solder and assembly defects are required"],
   ["MQX.tracE CT", "Adds CT slicing and reconstruction for layer-by-layer analysis", "Overlapping structures make conventional X-ray views ambiguous or detailed failure analysis is required"],
-  ["MQX.tracE IN-3D", "Inline 2D / 2.5D / 3D X-ray inspection with automated defect analysis and production-line board handling", "Inspection must happen directly within the SMT production flow without moving boards to an offline inspection station"],
+  ["MQX.tracE | IN-3D", "Inline 2D / 2.5D / 3D X-ray inspection with automated defect analysis and production-line board handling", "Inspection must happen directly within the SMT production flow without moving boards to an offline inspection station"],
 ];
 
 const BENEFITS_2D: [string, string, string][] = [
@@ -169,7 +169,7 @@ const SPECS: SpecTable[] = [
     ["Image export", "RAW / JPEG / TIFF / GIF / BMP"],
     ["Vibration mitigation", "Anti-vibration supports for stability"],
   ]},
-  { title: "MQX.tracE IN-3D", rows: [
+  { title: "MQX.tracE | IN-3D", rows: [
     ["X-ray source", "Sealed microfocus source, 130 kV, 39 W, 11 µm focal spot"],
     ["Detector", "High-resolution flat panel detector, 105 µm pixel pitch, 16-bit depth, 40 fps, real-time acquisition"],
     ["Imaging modes", "2D / 2.5D / 3D"],
@@ -319,7 +319,7 @@ export default function MqxTracE() {
         <h2 style={h2(INK)}>One platform. Three depths of answer.</h2>
         <p className="mt-4 max-w-[62ch]" style={lead(BODY)}>
           Where 2D leaves ambiguity, MQX.tracE CT adds 3D slicing and reconstruction to isolate layers, verify internal
-          geometry and generate evidence-ready reports without destructive sectioning. MQX.tracE IN-3D brings inline
+          geometry and generate evidence-ready reports without destructive sectioning. MQX.tracE | IN-3D brings inline
           2D / 2.5D / 3D inspection and automated defect analysis directly into the production line. All three systems
           share an AI-powered imaging suite.
         </p>
@@ -446,7 +446,7 @@ export default function MqxTracE() {
           <div className="relative aspect-[1402/1122] overflow-hidden" style={{ background: INSET }}>
             <Image
               src="/assets/product-trace-in3d.png"
-              alt="MQX.tracE IN-3D inline X-ray inspection system"
+              alt="MQX.tracE | IN-3D inline X-ray inspection system"
               fill
               quality={92}
               sizes="(min-width:1024px) 55vw, 100vw"
@@ -454,7 +454,7 @@ export default function MqxTracE() {
             />
           </div>
           <div>
-            <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE IN-3D</p>
+            <p style={eyebrow(CYAN_ON_LIGHT)}>MQX.tracE | IN-3D</p>
             <h2 className="mt-4" style={h2(INK)}>Inspection built into the SMT production flow.</h2>
             <p className="mt-4 max-w-[58ch]" style={lead(BODY)}>
               An inline X-ray solution for PCB and electronic assemblies, combining 2D / 2.5D / 3D inspection, automated
@@ -469,8 +469,7 @@ export default function MqxTracE() {
       <Section id="gallery" tone="navy">
         <h2 style={h2("#fff")}>Sample inspection images.</h2>
         <p className="mt-4 max-w-[64ch]" style={lead("rgba(255,255,255,.80)")}>
-          Representative captures from MQX.tracE: solder voids, fill measurement and package-level defects on real PCB
-          assemblies. Select any image to open it at full resolution.
+          Representative captures from MQX.tracE, MQX.tracE CT and MQX.tracE | IN-3D.
         </p>
         {/* The gap shows the section's own navy. The house idiom is a 1px gap over
             a hairline ground, but these are light-toned radiographs on a dark
@@ -524,7 +523,7 @@ export default function MqxTracE() {
 
       {/* ── specifications ── */}
       <Section id="specs" tone="page">
-        <h2 style={h2(INK)}>Specifications – 2.5D, CT &amp; IN-3D.</h2>
+        <h2 style={h2(INK)}>Technical Specifications</h2>
         <p className="mt-4 max-w-[64ch]" style={lead(BODY)}>
           Three systems, quoted separately. For 2.5D and CT, JIMA resolution describes the smallest feature the system can
           resolve. IN-3D detector resolution is stated as pixel pitch.
@@ -567,21 +566,13 @@ export default function MqxTracE() {
       <Section tone="white">
         <div className="grid grid-cols-1 gap-7 border-y py-8 md:py-10 lg:grid-cols-[minmax(0,7fr)_minmax(280px,4fr)] lg:items-center lg:gap-16" style={{ borderColor: HAIR }}>
           <div>
-            <h2 style={h2(INK)}>Compare all three on your own boards.</h2>
+            <h2 style={h2(INK)}>Compare all three on your own boards</h2>
             <p className="mt-4 max-w-[62ch]" style={lead(BODY)}>
-              Request a demonstration of MQX.tracE 2.5D, MQX.tracE CT and MQX.tracE IN-3D against your inspection requirement.
+              Request a demonstration of MQX.tracE 2.5D, MQX.tracE CT and MQX.tracE | IN-3D against your inspection requirement.
             </p>
           </div>
           <div className="lg:border-l lg:pl-10" style={{ borderColor: HAIR }}>
             <a href="#contact" style={{ ...btnPrimary, width: "100%" }} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a demo</a>
-            <a
-              href="/assets/product-trace-in3d.png"
-              download
-              className="mt-3 flex h-12 w-full items-center justify-center border no-underline transition-colors hover:!border-[#0B2A3A] hover:!bg-[#0B2A3A] hover:!text-white"
-              style={{ borderColor: HAIR, color: INK, font: `500 12px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }}
-            >
-              Download IN-3D image (PNG)
-            </a>
           </div>
         </div>
       </Section>

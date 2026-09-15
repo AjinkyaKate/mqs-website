@@ -547,7 +547,7 @@ export default function MqctSeries() {
 
       {/* ── technical data ── */}
       <Section id="specs" tone="page">
-        <h2 style={h2(INK)}>Specifications.</h2>
+        <h2 style={h2(INK)}>Technical Specifications</h2>
         <div className="mt-10 flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-8">
           {SPEC_TABLES.map((t) => {
             const isOpen = !accordion || open === t.title;

@@ -211,7 +211,7 @@ export default function EquipmentSection() {
             className="t-h2 m-0 md:max-w-[640px] lg:max-w-[900px]"
             style={{ color: INK }}
           >
-            Systems engineered for industrial-scale inspection.
+            Systems engineered for industrial-scale inspection
           </h2>
           <ExploreButton className="hidden flex-none px-7 lg:inline-flex" />
         </div>

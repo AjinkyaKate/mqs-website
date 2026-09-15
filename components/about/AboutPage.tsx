@@ -309,8 +309,8 @@ function PortfolioHead() {
 
 function Portfolio() {
   const groups = [
-    { title: "Non-Destructive Testing Solutions", items: PORTFOLIO.items.filter((item) => item.n.startsWith("NDT")) },
-    { title: "Automated Test Equipment", items: PORTFOLIO.items.filter((item) => item.n.startsWith("ATE")) },
+    { title: "X-ray/CT Solutions", items: PORTFOLIO.items.filter((item) => item.n.startsWith("NDT")) },
+    { title: "ATE", items: PORTFOLIO.items.filter((item) => item.n.startsWith("ATE")) },
     { title: "Contract Manufacturing", items: PORTFOLIO.items.filter((item) => item.n.startsWith("CM")) },
   ];
 
