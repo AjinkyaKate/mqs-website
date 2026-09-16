@@ -9,7 +9,7 @@ import ContactPage, { EMAIL, PHONE, ADDRESS_LINES } from "@/components/contact/C
    name is a colon here, per the house rule that no em dash ships in visible
    copy, and a title is visible copy in every search result. */
 export const metadata: Metadata = {
-  title: "Contact MQS Technologies: X-Ray, CT & ATE Inspection Solutions | Hyderabad",
+  title: "Contact MQS Technologies",
   description:
     "Talk to the MQS Technologies team about X-ray, CT and automated test requirements. Sales, contract manufacturing and service contacts, Hyderabad. Phone +91 40 2381 1122.",
   alternates: { canonical: "/contact" },

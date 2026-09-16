@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
    layout default. It now sets its own, with the canonical, so the most important
    page is explicit rather than incidental. */
 export const metadata: Metadata = {
-  title: "Industrial X-Ray, CT & NDT Inspection Systems | MQS Technologies",
+  title: "Industrial X-ray CT and ATE Solutions | MQS Technologies",
   description:
     "MQS Technologies designs and manufactures industrial X-ray, CT and NDT inspection systems and automated test equipment in Hyderabad. Serving aerospace, defence, automotive and electronics since 1994.",
   alternates: { canonical: "/" },

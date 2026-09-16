@@ -7,7 +7,7 @@ import ProductsHeroStats from "@/components/products/ProductsHeroStats";
 import ContactSection from "@/components/contact/ContactSection";
 
 export const metadata: Metadata = {
-  title: "Products — Industrial X-Ray, CT, Test & Irradiation Systems | MQS Technologies",
+  title: "Industrial X-ray CT and ATE Solutions | MQS Technologies",
   description:
     "Cabinet radiography, industrial CT, high energy LINAC systems, electronics inspection, automated test equipment, fuze inspection and X-ray irradiators — designed and manufactured in Hyderabad.",
 };

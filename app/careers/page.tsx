@@ -4,7 +4,7 @@ import Footer from "@/components/footer/Footer";
 import Careers from "@/components/careers/Careers";
 
 export const metadata: Metadata = {
-  title: "Careers at MQS Technologies — Engineering Jobs in Hyderabad",
+  title: "Careers | MQS",
   description:
     "Join the team building X-ray, CT and NDT inspection systems for aerospace, defence, automotive and electronics. Mechanical, electronics, software, applications and service roles in Hyderabad.",
 };

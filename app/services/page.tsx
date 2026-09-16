@@ -9,7 +9,7 @@ import ServicesOverview from "@/components/services/ServicesOverview";
    previous strings were my wording and said "& Support" where the brief says
    "& System Support". */
 export const metadata: Metadata = {
-  title: "Services — CT Inspection, Precision Manufacturing & System Support | MQS Technologies",
+  title: "Services | MQS Technologies",
   description:
     "CT scanning as a service, precision sub-assembly and industrial electronics manufacturing, and AMC and breakdown support for installed inspection systems. Hyderabad-based, defence-proven.",
   alternates: { canonical: "/services" },
