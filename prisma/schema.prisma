@@ -10,27 +10,27 @@ datasource db {
 model SiteImage {
   id        String   @id @default(cuid())
   slot      String   @unique // e.g. "hero-bg", "hero-inset"
-  url       String   // Vercel Blob URL
+  url       String // Vercel Blob URL
   alt       String   @default("")
   updatedAt DateTime @updatedAt
 }
 
 model BlogPost {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  excerpt     String   @default("")
-  content     String   @default("")
-  coverImage  String?
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  title      String
+  slug       String   @unique
+  excerpt    String   @default("")
+  content    String   @default("")
+  coverImage String?
+  published  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Enquiry {
-  id           String   @id @default(cuid())
-  source       String   // "contact" | "product"
-  status       String   @default("new") // "new" | "read" | "replied" | "closed"
+  id           String  @id @default(cuid())
+  source       String // "contact" | "product"
+  status       String  @default("new") // "new" | "read" | "replied" | "closed"
   name         String
   email        String
   phone        String?
@@ -62,8 +62,8 @@ model Enquiry {
   attachName String?
   attachSize Int?
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 /// Careers applications. Kept separate from Enquiry: an application has its own
@@ -91,4 +91,34 @@ model Application {
   consentAt  DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+/// Public vacancies synchronized from ERPNext/Trydot. ERPNext remains the
+/// source of truth; the website only stores the latest public representation.
+/// externalId is the stable ERP record identifier and makes every sync request
+/// idempotent: sending the same record again updates rather than duplicates it.
+model JobOpening {
+  id               String    @id @default(cuid())
+  externalId       String    @unique
+  title            String
+  department       String?
+  location         String?
+  employmentType   String?
+  description      String    @default("")
+  responsibilities String    @default("")
+  qualifications   String    @default("")
+  experience       String?
+  openings         Int?
+  openedAt         DateTime?
+  closesAt         DateTime?
+  applicationUrl   String?
+  status           String    @default("open")
+  published        Boolean   @default(true)
+  sourceUpdatedAt  DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([published, status])
+  @@index([department])
+  @@index([closesAt])
 }

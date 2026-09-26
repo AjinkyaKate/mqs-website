@@ -62,9 +62,15 @@ const STEPS: [string, string][] = [
   ["Offer", "Role, compensation and start date confirmed."],
 ];
 
-// Live vacancies. Empty by default → the talent-pool state renders (never a
-// fabricated "current openings" list). Add { title, team, meta } to publish roles.
-const OPENINGS: { title: string; team: string; meta: string }[] = [];
+export type CareerOpening = {
+  id: string;
+  externalId: string;
+  title: string;
+  department: string | null;
+  location: string | null;
+  employmentType: string | null;
+  applicationUrl: string | null;
+};
 
 const DEPARTMENTS = ["Mechanical", "Electronics", "Software", "Applications", "Service", "Sales", "Operations", "Other"];
 const EXPERIENCE = ["0 – 2 years", "2 – 5 years", "5 – 10 years", "10 – 15 years", "15+ years"];
@@ -171,14 +177,14 @@ function LocationField() {
   );
 }
 
-export default function Careers() {
+export default function Careers({ openings }: { openings: CareerOpening[] }) {
   const [file, setFile] = useState<File | null>(null);
   const [fileErr, setFileErr] = useState("");
   const [consent, setConsent] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const [state, formAction, pending] = useActionState(submitApplication, { success: false });
   const err = (k: string) => state.errors?.[k]?.[0];
-  const hasOpenings = OPENINGS.length > 0;
+  const hasOpenings = openings.length > 0;
 
   const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
@@ -283,13 +289,17 @@ export default function Careers() {
               <div className="flex items-center justify-between" style={{ gap: 16, padding: "16px clamp(18px,2vw,24px)", background: PAGE, borderBottom: `1px solid ${HAIR}`, font: `500 11px/1 ${SANS}`, letterSpacing: ".09em", textTransform: "uppercase", color: INK }}>
                 <span>Current openings</span>
               </div>
-              {OPENINGS.map((o) => (
-                <a key={o.title} href="#apply" className="grid hover:!bg-[#F4F8FA]" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(220px,100%),1fr))", gap: "6px 20px", alignItems: "baseline", padding: "clamp(16px,2vw,20px) clamp(18px,2vw,24px)", borderBottom: `1px solid ${HAIR}`, color: INK, transition: `background 200ms ${EASE}` }}>
+              {openings.map((o) => {
+                const details = [o.location, o.employmentType].filter(Boolean).join(" · ") || "View role";
+                const external = Boolean(o.applicationUrl);
+                return (
+                <a key={o.id} href={o.applicationUrl || "#apply"} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} className="grid hover:!bg-[#F4F8FA]" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(min(220px,100%),1fr))", gap: "6px 20px", alignItems: "baseline", padding: "clamp(16px,2vw,20px) clamp(18px,2vw,24px)", borderBottom: `1px solid ${HAIR}`, color: INK, transition: `background 200ms ${EASE}` }}>
                   <span style={{ font: `600 17px/1.3 ${SANS}`, letterSpacing: "-.025em" }}>{o.title}</span>
-                  <span style={{ font: `400 14px/1.5 ${SANS}`, color: BODY }}>{o.team}</span>
-                  <span style={{ font: `500 11px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase", color: CYAN_L }}>{o.meta}</span>
+                  <span style={{ font: `400 14px/1.5 ${SANS}`, color: BODY }}>{o.department || "MQS Technologies"}</span>
+                  <span style={{ font: `500 11px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase", color: CYAN_L }}>{details}</span>
                 </a>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="flex flex-col" style={{ border: `1px solid ${HAIR}`, borderTop: `2px solid ${CYAN}`, padding: "clamp(24px,3vw,34px)", background: PAGE, gap: 12 }}>
