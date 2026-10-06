@@ -1,4 +1,5 @@
 import Image from "next/image";
+import AutomotiveComponentGuide from "./AutomotiveComponentGuide";
 
 const challenges = [
   ["01", "Production speed", "Inspection must keep pace with the line."],
@@ -17,7 +18,7 @@ const positioning = [
 
 const applications = [
   {
-    number: "01",
+    number: "A",
     part: "Engine assemblies",
     systems: [
       ["MQS.PRISM", "/brochures/mqs-prism.pdf", "High-throughput digital radiography configurable around production inspection needs."],
@@ -25,7 +26,7 @@ const applications = [
     ],
   },
   {
-    number: "02",
+    number: "B",
     part: "Crankshafts",
     systems: [
       ["MQX.drIS Cabinet DR", "/products/mqx-dris", "Flexible 2D inspection configured around component size and inspection objective."],
@@ -33,7 +34,7 @@ const applications = [
     ],
   },
   {
-    number: "03",
+    number: "C",
     part: "Pistons",
     systems: [
       ["MQX.drIS Cabinet DR", "/products/mqx-dris", "2D inspection for porosity and internal defects, configured to the application."],
@@ -41,12 +42,12 @@ const applications = [
     ],
   },
   {
-    number: "04",
+    number: "D",
     part: "Valves",
     systems: [["Microfocus X-ray / CT", "/products/mqx-neva", "Detailed inspection for fine cracks and voids."]],
   },
   {
-    number: "05",
+    number: "E",
     part: "Brake calipers",
     systems: [
       ["MQS.PRISM", "/brochures/mqs-prism.pdf", "Production-focused digital radiography for repeatable inspection at scale."],
@@ -54,17 +55,17 @@ const applications = [
     ],
   },
   {
-    number: "06",
+    number: "F",
     part: "Steering knuckles",
     systems: [["MQS.PRISM", "/brochures/mqs-prism.pdf", "High-throughput inspection configured for production environments."]],
   },
   {
-    number: "07",
+    number: "G",
     part: "Alloy wheels",
     systems: [["MQWR 160U", "/brochures/mqwr-160u-wheel-inspection.pdf", "A dedicated inline solution engineered for alloy-wheel inspection."]],
   },
   {
-    number: "08",
+    number: "H",
     part: "Under brackets",
     systems: [
       ["MQX.drIS Cabinet DR", "/products/mqx-dris", "Flexible batch inspection for varied automotive components."],
@@ -90,15 +91,18 @@ export default function AutomotiveIndustryPage() {
   return (
     <main className="bg-[#F4F8FA] text-[#41586A]">
       <section className="relative min-h-[720px] overflow-hidden bg-[#0B2A3A] max-md:min-h-[680px]">
-        <Image
-          src="/assets/industries/automotive/exploded-car.png"
-          alt="Exploded-view automotive structure showing the internal assemblies inspected by X-ray and CT"
-          fill
-          preload
-          quality={90}
-          sizes="100vw"
-          className="object-cover object-[64%_center] max-md:object-[58%_center]"
-        />
+        <video
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/assets/industries/automotive/exploded-car.png"
+          aria-label="Automotive engine and mechanical technology in motion"
+        >
+          <source src="/assets/industries/automotive/engine-hero.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,42,58,.97)_0%,rgba(11,42,58,.88)_40%,rgba(11,42,58,.28)_75%,rgba(11,42,58,.12)_100%)] max-md:bg-[linear-gradient(180deg,rgba(11,42,58,.2)_0%,rgba(11,42,58,.94)_58%,#0B2A3A_100%)]" />
         <div className={`${shell} relative z-10 flex min-h-[720px] items-end pb-20 pt-32 max-md:min-h-[680px] max-md:pb-12`}>
           <div className="max-w-[760px]">
@@ -207,17 +211,7 @@ export default function AutomotiveIndustryPage() {
             <p className="t-lead m-0">Start with the component. The recommended platform follows from the defect, scale and required throughput.</p>
           </div>
 
-          <figure className="relative mt-12 aspect-[3/2] overflow-hidden bg-[#303940] lg:mt-16">
-            <Image
-              src="/assets/industries/automotive/exploded-car.png"
-              alt="Automotive structure used to map components to MQS inspection systems"
-              fill
-              quality={90}
-              sizes="(min-width:1440px) 1220px, 100vw"
-              className="object-cover"
-            />
-            <figcaption className="t-caption absolute bottom-0 left-0 bg-[#0B2A3A]/90 px-5 py-4 text-white/75">Component-to-system guide</figcaption>
-          </figure>
+          <AutomotiveComponentGuide />
 
           <div className="mt-8 grid border-t border-[#D3DFE7] lg:grid-cols-2">
             {applications.map((application, index) => (

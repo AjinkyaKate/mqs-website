@@ -5,11 +5,12 @@
    catalog (or the Industries hub when the parent is "Industries"). */
 
 export const HREF_MAP: Record<string, string> = {
-  /* Industries. Phase 1 is a single /industries/ page, so there are no child
-     routes and Industries is a plain top-level link rather than a dropdown. The
-     page's own industry sections and routing matrix do the routing. */
+  /* Industries. Phase 2 detail pages appear in the shared dropdown as they are
+     completed, while the overview remains the route to the full industry hub. */
   "Industries overview": "/industries",
   Industries: "/industries",
+  Automotive: "/industries/automotive",
+  Aerospace: "/industries/aerospace",
 
   /* Products. Two detail pages exist. The rest of the catalogue is reachable from
      /products; category labels with no page behind them are not in the nav.
