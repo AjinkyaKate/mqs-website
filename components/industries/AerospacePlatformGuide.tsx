@@ -135,7 +135,7 @@ export default function AerospacePlatformGuide() {
                 aria-label={`${point.id}: ${point.label}`}
                 aria-pressed={isActive}
                 onClick={() => setPointId(point.id)}
-                className={`absolute ${point.position} z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border font-mono text-xs font-bold shadow-[0_8px_24px_rgba(0,0,0,.28)] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${
+                className={`absolute ${point.position} z-10 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border font-mono text-xs font-bold shadow-[0_8px_24px_rgba(0,0,0,.28)] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:h-9 md:w-9 ${
                   isActive
                     ? "scale-110 border-white bg-[#16C1F3] text-[#08283A]"
                     : "border-white/70 bg-[#0B2A3A]/85 text-white hover:border-white hover:bg-[#16C1F3] hover:text-[#08283A]"

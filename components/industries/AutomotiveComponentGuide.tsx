@@ -41,7 +41,7 @@ export default function AutomotiveComponentGuide() {
               onMouseEnter={() => setActive(index)}
               onFocus={() => setActive(index)}
               onClick={() => setActive(index)}
-              className="absolute z-[3] grid h-8 w-8 -translate-x-1/2 -translate-y-1/2 cursor-pointer place-items-center border p-0 text-xs font-semibold shadow-[0_4px_16px_rgba(8,40,58,.25)] transition-colors md:h-9 md:w-9"
+              className="absolute z-[3] grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 cursor-pointer place-items-center border p-0 text-xs font-semibold shadow-[0_4px_16px_rgba(8,40,58,.25)] transition-colors md:h-9 md:w-9"
               style={{
                 left: `${x}%`,
                 top: `${y}%`,
