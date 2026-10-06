@@ -22,14 +22,14 @@ type NavItem = { name: string; href?: string; children?: string[] };
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
   { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipments"] },
-  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace"] },
+  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Electronics"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
 ];
 const MOBILE_MENU: NavItem[] = [
   { name: "About", href: "/about-us" },
   { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "High-Energy X-Ray", "Automated Test Equipments"] },
-  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace"] },
+  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Electronics"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
   { name: "Contact", href: "/contact" },

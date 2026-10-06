@@ -412,6 +412,15 @@ function IndustryBlock({ item, index }: { item: Industry; index: number }) {
             Explore aerospace solutions <span aria-hidden>→</span>
           </a>
         )}
+        {item.name === "Electronics & Semiconductors" && (
+          <a
+            href="/industries/electronics"
+            className="mt-6 inline-flex items-center gap-2 no-underline hover:underline"
+            style={label(CYAN_INK)}
+          >
+            Explore electronics solutions <span aria-hidden>→</span>
+          </a>
+        )}
         <div className="mt-7" style={{ borderTop: `1px solid ${HAIR}`, paddingTop: 18 }}>
           <p style={eyebrow(MUTED)}>Systems used</p>
           <div className="mt-3.5 flex flex-wrap gap-2">
