@@ -120,11 +120,9 @@ export default function AerospacePlatformGuide() {
             fill
             quality={90}
             sizes="(min-width:1024px) 64vw, 100vw"
-            className="object-cover grayscale contrast-[1.08] brightness-[.70]"
+            className="object-cover"
             style={{ objectPosition: platform.imagePosition ?? "center" }}
           />
-          <div className="absolute inset-0 bg-[#0B5470]/35 mix-blend-color" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,28,40,.18),rgba(7,28,40,.02)_55%,rgba(7,28,40,.30))]" />
 
           {platform.points.map((point) => {
             const isActive = point.id === selected.id;

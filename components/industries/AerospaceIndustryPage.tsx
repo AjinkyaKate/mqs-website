@@ -146,9 +146,8 @@ export default function AerospaceIndustryPage() {
               fill
               quality={90}
               sizes="(min-width:1024px) 52vw, 100vw"
-              className="object-cover grayscale contrast-[1.08] brightness-[.78]"
+              className="object-cover"
             />
-            <div className="absolute inset-0 bg-[#0B5470]/35 mix-blend-color" />
           </div>
           <div>
             <p className="t-eyebrow m-0 text-[#5AD1F7]">Why MQS</p>
