@@ -412,6 +412,15 @@ function IndustryBlock({ item, index }: { item: Industry; index: number }) {
             Explore aerospace solutions <span aria-hidden>→</span>
           </a>
         )}
+        {item.name === "Aerospace & Defence" && (
+          <a
+            href="/industries/defence"
+            className="mt-3 flex w-fit items-center gap-2 no-underline hover:underline"
+            style={label(CYAN_INK)}
+          >
+            Explore defence capabilities <span aria-hidden>→</span>
+          </a>
+        )}
         {item.name === "Electronics & Semiconductors" && (
           <a
             href="/industries/electronics"
