@@ -13,6 +13,7 @@ export const HREF_MAP: Record<string, string> = {
   Aerospace: "/industries/aerospace",
   Defence: "/industries/defence",
   Electronics: "/industries/electronics",
+  "Heavy Engineering": "/industries/heavy-engineering",
 
   /* Products. Two detail pages exist. The rest of the catalogue is reachable from
      /products; category labels with no page behind them are not in the nav.
