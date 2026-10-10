@@ -234,20 +234,19 @@ export default function MqxcSeries() {
         <div className="mx-auto" style={{ maxWidth: 1330 }}>
           <div style={eyebrow(CYAN_ON_LIGHT)}>Model lineup</div>
           <h2 style={{ ...h2, marginBottom: 40 }}>MQX.drIS: Four models. One architecture.</h2>
-          <div className="overflow-x-auto" style={{ background: "#fff", border: `1px solid ${HAIR}` }}>
-            <table style={{ borderCollapse: "collapse", width: "100%", minWidth: 720 }}>
-              <thead><tr><th style={th}>Model</th><th style={th}>Voltage</th><th style={th}>Best for</th><th style={th}>Materials</th></tr></thead>
-              <tbody>
-                {MODELS.map((m, i) => (
-                  <tr key={m.id} style={{ background: i % 2 ? "#F7FAFC" : "#fff" }}>
-                    <td style={{ padding: "16px 20px", borderBottom: `1px solid ${HAIR}`, font: "600 15px/1.4 var(--font-sans)", color: INK, whiteSpace: "nowrap" }}>{m.name}</td>
-                    <td style={{ padding: "16px 20px", borderBottom: `1px solid ${HAIR}`, font: "400 15px/1.5 var(--font-sans)", color: BODY }}>{m.voltage}</td>
-                    <td style={{ padding: "16px 20px", borderBottom: `1px solid ${HAIR}`, font: "400 15px/1.5 var(--font-sans)", color: BODY }}>{m.best}</td>
-                    <td style={{ padding: "16px 20px", borderBottom: `1px solid ${HAIR}`, font: "400 15px/1.5 var(--font-sans)", color: BODY }}>{m.materials}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Model lineup as cards rather than a table (client review, Oct 2026):
+              voltage leads because it is the one thing that separates the four. */}
+          <div className="grid" style={{ gridTemplateColumns: mobile ? "1fr" : tablet ? "1fr 1fr" : "repeat(4,1fr)", gap: 1, background: HAIR, border: `1px solid ${HAIR}` }}>
+            {MODELS.map((m) => (
+              <article key={m.id} style={{ display: "flex", flexDirection: "column", background: "#fff", padding: "28px 24px 30px", borderTop: `3px solid ${CYAN}` }}>
+                <div style={eyebrow(CYAN_ON_LIGHT)}>{m.name}</div>
+                <div style={{ margin: "14px 0 0", font: "600 clamp(34px,3.4vw,44px)/1 var(--font-sans)", letterSpacing: "-.03em", color: INK }}>{m.voltage}</div>
+                <div style={{ ...eyebrow(MUTED), marginTop: 26, paddingTop: 20, borderTop: `1px solid ${HAIR}` }}>Best for</div>
+                <p style={{ margin: "10px 0 0", font: "400 15px/1.5 var(--font-sans)", color: BODY, textWrap: "pretty" }}>{m.best}</p>
+                <div style={{ ...eyebrow(MUTED), marginTop: 20 }}>Materials</div>
+                <p style={{ margin: "10px 0 0", font: "400 15px/1.5 var(--font-sans)", color: BODY, textWrap: "pretty" }}>{m.materials}</p>
+              </article>
+            ))}
           </div>
 
           <p style={{ margin: "16px 0 0", font: "400 13px/1.6 var(--font-sans)", color: MUTED, textWrap: "pretty", maxWidth: 720 }}>
