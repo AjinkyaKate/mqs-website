@@ -6,9 +6,7 @@ systems, Hyderabad — aerospace/defence, automotive, electronics).
 ## Stack
 - **Next.js 16** (App Router, Turbopack) · React · TypeScript
 - **Tailwind CSS v4** · framer-motion · lenis
-- Hosted on **Vercel**
-  - Staging/review: <https://trivexa-test-theta.vercel.app>
-  - Production: <https://www.mqstechnologies.in>
+- Hosted on **Vercel** — production: <https://trivexa-test.vercel.app>
 
 ## Local development
 ```bash
@@ -24,11 +22,5 @@ npm run build    # production build
 - `client-assets/` — raw client source material (git-ignored, not deployed)
 
 ## Deploys
-Every push to `main` deploys automatically to production through the Vercel ↔
-GitHub integration. Phase 2 work must be reviewed from a feature-branch preview
-before it is merged to `main`. Manual production deploys: `npx vercel --prod`.
-
-## Phase 2
-
-Planning, reference audits, the client-input register and the draft Trydot ERP
-contract are tracked in [`docs/phase-2`](docs/phase-2/README.md).
+Every push to `main` deploys automatically via the Vercel ↔ GitHub integration;
+pull requests get preview URLs. Manual deploys: `npx vercel --prod`.

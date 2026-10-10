@@ -23,21 +23,18 @@ const EASE = "ease-[cubic-bezier(.22,.61,.36,1)]";
 const CARDS = [
   {
     title: "Aerospace & Defence",
-    href: "/industries/aerospace",
     src: "/assets/ind-aerospace.jpg",
     alt: "Jet engine — the kind of flight-critical component MQS X-ray and CT systems validate",
     body: "Mission-critical X-ray and CT to validate flight- and defence-grade components with complete confidence.",
   },
   {
     title: "Automotive",
-    href: "/industries/automotive",
     src: "/assets/ind-automotive.jpg",
     alt: "Automotive engine assembly — castings and safety-critical parts inspected by MQS systems",
     body: "High-throughput 2D Digital Radiography and CT for fast, repeatable defect detection in castings and safety-critical parts.",
   },
   {
     title: "Electronics",
-    href: "/industries",
     src: "/assets/ind-electronics.jpg",
     alt: "Printed circuit board close-up — PCB X-ray and CT inspection subject",
     body: "PCB X-ray – 2D / 2.5D, 3D CT slicing and AI reel counting to improve quality and traceability in SMT lines.",
@@ -71,7 +68,7 @@ export default function IndustriesSection() {
         {CARDS.map((c) => (
           <a
             key={c.title}
-            href={c.href}
+            href="/industries"
             aria-label={c.title}
             className={`group relative block aspect-[4/3] overflow-hidden border-t-2 border-[#16C1F3] bg-[#0B2A3A] no-underline outline-none transition-colors duration-200 ${EASE} sm:aspect-[4/5] sm:border-[rgba(255,255,255,.14)] sm:group-hover:border-[#16C1F3] sm:group-focus:border-[#16C1F3]`}
           >
