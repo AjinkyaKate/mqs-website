@@ -107,33 +107,68 @@ function Arrow() {
   return <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>;
 }
 
-/* Three-column reference table. Stacks to labelled rows below md so nothing
-   scrolls sideways on a phone. */
-function Table({ head, rows, dark = false }: { head: [string, string, string]; rows: string[][]; dark?: boolean }) {
-  const line = dark ? "border-white/15" : "border-[#D3DFE7]";
-  const strong = dark ? "text-white" : "text-[#0B2A3A]";
-  const soft = dark ? "text-white/65" : "text-[#5F7688]";
-  const accent = dark ? "text-[#5AD1F7]" : "text-[#0A6A88]";
+/* The client asked for cards instead of tables (WhatsApp review, Oct 2026).
+   Each card keeps the table's column labels as small eyebrows so the
+   question → capability → outcome reading order survives. */
+function VerificationCards({ rows }: { rows: string[][] }) {
   return (
-    <div className={`mt-12 border-t ${line} lg:mt-16`}>
-      <div className={`hidden grid-cols-[4fr_4fr_5fr] gap-8 border-b ${line} py-5 md:grid`}>
-        {head.map((h) => (
-          <span key={h} className={`t-eyebrow ${accent}`}>{h}</span>
-        ))}
-      </div>
-      {rows.map(([a, b, c]) => (
-        <div key={a + b} className={`grid gap-3 border-b ${line} py-6 md:grid-cols-[4fr_4fr_5fr] md:gap-8`}>
-          <p className={`t-h4 m-0 ${strong}`}>{a}</p>
-          <p className={`t-body m-0 ${strong}`}>
-            <span className={`t-caption mb-1 block md:hidden ${accent}`}>{head[1]}</span>
-            {b}
-          </p>
-          <p className={`t-body m-0 ${soft}`}>
-            <span className={`t-caption mb-1 block md:hidden ${accent}`}>{head[2]}</span>
-            {c}
-          </p>
-        </div>
+    <div className="mt-12 grid gap-6 md:grid-cols-2 lg:mt-16">
+      {rows.map(([question, capability, outcome], index) => (
+        <article key={question} className="flex flex-col border-t-4 border-[#16C1F3] bg-[#F4F8FA] p-8 lg:p-10">
+          <span className="t-eyebrow text-[#0A6A88]">Question {String(index + 1).padStart(2, "0")}</span>
+          <h3 className="t-h3 mb-0 mt-5 text-[#0B2A3A]">{question}</h3>
+          <div className="mt-auto pt-10">
+            <p className="t-caption m-0 text-[#0A6A88]">MQS capability</p>
+            <p className="t-h4 mb-0 mt-2 text-[#0B2A3A]">{capability}</p>
+            <p className="t-caption mb-0 mt-6 border-t border-[#D3DFE7] pt-6 text-[#0A6A88]">What it helps establish</p>
+            <p className="t-body mb-0 mt-2 text-[#5F7688]">{outcome}</p>
+          </div>
+        </article>
       ))}
+    </div>
+  );
+}
+
+function TestApplicationCards({ rows }: { rows: string[][] }) {
+  return (
+    <div className="mt-8 grid gap-px bg-white/15 md:grid-cols-2 lg:grid-cols-3">
+      {rows.map(([system, application, verified], index) => (
+        <article key={system} className="flex flex-col bg-[#0E3448] p-8">
+          <span className="t-eyebrow text-[#5AD1F7]">{String(index + 1).padStart(2, "0")}</span>
+          <h3 className="t-h4 mb-0 mt-5 text-white">{system}</h3>
+          <p className="t-caption mb-0 mt-6 text-[#5AD1F7]">Application</p>
+          <p className="t-body-sm mb-0 mt-2 text-white/75">{application}</p>
+          <p className="t-caption mb-0 mt-5 border-t border-white/15 pt-5 text-[#5AD1F7]">What is verified</p>
+          <p className="t-body-sm mb-0 mt-2 text-white/65">{verified}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+/* The capability map grouped by pillar: X-ray inspection on one side, ATE on
+   the other, so the split between "is it sound" and "does it work" reads at
+   a glance instead of row by row. */
+function CapabilityMapCards({ rows }: { rows: string[][] }) {
+  const xray = rows.filter(([, capability]) => !capability.startsWith("ATE"));
+  const ate = rows.filter(([, capability]) => capability.startsWith("ATE"));
+  const card = ([assembly, capability, role]: string[]) => (
+    <article key={assembly} className="bg-[#0E3448] p-7">
+      <h4 className="t-h4 m-0 text-white">{assembly}</h4>
+      <span className="t-caption mt-4 inline-block bg-white/10 px-3 py-1.5 text-[#5AD1F7]">{capability}</span>
+      <p className="t-body-sm mb-0 mt-4 text-white/65">{role}</p>
+    </article>
+  );
+  return (
+    <div className="mt-12 grid gap-10 lg:mt-16 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-8">
+      <div>
+        <p className="t-eyebrow m-0 border-b border-white/15 pb-4 text-[#5AD1F7]">X-ray inspection · Is it sound?</p>
+        <div className="mt-6 grid gap-px bg-white/15">{xray.map(card)}</div>
+      </div>
+      <div>
+        <p className="t-eyebrow m-0 border-b border-white/15 pb-4 text-[#5AD1F7]">Automated Test Equipments · Does it work?</p>
+        <div className="mt-6 grid gap-px bg-white/15 md:grid-cols-2 md:[&>*:last-child:nth-child(odd)]:col-span-2">{ate.map(card)}</div>
+      </div>
     </div>
   );
 }
@@ -197,7 +232,7 @@ export default function DefenceIndustryPage() {
           </p>
         </div>
         <div className={shell}>
-          <Table head={["Verification question", "MQS capability", "What it helps establish"]} rows={verification} />
+          <VerificationCards rows={verification} />
         </div>
       </section>
 
@@ -302,16 +337,14 @@ export default function DefenceIndustryPage() {
         </div>
 
         <div className={shell}>
-          <div className="mt-12 border-t border-[#D3DFE7] lg:mt-16">
-            <div className="hidden grid-cols-[5fr_8fr] gap-8 border-b border-[#D3DFE7] py-5 md:grid">
-              <span className="t-eyebrow text-[#0A6A88]">Capability</span>
-              <span className="t-eyebrow text-[#0A6A88]">How it supports the application</span>
-            </div>
-            {shellCapabilities.map(([title, copy]) => (
-              <div key={title} className="grid gap-3 border-b border-[#D3DFE7] py-6 md:grid-cols-[5fr_8fr] md:gap-8">
-                <p className="t-h4 m-0 text-[#0B2A3A]">{title}</p>
-                <p className="t-body m-0 text-[#5F7688]">{copy}</p>
-              </div>
+          <p className="t-eyebrow m-0 mt-16 text-[#0A6A88] lg:mt-24">How the system supports the application</p>
+          <div className="mt-8 grid gap-px bg-[#D3DFE7] md:grid-cols-2 lg:grid-cols-4">
+            {shellCapabilities.map(([title, copy], index) => (
+              <article key={title} className="bg-white p-8">
+                <span className="t-eyebrow text-[#0A6A88]">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="t-h4 mb-0 mt-5 text-[#0B2A3A]">{title}</h3>
+                <p className="t-body-sm mb-0 mt-3 text-[#5F7688]">{copy}</p>
+              </article>
             ))}
           </div>
         </div>
@@ -337,7 +370,7 @@ export default function DefenceIndustryPage() {
         <div className={`${shell} mt-16 lg:mt-24`}>
           <p className="t-h3 m-0 max-w-[24ch] text-white">X-ray Verifies What Is Inside. ATE Verifies What It Does.</p>
           <p className="t-eyebrow mb-0 mt-14 text-[#5AD1F7]">Typical defence test applications</p>
-          <Table dark head={["Test system", "Application", "What is verified"]} rows={testApplications} />
+          <TestApplicationCards rows={testApplications} />
 
           <p className="t-eyebrow mb-0 mt-16 text-[#5AD1F7] lg:mt-20">Two ATE architectures</p>
           <div className="mt-8 grid gap-px bg-white/15 md:grid-cols-2">
@@ -414,7 +447,7 @@ export default function DefenceIndustryPage() {
               A defence program may need internal inspection, functional testing, or both. The capability map below shows how the three MQS pillars can support different verification questions.
             </p>
           </div>
-          <Table dark head={["Application / assembly", "Primary MQS capability", "Verification role"]} rows={capabilityMap} />
+          <CapabilityMapCards rows={capabilityMap} />
         </div>
       </section>
 
