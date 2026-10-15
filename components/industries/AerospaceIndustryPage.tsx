@@ -31,22 +31,22 @@ const platforms = [
   {
     name: "Fixed-wing aircraft",
     scope: "Engine and propulsion components, wing structures, fuselage frames, landing gear, control surfaces and tail sections.",
-    systems: "MQX.NeVa-M · MQX.NeVa · MQX.drIS",
+    systems: "MQX.NeVa · MQX.drIS · Microfocus X-ray",
   },
   {
     name: "Fighter aircraft",
     scope: "Nose cones, avionics, wing-root structures, dense propulsion components, mounted assemblies and rear structures.",
-    systems: "High-Energy X-ray & CT · MQX.NeVa · MQX.drIS",
+    systems: "Microfocus X-ray / CT · High-Energy X-ray · MQX.NeVa · MQX.drIS",
   },
   {
     name: "Rotorcraft",
     scope: "Avionics assemblies, rotor hubs, gearbox housings, powertrain components and tail structural sections.",
-    systems: "High-Energy X-ray & CT · MQX.NeVa · MQX.NeVa-M",
+    systems: "Microfocus X-ray / CT · High-Energy X-ray · MQX.NeVa · MQX.drIS",
   },
   {
     name: "Rockets",
-    scope: "Payload fairings, interstage joints, motor casings, propellant sections and dense propulsion nozzles.",
-    systems: "High-Energy X-ray & CT",
+    scope: "Payload sections, structural stages and engine / propulsion components.",
+    systems: "Microfocus X-ray / CT · High-Energy X-ray · MQX.NeVa",
   },
 ];
 
@@ -201,8 +201,8 @@ export default function AerospaceIndustryPage() {
         <div className={shell}>
           <p className="t-eyebrow m-0 text-[#0A6A88]">Product highlights</p>
           <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-end lg:gap-20">
-            <h2 className="t-h2 m-0 text-[#0B2A3A]">One aircraft. Multiple inspection decisions.</h2>
-            <p className="t-lead m-0">Select a labelled inspection area to see how MQS maps the component and risk to the right imaging workflow.</p>
+            <h2 className="t-h2 m-0 text-[#0B2A3A]">Every platform. The right inspection solution.</h2>
+            <p className="t-lead m-0">Choose a platform to explore its labelled components and recommended MQS solutions.</p>
           </div>
           <AerospacePlatformGuide />
         </div>
