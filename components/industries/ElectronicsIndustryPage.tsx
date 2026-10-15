@@ -252,7 +252,7 @@ export default function ElectronicsIndustryPage() {
           <div className="mt-12 grid gap-px bg-[#D3DFE7] md:grid-cols-2 lg:mt-16">
             {evidence.map(([title, src, alt]) => (
               <figure key={title} className="m-0 bg-[#F4F8FA]">
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#071C28]">
+                <div className="relative aspect-[16/9] overflow-hidden bg-[#071C28]">
                   <Image src={src} alt={alt} fill quality={90} sizes="(min-width:768px) 50vw, 100vw" className="object-contain" />
                 </div>
                 <figcaption className="t-h4 px-7 py-6 text-[#0B2A3A]">{title}</figcaption>

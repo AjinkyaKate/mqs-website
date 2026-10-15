@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AutomotiveComponentGuide from "./AutomotiveComponentGuide";
+import TwoWheelerComponentGuide from "./TwoWheelerComponentGuide";
 
 const challenges = [
   ["01", "Production speed", "Inspection must keep pace with the line."],
@@ -211,7 +212,15 @@ export default function AutomotiveIndustryPage() {
             <p className="t-lead m-0">Start with the component. The recommended platform follows from the defect, scale and required throughput.</p>
           </div>
 
-          <AutomotiveComponentGuide />
+          <div className="mt-12 border-t border-[#D3DFE7] pt-8 lg:mt-16">
+            <p className="t-eyebrow m-0 text-[#0A6A88]">Two-wheeler inspection map</p>
+            <TwoWheelerComponentGuide />
+          </div>
+
+          <div className="mt-16 border-t border-[#D3DFE7] pt-8 lg:mt-20">
+            <p className="t-eyebrow m-0 text-[#0A6A88]">Four-wheeler inspection map</p>
+            <AutomotiveComponentGuide />
+          </div>
 
           <div className="mt-8 grid border-t border-[#D3DFE7] lg:grid-cols-2">
             {applications.map((application, index) => (

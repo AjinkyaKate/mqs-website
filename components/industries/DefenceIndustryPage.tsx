@@ -279,6 +279,9 @@ export default function DefenceIndustryPage() {
         <div className={`${shell} grid items-start gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-20`}>
           <div className="relative aspect-[1400/1123] overflow-hidden bg-white">
             <Image src="/assets/product-fuze.png" alt="MQS fuze inspection cabinet with loading and unloading conveyors" fill quality={90} sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" />
+            <div className="absolute left-[36%] top-[48%] w-[18%] -translate-x-1/2 -translate-y-1/2 rounded-sm bg-white/92 p-2 shadow-[0_4px_14px_rgba(0,0,0,.18)]">
+              <Image src="/assets/mqs-logo-2a-dark.png" alt="MQS Technologies" width={320} height={120} className="h-auto w-full" />
+            </div>
           </div>
           <div>
             <p className="t-eyebrow m-0 text-[#0A6A88]">Fuze Inspection Systems</p>
