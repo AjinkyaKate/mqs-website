@@ -121,7 +121,7 @@ const INDUSTRIES: Industry[] = [
     systems: [
       { label: "High Energy X-ray and CT", href: "/products/high-energy-xray" },
       { label: "MQX.NeVa", href: "/products/mqx-neva" },
-      { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+      { label: "Microfocus X-ray Solutions", href: "/products/microfocus-xray" },
       { label: "MQX.drIS", href: "/products/mqx-dris" },
     ],
     image: {
@@ -137,10 +137,10 @@ const INDUSTRIES: Industry[] = [
     name: "Automotive & EV",
     lead: "Inspect faster. Reduce scrap. Deliver safer vehicles. Cast housings, brake components, powertrain parts and battery assemblies — inspected at production speed, because a zero-defect target means checking parts, not samples.",
     systems: [
-      { label: "MQS.PRISM", href: "/brochures/mqs-prism.pdf" },
+      { label: "MQS.PRISM", href: "/products/prism" },
       { label: "MQX.drIS", href: "/products/mqx-dris" },
       { label: "MQX.NeVa", href: "/products/mqx-neva" },
-      { label: "MQWR 160U", href: "/brochures/mqwr-160u-wheel-inspection.pdf" },
+      { label: "MQWR 160U", href: "/products/mqwr-160u" },
     ],
     image: {
       src: "/assets/ind-auto-wheel-hub.jpg",
@@ -159,7 +159,7 @@ const INDUSTRIES: Industry[] = [
       { label: "MQX.tracE CT", href: "/products/mqx-trace" },
       { label: "MQX.tracE | IN-3D", href: "/products/mqx-trace" },
       { label: "MQX.gINti", href: "/brochures/mqx-ginti.pdf" },
-      { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+      { label: "Microfocus X-ray Solutions", href: "/products/microfocus-xray" },
     ],
     /* The handoff ships the same PTH radiograph here as in the internal-view
        figure above. Kept as designed so both captions stay accurate. */
@@ -182,14 +182,14 @@ const ALSO: [string, string][] = [
 
 const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
   ["Turbine and engine components", "Micro-defects in high-value parts", [
-    { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+    { label: "Microfocus X-ray Solutions", href: "/products/microfocus-xray" },
     { label: "MQX.NeVa", href: "/products/mqx-neva" },
   ]],
   ["Thick castings and dense assemblies", "Penetration through the section", [
     { label: "High Energy X-ray and CT", href: "/products/high-energy-xray" },
   ]],
   ["Aluminium castings at volume", "Throughput without missing porosity", [
-    { label: "MQS.PRISM", href: "/brochures/mqs-prism.pdf" },
+    { label: "MQS.PRISM", href: "/products/prism" },
     { label: "MQX.drIS", href: "/products/mqx-dris" },
   ]],
   ["Brake, steering and safety parts", "100% inspection with traceability", [
@@ -198,7 +198,7 @@ const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
   ]],
   ["EV battery cells and modules", "Electrode alignment and internal defects", [
     { label: "MQX.NeVa", href: "/products/mqx-neva" },
-    { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+    { label: "Microfocus X-ray Solutions", href: "/products/microfocus-xray" },
   ]],
   ["PCBs and solder joints", "Hidden voids under packages", [
     { label: "MQX.tracE", href: "/products/mqx-trace" },

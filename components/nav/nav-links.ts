@@ -15,13 +15,16 @@ export const HREF_MAP: Record<string, string> = {
   Electronics: "/industries/electronics",
   "Heavy Engineering": "/industries/heavy-engineering",
 
-  /* Products. Two detail pages exist. The rest of the catalogue is reachable from
+  /* Products. Each detail page has an entry. The rest of the catalogue is reachable from
      /products; category labels with no page behind them are not in the nav.
      Add children here as each product page lands. */
   "Products overview": "/products",
   "MQX.drIS": "/products/mqx-dris",
   "MQX.NeVa": "/products/mqx-neva",
   "MQX.tracE": "/products/mqx-trace",
+  "MQS.PRISM": "/products/prism",
+  "MQWR 160U": "/products/mqwr-160u",
+  "Microfocus X-Ray": "/products/microfocus-xray",
   "High-Energy X-Ray": "/products/high-energy-xray",
   "Automated Test Equipments": "/products/automated-test-equipment",
 

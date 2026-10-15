@@ -22,7 +22,7 @@ const applications = [
     number: "A",
     part: "Engine assemblies",
     systems: [
-      ["MQS.PRISM", "/brochures/mqs-prism.pdf", "High-throughput digital radiography configurable around production inspection needs."],
+      ["MQS.PRISM", "/products/prism", "High-throughput digital radiography configurable around production inspection needs."],
       ["MQX.NeVa", "/products/mqx-neva", "3D CT for internal geometry review and application-specific analysis."],
     ],
   },
@@ -39,38 +39,38 @@ const applications = [
     part: "Pistons",
     systems: [
       ["MQX.drIS Cabinet DR", "/products/mqx-dris", "2D inspection for porosity and internal defects, configured to the application."],
-      ["Microfocus X-ray / CT", "/products/mqx-neva", "Finer detail where smaller defects require higher-resolution imaging."],
+      ["Microfocus X-ray / CT", "/products/microfocus-xray", "Finer detail where smaller defects require higher-resolution imaging."],
     ],
   },
   {
     number: "D",
     part: "Valves",
-    systems: [["Microfocus X-ray / CT", "/products/mqx-neva", "Detailed inspection for fine cracks and voids."]],
+    systems: [["Microfocus X-ray / CT", "/products/microfocus-xray", "Detailed inspection for fine cracks and voids."]],
   },
   {
     number: "E",
     part: "Brake calipers",
     systems: [
-      ["MQS.PRISM", "/brochures/mqs-prism.pdf", "Production-focused digital radiography for repeatable inspection at scale."],
+      ["MQS.PRISM", "/products/prism", "Production-focused digital radiography for repeatable inspection at scale."],
       ["MQX.NeVa", "/products/mqx-neva", "3D CT for porosity mapping, internal analysis and root-cause investigation."],
     ],
   },
   {
     number: "F",
     part: "Steering knuckles",
-    systems: [["MQS.PRISM", "/brochures/mqs-prism.pdf", "High-throughput inspection configured for production environments."]],
+    systems: [["MQS.PRISM", "/products/prism", "High-throughput inspection configured for production environments."]],
   },
   {
     number: "G",
     part: "Alloy wheels",
-    systems: [["MQWR 160U", "/brochures/mqwr-160u-wheel-inspection.pdf", "A dedicated inline solution engineered for alloy-wheel inspection."]],
+    systems: [["MQWR 160U", "/products/mqwr-160u", "A dedicated inline solution engineered for alloy-wheel inspection."]],
   },
   {
     number: "H",
     part: "Under brackets",
     systems: [
       ["MQX.drIS Cabinet DR", "/products/mqx-dris", "Flexible batch inspection for varied automotive components."],
-      ["MQS.PRISM", "/brochures/mqs-prism.pdf", "Higher-throughput inspection where production speed is the priority."],
+      ["MQS.PRISM", "/products/prism", "Higher-throughput inspection where production speed is the priority."],
     ],
   },
 ];
