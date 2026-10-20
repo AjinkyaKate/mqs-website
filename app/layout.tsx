@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Figtree, Archivo } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { getGaMeasurementId } from "@/lib/site-settings";
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -52,7 +54,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  /* Set from Admin > Settings. Null when unset, so nothing loads. */
+  const gaId = await getGaMeasurementId();
+
   return (
     <html
       lang="en"
@@ -60,6 +65,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full">
         <SmoothScroll>{children}</SmoothScroll>
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );

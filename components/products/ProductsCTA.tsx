@@ -11,7 +11,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useActionState } from "react";
+import { useEffect, useRef, useActionState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { submitProductForm } from "@/lib/actions/enquiry";
 import type { ContactFormState } from "@/lib/schemas";
 
@@ -85,6 +86,9 @@ function Field({ label, name, type = "text", placeholder, textarea, full }: Fiel
 export default function ProductsCTA() {
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, pending] = useActionState<ContactFormState, FormData>(submitProductForm, { success: false });
+  useEffect(() => {
+    if (state.success) trackEvent("generate_lead", { form: "product" });
+  }, [state]);
 
   return (
     <section id="contact" className="relative overflow-hidden" style={{ background: DARK }}>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 import { submitApplication } from "@/lib/actions/application";
 import Image from "next/image";
 
@@ -183,6 +184,9 @@ export default function Careers({ openings }: { openings: CareerOpening[] }) {
   const [consent, setConsent] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const [state, formAction, pending] = useActionState(submitApplication, { success: false });
+  useEffect(() => {
+    if (state.success) trackEvent("job_application", { form: "careers" });
+  }, [state]);
   const err = (k: string) => state.errors?.[k]?.[0];
   const hasOpenings = openings.length > 0;
 

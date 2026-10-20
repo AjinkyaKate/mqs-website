@@ -10,7 +10,8 @@
 
 "use client";
 
-import { useRef, useState, useActionState, type Ref } from "react";
+import { useEffect, useRef, useState, useActionState, type Ref } from "react";
+import { trackEvent } from "@/lib/analytics";
 import FormSelect from "./FormSelect";
 import BackgroundVideo from "@/components/media/BackgroundVideo";
 import { submitContactForm } from "@/lib/actions/enquiry";
@@ -130,6 +131,9 @@ export default function ContactSection({ showChips = true }: { showChips?: boole
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, pending] = useActionState<ContactFormState, FormData>(submitContactForm, { success: false });
+  useEffect(() => {
+    if (state.success) trackEvent("generate_lead", { form: "contact-section" });
+  }, [state]);
 
   const handleChip = (c: string) => {
     const msg = `I'm interested in ${c} — `;

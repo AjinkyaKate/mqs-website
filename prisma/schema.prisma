@@ -122,3 +122,12 @@ model JobOpening {
   @@index([department])
   @@index([closesAt])
 }
+
+/// Small key/value settings the client edits from the admin, such as the Google
+/// Analytics measurement ID. Kept as rows rather than env vars so a change needs
+/// no redeploy.
+model SiteSetting {
+  key       String   @id // e.g. "ga-measurement-id"
+  value     String
+  updatedAt DateTime @updatedAt
+}
