@@ -25,6 +25,12 @@ export const HREF_MAP: Record<string, string> = {
   "MQS.PRISM": "/products/prism",
   "MQWR 160U": "/products/mqwr-160u",
   "Microfocus X-Ray": "/products/microfocus-xray",
+  "MQX.OptimaXis": "/products/mqx-optimaxis",
+  "MQX.gINti": "/products/mqx-ginti",
+  "Pipe Inspection DR": "/products/pipe-inspection",
+  "Shell Inspection": "/products/shell-inspection",
+  "Fuze Inspection": "/products/fuze-inspection",
+  "MQIR 225 Irradiator": "/products/mqir-225",
   "High-Energy X-Ray": "/products/high-energy-xray",
   "Automated Test Equipments": "/products/automated-test-equipment",
 

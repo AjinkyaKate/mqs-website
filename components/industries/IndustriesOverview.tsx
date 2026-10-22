@@ -158,7 +158,7 @@ const INDUSTRIES: Industry[] = [
       { label: "MQX.tracE", href: "/products/mqx-trace" },
       { label: "MQX.tracE CT", href: "/products/mqx-trace" },
       { label: "MQX.tracE | IN-3D", href: "/products/mqx-trace" },
-      { label: "MQX.gINti", href: "/brochures/mqx-ginti.pdf" },
+      { label: "MQX.gINti", href: "/products/mqx-ginti" },
       { label: "Microfocus X-ray Solutions", href: "/products/microfocus-xray" },
     ],
     /* The handoff ships the same PTH radiograph here as in the internal-view
@@ -206,7 +206,7 @@ const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
     { label: "MQX.tracE | IN-3D", href: "/products/mqx-trace" },
   ]],
   ["SMT component reels", "Inventory count accuracy", [
-    { label: "MQX.gINti", href: "/brochures/mqx-ginti.pdf" },
+    { label: "MQX.gINti", href: "/products/mqx-ginti" },
   ]],
   ["Welds and pressure components", "Root penetration and weld integrity", [
     { label: "MQX.drIS 320 / 450", href: "/products/mqx-dris" },
