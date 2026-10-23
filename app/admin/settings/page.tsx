@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
-import { GA_KEY } from "@/lib/site-settings";
+import { GA_KEY, getGaPropertyId } from "@/lib/site-settings";
+import { serviceAccountEmail } from "@/lib/ga-data";
 import AnalyticsSettingsForm from "@/components/admin/AnalyticsSettingsForm";
 
 export default async function AdminSettingsPage() {
@@ -11,6 +12,7 @@ export default async function AdminSettingsPage() {
   } catch {
     // Table not created yet; the form still renders and save reports the problem.
   }
+  const propertyId = await getGaPropertyId();
 
   return (
     <div className="p-6 md:p-10">
@@ -22,7 +24,7 @@ export default async function AdminSettingsPage() {
       </p>
 
       <div className="mt-8 max-w-2xl">
-        <AnalyticsSettingsForm currentId={gaId} />
+        <AnalyticsSettingsForm currentId={gaId} currentPropertyId={propertyId} serviceEmail={serviceAccountEmail()} />
       </div>
     </div>
   );
