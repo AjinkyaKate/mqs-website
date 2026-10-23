@@ -54,6 +54,14 @@ export function serviceAccountKeyStatus(): KeyStatus {
   return parseServiceAccount().status;
 }
 
+/* Shape of the stored value for troubleshooting a bad paste: its length and
+   first four characters, which for a key file are "{" and whitespace (or
+   "ewog" when base64). Nothing from the key itself. */
+export function serviceAccountKeyShape(): string {
+  const raw = process.env.GA_SERVICE_ACCOUNT_JSON ?? "";
+  return `${raw.length} characters, starting ${JSON.stringify(raw.slice(0, 4))}`;
+}
+
 /* The email is shown on the Settings page so the client knows which address to
    grant access to. It is an identifier, not a secret. */
 export function serviceAccountEmail(): string | null {

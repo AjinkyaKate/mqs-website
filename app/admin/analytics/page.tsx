@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getGaPropertyId } from "@/lib/site-settings";
-import { getDashboard, getRealtimeUsers, GaError, serviceAccountEmail, serviceAccountKeyStatus, type Dashboard } from "@/lib/ga-data";
+import { getDashboard, getRealtimeUsers, GaError, serviceAccountEmail, serviceAccountKeyStatus, serviceAccountKeyShape, type Dashboard } from "@/lib/ga-data";
 import AnalyticsDashboard from "@/components/admin/analytics/AnalyticsDashboard";
 
 const RANGES = [7, 28, 90] as const;
@@ -46,7 +46,7 @@ function SetupNotice({ error }: { error: GaError | null }) {
           <p>The site needs a Google service account key to read reports. This is a one-time step for the website developer.</p>
           <p className="text-xs text-gray-500">
             {status === "missing" && "GA_SERVICE_ACCOUNT_JSON is not set for this environment. Add it in Vercel and redeploy."}
-            {status === "invalid-json" && "GA_SERVICE_ACCOUNT_JSON is set but is not valid JSON. Paste the whole key file again, from { to }."}
+            {status === "invalid-json" && `GA_SERVICE_ACCOUNT_JSON is set but is not valid JSON (${serviceAccountKeyShape()}). Paste the whole key file again, from { to }.`}
             {status === "missing-fields" && "GA_SERVICE_ACCOUNT_JSON is missing client_email or private_key. Use the JSON key file downloaded from Google Cloud."}
           </p>
         </Notice>
