@@ -15,16 +15,43 @@ export const LEAD_EVENTS = { generate_lead: "Enquiries", job_application: "Job a
 
 type ServiceAccount = { client_email: string; private_key: string };
 
-function readServiceAccount(): ServiceAccount | null {
-  const raw = process.env.GA_SERVICE_ACCOUNT_JSON;
-  if (!raw) return null;
-  try {
-    const sa = JSON.parse(raw) as Partial<ServiceAccount>;
-    if (!sa.client_email || !sa.private_key) return null;
-    return { client_email: sa.client_email, private_key: sa.private_key.replace(/\\n/g, "\n") };
-  } catch {
-    return null;
+export type KeyStatus = "ok" | "missing" | "invalid-json" | "missing-fields";
+
+/* Parses the key, forgiving the ways a pasted value usually goes wrong:
+   surrounding quotes, curly quotes from a text editor, or the file supplied as
+   base64. Never logs or returns the key itself, only what was wrong with it. */
+function parseServiceAccount(): { status: KeyStatus; sa?: ServiceAccount } {
+  let raw = process.env.GA_SERVICE_ACCOUNT_JSON?.trim();
+  if (!raw) return { status: "missing" };
+  if (raw.startsWith("'") && raw.endsWith("'")) raw = raw.slice(1, -1);
+  if (!raw.startsWith("{") && !raw.startsWith('"')) {
+    try {
+      raw = Buffer.from(raw, "base64").toString("utf8").trim();
+    } catch {
+      return { status: "invalid-json" };
+    }
   }
+  raw = raw.replace(/[\u201C\u201D]/g, '"');
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+    // A value pasted with escaped quotes parses to a string holding the JSON.
+    if (typeof parsed === "string") parsed = JSON.parse(parsed);
+  } catch {
+    return { status: "invalid-json" };
+  }
+  const sa = parsed as Partial<ServiceAccount>;
+  if (!sa.client_email || !sa.private_key) return { status: "missing-fields" };
+  return { status: "ok", sa: { client_email: sa.client_email, private_key: sa.private_key.replace(/\\n/g, "\n") } };
+}
+
+function readServiceAccount(): ServiceAccount | null {
+  return parseServiceAccount().sa ?? null;
+}
+
+export function serviceAccountKeyStatus(): KeyStatus {
+  return parseServiceAccount().status;
 }
 
 /* The email is shown on the Settings page so the client knows which address to
@@ -34,7 +61,7 @@ export function serviceAccountEmail(): string | null {
 }
 
 export class GaError extends Error {
-  constructor(public kind: "not-configured" | "no-access" | "api-disabled" | "bad-property" | "other", message: string) {
+  constructor(public kind: "not-configured" | "key-rejected" | "no-access" | "api-disabled" | "bad-property" | "other", message: string) {
     super(message);
   }
 }
@@ -55,7 +82,10 @@ async function accessToken(sa: ServiceAccount): Promise<string> {
     body: new URLSearchParams({ grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer", assertion }),
     cache: "no-store",
   });
-  if (!res.ok) throw new GaError("not-configured", "The service account key was rejected by Google.");
+  if (!res.ok) {
+    const body = (await res.json().catch(() => ({}))) as { error?: string; error_description?: string };
+    throw new GaError("key-rejected", `Google rejected the service account key (${body.error ?? res.status}${body.error_description ? `: ${body.error_description}` : ""}).`);
+  }
   return ((await res.json()) as { access_token: string }).access_token;
 }
 

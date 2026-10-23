@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getGaPropertyId } from "@/lib/site-settings";
-import { getDashboard, getRealtimeUsers, GaError, serviceAccountEmail, type Dashboard } from "@/lib/ga-data";
+import { getDashboard, getRealtimeUsers, GaError, serviceAccountEmail, serviceAccountKeyStatus, type Dashboard } from "@/lib/ga-data";
 import AnalyticsDashboard from "@/components/admin/analytics/AnalyticsDashboard";
 
 const RANGES = [7, 28, 90] as const;
@@ -39,10 +39,24 @@ function SetupNotice({ error }: { error: GaError | null }) {
     );
   }
   switch (error.kind) {
-    case "not-configured":
+    case "not-configured": {
+      const status = serviceAccountKeyStatus();
       return (
         <Notice title="Reporting access is not set up on the server">
           <p>The site needs a Google service account key to read reports. This is a one-time step for the website developer.</p>
+          <p className="text-xs text-gray-500">
+            {status === "missing" && "GA_SERVICE_ACCOUNT_JSON is not set for this environment. Add it in Vercel and redeploy."}
+            {status === "invalid-json" && "GA_SERVICE_ACCOUNT_JSON is set but is not valid JSON. Paste the whole key file again, from { to }."}
+            {status === "missing-fields" && "GA_SERVICE_ACCOUNT_JSON is missing client_email or private_key. Use the JSON key file downloaded from Google Cloud."}
+          </p>
+        </Notice>
+      );
+    }
+    case "key-rejected":
+      return (
+        <Notice title="Google rejected the service account key">
+          <p>The key may have been deleted or replaced in Google Cloud. Create a new JSON key, update GA_SERVICE_ACCOUNT_JSON in Vercel and redeploy.</p>
+          <p className="text-xs text-gray-400">{error.message}</p>
         </Notice>
       );
     case "no-access":
