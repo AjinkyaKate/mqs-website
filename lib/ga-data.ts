@@ -135,6 +135,20 @@ export type Dashboard = {
   fetchedAt: string;
 };
 
+/* GA returns no row for a day with no visits, so the trend line would skip
+   them. Fill every day in the range with zero, counting back from today in
+   India time (the property's time zone, which GA's dates follow). */
+function fillDays(days: number, rows: { date: string; users: number }[]) {
+  const byDate = new Map(rows.map((r) => [r.date, r.users]));
+  const today = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  return Array.from({ length: days }, (_, i) => {
+    const d = new Date(today);
+    d.setDate(today.getDate() - (days - 1 - i));
+    const key = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
+    return { date: key, users: byDate.get(key) ?? 0 };
+  });
+}
+
 const TOTAL_METRICS = ["activeUsers", "newUsers", "sessions", "screenPageViews", "userEngagementDuration"];
 
 function totalsFrom(rows: Row[] | undefined, range: string): Totals {
@@ -197,7 +211,7 @@ async function fetchDashboard(propertyId: string, days: number): Promise<Dashboa
     days,
     current: totalsFrom(totals.rows, "current"),
     previous: totalsFrom(totals.rows, "previous"),
-    daily: (daily.rows ?? []).map((r) => ({ date: dim(r), users: num(r) })),
+    daily: fillDays(days, (daily.rows ?? []).map((r) => ({ date: dim(r), users: num(r) }))),
     pages: (pages.rows ?? []).map((r) => ({ path: dim(r, 0), title: dim(r, 1), views: num(r) })),
     channels: (channels.rows ?? []).map((r) => ({ name: dim(r), sessions: num(r) })),
     countries: (countries.rows ?? []).map((r) => ({ name: dim(r), users: num(r) })),
