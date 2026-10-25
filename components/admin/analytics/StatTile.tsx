@@ -1,17 +1,21 @@
 /* One headline number with its change against the previous period of the same
-   length. Every metric here is better when it goes up, so up is green. */
+   length. Up is green unless `lowerIsBetter` (bounce rate). */
 export default function StatTile({
   label,
   value,
   current,
   previous,
   hero = false,
+  lowerIsBetter = false,
+  hint,
 }: {
   label: string;
   value: string;
   current: number;
   previous: number;
   hero?: boolean;
+  lowerIsBetter?: boolean;
+  hint?: React.ReactNode;
 }) {
   let delta: { text: string; tone: string } | null = null;
   if (previous > 0) {
@@ -20,7 +24,7 @@ export default function StatTile({
     delta =
       Math.abs(pct) < 0.05
         ? { text: "No change", tone: "text-gray-500" }
-        : { text: `${pct > 0 ? "▲" : "▼"} ${rounded.replace("-", "")}%`, tone: pct > 0 ? "text-green-700" : "text-red-600" };
+        : { text: `${pct > 0 ? "▲" : "▼"} ${rounded.replace("-", "")}%`, tone: pct > 0 !== lowerIsBetter ? "text-green-700" : "text-red-600" };
   } else if (current > 0) {
     delta = { text: "New", tone: "text-gray-500" };
   }
@@ -35,6 +39,7 @@ export default function StatTile({
           <span className="text-gray-400"> vs previous period</span>
         </p>
       )}
+      {hint && <p className="mt-1 text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

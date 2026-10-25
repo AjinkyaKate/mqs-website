@@ -3,40 +3,36 @@ import { prisma } from "@/lib/db";
 
 export const SETTINGS_TAG = "site-settings";
 export const GA_KEY = "ga-measurement-id";
-export const GA_PROPERTY_KEY = "ga-property-id";
+export const UMAMI_KEY = "umami-website-id";
 
-/* GA4 measurement IDs look like G-ABC123XYZ. Anything else is rejected on save,
-   and also ignored on read so a bad row can never inject into the script tag. */
+/* GA4 measurement IDs look like G-ABC123XYZ and Umami website IDs are UUIDs.
+   Anything else is rejected on save, and also ignored on read so a bad row can
+   never inject into a script tag. */
 export const GA_ID_PATTERN = /^G-[A-Z0-9]{4,16}$/;
+export const UMAMI_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
-/* The numeric GA4 property ID the admin's Analytics tab reads reports from.
-   Different from the G- measurement ID: that one sends data, this one reads it. */
-export const GA_PROPERTY_PATTERN = /^\d{6,12}$/;
+export type TrackingIds = { gaId: string | null; umamiId: string | null };
+
+async function readTrackingIds(): Promise<TrackingIds> {
+  try {
+    const rows = await prisma.siteSetting.findMany({ where: { key: { in: [GA_KEY, UMAMI_KEY] } } });
+    const value = (key: string) => rows.find((r) => r.key === key)?.value ?? null;
+    const ga = value(GA_KEY);
+    const umami = value(UMAMI_KEY);
+    return {
+      gaId: ga && GA_ID_PATTERN.test(ga) ? ga : null,
+      umamiId: umami && UMAMI_ID_PATTERN.test(umami) ? umami : null,
+    };
+  } catch {
+    return { gaId: null, umamiId: null };
+  }
+}
 
 /* The root layout reads this on every page, so it is cached and only refetched
    when the admin saves (revalidateTag on SETTINGS_TAG). Like getSiteImage, an
    unreachable database or a missing table must not take the site down: no
    setting just means no analytics. */
-export const getGaMeasurementId = unstable_cache(
-  async () => {
-    try {
-      const row = await prisma.siteSetting.findUnique({ where: { key: GA_KEY } });
-      return row && GA_ID_PATTERN.test(row.value) ? row.value : null;
-    } catch {
-      return null;
-    }
-  },
-  [GA_KEY],
-  { tags: [SETTINGS_TAG] }
-);
+export const getTrackingIds = unstable_cache(readTrackingIds, ["tracking-ids"], { tags: [SETTINGS_TAG] });
 
-/* Read uncached: only admin pages call this, and they should always show what
-   is actually stored. */
-export async function getGaPropertyId(): Promise<string | null> {
-  try {
-    const row = await prisma.siteSetting.findUnique({ where: { key: GA_PROPERTY_KEY } });
-    return row && GA_PROPERTY_PATTERN.test(row.value) ? row.value : null;
-  } catch {
-    return null;
-  }
-}
+/* Uncached, for admin pages, which should always show what is actually stored. */
+export const getTrackingIdsFresh = readTrackingIds;

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Figtree, Archivo } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
-import { getGaMeasurementId } from "@/lib/site-settings";
+import SiteAnalytics from "@/components/SiteAnalytics";
+import { getTrackingIds } from "@/lib/site-settings";
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   /* Set from Admin > Settings. Null when unset, so nothing loads. */
-  const gaId = await getGaMeasurementId();
+  const tracking = await getTrackingIds();
 
   return (
     <html
@@ -65,7 +65,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full">
         <SmoothScroll>{children}</SmoothScroll>
-        {gaId && <GoogleAnalytics gaId={gaId} />}
+        <SiteAnalytics {...tracking} />
       </body>
     </html>
   );

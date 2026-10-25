@@ -3,7 +3,7 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { prisma } from "@/lib/db";
 import { verifySession } from "@/lib/auth";
-import { GA_ID_PATTERN, GA_KEY, GA_PROPERTY_KEY, GA_PROPERTY_PATTERN, SETTINGS_TAG } from "@/lib/site-settings";
+import { GA_ID_PATTERN, GA_KEY, SETTINGS_TAG, UMAMI_ID_PATTERN, UMAMI_KEY } from "@/lib/site-settings";
 
 export type SettingsFormState = { success: boolean; message?: string };
 
@@ -24,18 +24,18 @@ export async function saveAnalyticsSettings(
   if (!authed) return { success: false, message: "Unauthorized" };
 
   const gaId = String(formData.get("gaId") ?? "").trim().toUpperCase();
-  const propertyId = String(formData.get("propertyId") ?? "").trim();
+  const umamiId = String(formData.get("umamiId") ?? "").trim().toLowerCase();
 
   if (gaId && !GA_ID_PATTERN.test(gaId)) {
     return { success: false, message: "That doesn't look like a GA4 Measurement ID. It should start with G-, for example G-ABC123XYZ." };
   }
-  if (propertyId && !GA_PROPERTY_PATTERN.test(propertyId)) {
-    return { success: false, message: "The Property ID should be a number only, for example 412345678. It is shown in Google Analytics under Admin, Property details." };
+  if (umamiId && !UMAMI_ID_PATTERN.test(umamiId)) {
+    return { success: false, message: "The Umami Website ID should look like 3f2a9c1e-1b2c-4d5e-8f90-123456789abc. It is under Settings, Websites, Edit in Umami." };
   }
 
   try {
     await saveSetting(GA_KEY, gaId);
-    await saveSetting(GA_PROPERTY_KEY, propertyId);
+    await saveSetting(UMAMI_KEY, umamiId);
   } catch {
     return { success: false, message: "Could not save. The settings table may not exist yet in this database." };
   }
@@ -43,8 +43,6 @@ export async function saveAnalyticsSettings(
   revalidateTag(SETTINGS_TAG, "max");
   revalidatePath("/", "layout");
 
-  return {
-    success: true,
-    message: gaId ? `Saved. Google Analytics (${gaId}) is now on across the site.` : "Saved. Google Analytics tracking is off.",
-  };
+  const on = [umamiId && "Umami", gaId && "Google Analytics"].filter(Boolean);
+  return { success: true, message: on.length ? `Saved. ${on.join(" and ")} tracking is on across the site.` : "Saved. Tracking is off." };
 }

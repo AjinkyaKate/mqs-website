@@ -1,18 +1,9 @@
-import { prisma } from "@/lib/db";
-import { GA_KEY, getGaPropertyId } from "@/lib/site-settings";
-import { serviceAccountEmail } from "@/lib/ga-data";
+import { getTrackingIdsFresh } from "@/lib/site-settings";
+import { umamiConfigured } from "@/lib/umami";
 import AnalyticsSettingsForm from "@/components/admin/AnalyticsSettingsForm";
 
 export default async function AdminSettingsPage() {
-  // Read uncached here so the page always shows what is actually stored.
-  let gaId: string | null = null;
-  try {
-    const row = await prisma.siteSetting.findUnique({ where: { key: GA_KEY } });
-    gaId = row?.value ?? null;
-  } catch {
-    // Table not created yet; the form still renders and save reports the problem.
-  }
-  const propertyId = await getGaPropertyId();
+  const { gaId, umamiId } = await getTrackingIdsFresh();
 
   return (
     <div className="p-6 md:p-10">
@@ -24,7 +15,7 @@ export default async function AdminSettingsPage() {
       </p>
 
       <div className="mt-8 max-w-2xl">
-        <AnalyticsSettingsForm currentId={gaId} currentPropertyId={propertyId} serviceEmail={serviceAccountEmail()} />
+        <AnalyticsSettingsForm umamiId={umamiId} gaId={gaId} apiConfigured={umamiConfigured()} />
       </div>
     </div>
   );
