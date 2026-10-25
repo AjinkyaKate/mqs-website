@@ -10,7 +10,7 @@ import { compact, duration } from "./format";
 export default function AnalyticsDashboard({ data, days, propertyId }: { data: Dashboard; days: number; propertyId: string }) {
   return (
     <>
-      <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mt-3 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <div className="col-span-2 lg:col-span-1 lg:row-span-2">
           <StatTile hero label="Visitors" value={compact(data.current.users)} current={data.current.users} previous={data.previous.users} />
         </div>

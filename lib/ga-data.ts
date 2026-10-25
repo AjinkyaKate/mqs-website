@@ -231,12 +231,66 @@ async function fetchDashboard(propertyId: string, days: number): Promise<Dashboa
    in freshness and keeps the tab fast and well inside the API quota. */
 export const getDashboard = unstable_cache(fetchDashboard, ["ga-dashboard"], { revalidate: 3600 });
 
-async function fetchRealtimeUsers(propertyId: string): Promise<number> {
+export type Realtime = {
+  activeUsers: number;
+  /* Active users per minute, oldest first: index 0 is 29 minutes ago, 29 is now. */
+  perMinute: number[];
+  pages: { name: string; users: number }[];
+  cities: { name: string; users: number }[];
+  devices: { name: string; users: number }[];
+  leads: { event: keyof typeof LEAD_EVENTS; count: number }[];
+};
+
+/* The Realtime API covers the last 30 minutes with no processing delay, which
+   is what makes a form submission show up within a minute. It has no batch
+   endpoint, so the five reports run in parallel. */
+async function fetchRealtime(propertyId: string): Promise<Realtime> {
   const sa = readServiceAccount();
   if (!sa) throw new GaError("not-configured", "GA_SERVICE_ACCOUNT_JSON is not set.");
   const token = await accessToken(sa);
-  const res = await call<Report>(token, `properties/${propertyId}:runRealtimeReport`, { metrics: [{ name: "activeUsers" }] });
-  return num(res.rows?.[0] ?? {});
+  const path = `properties/${propertyId}:runRealtimeReport`;
+  const m = (name: string) => ({ name });
+  const top = (dimension: string, limit: number) =>
+    call<Report>(token, path, {
+      dimensions: [m(dimension)],
+      metrics: [m("activeUsers")],
+      orderBys: [{ metric: { metricName: "activeUsers" }, desc: true }],
+      limit,
+    });
+
+  const [total, minutes, pages, cities, devices, events] = await Promise.all([
+    call<Report>(token, path, { metrics: [m("activeUsers")] }),
+    call<Report>(token, path, { dimensions: [m("minutesAgo")], metrics: [m("activeUsers")] }),
+    top("unifiedScreenName", 8),
+    top("city", 9),
+    top("deviceCategory", 3),
+    call<Report>(token, path, {
+      dimensions: [m("eventName")],
+      metrics: [m("eventCount")],
+      dimensionFilter: { filter: { fieldName: "eventName", inListFilter: { values: Object.keys(LEAD_EVENTS) } } },
+    }),
+  ]);
+
+  const perMinute = Array<number>(30).fill(0);
+  for (const r of minutes.rows ?? []) {
+    const ago = Number(dim(r));
+    if (ago >= 0 && ago < 30) perMinute[29 - ago] = num(r);
+  }
+  const list = (rep: Report) => (rep.rows ?? []).map((r) => ({ name: dim(r), users: num(r) }));
+
+  return {
+    activeUsers: num(total.rows?.[0] ?? {}),
+    perMinute,
+    pages: list(pages),
+    cities: list(cities).filter((c) => c.name !== "(not set)").slice(0, 8),
+    devices: list(devices),
+    leads: (Object.keys(LEAD_EVENTS) as (keyof typeof LEAD_EVENTS)[]).map((event) => ({
+      event,
+      count: num(events.rows?.find((r) => dim(r) === event) ?? {}),
+    })),
+  };
 }
 
-export const getRealtimeUsers = unstable_cache(fetchRealtimeUsers, ["ga-realtime"], { revalidate: 60 });
+/* Cached for 30 seconds: the tab refreshes itself every minute, and this keeps
+   several open admin tabs from multiplying the API calls. */
+export const getRealtime = unstable_cache(fetchRealtime, ["ga-realtime-full"], { revalidate: 30 });

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getGaPropertyId } from "@/lib/site-settings";
-import { getDashboard, getRealtimeUsers, GaError, serviceAccountEmail, serviceAccountKeyStatus, serviceAccountKeyShape, type Dashboard } from "@/lib/ga-data";
+import { getDashboard, getRealtime, GaError, serviceAccountEmail, serviceAccountKeyStatus, serviceAccountKeyShape, type Dashboard, type Realtime } from "@/lib/ga-data";
 import AnalyticsDashboard from "@/components/admin/analytics/AnalyticsDashboard";
+import RealtimePanel from "@/components/admin/analytics/RealtimePanel";
 
 const RANGES = [7, 28, 90] as const;
 
@@ -90,11 +91,11 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
   const propertyId = await getGaPropertyId();
 
   let data: Dashboard | null = null;
-  let live: number | null = null;
+  let live: Realtime | null = null;
   let error: GaError | null = null;
   if (propertyId) {
     try {
-      [data, live] = await Promise.all([getDashboard(propertyId, days), getRealtimeUsers(propertyId).catch(() => null)]);
+      [data, live] = await Promise.all([getDashboard(propertyId, days), getRealtime(propertyId).catch(() => null)]);
     } catch (e) {
       error = e instanceof GaError ? e : new GaError("other", e instanceof Error ? e.message : "Unknown error");
     }
@@ -107,17 +108,18 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
           <h1 className="font-[family-name:var(--font-archivo)] text-2xl font-bold text-[#0B2A3A]">Analytics</h1>
           <p className="mt-1 text-sm text-gray-500">Website traffic from Google Analytics.</p>
         </div>
-        {data && (
-          <div className="flex items-center gap-3">
-            {live !== null && (
-              <span className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-                </span>
-                {live} on the site now
-              </span>
-            )}
+      </div>
+
+      {!data ? (
+        <SetupNotice error={error} />
+      ) : (
+        <>
+          {live && <RealtimePanel data={live} updatedAt={new Date().toISOString()} />}
+
+          <div className="mt-10 flex flex-wrap items-baseline justify-between gap-3">
+            <h2 className="text-sm font-semibold text-[#0B2A3A]">
+              Reports <span className="font-normal text-gray-400">Updated hourly</span>
+            </h2>
             <nav className="flex rounded-md border border-gray-200 bg-white p-0.5 text-xs" aria-label="Date range">
               {RANGES.map((r) => (
                 <Link
@@ -131,10 +133,9 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Se
               ))}
             </nav>
           </div>
-        )}
-      </div>
-
-      {!data ? <SetupNotice error={error} /> : <AnalyticsDashboard data={data} days={days} propertyId={propertyId!} />}
+          <AnalyticsDashboard data={data} days={days} propertyId={propertyId!} />
+        </>
+      )}
     </div>
   );
 }
