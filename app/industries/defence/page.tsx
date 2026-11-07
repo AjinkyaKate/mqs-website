@@ -5,9 +5,9 @@ import ContactSection from "@/components/contact/ContactSection";
 import DefenceIndustryPage from "@/components/industries/DefenceIndustryPage";
 
 export const metadata: Metadata = {
-  title: "Defence X-Ray Inspection & Automated Test Equipment | MQS Technologies",
+  title: "Defense and Securities X-Ray Inspection & Test Equipment | MQS Technologies",
   description:
-    "Digital radiography for fuzes, shells and ammunition, plus custom Automated Test Equipments for missile, torpedo and defence assemblies. Indigenous engineering by MQS.",
+    "X-ray inspection and custom Automated Test Equipment for defense, securities, tactical and mission-critical applications. Indigenous engineering by MQS.",
   alternates: { canonical: "/industries/defence" },
 };
 

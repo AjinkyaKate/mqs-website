@@ -92,7 +92,7 @@ export const AWARD = {
 export const PORTFOLIO = {
   eyebrow: "What we build",
   heading: "MQS solution portfolio.",
-  flow: "X-ray/CT Testing · ATE · Contract Manufacturing",
+  flow: "X-ray/CT Testing · ATE",
   items: [
     {
       n: "1",

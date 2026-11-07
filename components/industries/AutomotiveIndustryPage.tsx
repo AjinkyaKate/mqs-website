@@ -39,13 +39,12 @@ const applications = [
     part: "Pistons",
     systems: [
       ["MQX.drIS Cabinet DR", "/products/mqx-dris", "2D inspection for porosity and internal defects, configured to the application."],
-      ["Microfocus X-ray / CT", "/products/microfocus-xray", "Finer detail where smaller defects require higher-resolution imaging."],
     ],
   },
   {
     number: "D",
     part: "Valves",
-    systems: [["Microfocus X-ray / CT", "/products/microfocus-xray", "Detailed inspection for fine cracks and voids."]],
+    systems: [["MQX.drIS Cabinet DR", "/products/mqx-dris", "Flexible 2D inspection configured around the valve geometry and inspection objective."]],
   },
   {
     number: "E",

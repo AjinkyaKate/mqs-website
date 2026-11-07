@@ -55,7 +55,6 @@ const resources = [
   ["MQX.NeVa", "Industrial computed tomography", "/brochures/mqct-industrial-ct.pdf"],
   ["MQX.NeVa-M", "Microfocus CT and fine-detail inspection", "/brochures/microfocus-xray.pdf"],
   ["MQX.drIS", "Cabinet-based digital radiography", "/brochures/mqxc-cabinet-dr.pdf"],
-  ["Shell & ammunition inspection", "Application-focused inspection solutions", "/brochures/shell-ammunition-inspection.pdf"],
 ];
 
 const shell = "mx-auto w-full max-w-[1330px] px-6 md:px-10 lg:px-[55px]";

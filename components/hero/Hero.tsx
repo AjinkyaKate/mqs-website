@@ -37,8 +37,8 @@ type NavItem = { name: string; href?: string; children?: string[] };
 
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQWR 160U", "Microfocus X-Ray", "High-Energy X-Ray", "Automated Test Equipments"] },
-  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defence", "Electronics", "Heavy Engineering"] },
+  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "Microfocus X-Ray", "High-Energy X-Ray", "Automated Test Equipments"] },
+  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defense and Securities", "Electronics", "Heavy Engineering"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
 ];
@@ -47,8 +47,8 @@ const NAV: NavItem[] = [
 type MobileItem = { name: string; href?: string; children?: string[] };
 const MOBILE_MENU: MobileItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQWR 160U", "Microfocus X-Ray", "High-Energy X-Ray", "Automated Test Equipments"] },
-  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defence", "Electronics", "Heavy Engineering"] },
+  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "Microfocus X-Ray", "High-Energy X-Ray", "Automated Test Equipments"] },
+  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defense and Securities", "Electronics", "Heavy Engineering"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
   { name: "Contact", href: "/contact" },

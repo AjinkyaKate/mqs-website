@@ -21,15 +21,15 @@ const LABEL: CSSProperties = { font: "var(--type-label)", letterSpacing: "var(--
 type NavItem = { name: string; href?: string; children?: string[] };
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQWR 160U", "Microfocus X-Ray", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
-  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defence", "Electronics", "Heavy Engineering"] },
+  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "Microfocus X-Ray", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
+  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defense and Securities", "Electronics", "Heavy Engineering"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
 ];
 const MOBILE_MENU: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQWR 160U", "Microfocus X-Ray", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
-  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defence", "Electronics", "Heavy Engineering"] },
+  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "Microfocus X-Ray", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
+  { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defense and Securities", "Electronics", "Heavy Engineering"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
   { name: "Contact", href: "/contact" },

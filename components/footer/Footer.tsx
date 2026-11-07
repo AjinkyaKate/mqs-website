@@ -34,6 +34,7 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
       { label: "MQX.NeVa", href: "/products/mqx-neva" },
       { label: "MQX.tracE", href: "/products/mqx-trace" },
       { label: "MQS.PRISM", href: "/products/prism" },
+      { label: "MQS.VIGIL", href: "/products/mqs-vigil" },
       { label: "MQWR 160U", href: "/products/mqwr-160u" },
       { label: "Microfocus X-Ray", href: "/products/microfocus-xray" },
       { label: "MQX.OptimaXis", href: "/products/mqx-optimaxis" },

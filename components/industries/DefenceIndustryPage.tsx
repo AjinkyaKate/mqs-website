@@ -208,7 +208,7 @@ export default function DefenceIndustryPage() {
 
         <div className={`${shell} relative z-10 flex min-h-[720px] items-end pb-20 pt-32 max-md:min-h-[680px] max-md:pb-12`}>
           <div className="max-w-[800px]">
-            <p className="t-eyebrow m-0 text-[#5AD1F7]">Defence capabilities</p>
+            <p className="t-eyebrow m-0 text-[#5AD1F7]">Defense and Securities</p>
             <p className="t-caption mb-0 mt-6 text-white/65">Custom requirements. Engineered solution.</p>
             <h1 className="t-display mb-0 mt-4 max-w-[13ch] text-white">See Inside. Test Function. Prove Readiness.</h1>
             <p className="t-lead mb-0 mt-7 max-w-[63ch] text-white/75">

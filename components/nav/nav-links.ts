@@ -12,6 +12,7 @@ export const HREF_MAP: Record<string, string> = {
   Automotive: "/industries/automotive",
   Aerospace: "/industries/aerospace",
   Defence: "/industries/defence",
+  "Defense and Securities": "/industries/defence",
   Electronics: "/industries/electronics",
   "Heavy Engineering": "/industries/heavy-engineering",
 
@@ -23,6 +24,7 @@ export const HREF_MAP: Record<string, string> = {
   "MQX.NeVa": "/products/mqx-neva",
   "MQX.tracE": "/products/mqx-trace",
   "MQS.PRISM": "/products/prism",
+  "MQS.VIGIL": "/products/mqs-vigil",
   "MQWR 160U": "/products/mqwr-160u",
   "Microfocus X-Ray": "/products/microfocus-xray",
   "MQX.OptimaXis": "/products/mqx-optimaxis",
