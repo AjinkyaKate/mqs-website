@@ -76,6 +76,17 @@ export default function AerospaceIndustryPage() {
           sizes="100vw"
           className="object-cover object-center"
         />
+        <video
+          aria-hidden="true"
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/assets/ind-aerospace.jpg"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        >
+          <source src="/assets/industries/aerospace/aerospace-client-preview.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[#0B5470]/30 mix-blend-color" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,24,35,.98)_0%,rgba(6,30,42,.88)_43%,rgba(5,22,32,.24)_78%,rgba(5,22,32,.18)_100%)] max-md:bg-[linear-gradient(180deg,rgba(5,22,32,.20)_0%,rgba(5,22,32,.92)_58%,#071C28_100%)]" />
 
