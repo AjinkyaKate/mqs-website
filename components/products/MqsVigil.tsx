@@ -115,6 +115,12 @@ function Arrow() {
 }
 
 function SpecTable({ rows, label }: { rows: string[][]; label: string }) {
+  const categorySpan = (index: number) => {
+    let span = 1;
+    while (index + span < rows.length && rows[index + span][0] === rows[index][0]) span += 1;
+    return span;
+  };
+
   return (
     <div className="overflow-x-auto border border-[#D3DFE7] bg-white">
       <table className="w-full min-w-[720px] border-collapse text-left">
@@ -127,13 +133,23 @@ function SpecTable({ rows, label }: { rows: string[][]; label: string }) {
           </tr>
         </thead>
         <tbody>
-          {rows.map(([category, feature, value], index) => (
-            <tr key={`${category}-${feature}`} className={index % 2 ? "bg-[#F4F8FA]" : "bg-white"}>
-              <td className="t-body-sm border-t border-[#D3DFE7] px-5 py-4 font-semibold text-[#0B2A3A]">{category}</td>
-              <td className="t-body-sm border-t border-[#D3DFE7] px-5 py-4 text-[#41586A]">{feature}</td>
-              <td className="t-body-sm border-t border-[#D3DFE7] px-5 py-4 text-[#41586A]">{value}</td>
-            </tr>
-          ))}
+          {rows.map(([category, feature, value], index) => {
+            const startsCategory = index === 0 || rows[index - 1][0] !== category;
+            return (
+              <tr key={`${category}-${feature}`} className={index % 2 ? "bg-[#F4F8FA]" : "bg-white"}>
+                {startsCategory && (
+                  <td
+                    rowSpan={categorySpan(index)}
+                    className="t-body-sm align-top border-t border-r border-[#D3DFE7] bg-[#E9F0F4] px-5 py-4 font-semibold text-[#0B2A3A]"
+                  >
+                    {category}
+                  </td>
+                )}
+                <td className="t-body-sm border-t border-[#D3DFE7] px-5 py-4 text-[#41586A]">{feature}</td>
+                <td className="t-body-sm border-t border-[#D3DFE7] px-5 py-4 text-[#41586A]">{value}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -143,41 +159,23 @@ function SpecTable({ rows, label }: { rows: string[][]; label: string }) {
 export default function MqsVigil() {
   return (
     <main className="bg-[#F4F8FA] text-[#41586A]">
-      <section id="overview" className="relative overflow-hidden bg-[#071C28] pt-[76px]">
-        <div className={`${shell} grid min-h-[680px] items-stretch lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]`}>
-          <div className="flex flex-col justify-center py-16 pr-0 md:py-20 lg:py-24 lg:pr-14">
-            <p className="t-eyebrow m-0 text-[#5AD1F7]">MQS Vigil</p>
-            <p className="t-caption mb-0 mt-6 text-white/60">Portable real-time X-ray viewing system</p>
-            <h1 className="t-display mb-0 mt-5 max-w-[12ch] text-white">Portable. Remote. Field-Ready.</h1>
-            <p className="t-lead mb-0 mt-7 max-w-[58ch] text-white/75">
+      <section id="overview" className="bg-white pt-[76px]">
+        <div className={`${shell} flex min-h-[600px] flex-col justify-center py-20 md:py-24 lg:py-32`}>
+          <div className="max-w-[900px]">
+            <p className="t-eyebrow m-0 text-[#0A6A88]">MQS Vigil</p>
+            <p className="t-caption mb-0 mt-6 text-[#5F7688]">Portable real-time X-ray viewing system</p>
+            <h1 className="t-display mb-0 mt-5 max-w-[12ch] text-[#0B2A3A]">Portable. Remote. Field-Ready.</h1>
+            <p className="t-lead mb-0 mt-7 max-w-[65ch] text-[#41586A]">
               MQS Vigil is a portable, battery-powered digital X-ray viewing system designed for rapid field deployment.
               It combines an X-ray source, detector panel, control interface and rugged display unit to deliver real-time
               X-ray images of suspicious, concealed or hard-to-access objects.
             </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <a href="#specifications" className="group t-button inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-white">
-                View Specifications <Arrow />
-              </a>
-              <a href="#contact" className="group t-button inline-flex h-[52px] items-center gap-3 border border-white/40 px-7 text-white no-underline transition-colors hover:bg-white/10">
+            <div className="mt-9">
+              <a href="/contact" className="group t-button inline-flex h-[52px] items-center gap-3 bg-[#0E3A52] px-7 text-white no-underline transition-colors hover:bg-[#0A2B3D]">
                 Request a Demo <Arrow />
               </a>
             </div>
           </div>
-          <figure className="relative m-0 min-h-[420px] overflow-hidden border-l border-white/10 bg-[#0B2A3A] lg:min-h-full">
-            <Image
-              src="/assets/products/mqs-vigil/field-deployment.png"
-              alt="MQS Vigil portable X-ray source, detector, control unit and rugged case deployed outdoors"
-              fill
-              preload
-              quality={90}
-              sizes="(min-width:1024px) 55vw, 100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,28,40,.38),transparent_45%)]" />
-            <figcaption className="t-caption absolute bottom-0 left-0 bg-[#071C28]/90 px-5 py-4 text-white/75 backdrop-blur-sm">
-              MQS Vigil field-deployment configuration
-            </figcaption>
-          </figure>
         </div>
       </section>
 
@@ -274,6 +272,9 @@ export default function MqsVigil() {
               </article>
             ))}
           </div>
+          <a href="#specifications" className="group t-button mt-10 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0E3A52] hover:text-white">
+            View Specifications <Arrow />
+          </a>
         </div>
       </section>
 
@@ -322,10 +323,10 @@ export default function MqsVigil() {
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <a href="#contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">
+              <a href="/contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">
                 Talk to an Expert <Arrow />
               </a>
-              <a href="#contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 border border-[#0E3A52] px-7 text-[#0E3A52] no-underline hover:bg-white">
+              <a href="/contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 border border-[#0E3A52] px-7 text-[#0E3A52] no-underline hover:bg-white">
                 Request a Demo <Arrow />
               </a>
             </div>

@@ -122,7 +122,7 @@ export default function MqxcSeries() {
           <h1 style={{ margin: 0, font: "600 clamp(30px,4.2vw,58px)/1.04 var(--font-sans)", letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>See inside every part. Safely. Repeatably. On your floor.</h1>
           <p style={{ margin: 0, font: "400 clamp(15px,1.3vw,19px)/1.55 var(--font-sans)", color: "rgba(255,255,255,.80)", maxWidth: 600, textWrap: "pretty" }}>Self-contained DR &amp; CT-ready platforms with AERB-compliant shielding, high-resolution detectors and multi-axis part handling — installed on your production floor, not in a bunker.</p>
           <div className="flex flex-wrap" style={{ gap: 12, marginTop: 8 }}>
-            <a href="#contact" style={btnPrimary} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a demo</a>
+            <a href="/contact" style={btnPrimary} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a demo</a>
             <a href="/brochures/mqxc-cabinet-dr.pdf" target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: "transparent", border: "1px solid rgba(255,255,255,.42)", color: "#fff", font: "500 13px/1 var(--font-sans)", letterSpacing: ".045em", textTransform: "uppercase" }} className="hover:!bg-white/10">Download brochure (PDF)</a>
           </div>
         </div>
@@ -161,7 +161,7 @@ export default function MqxcSeries() {
                 </li>
               ))}
             </ul>
-            <div><a href="#contact" style={{ ...btnPrimary, marginTop: 8 }} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a demo</a></div>
+            <div><a href="/contact" style={{ ...btnPrimary, marginTop: 8 }} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a demo</a></div>
           </div>
         </div>
       </section>

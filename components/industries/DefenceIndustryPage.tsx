@@ -204,15 +204,6 @@ export default function DefenceIndustryPage() {
           sizes="100vw"
           className="object-cover object-[70%_center]"
         />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/Cl-5K_hT-OM?autoplay=1&mute=1&controls=0&loop=1&playlist=Cl-5K_hT-OM&start=556&end=574&playsinline=1&rel=0&modestbranding=1&disablekb=1"
-            title="Preview footage of 155 mm artillery shell manufacturing"
-            tabIndex={-1}
-            allow="autoplay; encrypted-media"
-            className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-screen min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 scale-[1.18] border-0"
-          />
-        </div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,24,35,.98)_0%,rgba(6,30,42,.88)_43%,rgba(5,22,32,.22)_78%,rgba(5,22,32,.12)_100%)] max-md:bg-[linear-gradient(180deg,rgba(5,22,32,.18)_0%,rgba(5,22,32,.92)_58%,#071C28_100%)]" />
 
         <div className={`${shell} relative z-10 flex min-h-[720px] items-end pb-20 pt-32 max-md:min-h-[680px] max-md:pb-12`}>
@@ -223,7 +214,7 @@ export default function DefenceIndustryPage() {
             <p className="t-lead mb-0 mt-7 max-w-[63ch] text-white/75">
               MQS combines industrial X-ray inspection with custom Automated Test Equipments to help defence manufacturers verify both internal integrity and functional performance across fuzes, ammunition and mission critical assemblies.
             </p>
-            <a href="#contact" className="group t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
+            <a href="/contact" className="group t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
               Talk to an Engineer <Arrow />
             </a>
           </div>
@@ -504,8 +495,8 @@ export default function DefenceIndustryPage() {
               </p>
             </div>
             <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-              <a href="#contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Engineer <Arrow /></a>
-              <a href="#contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 border border-[#0E3A52] px-7 text-[#0E3A52] no-underline hover:bg-white">Request a Demo <Arrow /></a>
+              <a href="/contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Engineer <Arrow /></a>
+              <a href="/contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 border border-[#0E3A52] px-7 text-[#0E3A52] no-underline hover:bg-white">Request a Demo <Arrow /></a>
             </div>
           </div>
         </div>

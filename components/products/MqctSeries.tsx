@@ -261,7 +261,7 @@ export default function MqctSeries() {
             to thick steel castings, with defect analysis that feeds back into defect-free production.
           </p>
           <div className="flex flex-wrap" style={{ gap: 12, marginTop: 8 }}>
-            <a href="#contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
+            <a href="/contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
             <a href="#specs" style={btnGhostDark} className="hover:!bg-white/10">See specifications</a>
           </div>
         </div>

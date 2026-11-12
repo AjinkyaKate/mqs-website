@@ -176,7 +176,7 @@ export default function ProductsCTA() {
                   {pending ? "Submitting..." : "Request consultation"}
                 </button>
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="t-button flex h-12 items-center justify-center rounded-none px-7 transition-colors duration-200 hover:!bg-[#0B2A3A] hover:!text-white"
                   style={{ border: `1px solid ${INK}`, color: INK }}
                 >

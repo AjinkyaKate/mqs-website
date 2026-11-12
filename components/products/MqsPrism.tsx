@@ -28,8 +28,6 @@ import {
      brochure filename use "MQS.PRISM". The site convention is used here.
    · The A–F highlight letters sat on a diagram that did not survive export,
      so the pins are placed on the studio photograph.
-   · "ASTM E2422 Compliance Guide" is listed in the brief but no file was
-     supplied, so it is shown without a link.
    · Section 8 (Request a Demo) is served by the hero button and the contact
      form below the page; a separate CTA band was removed site-wide at the
      client's request (see HighEnergy.tsx).
@@ -37,7 +35,7 @@ import {
 
 const NAV_ITEMS: [string, string][] = [
   ["Overview", "#overview"], ["Key Benefits", "#benefits"], ["Highlights", "#highlights"], ["ADR", "#adr"],
-  ["Applications", "#applications"], ["Specifications", "#specs"], ["Downloads", "#downloads"],
+  ["Applications", "#applications"], ["Demo", "#demo"], ["Specifications", "#specs"], ["Downloads", "#downloads"],
 ];
 
 const BADGES = ["Made in India", "AI-enabled ADR · ASTM E2422", "AERB-compliant", "24/7 operation"];
@@ -248,7 +246,7 @@ export default function MqsPrism() {
 
       {/* ── highlights (§3), with highlight A animated ── */}
       <Section id="highlights" tone="page" ruled>
-        <SectionHead title="Product Highlights" />
+        <SectionHead title="Solution Highlights" />
         <HotspotFigure src="/assets/prod-prism-hero.jpg" aspect="2046 / 1151" items={HIGHLIGHTS}
           alt="MQS.PRISM inspection cabinet, operator console and safety fencing with lettered feature callouts" />
         <div className="mt-16">
@@ -270,6 +268,22 @@ export default function MqsPrism() {
         <div className="mt-4"><TagList items={APPLICATIONS} /></div>
         <p className="mt-10" style={label(CYAN_ON_LIGHT)}>Industries Served</p>
         <div className="mt-4"><IndustryCards items={INDUSTRIES} /></div>
+      </Section>
+
+      <Section id="demo" tone="page" ruled>
+        <SectionHead title="MQS.PRISM Demo" />
+        <p className="mt-7 max-w-[760px]" style={lead(BODY)}>
+          See MQS.PRISM performing high-speed automated X-ray inspection for automotive production components.
+        </p>
+        <div className="relative mt-9 aspect-video max-w-[1100px] overflow-hidden bg-[#071C28]">
+          <iframe
+            title="MQS.PRISM high-speed automated X-ray inspection demo"
+            src="https://www.youtube-nocookie.com/embed/k3Auc_KEG70?rel=0&modestbranding=1"
+            className="absolute inset-0 h-full w-full border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
       </Section>
 
       {/* ── specs (§5) + why (§6) ── */}
@@ -302,8 +316,7 @@ export default function MqsPrism() {
           relatedTitle="Other MQS Solutions"
           downloads={[
             { name: "PRISM Brochure (PDF)", href: "/brochures/mqs-prism.pdf" },
-            { name: "PRISM Demo Video", status: "Coming Soon" },
-            { name: "ASTM E2422 Compliance Guide" },
+            { name: "PRISM Demo Video", href: "https://www.youtube.com/watch?v=k3Auc_KEG70" },
           ]}
           related={[
             { name: "High Energy X-ray", href: "/products/high-energy-xray" },

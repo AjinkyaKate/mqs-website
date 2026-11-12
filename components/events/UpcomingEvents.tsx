@@ -3,14 +3,15 @@
 import Image from "next/image";
 import { useState } from "react";
 
-const EVENTS = [
-  {
-    dates: "16–18 Sept 2026",
-    event: "Productronica India 2026",
-    city: "BIEC, Bengaluru",
-    showing: "MQX.tracE | IN-3D",
-    logo: "/assets/event-productronica.svg",
-  },
+type EventItem = {
+  dates: string;
+  event: string;
+  city: string;
+  logo: string;
+  showing?: string;
+};
+
+const EVENTS: EventItem[] = [
   {
     dates: "15–17 Nov 2026",
     event: "ISNT 2026",
@@ -69,7 +70,7 @@ export default function UpcomingEvents() {
               <span aria-hidden="true" className="ml-3">→</span>
             </a>
             <a href="/products" className="t-button inline-flex h-12 items-center border bg-white px-6 no-underline transition-colors hover:bg-[#E8F1F4]" style={{ color: INK, borderColor: "#BFCFD6" }}>
-              See our products
+              See our solutions
               <span aria-hidden="true" className="ml-3">→</span>
             </a>
           </div>
@@ -79,9 +80,9 @@ export default function UpcomingEvents() {
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
               <div className="t-caption" style={{ color: CYAN }}>Confirmed schedule</div>
-              <p className="t-body m-0 mt-1" style={{ color: MUTED }}>Four opportunities to see MQS systems up close.</p>
+              <p className="t-body m-0 mt-1" style={{ color: MUTED }}>Three opportunities to see MQS systems up close.</p>
             </div>
-            <div className="t-caption whitespace-nowrap" style={{ color: "#71848E" }}>04 events</div>
+            <div className="t-caption whitespace-nowrap" style={{ color: "#71848E" }}>03 events</div>
           </div>
 
           <div className="flex flex-col gap-4">

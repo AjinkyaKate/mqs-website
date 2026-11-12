@@ -14,10 +14,10 @@ export async function submitContactForm(
     name: formData.get("name") as string,
     company: formData.get("company") as string,
     email: formData.get("email") as string,
-    phone: formData.get("phone") as string,
-    industry: formData.get("industry") as string,
-    application: formData.get("application") as string,
-    message: formData.get("message") as string,
+    phone: (formData.get("phone") as string) ?? "",
+    industry: (formData.get("industry") as string) ?? "",
+    application: (formData.get("application") as string) ?? "",
+    message: (formData.get("message") as string) ?? "",
   };
 
   const result = contactSchema.safeParse(raw);

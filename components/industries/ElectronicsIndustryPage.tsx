@@ -68,7 +68,7 @@ const solutions = [
   },
   {
     name: "MQX.NeVa-M",
-    mode: "Microfocus CT",
+    mode: "Fine-detail X-ray / CT",
     copy: "Finer internal detail for package analysis, R&D and failure investigation beyond routine board screening.",
     image: "/assets/prod-mqct-pcb.jpg",
     href: "/products/mqx-neva",
@@ -86,7 +86,7 @@ const resources = [
   ["MQX.tracE", "2.5D PCB X-ray inspection brochure", "/brochures/mqx-trace.pdf"],
   ["MQX.tracE CT", "3D CT inspection brochure", "/brochures/mqx-trace-ct.pdf"],
   ["MQX.tracE | IN-3D", "Inline 2D / 2.5D / 3D inspection flyer", "/brochures/mqx-trace-in-3d.pdf"],
-  ["MQX.NeVa-M", "Microfocus CT brochure", "/brochures/microfocus-xray.pdf"],
+  ["MQX.NeVa-M", "Fine-detail X-ray / CT brochure", "/brochures/microfocus-xray.pdf"],
   ["MQX.gINti", "AI X-ray component counter flyer", "/brochures/mqx-ginti.pdf"],
 ];
 
@@ -109,6 +109,18 @@ export default function ElectronicsIndustryPage() {
           sizes="100vw"
           className="object-cover object-center"
         />
+        <video
+          className="mqs-hero-video-reveal absolute inset-0 h-full w-full object-cover object-center"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/assets/ind-electronics-alt.jpg"
+          aria-label="Modern high-tech electronics manufacturing floor"
+        >
+          <source src="/assets/industries/electronics/electronics-header.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[#0B5470]/25 mix-blend-color" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,24,35,.98)_0%,rgba(6,30,42,.88)_43%,rgba(5,22,32,.22)_78%,rgba(5,22,32,.12)_100%)] max-md:bg-[linear-gradient(180deg,rgba(5,22,32,.18)_0%,rgba(5,22,32,.92)_58%,#071C28_100%)]" />
 
@@ -120,7 +132,7 @@ export default function ElectronicsIndustryPage() {
             <p className="t-lead mb-0 mt-7 max-w-[63ch] text-white/75">
               From SMT production to failure analysis, MQS X-ray and CT solutions reveal hidden solder, package and interconnect defects without damaging the assembly.
             </p>
-            <a href="#contact" className="group t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
+            <a href="/contact" className="group t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
               Talk to an Expert <Arrow />
             </a>
           </div>
@@ -300,7 +312,7 @@ export default function ElectronicsIndustryPage() {
               <p className="t-h4 m-0 max-w-[38ch] text-[#0B2A3A]">Bring us the board. We’ll engineer the inspection.</p>
               <p className="t-body-sm mb-0 mt-3 max-w-[62ch] text-[#5F7688]">Share the package, defect target, throughput requirement and traceability need.</p>
             </div>
-            <a href="#contact" className="group t-button inline-flex h-[52px] shrink-0 items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Expert <Arrow /></a>
+            <a href="/contact" className="group t-button inline-flex h-[52px] shrink-0 items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Expert <Arrow /></a>
           </div>
         </div>
       </section>

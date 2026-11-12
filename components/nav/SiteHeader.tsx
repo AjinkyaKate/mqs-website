@@ -8,7 +8,7 @@ const INK = "#0B2A3A";
 
 const LINKS: [string, string][] = [
   ["About", "/#about"],
-  ["Products", "/products"],
+  ["Solutions", "/products"],
   ["Industries", "/#industries"],
   ["Services", "/#services"],
 ];
@@ -37,7 +37,7 @@ export default function SiteHeader() {
       </nav>
 
       <Link
-        href="/#contact"
+        href="/contact"
         className="ml-auto flex h-11 items-center rounded-none px-6 uppercase no-underline transition-colors duration-200 hover:!bg-[#0A2B3D] md:h-12 lg:ml-9"
         style={{ background: "#0E3A52", color: "#fff", font: "500 13px/1 var(--font-sans)", letterSpacing: ".045em" }}
       >

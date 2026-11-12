@@ -37,7 +37,7 @@ type NavItem = { name: string; href?: string; children?: string[] };
 
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "Microfocus X-Ray", "High-Energy X-Ray", "Automated Test Equipments"] },
+  { name: "Solutions", children: ["Solutions overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "MQX.NeVa-M", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
   { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defense and Securities", "Electronics", "Heavy Engineering"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
@@ -47,7 +47,7 @@ const NAV: NavItem[] = [
 type MobileItem = { name: string; href?: string; children?: string[] };
 const MOBILE_MENU: MobileItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "Microfocus X-Ray", "High-Energy X-Ray", "Automated Test Equipments"] },
+  { name: "Solutions", children: ["Solutions overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "MQX.NeVa-M", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
   { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defense and Securities", "Electronics", "Heavy Engineering"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
@@ -404,7 +404,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
         )}
 
         {isDesktop && (
-          <a href="#contact" style={{ ...LABEL, width: ctaW, flex: "none", display: "flex", alignItems: "center", justifyContent: "center", background: inkHeader ? "#0E3A52" : CYAN, color: inkHeader ? "#FFFFFF" : "#08283A", fontSize: 15, transition: `background 200ms ${EASE}, color 200ms ${EASE}` }} className={inkHeader ? "hover:!bg-[#0A2B3D]" : "hover:!bg-[#0FA5D2]"}>
+          <a href="/contact" style={{ ...LABEL, width: ctaW, flex: "none", display: "flex", alignItems: "center", justifyContent: "center", background: inkHeader ? "#0E3A52" : CYAN, color: inkHeader ? "#FFFFFF" : "#08283A", fontSize: 15, transition: `background 200ms ${EASE}, color 200ms ${EASE}` }} className={inkHeader ? "hover:!bg-[#0A2B3D]" : "hover:!bg-[#0FA5D2]"}>
             Contact us
           </a>
         )}
@@ -413,7 +413,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
 
       {/* 7 — dropdown (Services / Equipment) */}
       {dropdownOpen && openItem?.children && (
-        <div data-mqs-panel onMouseEnter={cancelDropClose} onMouseLeave={scheduleDropClose} style={{ position: "fixed", top: navH, left: menuLeft ?? 600, zIndex: 40, minWidth: 320, background: "#FFFFFF", animation: `mqsPanel 200ms ${EASE} both` }}>
+        <div data-mqs-panel onMouseEnter={cancelDropClose} onMouseLeave={scheduleDropClose} style={{ position: "fixed", top: navH, left: menuLeft ?? 600, zIndex: 40, minWidth: 320, maxHeight: `calc(100vh - ${navH}px)`, overflowY: "auto", background: "#FFFFFF", animation: `mqsPanel 200ms ${EASE} both` }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {openItem.children.map((l) => (
               <a key={l} href={linkFor(openItem.name, l)} style={{ display: "block", padding: "12px 28px", font: "var(--type-body)", color: "#0B2A3A" }} className="transition-colors duration-200 hover:!bg-[#F4F8FA] hover:!text-[#0A6A88]">
@@ -496,7 +496,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
               })}
             </nav>
             <a
-              href="#contact"
+              href="/contact"
               style={{ ...LABEL, flexShrink: 0, marginTop: isTablet ? 40 : 30, alignSelf: "flex-start", display: "inline-flex", alignItems: "center", justifyContent: "center", height: isTablet ? 56 : 50, padding: `0 ${isTablet ? 34 : 28}px`, background: "#0E3A52", color: "#FFFFFF", fontSize: isTablet ? 17 : 16 }}
               className="hover:!bg-[#0A2B3D]"
             >
@@ -538,7 +538,7 @@ export default function Hero({ bgImage }: { bgImage?: ImageOverride } = {}) {
             <CTAButton variant="primary" href="/products" fullWidth={isPhone}>
               Explore solutions
             </CTAButton>
-            <CTAButton variant="outline" href="#contact" withArrow fullWidth={isPhone}>
+            <CTAButton variant="outline" href="/contact" withArrow fullWidth={isPhone}>
               Request a demo
             </CTAButton>
           </div>

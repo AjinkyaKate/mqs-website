@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "../hero/icons";
@@ -21,14 +22,14 @@ const LABEL: CSSProperties = { font: "var(--type-label)", letterSpacing: "var(--
 type NavItem = { name: string; href?: string; children?: string[] };
 const NAV: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "Microfocus X-Ray", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
+  { name: "Solutions", children: ["Solutions overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "MQX.NeVa-M", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
   { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defense and Securities", "Electronics", "Heavy Engineering"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
 ];
 const MOBILE_MENU: NavItem[] = [
   { name: "About", href: "/about-us" },
-  { name: "Products", children: ["Products overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "Microfocus X-Ray", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
+  { name: "Solutions", children: ["Solutions overview", "MQX.drIS", "MQX.NeVa", "MQX.tracE", "MQS.PRISM", "MQS.VIGIL", "MQWR 160U", "MQX.NeVa-M", "MQX.OptimaXis", "MQX.gINti", "Pipe Inspection DR", "Shell Inspection", "Fuze Inspection", "MQIR 225 Irradiator", "High-Energy X-Ray", "Automated Test Equipments"] },
   { name: "Industries", children: ["Industries overview", "Automotive", "Aerospace", "Defense and Securities", "Electronics", "Heavy Engineering"] },
   { name: "Services", href: "/services" },
   { name: "Careers", href: "/careers" },
@@ -44,6 +45,7 @@ const MOBILE_MENU: NavItem[] = [
 
 
 export default function SiteHeaderFull() {
+  const pathname = usePathname();
   const [w, setW] = useState(1440);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -125,7 +127,8 @@ export default function SiteHeaderFull() {
   const openItem = NAV.find((n) => n.name === openMenu) || null;
   const dropdownOpen = !!(openItem?.children && isDesktop);
   const menuActive = mobileOpen || menuMounted;
-  const inkHeader = headerSolid || menuActive;
+  const forceSolid = pathname === "/contact" || pathname === "/products/mqs-vigil";
+  const inkHeader = forceSolid || headerSolid || menuActive;
   const headerHide = headerHidden && !menuActive;
 
   const toggleLeft = (e: React.MouseEvent) => {
@@ -170,7 +173,7 @@ export default function SiteHeaderFull() {
           height: navH,
           display: "flex",
           alignItems: "stretch",
-          background: menuActive ? "#F4F8FA" : headerSolid ? "#FFFFFF" : isSmall ? SMALL_HEADER_GRADIENT : "transparent",
+          background: menuActive ? "#F4F8FA" : forceSolid || headerSolid ? "#FFFFFF" : isSmall ? SMALL_HEADER_GRADIENT : "transparent",
           borderBottom: `1px solid ${inkHeader ? "rgba(16,16,16,.08)" : "rgba(255,255,255,.14)"}`,
           transform: headerHide ? "translateY(-100%)" : "translateY(0)",
           transition: `transform 320ms ${EASE}, background 240ms ease, border-color 240ms ease`,
@@ -270,7 +273,7 @@ export default function SiteHeaderFull() {
 
       {/* dropdown */}
       {dropdownOpen && openItem?.children && (
-        <div data-mqs-panel onMouseEnter={cancelDropClose} onMouseLeave={scheduleDropClose} style={{ position: "fixed", top: navH, left: menuLeft ?? 600, zIndex: 40, minWidth: 320, background: "#FFFFFF", animation: `mqsPanel 200ms ${EASE} both` }}>
+        <div data-mqs-panel onMouseEnter={cancelDropClose} onMouseLeave={scheduleDropClose} style={{ position: "fixed", top: navH, left: menuLeft ?? 600, zIndex: 40, minWidth: 320, maxHeight: `calc(100vh - ${navH}px)`, overflowY: "auto", background: "#FFFFFF", animation: `mqsPanel 200ms ${EASE} both` }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {openItem.children.map((l) => (
               <a key={l} href={linkFor(openItem.name, l)} style={{ display: "block", padding: "12px 28px", font: "var(--type-body)", color: "#0B2A3A" }} className="transition-colors duration-200 hover:!bg-[#F4F8FA] hover:!text-[#0A6A88]">

@@ -154,7 +154,7 @@ function HeroSplit() {
         <div style={{ flex: "1 1 480px", display: "flex", flexDirection: "column", gap: "clamp(18px,2cqi,26px)" }}>
           <nav aria-label="Breadcrumb" style={{ display: "flex", flexWrap: "wrap", gap: 8, font: T_EYEBROW, letterSpacing: TR_LABEL, color: MUTED }}>
             <Link href="/" style={{ color: MUTED, textDecoration: "none" }}>Home</Link><span aria-hidden>/</span>
-            <Link href="/products" style={{ color: MUTED, textDecoration: "none" }}>Products</Link><span aria-hidden>/</span>
+            <Link href="/products" style={{ color: MUTED, textDecoration: "none" }}>Solutions</Link><span aria-hidden>/</span>
             <span aria-current="page" style={{ color: NAVY }}>MQCT Series</span>
           </nav>
           <p style={eyebrow()}>MQCT Series · Computed tomography solutions</p>

@@ -343,7 +343,7 @@ export default function Mqwr160u() {
 
       {/* ── highlights ── */}
       <Section id="highlights" tone="page" ruled>
-        <SectionHead title="Product Highlights" />
+        <SectionHead title="Solution Highlights" />
         <HotspotFigure src="/assets/prod-mqwr-system.jpg" aspect="1640 / 720" fit="contain" ground={WHITE} items={HIGHLIGHTS}
           alt="MQWR 160U shielded inspection cabinet with roller conveyors on the infeed and outfeed sides, with numbered feature callouts" />
       </Section>

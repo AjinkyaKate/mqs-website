@@ -298,7 +298,7 @@ export default function ShellInspection() {
               layout. MQS can recommend a cabinet-based system or engineer a bunker-based LINAC solution around the
               requirement.
             </p>
-            <a href="#contact" className="mt-6 inline-flex items-center gap-2 no-underline" style={label(CYAN_ON_DARK)}>
+            <a href="/contact" className="mt-6 inline-flex items-center gap-2 no-underline" style={label(CYAN_ON_DARK)}>
               Talk to an expert <span aria-hidden>→</span>
             </a>
           </div>

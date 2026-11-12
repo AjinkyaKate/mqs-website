@@ -141,7 +141,7 @@ export default function HighEnergy() {
             <h1 style={{ margin: 0, font: `600 clamp(32px,4.4vw,58px)/1.04 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>High Energy X-ray and CT</h1>
             <p style={{ margin: 0, font: `400 clamp(15px,1.3vw,18px)/1.6 ${SANS}`, color: "rgba(255,255,255,.80)", textWrap: "pretty" }}>When a part is too dense for an X-ray tube, a linear accelerator is the only way in. MQS builds turnkey high-energy inspection systems for rocket motors, solid propellants, heavy castings and pressure vessels — installed, shielded and supported in India.</p>
             <div className="flex flex-wrap" style={{ gap: 12, marginTop: 6 }}>
-              <a href="#contact" style={btnPrimary} className="hover:!bg-white hover:!text-[#0B2A3A]">Talk to an Engineer</a>
+              <a href="/contact" style={btnPrimary} className="hover:!bg-white hover:!text-[#0B2A3A]">Talk to an Engineer</a>
               <a href="#specs" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: "transparent", border: "1px solid rgba(255,255,255,.42)", color: "#fff", font: `500 13px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }} className="hover:!bg-white/10">See Specifications</a>
             </div>
           </div>

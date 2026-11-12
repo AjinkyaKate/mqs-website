@@ -205,7 +205,7 @@ export default function FuzeInspection() {
 
       {/* ── product highlights (§3) ── */}
       <Section id="highlights" tone="page" ruled>
-        <SectionHead title="Product Highlights" />
+        <SectionHead title="Solution Highlights" />
         <HotspotFigure src="/assets/prod-fuze-qx-cabinet.jpg" aspect="1 / 1" ground="#EEF1F4" items={HIGHLIGHTS}
           alt="MQS QX Cabinet fuze inspection system" />
       </Section>
@@ -247,7 +247,7 @@ export default function FuzeInspection() {
             Want a fuze inspection workflow customized to your calibre, cycle time, and compliance needs?
           </h3>
           <div className="flex shrink-0 flex-wrap" style={{ gap: 12 }}>
-            <a href="#contact" style={btnPrimary} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a Demo</a>
+            <a href="/contact" style={btnPrimary} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a Demo</a>
             <a href="/contact" className="hover:!bg-[#EAF6FB]" style={{ ...btnPrimary, background: "transparent", border: `1px solid ${INK}` }}>Talk to an Expert</a>
           </div>
         </div>

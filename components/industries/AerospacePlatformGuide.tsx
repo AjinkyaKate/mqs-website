@@ -11,15 +11,15 @@ const platforms = [
       ["Wing Structure (Spars, Ribs & Stringers)", "MQX.NeVa / MQX.drIS"],
       ["Fuselage Frames & Structural Rings", "MQX.NeVa"],
       ["Landing Gear & Mounting Brackets", "MQX.drIS: X-ray, MQX.NeVa"],
-      ["Control Surface Assemblies (Flaps / Ailerons / Hinges)", "MQX.drIS: X-ray, Microfocus X-ray"],
+      ["Control Surface Assemblies (Flaps / Ailerons / Hinges)", "MQX.drIS: X-ray, MQX.NeVa-M"],
       ["Tail Section (Empennage Frames)", "MQX.NeVa / MQX.drIS"],
     ],
   },
   {
     id: "fighter", label: "Fighter aircraft", left: "-100%", top: "0%",
     points: [
-      ["Nose Cone / Radome Section", "Microfocus X-ray / CT"],
-      ["Cockpit / Avionics Subsystems", "Microfocus X-ray / CT, MQX.NeVa"],
+      ["Nose Cone / Radome Section", "MQX.NeVa-M"],
+      ["Cockpit / Avionics Subsystems", "MQX.NeVa-M, MQX.NeVa"],
       ["Wing Root / Structural Assemblies", "MQX.NeVa / MQX.drIS"],
       ["Engine / Propulsion Components", "High-Energy X-ray, MQX.NeVa"],
       ["Mounted Assemblies", "High-Energy X-ray"],
@@ -29,7 +29,7 @@ const platforms = [
   {
     id: "rotorcraft", label: "Rotor wing aircraft", left: "0%", top: "-100%",
     points: [
-      ["Avionics Assemblies", "Microfocus X-ray / CT"],
+      ["Avionics Assemblies", "MQX.NeVa-M"],
       ["Main Rotor Hub", "High-Energy X-ray"],
       ["Gearbox Housing", "MQX.NeVa"],
       ["Engine / Powertrain Section", "High-Energy X-ray, MQX.NeVa"],
@@ -40,7 +40,7 @@ const platforms = [
   {
     id: "launch-vehicle", label: "Rocket & space launch vehicle", left: "-100%", top: "-100%",
     points: [
-      ["Payload Section", "Microfocus X-ray / CT, MQX.NeVa"],
+      ["Payload Section", "MQX.NeVa-M, MQX.NeVa"],
       ["Structural Stages", "High-Energy X-ray, MQX.NeVa"],
       ["Engine / Propulsion Components", "High-Energy X-ray, MQX.NeVa"],
     ],

@@ -127,7 +127,7 @@ export default function HeavyEngineeringIndustryPage() {
             <p className="t-lead mb-0 mt-7 max-w-[63ch] text-white/75">
               From straight pipe butt welds to SAW pipe joints, MQS engineers Digital Radiography solutions around the weld geometry, wall thickness, defect target, throughput and production environment.
             </p>
-            <a href="#contact" className="group t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
+            <a href="/contact" className="group t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
               Talk to an Expert <Arrow />
             </a>
           </div>
@@ -417,8 +417,8 @@ export default function HeavyEngineeringIndustryPage() {
               </p>
             </div>
             <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-              <a href="#contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Expert <Arrow /></a>
-              <a href="#contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 border border-[#0E3A52] px-7 text-[#0E3A52] no-underline hover:bg-white">Request a Demo <Arrow /></a>
+              <a href="/contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Expert <Arrow /></a>
+              <a href="/contact" className="group t-button inline-flex h-[52px] items-center justify-center gap-3 border border-[#0E3A52] px-7 text-[#0E3A52] no-underline hover:bg-white">Request a Demo <Arrow /></a>
             </div>
           </div>
         </div>

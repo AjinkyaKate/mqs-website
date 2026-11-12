@@ -197,7 +197,7 @@ export default function Mqir225() {
 
       {/* ── product highlights (§3) ── */}
       <Section id="highlights" tone="page" ruled>
-        <SectionHead title="Product Highlights" />
+        <SectionHead title="Solution Highlights" />
         <HotspotFigure src="/assets/product-irradiator.png" aspect="1 / 1" fit="contain" ground={WHITE} items={HIGHLIGHTS}
           alt="MQIR 225 X-ray irradiator cabinet with lettered callouts on the touchscreen control panel and the shielded cabinet" />
       </Section>
@@ -229,7 +229,7 @@ export default function Mqir225() {
         </ul>
         <div className="mt-12 flex max-w-[900px] flex-col gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-8" style={{ background: PAGE, border: `1px solid ${HAIR}` }}>
           <p style={{ ...body(INK), fontWeight: 500 }}>Need irradiators of other energies (20–450 kV) or chambers of custom sizes?</p>
-          <a href="#contact" style={btnPrimary} className="shrink-0 hover:!bg-[#0B2A3A] hover:!text-white">Talk to an Expert</a>
+          <a href="/contact" style={btnPrimary} className="shrink-0 hover:!bg-[#0B2A3A] hover:!text-white">Talk to an Expert</a>
         </div>
       </Section>
 

@@ -355,12 +355,12 @@ export default function MicrofocusXray() {
       <section id="overview" className="relative overflow-hidden scroll-mt-[76px]" style={{ background: INK }}>
         <div className={`${SHELL} grid grid-cols-1 items-center gap-10 pb-12 pt-[120px] md:pb-16 md:pt-[132px] lg:grid-cols-[minmax(0,1fr)_minmax(0,.95fr)] lg:gap-14 lg:pb-[88px] lg:pt-[150px]`}>
           <div className="flex max-w-[620px] flex-col" style={{ gap: 18 }}>
-            <p style={eyebrow(CYAN)}>Microfocus X-Ray Systems</p>
+            <p style={eyebrow(CYAN)}>MQX.NeVa-M</p>
             <h1 style={{ margin: 0, font: `600 clamp(30px,4.2vw,56px)/1.04 ${SANS}`, letterSpacing: "-.025em", color: "#fff", textWrap: "pretty" }}>
               Built for Fine Detail. Designed to Catch What Others Miss.
             </h1>
             <p style={lead("rgba(255,255,255,.82)")}>
-              MQS Microfocus X-ray systems are purpose-built for inspecting small, complex, and high-precision components
+              MQX.NeVa-M systems are purpose-built for inspecting small, complex, and high-precision components
               where even the tiniest defect can lead to major failure.
             </p>
             <Badges items={BADGES} />
@@ -389,7 +389,7 @@ export default function MicrofocusXray() {
 
       {/* ── highlights ── */}
       <Section id="highlights" tone="page" ruled>
-        <SectionHead title="Product Highlights" />
+        <SectionHead title="Solution Highlights" />
         <HotspotFigure src="/assets/prod-mf-system.jpg" aspect="2000 / 1656" fit="contain" ground={WHITE} items={HIGHLIGHTS}
           alt="Open-frame MQS microfocus X-ray system with numbered callouts on the tube, manipulator, detector and frame" />
       </Section>
@@ -424,8 +424,8 @@ export default function MicrofocusXray() {
       {/* ── downloads + related ── */}
       <Section id="downloads" tone="white" ruled>
         <DownloadsAndRelated downloadsTitle="Download Brochure"
-          downloads={[{ name: "Microfocus X-Ray Systems (PDF)", href: "/brochures/microfocus-xray.pdf" }]} />
-        <a href="#contact" className="mt-8 hover:!bg-[#0B2A3A] hover:!text-white" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: CYAN, color: INK, font: `500 13px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }}>Request a Demo</a>
+          downloads={[{ name: "MQX.NeVa-M brochure (PDF)", href: "/brochures/microfocus-xray.pdf" }]} />
+        <a href="/contact" className="mt-8 hover:!bg-[#0B2A3A] hover:!text-white" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: CYAN, color: INK, font: `500 13px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }}>Request a Demo</a>
       </Section>
     </main>
   );

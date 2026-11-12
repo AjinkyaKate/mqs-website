@@ -31,29 +31,29 @@ const platforms = [
   {
     name: "Fixed-wing aircraft",
     scope: "Engine and propulsion components, wing structures, fuselage frames, landing gear, control surfaces and tail sections.",
-    systems: "MQX.NeVa · MQX.drIS · Microfocus X-ray",
+    systems: "MQX.NeVa · MQX.drIS · MQX.NeVa-M",
   },
   {
     name: "Fighter aircraft",
     scope: "Nose cones, avionics, wing-root structures, dense propulsion components, mounted assemblies and rear structures.",
-    systems: "Microfocus X-ray / CT · High-Energy X-ray · MQX.NeVa · MQX.drIS",
+    systems: "MQX.NeVa-M · High-Energy X-ray · MQX.NeVa · MQX.drIS",
   },
   {
     name: "Rotorcraft",
     scope: "Avionics assemblies, rotor hubs, gearbox housings, powertrain components and tail structural sections.",
-    systems: "Microfocus X-ray / CT · High-Energy X-ray · MQX.NeVa · MQX.drIS",
+    systems: "MQX.NeVa-M · High-Energy X-ray · MQX.NeVa · MQX.drIS",
   },
   {
     name: "Rockets",
     scope: "Payload sections, structural stages and engine / propulsion components.",
-    systems: "Microfocus X-ray / CT · High-Energy X-ray · MQX.NeVa",
+    systems: "MQX.NeVa-M · High-Energy X-ray · MQX.NeVa",
   },
 ];
 
 const resources = [
   ["High-Energy X-ray & CT", "Deep-penetration inspection systems", "/brochures/high-energy-xray.pdf"],
   ["MQX.NeVa", "Industrial computed tomography", "/brochures/mqct-industrial-ct.pdf"],
-  ["MQX.NeVa-M", "Microfocus CT and fine-detail inspection", "/brochures/microfocus-xray.pdf"],
+  ["MQX.NeVa-M", "Fine-detail CT and X-ray inspection", "/brochures/microfocus-xray.pdf"],
   ["MQX.drIS", "Cabinet-based digital radiography", "/brochures/mqxc-cabinet-dr.pdf"],
 ];
 
@@ -99,7 +99,7 @@ export default function AerospaceIndustryPage() {
               From propulsion systems to avionics and structural assemblies, MQS engineers X-ray and CT solutions around the part,
               the defect, the material and the workflow.
             </p>
-            <a href="#contact" className="group t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
+            <a href="/contact" className="group t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
               Talk to an Expert <Arrow />
             </a>
           </div>
@@ -119,7 +119,7 @@ export default function AerospaceIndustryPage() {
             </p>
             <p className="t-body m-0 text-[#5F7688]">
               MQS supports aerospace applications with High-Energy X-ray and CT systems, MQX.NeVa industrial CT, MQX.NeVa-M
-              microfocus CT and MQX.drIS cabinet-based digital radiography. The right configuration follows the component size,
+              fine-detail CT and MQX.drIS cabinet-based digital radiography. The right configuration follows the component size,
               material, wall thickness, defect target and inspection workflow.
             </p>
           </div>
@@ -280,7 +280,7 @@ export default function AerospaceIndustryPage() {
               <p className="t-h4 m-0 max-w-[38ch] text-[#0B2A3A]">Bring us the inspection challenge.</p>
               <p className="t-body-sm mb-0 mt-3 max-w-[62ch] text-[#5F7688]">Share the component size, material, thickness, defect target and inspection workflow.</p>
             </div>
-            <a href="#contact" className="group t-button inline-flex h-[52px] shrink-0 items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Expert <Arrow /></a>
+            <a href="/contact" className="group t-button inline-flex h-[52px] shrink-0 items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Expert <Arrow /></a>
           </div>
         </div>
       </section>

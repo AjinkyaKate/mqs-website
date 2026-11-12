@@ -91,8 +91,17 @@ export default function AutomotiveIndustryPage() {
   return (
     <main className="bg-[#F4F8FA] text-[#41586A]">
       <section className="relative min-h-[720px] overflow-hidden bg-[#0B2A3A] max-md:min-h-[680px]">
+        <Image
+          src="/assets/industries/automotive/exploded-car.png"
+          alt="Automotive powertrain and inspection technology"
+          fill
+          preload
+          quality={90}
+          sizes="100vw"
+          className="object-cover object-center"
+        />
         <video
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="mqs-hero-video-reveal absolute inset-0 h-full w-full object-cover object-center"
           autoPlay
           muted
           loop
@@ -113,7 +122,7 @@ export default function AutomotiveIndustryPage() {
               From proven standard platforms to application-specific X-ray and CT systems, MQS engineers the configuration
               around your component, defect type, throughput and production workflow.
             </p>
-            <a href="#contact" className="t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
+            <a href="/contact" className="t-button mt-9 inline-flex h-[52px] items-center gap-3 bg-[#16C1F3] px-7 text-[#08283A] no-underline transition-colors hover:bg-[#0FA5D2]">
               Talk to an Expert <Arrow />
             </a>
           </div>
@@ -286,7 +295,7 @@ export default function AutomotiveIndustryPage() {
           </div>
           <div className="mt-12 flex flex-col gap-6 bg-[#E9F0F4] p-8 md:flex-row md:items-center md:justify-between md:p-10">
             <p className="t-h4 m-0 max-w-[38ch] text-[#0B2A3A]">Have a standard requirement or a custom inspection challenge?</p>
-            <a href="#contact" className="t-button group inline-flex h-[52px] shrink-0 items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Expert <Arrow /></a>
+            <a href="/contact" className="t-button group inline-flex h-[52px] shrink-0 items-center justify-center gap-3 bg-[#0E3A52] px-7 text-white no-underline hover:bg-[#0A2B3D]">Talk to an Expert <Arrow /></a>
           </div>
         </div>
       </section>

@@ -121,7 +121,7 @@ const INDUSTRIES: Industry[] = [
     systems: [
       { label: "High Energy X-ray and CT", href: "/products/high-energy-xray" },
       { label: "MQX.NeVa", href: "/products/mqx-neva" },
-      { label: "Microfocus X-ray Solutions", href: "/products/microfocus-xray" },
+      { label: "MQX.NeVa-M", href: "/products/microfocus-xray" },
       { label: "MQX.drIS", href: "/products/mqx-dris" },
     ],
     image: {
@@ -159,7 +159,7 @@ const INDUSTRIES: Industry[] = [
       { label: "MQX.tracE CT", href: "/products/mqx-trace" },
       { label: "MQX.tracE | IN-3D", href: "/products/mqx-trace" },
       { label: "MQX.gINti", href: "/products/mqx-ginti" },
-      { label: "Microfocus X-ray Solutions", href: "/products/microfocus-xray" },
+      { label: "MQX.NeVa-M", href: "/products/microfocus-xray" },
     ],
     /* The handoff ships the same PTH radiograph here as in the internal-view
        figure above. Kept as designed so both captions stay accurate. */
@@ -182,7 +182,7 @@ const ALSO: [string, string][] = [
 
 const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
   ["Turbine and engine components", "Micro-defects in high-value parts", [
-    { label: "Microfocus X-ray Solutions", href: "/products/microfocus-xray" },
+    { label: "MQX.NeVa-M", href: "/products/microfocus-xray" },
     { label: "MQX.NeVa", href: "/products/mqx-neva" },
   ]],
   ["Thick castings and dense assemblies", "Penetration through the section", [
@@ -198,7 +198,7 @@ const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
   ]],
   ["EV battery cells and modules", "Electrode alignment and internal defects", [
     { label: "MQX.NeVa", href: "/products/mqx-neva" },
-    { label: "Microfocus X-ray Solutions", href: "/products/microfocus-xray" },
+    { label: "MQX.NeVa-M", href: "/products/microfocus-xray" },
   ]],
   ["PCBs and solder joints", "Hidden voids under packages", [
     { label: "MQX.tracE", href: "/products/mqx-trace" },
@@ -319,7 +319,7 @@ function Hero() {
         </p>
         <div className="mt-9 flex flex-wrap gap-3.5 max-[639px]:mt-7 max-[639px]:flex-col max-[639px]:gap-2.5">
           <a href="#routing" style={btn(CYAN, NAVY)} className="hover:!bg-[#0FA6D4] max-[639px]:!w-full">Find Your Industry</a>
-          <a href="#contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10 max-[639px]:!w-full">
+          <a href="/contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10 max-[639px]:!w-full">
             Talk to an Expert
           </a>
         </div>

@@ -173,7 +173,7 @@ export default function MqxOptimaxis() {
 
       {/* ── product highlights (§3) ── */}
       <Section id="highlights" tone="page" ruled>
-        <SectionHead title="Product Highlights" />
+        <SectionHead title="Solution Highlights" />
         <HotspotFigure src="/assets/prod-optimaxis-system.jpg" aspect="1565 / 2000" items={HIGHLIGHTS} fit="contain" ground={WHITE}
           alt="MQX.OptimaXis inspection cabinet with operator console, monitor and open inspection bay, with lettered feature callouts" />
       </Section>

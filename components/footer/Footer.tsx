@@ -27,7 +27,7 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
     ],
   },
   {
-    title: "Products",
+    title: "Solutions",
     links: [
       { label: "All solutions", href: "/products" },
       { label: "MQX.drIS", href: "/products/mqx-dris" },
@@ -36,7 +36,7 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
       { label: "MQS.PRISM", href: "/products/prism" },
       { label: "MQS.VIGIL", href: "/products/mqs-vigil" },
       { label: "MQWR 160U", href: "/products/mqwr-160u" },
-      { label: "Microfocus X-Ray", href: "/products/microfocus-xray" },
+      { label: "MQX.NeVa-M", href: "/products/microfocus-xray" },
       { label: "MQX.OptimaXis", href: "/products/mqx-optimaxis" },
       { label: "MQX.gINti", href: "/products/mqx-ginti" },
       { label: "Pipe Inspection DR", href: "/products/pipe-inspection" },

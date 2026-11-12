@@ -296,7 +296,7 @@ export default function MqxTracE() {
             ))}
           </div>
           <div className="mt-3 flex flex-wrap" style={{ gap: 12 }}>
-            <a href="#contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
+            <a href="/contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
             <a href="#specs" style={btnGhostDark} className="hover:!bg-white/10">See specifications</a>
           </div>
         </div>
@@ -572,7 +572,7 @@ export default function MqxTracE() {
             </p>
           </div>
           <div className="lg:border-l lg:pl-10" style={{ borderColor: HAIR }}>
-            <a href="#contact" style={{ ...btnPrimary, width: "100%" }} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a demo</a>
+            <a href="/contact" style={{ ...btnPrimary, width: "100%" }} className="hover:!bg-[#0B2A3A] hover:!text-white">Request a demo</a>
           </div>
         </div>
       </Section>

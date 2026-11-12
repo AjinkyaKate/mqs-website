@@ -164,7 +164,7 @@ export default function MqxGinti() {
 
       {/* ── product highlights ── */}
       <Section id="highlights" tone="page" ruled>
-        <SectionHead title="Product Highlights" />
+        <SectionHead title="Solution Highlights" />
         <HotspotFigure src="/assets/prod-ginti-kiosk.jpg" aspect="1086 / 1448" fit="contain" ground={WHITE} items={HIGHLIGHTS}
           alt="MQX.gINti cabinet with lettered feature callouts on the touchscreen, reel tray and castor wheels" />
       </Section>
@@ -197,7 +197,7 @@ export default function MqxGinti() {
             <p className="mt-7 max-w-[52ch] pt-5" style={{ ...body(BODY), borderTop: `1px solid ${INK}` }}>
               See how MQX.gINti can reduce counting time and improve inventory accuracy in your SMT operations.
             </p>
-            <a href="#contact" className="mt-6 hover:!bg-[#0B2A3A] hover:!text-white"
+            <a href="/contact" className="mt-6 hover:!bg-[#0B2A3A] hover:!text-white"
               style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: CYAN, color: INK, textDecoration: "none", font: `500 13px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }}>
               Contact Us
             </a>

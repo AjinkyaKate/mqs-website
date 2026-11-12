@@ -279,8 +279,8 @@ function Hero() {
           {HERO.lead}
         </p>
         <div className="mt-9 flex flex-wrap gap-3.5 max-[639px]:mt-7 max-[639px]:flex-col max-[639px]:gap-2.5">
-          <Btn href="#contact" variant="primary">Raise a service request</Btn>
-          <Btn href="#contact" variant="outline">Talk to our team</Btn>
+          <Btn href="/contact" variant="primary">Raise a service request</Btn>
+          <Btn href="/contact" variant="outline">Talk to our team</Btn>
         </div>
       </div>
     </section>

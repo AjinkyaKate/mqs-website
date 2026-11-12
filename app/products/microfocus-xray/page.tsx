@@ -5,7 +5,7 @@ import ContactSection from "@/components/contact/ContactSection";
 import MicrofocusXray from "@/components/products/MicrofocusXray";
 
 export const metadata: Metadata = {
-  title: "Microfocus X-Ray Systems",
+  title: "MQX.NeVa-M | Fine-Detail CT and X-Ray",
   description:
     "MQS microfocus X-ray systems from 160 to 300 kV with transmission, reflection, rod anode and dual head tubes, for DR, CT and panoramic inspection down to 0.5 µm.",
   alternates: { canonical: "/products/microfocus-xray" },

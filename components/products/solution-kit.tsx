@@ -142,7 +142,7 @@ export function Badges({ items }: { items: string[] }) {
 export function HeroActions() {
   return (
     <div className="mt-3 flex flex-wrap" style={{ gap: 12 }}>
-      <a href="#contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
+      <a href="/contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
       <a href="#specs" style={btnGhostDark} className="hover:!bg-white/10">See specifications</a>
     </div>
   );

@@ -28,7 +28,7 @@ const NDT: Item[] = [
   { cat: "PCB X-ray", spec: "Volumetric 3D", name: "MQX.tracE CT", subtitle: "3D PCB Inspection", desc: "Layer-by-layer analysis of populated boards for buried-via and interconnect failure analysis.", image: "/assets/product-trace.png", href: "/products/mqx-trace", brochure: "mqx-trace-ct.pdf" },
   { cat: "PCB X-ray", spec: "Inline · 2D / 2.5D / 3D", name: "MQX.tracE | IN-3D", subtitle: "Inline PCB X-Ray Inspection", desc: "Inline 2D / 2.5D / 3D X-ray inspection for PCB and electronic assemblies, combining high-resolution imaging and automated defect analysis directly in the production flow.", image: "/assets/product-trace-in3d.png", href: "/products/mqx-trace", brochure: "mqx-trace-in-3d.pdf" },
   { cat: "PCB X-ray", spec: "AI counter · 99%", name: "MQX.gINti", subtitle: "Component Reel Counting", desc: "Fast, accurate X-ray inventory verification of SMT component reels without unspooling.", image: "/assets/product-ginti.jpg", href: "/products/mqx-ginti", brochure: "mqx-ginti.pdf" },
-  { cat: "Microfocus", spec: "0.5 µm · 160–300 kV", name: "Microfocus X-Ray Solutions", subtitle: "Sub-Micron Imaging Systems", desc: "Half-micron focal spot inspection for micro-castings, connectors and additive-manufactured parts.", image: "/assets/product-microfocus.png", href: "/products/microfocus-xray", brochure: "microfocus-xray.pdf" },
+  { cat: "Microfocus", spec: "0.5 µm · 160–300 kV", name: "MQX.NeVa-M", subtitle: "Fine-Detail CT & X-Ray", desc: "Half-micron focal spot inspection for micro-castings, connectors and additive-manufactured parts.", image: "/assets/product-microfocus.png", href: "/products/microfocus-xray", brochure: "microfocus-xray.pdf" },
   { cat: "Digital Radiography", spec: "160–450 kV · 100% duty", name: "Digital Radiography Solutions for Pipe Inspection", subtitle: "Pipe and Weld Inspection", desc: "Digital radiography for pipeline weld integrity and corrosion mapping at 100% duty cycle.", image: "/assets/product-pipe.png", href: "/products/pipe-inspection", brochure: "pipe-inspection-dr.pdf" },
   { cat: "Specialised Systems", spec: "Custom-built · Automated", name: "Fuze Inspection Solutions", subtitle: "Digital Radiography for Fuzes", desc: "Custom-built digital radiography with an optional swivel mechanism for faster automated fuze inspection.", image: "/assets/product-fuze.png", href: "/products/fuze-inspection", brochure: "fuze-inspection-system.pdf" },
   { cat: "Specialised Systems", spec: "Controlled energy · Dose", name: "MQIR 225 — X-Ray Irradiator", subtitle: "Laboratory Irradiation System", desc: "Stable, accurate laboratory irradiation in a shielded stainless-steel chamber with adjustable sample distance.", image: "/assets/product-irradiator.png", href: "/products/mqir-225", brochure: "mqir-225-irradiator.pdf" },
@@ -87,7 +87,7 @@ export default function ProductsCatalog() {
 
       {ndt.length > 0 && (
         <section className="px-6 pt-16 md:px-10 md:pt-[72px] lg:px-[55px] lg:pt-24">
-          <SectionHead title="X-Ray & CT Solutions" tag={`${ndt.length} Product${ndt.length === 1 ? "" : "s"}`} />
+          <SectionHead title="X-Ray & CT Solutions" tag={`${ndt.length} Solution${ndt.length === 1 ? "" : "s"}`} />
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-7 lg:mt-10 lg:grid-cols-3 lg:gap-8">
             {ndt.map((p) => (
               <ProductCard key={p.name} {...p} />
