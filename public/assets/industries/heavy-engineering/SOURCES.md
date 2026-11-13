@@ -13,4 +13,8 @@ The supplied 16-bit TIFF radiographs are the same three images; the docx PNG exp
 Reused from existing site assets:
 
 - `/assets/product-pipe.png` - real time butt weld DR system (identical to the supplied `Butt Weld Inspection.png`).
-- `/assets/inset-welder.jpg` - hero background, welding inside a large pipe section, used until the client supplies the header video.
+- `/assets/inset-welder.jpg` - hero poster and no-video fallback, welding inside a large pipe section.
+
+Licensed third-party media:
+
+- `heavy-engineering-header.mp4` - Pexels, “Close-up Industrial Machine Components in Operation”, downloaded 13 November 2026 from https://www.pexels.com/video/close-up-industrial-machine-components-in-operation-35451865/ and transcoded for web delivery.

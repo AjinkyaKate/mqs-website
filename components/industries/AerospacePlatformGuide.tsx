@@ -47,6 +47,26 @@ const platforms = [
   },
 ] as const;
 
+const solutionLinks: Record<string, string> = {
+  "MQX.NeVa": "/products/mqx-neva",
+  "MQX.NeVa-M": "/products/microfocus-xray",
+  "MQX.drIS": "/products/mqx-dris",
+  "High-Energy X-ray": "/products/high-energy-xray",
+};
+
+function LinkedSolutions({ value }: { value: string }) {
+  const parts = value.split(/(High-Energy X-ray|MQX\.NeVa-M|MQX\.NeVa|MQX\.drIS)/g);
+  return (
+    <>
+      {parts.map((part, index) => solutionLinks[part] ? (
+        <a key={`${part}-${index}`} href={solutionLinks[part]} className="font-semibold text-[#5AD1F7] underline decoration-white/30 underline-offset-4 hover:decoration-[#5AD1F7]">
+          {part}
+        </a>
+      ) : part)}
+    </>
+  );
+}
+
 export default function AerospacePlatformGuide() {
   const [active, setActive] = useState(0);
   const platform = platforms[active];
@@ -99,7 +119,7 @@ export default function AerospacePlatformGuide() {
                   <span className="grid h-7 w-7 shrink-0 place-items-center border border-[#5AD1F7] text-xs font-semibold text-[#5AD1F7]">{index + 1}</span>
                   <div>
                     <h4 className="m-0 text-sm font-semibold leading-snug text-white">{name}</h4>
-                    <p className="mb-0 mt-2 text-sm leading-relaxed text-white/70"><span className="text-[#5AD1F7]">MQS solution: </span>{solution}</p>
+                    <p className="mb-0 mt-2 text-sm leading-relaxed text-white/70"><span className="text-[#5AD1F7]">MQS solution: </span><LinkedSolutions value={solution} /></p>
                   </div>
                 </li>
               ))}

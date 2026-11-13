@@ -371,8 +371,14 @@ export default function Mqwr160u() {
 
       {/* ── brochure ── */}
       <Section id="downloads" tone="white">
-        <DownloadsAndRelated downloadsTitle="Download Brochure"
-          downloads={[{ name: "MQWR 160U Inline Wheel Inspection System (PDF)", href: "/brochures/mqwr-160u-wheel-inspection.pdf" }]} />
+        <DownloadsAndRelated downloadsTitle="Download Brochure" relatedTitle="Other MQS Solutions"
+          downloads={[{ name: "MQWR 160U Inline Wheel Inspection System (PDF)", href: "/brochures/mqwr-160u-wheel-inspection.pdf" }]}
+          related={[
+            { name: "MQS.PRISM", href: "/products/prism" },
+            { name: "MQX.drIS", href: "/products/mqx-dris" },
+            { name: "MQX.NeVa", href: "/products/mqx-neva" },
+            { name: "MQX.OptiMaxis", href: "/products/mqx-optimaxis" },
+          ]} />
       </Section>
     </main>
   );

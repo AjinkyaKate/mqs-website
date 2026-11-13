@@ -30,7 +30,7 @@ const applications = [
     number: "B",
     part: "Crankshafts",
     systems: [
-      ["MQX.drIS Cabinet DR", "/products/mqx-dris", "Flexible 2D inspection configured around component size and inspection objective."],
+      ["MQX.drIS", "/products/mqx-dris", "Flexible 2D inspection configured around component size and inspection objective."],
       ["MQX.NeVa", "/products/mqx-neva", "3D CT where deeper internal detail or dimensional understanding is required."],
     ],
   },
@@ -38,13 +38,13 @@ const applications = [
     number: "C",
     part: "Pistons",
     systems: [
-      ["MQX.drIS Cabinet DR", "/products/mqx-dris", "2D inspection for porosity and internal defects, configured to the application."],
+      ["MQX.drIS", "/products/mqx-dris", "2D inspection for porosity and internal defects, configured to the application."],
     ],
   },
   {
     number: "D",
     part: "Valves",
-    systems: [["MQX.drIS Cabinet DR", "/products/mqx-dris", "Flexible 2D inspection configured around the valve geometry and inspection objective."]],
+    systems: [["MQX.drIS", "/products/mqx-dris", "Flexible 2D inspection configured around the valve geometry and inspection objective."]],
   },
   {
     number: "E",
@@ -68,7 +68,7 @@ const applications = [
     number: "H",
     part: "Under brackets",
     systems: [
-      ["MQX.drIS Cabinet DR", "/products/mqx-dris", "Flexible batch inspection for varied automotive components."],
+      ["MQX.drIS", "/products/mqx-dris", "Flexible batch inspection for varied automotive components."],
       ["MQS.PRISM", "/products/prism", "Higher-throughput inspection where production speed is the priority."],
     ],
   },

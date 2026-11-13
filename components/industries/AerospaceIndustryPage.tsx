@@ -63,6 +63,19 @@ function Arrow() {
   return <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">→</span>;
 }
 
+const productLinks: Record<string, string> = {
+  "MQX.NeVa": "/products/mqx-neva",
+  "MQX.NeVa-M": "/products/microfocus-xray",
+  "MQX.drIS": "/products/mqx-dris",
+  "High-Energy X-ray": "/products/high-energy-xray",
+};
+
+function LinkedSolutionList({ value }: { value: string }) {
+  return <>{value.split(/(High-Energy X-ray|MQX\.NeVa-M|MQX\.NeVa|MQX\.drIS)/g).map((part, index) => productLinks[part] ? (
+    <a key={`${part}-${index}`} href={productLinks[part]} className="font-semibold text-[#0A6A88] underline decoration-[#0A6A88]/25 underline-offset-4 hover:decoration-[#0A6A88]">{part}</a>
+  ) : part)}</>;
+}
+
 export default function AerospaceIndustryPage() {
   return (
     <main className="bg-[#F4F8FA] text-[#41586A]">
@@ -228,7 +241,7 @@ export default function AerospaceIndustryPage() {
                 <span className="t-caption text-[#0A6A88]">0{index + 1}</span>
                 <h3 className="t-h3 mb-0 mt-5 text-[#0B2A3A]">{platform.name}</h3>
                 <p className="t-body mb-0 mt-5 text-[#5F7688]">{platform.scope}</p>
-                <p className="t-caption mb-0 mt-7 border-t border-[#D3DFE7] pt-5 text-[#0A6A88]">{platform.systems}</p>
+                <p className="t-caption mb-0 mt-7 border-t border-[#D3DFE7] pt-5 text-[#0A6A88]"><LinkedSolutionList value={platform.systems} /></p>
               </article>
             ))}
           </div>

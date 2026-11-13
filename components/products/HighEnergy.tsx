@@ -28,7 +28,7 @@ const STATS: [string, string, string][] = [
 ];
 
 const COMPONENTS: [string, string, string][] = [
-  ["Source", "Varex Linear Accelerators", "Linatron models from 0.95 to 15 MeV, single and dual energy, selected against the thickness and density you actually inspect."],
+  ["Source", "Linear Accelerators", "Linatron models from 0.95 to 15 MeV, single and dual energy, selected against the thickness and density you actually inspect."],
   ["Imaging", "Detectors & Software", "Digital flat panel detectors rated to 16 MeV with optional line detectors, driven by MQS Imaging Suite and VG Studio Max."],
   ["Handling", "Manipulators & Enclosures", "Multi-axial manipulators for the accelerator head, detector and object, plus shielded enclosures and remote control stations."],
 ];
@@ -74,7 +74,7 @@ const CONFIGS: Config[] = [
   {
     no: "04", sector: "Volumetric analysis", title: "MQHCT Series — High Energy Computed Tomography",
     desc: "High-energy CT for large, intricate parts — producing a measurable 3D volume rather than a projection, so porosity can be sized and located rather than estimated. Energy is chosen against the application, and the cell is configured around multi-axial manipulators, accelerators, detectors and imaging software.",
-    specs: [["X-ray source", "Dual energy Linatron, with optional dual-focus 450 kV industrial X-ray"], ["Imaging system", "Digital flat panel detector to 16 MeV, with optional line detector"], ["Handling", "Custom multi-axial manipulators for tube, flat panel and object"], ["Imaging software", "MQS Imaging Suite, VG Studio Max, Varex CBCT tools"], ["Control station", "Control unit, operator workstation and image visualisation workstation"]],
+    specs: [["X-ray source", "Dual energy Linatron, with optional dual-focus 450 kV industrial X-ray"], ["Imaging system", "Digital flat panel detector to 16 MeV, with optional line detector"], ["Handling", "Custom multi-axial manipulators for tube, flat panel and object"], ["Imaging software", "MQS Imaging Suite, VG Studio Max and CBCT tools"], ["Control station", "Control unit, operator workstation and image visualisation workstation"]],
     image: "/assets/he-hero-light.png",
   },
 ];
@@ -84,6 +84,7 @@ const APP_CALLOUTS: [string, string, string][] = [
   ["Aerospace", "Rocket Motors & Propellants", "Cracks, voids and debonds in grain and casing, at thicknesses no tube-based system can reach."],
   ["Heavy engineering", "Castings & Pressure Parts", "Porosity, shrinkage and inclusions in thick-section castings, valve bodies and pressure vessels."],
   ["Energy", "Weldments & Components", "Weld integrity in heavy fabricated structures where radiographic quality must meet ASTM E-94."],
+  ["Defence and Securities", "Mission-Critical Components", "Deep-penetration inspection of dense assemblies, propellant systems and security-critical components."],
 ];
 
 type SpecTable = { title: string; rows: [string, string][] };
@@ -346,7 +347,26 @@ export default function HighEnergy() {
               );
             })}
           </div>
-          <p style={{ margin: "28px 0 0", maxWidth: 760, font: `400 13px/1.6 ${SANS}`, color: MUTED }}>All Linatron models from Varex Imaging Corporation are designed and manufactured in accordance with EMC Directive 89/336/EEC and Low Voltage Directive 73/23/EEC.</p>
+        </div>
+      </section>
+
+      <section style={{ padding: "clamp(56px,7vw,104px) clamp(24px,4vw,55px)", background: PAGE, borderTop: `1px solid ${HAIR}` }}>
+        <div className="mx-auto" style={{ maxWidth: 1330 }}>
+          <div style={eyebrow(CYAN_ON_LIGHT)}>Other MQS Solutions</div>
+          <h2 style={{ ...h2, marginBottom: 36 }}>Explore related inspection platforms.</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4" style={{ gap: 1, background: HAIR, border: `1px solid ${HAIR}` }}>
+            {[
+              ["MQX.drIS", "/products/mqx-dris"],
+              ["MQX.NeVa", "/products/mqx-neva"],
+              ["MQX.NeVa-M", "/products/microfocus-xray"],
+              ["MQS.VIGIL", "/products/mqs-vigil"],
+            ].map(([name, href]) => (
+              <a key={name} href={href} className="group flex min-h-[110px] items-center justify-between bg-white p-6 no-underline hover:!bg-[#EAF6FB]">
+                <span style={{ font: `600 17px/1.3 ${SANS}`, color: INK }}>{name}</span>
+                <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-1" style={{ color: CYAN_ON_LIGHT }}>→</span>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -19,9 +19,10 @@ const needs = [
 ];
 
 const pillars = [
-  ["01", "Fuze Inspection Systems", "Custom built indigenous digital radiography systems for electronic and mechanical fuzes, including automated configurations and swivel mechanisms for faster inspection cycles.", "#fuze"],
-  ["02", "Shell & Ammunition Inspection", "Digital X-ray systems for ammunition of different calibres, with automated handling, shell rotation, indexing and configurable inspection presets.", "#shell"],
-  ["03", "Automated Test Equipments", "Custom functional test systems for critical defence assemblies and subsystems where standard test equipment cannot meet the test objective or interface requirement.", "#ate"],
+  ["01", "Fuze Inspection Systems", "Custom built indigenous digital radiography systems for electronic and mechanical fuzes, including automated configurations and swivel mechanisms for faster inspection cycles.", "/products/fuze-inspection"],
+  ["02", "Shell & Ammunition Inspection", "Digital X-ray systems for ammunition of different calibres, with automated handling, shell rotation, indexing and configurable inspection presets.", "/products/shell-inspection"],
+  ["03", "Automated Test Equipments", "Custom functional test systems for critical defence assemblies and subsystems where standard test equipment cannot meet the test objective or interface requirement.", "/products/automated-test-equipment"],
+  ["04", "MQS.VIGIL", "Portable, battery-powered real-time X-ray viewing for rapid stand-off inspection in security, tactical and field environments.", "/products/mqs-vigil"],
 ];
 
 const fuzeFeatures = [
@@ -99,6 +100,7 @@ const resources = [
   ["Fuze Inspection Systems", "Digital radiography for electronic and mechanical fuzes", "/brochures/fuze-inspection-system.pdf"],
   ["Shell & Ammunition Inspection", "Cabinet and LINAC based X-ray inspection for ammunition", "/brochures/shell-ammunition-inspection.pdf"],
   ["Automated Test Equipments", "Custom functional test systems for defence assemblies", "/brochures/automated-test-equipment.pdf"],
+  ["MQS.VIGIL", "Portable real-time X-ray viewing for field and security applications", "/brochures/mqs-vigil.pdf"],
 ];
 
 const shell = "mx-auto w-full max-w-[1330px] px-6 md:px-10 lg:px-[55px]";
@@ -255,12 +257,12 @@ export default function DefenceIndustryPage() {
         <div className={shell}>
           <p className="t-eyebrow m-0 text-[#5AD1F7]">Capability pillars</p>
           <div className="mt-5 grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-end lg:gap-20">
-            <h2 className="t-h2 m-0 text-white">Three Defence Capability Pillars.</h2>
+            <h2 className="t-h2 m-0 text-white">Four Defence Capability Pillars.</h2>
             <p className="t-lead m-0 text-white/70">
               The capabilities are complementary. X-ray and CT reveal internal condition. Automated Test Equipments verify function and performance. Together, they support a broader verification strategy for defence manufacturing.
             </p>
           </div>
-          <div className="mt-12 grid gap-px bg-white/15 md:grid-cols-3 lg:mt-16">
+          <div className="mt-12 grid gap-px bg-white/15 md:grid-cols-2 lg:mt-16 lg:grid-cols-4">
             {pillars.map(([number, title, copy, href]) => (
               <a key={title} href={href} className="group flex min-h-[320px] flex-col justify-between bg-[#0E3448] p-8 text-white no-underline lg:p-10">
                 <div>
@@ -268,7 +270,7 @@ export default function DefenceIndustryPage() {
                   <h3 className="t-h3 mb-0 mt-5 text-white">{title}</h3>
                   <p className="t-body mb-0 mt-5 text-white/65">{copy}</p>
                 </div>
-                <span className="t-button mt-8 inline-flex items-center gap-3 text-[#5AD1F7]">Read more <Arrow /></span>
+                <span className="t-button mt-8 inline-flex items-center gap-3 text-[#5AD1F7]">Explore solution <Arrow /></span>
               </a>
             ))}
           </div>
@@ -290,6 +292,7 @@ export default function DefenceIndustryPage() {
               MQS has developed custom built indigenous fuze inspection systems for digital radiography of electronic and mechanical fuzes. The platform can be engineered around the fuze geometry, required X-ray configuration and inspection workflow.
             </p>
             <FeatureList items={fuzeFeatures} />
+            <a href="/products/fuze-inspection" className="group t-button mt-8 inline-flex h-[48px] items-center gap-3 bg-[#0E3A52] px-6 text-white no-underline hover:bg-[#0A2B3D]">Explore Solution <Arrow /></a>
             <p className="t-body-sm mb-0 mt-8 bg-[#E9F0F4] p-6 text-[#41586A]">
               <strong className="text-[#0B2A3A]">Where it fits:</strong> artillery fuze and multi model hand grenade inspection requirements where repeatability, automation and internal visibility are important.
             </p>
@@ -308,6 +311,7 @@ export default function DefenceIndustryPage() {
             <p className="t-body mb-0 mt-5 text-[#5F7688]">
               The solutions can be supplied in two broad configurations: cabinet based systems for suitable shell sizes and energy ranges, and LINAC based systems installed in shielded bunkers for larger, denser or higher penetration applications. MQS systems can also incorporate automated handling, shell rotation, indexing and preset inspection sequences to support repeatable inspection across different diameters and production workflows.
             </p>
+            <a href="/products/shell-inspection" className="group t-button mt-8 inline-flex h-[48px] items-center gap-3 bg-[#0E3A52] px-6 text-white no-underline hover:bg-[#0A2B3D]">Explore Solution <Arrow /></a>
           </div>
           <div className="relative aspect-[860/715] overflow-hidden bg-white">
             <Image src="/assets/industries/defence/shell-inspection-system.jpg" alt="MQS shell inspection system with conveyor and the range of ammunition calibres it inspects" fill quality={90} sizes="(min-width:1024px) 42vw, 100vw" className="object-contain" />
@@ -364,6 +368,7 @@ export default function DefenceIndustryPage() {
             <p className="t-body mb-0 mt-5 text-white/60">
               MQS develops customized ATE for applications where standard test equipment cannot address the complete requirement. These systems can support fault diagnosis, functional verification, production testing and final acceptance of critical assemblies, while reducing dependence on manual testing and improving repeatability. MQS has more than 25 years of experience developing customized test equipment for defence applications, including missile assemblies, missile launchers, fuzes, propellants, ignitors, missiles and torpedoes.
             </p>
+            <a href="/products/automated-test-equipment" className="group t-button mt-8 inline-flex h-[48px] items-center gap-3 bg-[#16C1F3] px-6 text-[#08283A] no-underline hover:bg-white">Explore Solution <Arrow /></a>
           </div>
           <div className="relative aspect-[700/555] overflow-hidden bg-white">
             <Image src="/assets/industries/defence/ate-test-racks.jpg" alt="MQS Automated Test Equipment racks for sensor and EDU testing" fill quality={90} sizes="(min-width:1024px) 42vw, 100vw" className="object-contain" />
@@ -476,7 +481,7 @@ export default function DefenceIndustryPage() {
             <h2 className="t-h2 m-0 max-w-[14ch] text-[#0B2A3A]">Technical details for your review.</h2>
             <p className="t-body m-0 max-w-[46ch] text-[#5F7688]">Move directly from the capability to the relevant product information.</p>
           </div>
-          <div className="grid md:grid-cols-3">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4">
             {resources.map(([name, description, href], index) => (
               <a key={name} href={href} className={`group border-b border-[#D3DFE7] py-7 text-[#0B2A3A] no-underline md:px-7 ${index ? "md:border-l" : ""}`}>
                 <span className="t-caption text-[#0A6A88]">PDF brochure</span>

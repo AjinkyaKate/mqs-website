@@ -309,14 +309,16 @@ export default function ShellInspection() {
       <Section id="downloads" tone="page" ruled>
         <DownloadsAndRelated
           downloadsTitle="Downloads"
-          relatedTitle="Helpful Links"
+          relatedTitle="Other MQS Solutions"
           downloads={[
             { name: "Shell / Ammunition Brochure (PDF)", href: "/brochures/shell-ammunition-inspection.pdf" },
             { name: "High-Energy X-ray Brochure (PDF)", href: "/brochures/high-energy-xray.pdf" },
           ]}
           related={[
-            { name: "High-Energy X-Ray Solutions", href: "/products/high-energy-xray" },
-            { name: "Defence Industry", href: "/industries/defence" },
+            { name: "Fuze Inspection", href: "/products/fuze-inspection" },
+            { name: "MQWR 160U", href: "/products/mqwr-160u" },
+            { name: "MQX.NeVa", href: "/products/mqx-neva" },
+            { name: "High Energy X-ray", href: "/products/high-energy-xray" },
           ]}
         />
       </Section>

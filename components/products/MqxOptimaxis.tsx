@@ -201,6 +201,12 @@ export default function MqxOptimaxis() {
           downloads={[
             { name: "OptimaXis Brochure (PDF)", href: "/brochures/mqx-optimaxis.pdf" },
           ]}
+          relatedTitle="Other MQS Solutions"
+          related={[
+            { name: "MQS.PRISM", href: "/products/prism" },
+            { name: "MQX.drIS", href: "/products/mqx-dris" },
+            { name: "MQX.NeVa", href: "/products/mqx-neva" },
+          ]}
         />
       </Section>
     </main>

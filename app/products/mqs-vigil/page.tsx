@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "/assets/products/mqs-vigil/field-deployment.png",
+        url: "/assets/products/mqs-vigil/field-deployment-client.jpg",
         width: 915,
         height: 780,
         alt: "MQS Vigil portable field X-ray system deployed outdoors",

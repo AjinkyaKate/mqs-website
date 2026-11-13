@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import XRayTorch from "@/components/application/ApplicationVisualPreview";
+import RelatedProductLinks from "./RelatedProductLinks";
 
 /* ──────────────────────────────────────────────────────────────
    MQXC Series product detail page — ported from
@@ -400,6 +401,12 @@ export default function MqxcSeries() {
           </div>
         </div>
       </section>
+
+      <RelatedProductLinks items={[
+        { name: "MQX.NeVa", href: "/products/mqx-neva" },
+        { name: "MQX.NeVa-M", href: "/products/microfocus-xray" },
+        { name: "High Energy X-ray", href: "/products/high-energy-xray" },
+      ]} />
     </main>
   );
 }

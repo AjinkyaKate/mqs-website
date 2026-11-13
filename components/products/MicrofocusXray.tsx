@@ -423,8 +423,13 @@ export default function MicrofocusXray() {
 
       {/* ── downloads + related ── */}
       <Section id="downloads" tone="white" ruled>
-        <DownloadsAndRelated downloadsTitle="Download Brochure"
-          downloads={[{ name: "MQX.NeVa-M brochure (PDF)", href: "/brochures/microfocus-xray.pdf" }]} />
+        <DownloadsAndRelated downloadsTitle="Download Brochure" relatedTitle="Other MQS Solutions"
+          downloads={[{ name: "MQX.NeVa-M brochure (PDF)", href: "/brochures/microfocus-xray.pdf" }]}
+          related={[
+            { name: "MQX.drIS", href: "/products/mqx-dris" },
+            { name: "MQX.NeVa", href: "/products/mqx-neva" },
+            { name: "High Energy X-ray", href: "/products/high-energy-xray" },
+          ]} />
         <a href="/contact" className="mt-8 hover:!bg-[#0B2A3A] hover:!text-white" style={{ display: "inline-flex", alignItems: "center", height: 48, padding: "0 26px", background: CYAN, color: INK, font: `500 13px/1 ${SANS}`, letterSpacing: ".045em", textTransform: "uppercase" }}>Request a Demo</a>
       </Section>
     </main>

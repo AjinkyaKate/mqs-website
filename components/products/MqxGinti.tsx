@@ -56,9 +56,9 @@ const BENEFITS: [string, string, string][] = [
 const HIGHLIGHTS: Hotspot[] = [
   { id: "A", title: "Touchscreen / UI Panel", desc: "Smart counting interface & quick operation.", at: [49.5, 50] },
   { id: "B", title: "X-ray Inspection Bay / Reel Tray", desc: "Ensures simultaneous reel counting.", at: [50, 71] },
-  { id: "C", title: "Barcode Scanning Zone", desc: "Barcode integration." },
-  { id: "D", title: "Safety Interlocks / E-stop", desc: "AERB safety & interlocks." },
-  { id: "E", title: "Mobility / Castor Wheels", desc: "Easy handling on shop floor.", at: [30.4, 92.9] },
+  { id: "C", title: "Barcode Scanning Zone", desc: "Barcode integration.", at: [68, 71] },
+  { id: "D", title: "Safety Interlocks / E-stop", desc: "AERB safety & interlocks.", at: [35, 71] },
+  { id: "E", title: "Mobility / Castor Wheels", desc: "Easy handling on shop floor.", at: [71.5, 93] },
 ];
 
 /* Step names are image labels only. Alt text describes what is visible. */
@@ -190,8 +190,14 @@ export default function MqxGinti() {
       {/* ── downloads & demo CTA ── */}
       <Section id="downloads" tone="page" ruled>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
-          <DownloadsAndRelated downloadsTitle="Downloadable Materials"
-            downloads={[{ name: "MQX.gINti Brochure (PDF)", href: "/brochures/mqx-ginti.pdf" }]} />
+          <DownloadsAndRelated downloadsTitle="Downloadable Materials" relatedTitle="Other MQS Solutions"
+            downloads={[{ name: "MQX.gINti Brochure (PDF)", href: "/brochures/mqx-ginti.pdf" }]}
+            related={[
+              { name: "MQX.tracE", href: "/products/mqx-trace" },
+              { name: "MQX.NeVa", href: "/products/mqx-neva" },
+              { name: "High Energy X-ray Solutions", href: "/products/high-energy-xray" },
+              { name: "MQX.NeVa-M", href: "/products/microfocus-xray" },
+            ]} />
           <div>
             <h2 style={{ ...h2(INK), fontSize: "clamp(24px,2.4vw,32px)" }}>Request a Demo</h2>
             <p className="mt-7 max-w-[52ch] pt-5" style={{ ...body(BODY), borderTop: `1px solid ${INK}` }}>

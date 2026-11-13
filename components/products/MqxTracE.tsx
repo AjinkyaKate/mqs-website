@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import RelatedProductLinks from "./RelatedProductLinks";
 
 /* ──────────────────────────────────────────────────────────────
    MQX.tracE product page — /products/mqx-trace/
@@ -576,6 +577,10 @@ export default function MqxTracE() {
           </div>
         </div>
       </Section>
+
+      <RelatedProductLinks items={[
+        { name: "MQX.gINti", href: "/products/mqx-ginti" },
+      ]} />
 
       {/* ── lightbox ── */}
       {zoom && (

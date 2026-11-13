@@ -275,15 +275,21 @@ export default function MqsPrism() {
         <p className="mt-7 max-w-[760px]" style={lead(BODY)}>
           See MQS.PRISM performing high-speed automated X-ray inspection for automotive production components.
         </p>
-        <div className="relative mt-9 aspect-video max-w-[1100px] overflow-hidden bg-[#071C28]">
-          <iframe
-            title="MQS.PRISM high-speed automated X-ray inspection demo"
-            src="https://www.youtube-nocookie.com/embed/k3Auc_KEG70?rel=0&modestbranding=1"
-            className="absolute inset-0 h-full w-full border-0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
-        </div>
+        <a
+          href="https://www.youtube.com/watch?v=k3Auc_KEG70"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative mt-9 block aspect-video max-w-[1100px] overflow-hidden bg-[#071C28]"
+          aria-label="Watch the MQS.PRISM demo on YouTube"
+        >
+          <Image src="/assets/prod-prism-hero.jpg" alt="MQS.PRISM automated X-ray inspection system" fill sizes="(min-width:1100px) 1100px, 100vw" className="object-cover opacity-55 transition-transform duration-500 group-hover:scale-[1.02]" />
+          <span className="absolute inset-0 grid place-items-center">
+            <span className="grid h-20 w-20 place-items-center rounded-full border border-white/50 bg-[#16C1F3] text-[#08283A] shadow-xl transition-transform duration-200 group-hover:scale-105" aria-hidden>
+              <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z" /></svg>
+            </span>
+          </span>
+          <span className="absolute bottom-6 left-6 bg-[#0B2A3A]/90 px-5 py-3 text-sm font-semibold uppercase tracking-[.08em] text-white">Watch demo on YouTube ↗</span>
+        </a>
       </Section>
 
       {/* ── specs (§5) + why (§6) ── */}
@@ -319,9 +325,9 @@ export default function MqsPrism() {
             { name: "PRISM Demo Video", href: "https://www.youtube.com/watch?v=k3Auc_KEG70" },
           ]}
           related={[
-            { name: "High Energy X-ray", href: "/products/high-energy-xray" },
-            { name: "Inline Wheel Inspection", href: "/products/mqwr-160u" },
-            { name: "CT System", href: "/products/mqx-neva" },
+            { name: "MQX.drIS", href: "/products/mqx-dris" },
+            { name: "MQX.NeVa", href: "/products/mqx-neva" },
+            { name: "MQX.OptiMaxis", href: "/products/mqx-optimaxis" },
           ]}
         />
       </Section>

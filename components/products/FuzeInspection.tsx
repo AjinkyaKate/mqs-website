@@ -240,7 +240,8 @@ export default function FuzeInspection() {
         <DownloadsAndRelated
           downloadsTitle="Downloadable Resources"
           downloads={[{ name: "Fuze Inspection Systems Brochure (PDF)", href: "/brochures/fuze-inspection-system.pdf" }]}
-          related={[{ name: "Defence", note: "Industry page", href: "/industries/defence" }]}
+          relatedTitle="Other MQS Solutions"
+          related={[{ name: "Shell Inspection", href: "/products/shell-inspection" }]}
         />
         <div className="mt-14 flex flex-col gap-6 p-6 md:flex-row md:items-center md:justify-between md:p-8" style={{ background: PAGE, border: `1px solid ${HAIR}` }}>
           <h3 className="max-w-[56ch]" style={{ ...h3(INK), fontSize: 20 }}>

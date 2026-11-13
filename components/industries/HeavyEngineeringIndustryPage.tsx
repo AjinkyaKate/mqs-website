@@ -85,14 +85,9 @@ const platforms = [
   ["Custom Engineered Configuration", "Best when geometry, line integration, bunker layout, manipulation, automation, fixtures or software workflow require a system designed around the customer environment."],
 ];
 
-/* Only the pipe inspection brochure exists in /public/brochures today. The other
-   three documents are listed in the client brief but not yet supplied, so they
-   route to the enquiry form until the PDFs arrive. */
-const resources: [string, string, string | null][] = [
+const resources: [string, string, string][] = [
   ["Butt Weld / Straight Pipe Inspection", "Application brochure", "/brochures/pipe-inspection-dr.pdf"],
-  ["Steel Tubular Butt Weld Inspection", "Solution brief", null],
-  ["SAW Pipe Digital Radiography", "Application brochure", null],
-  ["MQS Imaging Suite", "Software overview", null],
+  ["Pipe Inspection DR", "Product page", "/products/pipe-inspection"],
 ];
 
 const shell = "mx-auto w-full max-w-[1330px] px-6 md:px-10 lg:px-[55px]";
@@ -104,9 +99,8 @@ function Arrow() {
 export default function HeavyEngineeringIndustryPage() {
   return (
     <main className="bg-[#F4F8FA] text-[#41586A]">
-      {/* Hero. The client asked for a pipe image here until their header video
-          arrives; this is the dark welding photograph already in the asset set,
-          which holds up under the scrim where the light product renders do not. */}
+      {/* Licensed industrial-machine film with the existing welding image as a
+          poster and no-video fallback. */}
       <section className="relative min-h-[720px] overflow-hidden bg-[#071C28] max-md:min-h-[680px]">
         <Image
           src="/assets/inset-welder.jpg"
@@ -117,6 +111,14 @@ export default function HeavyEngineeringIndustryPage() {
           sizes="100vw"
           className="object-cover object-[65%_center]"
         />
+        <video
+          className="mqs-hero-video-reveal absolute inset-0 h-full w-full object-cover object-center"
+          autoPlay muted loop playsInline preload="metadata"
+          poster="/assets/inset-welder.jpg"
+          aria-label="Industrial machine components operating in a heavy engineering facility"
+        >
+          <source src="/assets/industries/heavy-engineering/heavy-engineering-header.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,24,35,.98)_0%,rgba(6,30,42,.88)_43%,rgba(5,22,32,.22)_78%,rgba(5,22,32,.12)_100%)] max-md:bg-[linear-gradient(180deg,rgba(5,22,32,.18)_0%,rgba(5,22,32,.92)_58%,#071C28_100%)]" />
 
         <div className={`${shell} relative z-10 flex min-h-[720px] items-end pb-20 pt-32 max-md:min-h-[680px] max-md:pb-12`}>
@@ -242,13 +244,14 @@ export default function HeavyEngineeringIndustryPage() {
           </div>
           <div className="mt-12 grid gap-px bg-white/15 md:grid-cols-2 lg:mt-16">
             {solutions.map(([title, approach, value], index) => (
-              <article key={title} className="flex flex-col bg-[#0E3448] p-8 lg:p-10">
+              <article key={title} className="group flex flex-col bg-[#0E3448] p-8 lg:p-10">
                 <span className="t-eyebrow text-[#5AD1F7]">{String(index + 1).padStart(2, "0")}</span>
                 <h3 className="t-h3 mb-0 mt-5 text-white">{title}</h3>
                 <p className="t-caption mb-0 mt-8 text-[#5AD1F7]">MQS inspection approach</p>
                 <p className="t-body mb-0 mt-2 text-white/75">{approach}</p>
                 <p className="t-caption mb-0 mt-6 border-t border-white/15 pt-6 text-[#5AD1F7]">Inspection value</p>
                 <p className="t-body mb-0 mt-2 text-white/65">{value}</p>
+                <a href="/products/pipe-inspection" className="t-button mt-8 inline-flex items-center gap-3 self-start text-[#5AD1F7] no-underline">Explore Solution <Arrow /></a>
               </article>
             ))}
           </div>
@@ -400,8 +403,8 @@ export default function HeavyEngineeringIndustryPage() {
           </div>
           <div className="grid md:grid-cols-2">
             {resources.map(([name, kind, href], index) => (
-              <a key={name} href={href ?? "#contact"} className={`group border-b border-[#D3DFE7] py-7 text-[#0B2A3A] no-underline md:px-7 ${index % 2 ? "md:border-l" : ""}`}>
-                <span className="t-caption text-[#0A6A88]">{href ? `PDF · ${kind}` : `${kind} · Available on request`}</span>
+              <a key={name} href={href} className={`group border-b border-[#D3DFE7] py-7 text-[#0B2A3A] no-underline md:px-7 ${index % 2 ? "md:border-l" : ""}`}>
+                <span className="t-caption text-[#0A6A88]">{kind}</span>
                 <span className="mt-3 flex items-center justify-between gap-6">
                   <strong className="t-h4 block">{name}</strong>
                   <Arrow />
