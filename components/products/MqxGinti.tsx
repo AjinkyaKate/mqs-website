@@ -23,10 +23,8 @@ import {
 
    PENDING MQS SIGN-OFF:
    · The A to E highlight letters sat beside the product photo in the brief
-     with no leader lines that survived export. A, B and E are pinned where
-     the part is visible on the studio photo; C (barcode scanning zone) and
-     D (safety interlocks / E-stop) cannot be located on it, so they are
-     listed without a pin.
+     with no leader lines that survived export. All five markers are placed on
+     the nearest corresponding visible hardware area in the studio photo.
    · Industries: the brief lists applications only, so no industry cards.
    · Request a Demo uses the brief's own line and points at the contact form.
    ────────────────────────────────────────────────────────────── */

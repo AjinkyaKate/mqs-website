@@ -163,7 +163,7 @@ export default function MqsVigil() {
         <Image
           src="/assets/products/mqs-vigil/field-deployment-client.jpg"
           alt="MQS.VIGIL portable X-ray equipment deployed in a field environment"
-          fill preload quality={92} sizes="100vw"
+          fill preload quality={90} sizes="100vw"
           className="object-cover object-[62%_center]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,24,35,.98)_0%,rgba(7,31,44,.91)_42%,rgba(5,22,32,.38)_72%,rgba(5,22,32,.16)_100%)] max-md:bg-[linear-gradient(180deg,rgba(5,22,32,.18)_0%,rgba(5,22,32,.94)_58%,#071C28_100%)]" />
