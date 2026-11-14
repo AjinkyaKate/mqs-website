@@ -30,9 +30,8 @@ import {
      ("Preset workflows support automated inspections...") is shown as C,
      titled with Key Benefit 03's wording. A and B reuse the brief's own
      short-description sentences.
-   · The A–E letters sat on the brief's photo (MEDEQUIP-branded), as
-     floating labels whose positions did not survive export, so no pins
-     are placed on the photograph; the list carries the highlights.
+   · The A–E letters are positioned on the nearest corresponding visible
+     hardware area in the supplied cabinet photograph.
    · DETECTOR NAMES. "MQXRD 0822 XX" is listed with a 200 × 200 mm active
      area and "MQXRD 1621 XX" with 400 × 400 mm; the model numbers suggest
      other sizes. Shown as supplied.
@@ -64,11 +63,11 @@ const BENEFITS: [string, string, string][] = [
 ];
 
 const HIGHLIGHTS: Hotspot[] = [
-  { id: "A", title: "Custom-built Fuze Inspection Platform", desc: "Custom-built indigenous fuze inspection systems designed to perform digital radiography of electronic and mechanical fuzes." },
-  { id: "B", title: "Swivel Mechanism (optional configuration)", desc: "A highly reliable swivel mechanism that significantly improves cycle time and productivity." },
-  { id: "C", title: "Repeatable inspection with preset programs", desc: "Preset workflows support automated inspections and repeatable outcomes." },
-  { id: "D", title: "Configurable Imaging Chain (Source + Detector options)", desc: "Match penetration and image clarity to your fuze type and inspection requirement." },
-  { id: "E", title: "Compliance-Ready Safety & Shielding (AERB-aligned)", desc: "Safer operation with controlled leakage and interlock logic, supporting audits and regulated environments." },
+  { id: "A", title: "Custom-built Fuze Inspection Platform", desc: "Custom-built indigenous fuze inspection systems designed to perform digital radiography of electronic and mechanical fuzes.", at: [18, 62] },
+  { id: "B", title: "Swivel Mechanism (optional configuration)", desc: "A highly reliable swivel mechanism that significantly improves cycle time and productivity.", at: [69, 47] },
+  { id: "C", title: "Repeatable inspection with preset programs", desc: "Preset workflows support automated inspections and repeatable outcomes.", at: [88, 28] },
+  { id: "D", title: "Configurable Imaging Chain (Source + Detector options)", desc: "Match penetration and image clarity to your fuze type and inspection requirement.", at: [45, 28] },
+  { id: "E", title: "Compliance-Ready Safety & Shielding (AERB-aligned)", desc: "Safer operation with controlled leakage and interlock logic, supporting audits and regulated environments.", at: [95, 44] },
 ];
 
 /* ── technical information (brief §4), verbatim apart from unit spacing ── */
@@ -172,7 +171,7 @@ export default function FuzeInspection() {
           </div>
           <div className="relative" style={{ aspectRatio: "1 / 1", border: `1px solid ${HAIR_DARK}`, background: "#EEF1F4" }}>
             <Image src="/assets/prod-fuze-qx-cabinet.jpg" alt="MQS QX Cabinet fuze inspection system with two monitors, emergency stop and fuzes on the loading platform"
-              fill priority quality={90} sizes="(min-width:1024px) 44vw, 100vw" className="object-cover" />
+              fill preload quality={90} sizes="(min-width:1024px) 44vw, 100vw" className="object-cover" />
           </div>
         </div>
       </section>
@@ -196,7 +195,7 @@ export default function FuzeInspection() {
           </div>
           <div className="relative" style={{ aspectRatio: "1400 / 1123", background: WHITE, border: `1px solid ${HAIR}` }}>
             <Image src="/assets/prod-fuze-conveyor-cabinet.jpg" alt="Shielded fuze inspection cabinet with double doors and roller conveyors carrying fuze trays on either side"
-              fill quality={88} sizes="(min-width:1024px) 40vw, 100vw" className="object-contain" />
+              fill quality={90} sizes="(min-width:1024px) 40vw, 100vw" className="object-contain" />
           </div>
         </div>
         <h2 className="mt-14" style={h2(INK)}>Key Benefits</h2>

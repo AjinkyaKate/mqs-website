@@ -81,6 +81,7 @@ const capabilityMap = [
   ["Electronic / mechanical fuzes", "Fuze Inspection System", "Digital radiography of internal construction and assembly condition."],
   ["Mechanical fuze functional validation", "ATE: Spin test equipment", "Opening time and speed of the shutter assembly."],
   ["Artillery shells / ammunition", "Shell & Ammunition Inspection", "Automated X-ray inspection with rotation and indexing."],
+  ["Field and stand-off security inspection", "MQS.VIGIL", "Portable real-time X-ray viewing for suspicious, concealed and hard-to-access objects."],
   ["Missile launcher", "ATE", "Final functional testing, response time and launch mechanism verification."],
   ["Gyro subsystem", "ATE", "Drift parameter measurement and stabilization rate."],
   ["Torpedo and integration assemblies", "ATE", "Functional verification during final testing and integration."],
@@ -192,10 +193,8 @@ function FeatureList({ items, dark = false }: { items: string[][]; dark?: boolea
 export default function DefenceIndustryPage() {
   return (
     <main className="bg-[#F4F8FA] text-[#41586A]">
-      {/* Hero. The supplied renders are all on white, which washes out under the
-          scrim, so the hero uses the navy version of the same LINAC shell
-          inspection system (also the /industries hero) until a defence
-          photograph or film is supplied. */}
+      {/* Hero. The NDT animation provides motion while the existing LINAC image
+          remains available as a no-video fallback. */}
       <section className="relative min-h-[720px] overflow-hidden bg-[#071C28] max-md:min-h-[680px]">
         <Image
           src="/assets/ind-hero-linac.jpg"
@@ -206,6 +205,18 @@ export default function DefenceIndustryPage() {
           sizes="100vw"
           className="object-cover object-[70%_center]"
         />
+        <video
+          className="mqs-hero-video-reveal absolute inset-0 h-full w-full object-cover object-center"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/assets/mqs-ndt-poster.jpg"
+          aria-label="Animated non-destructive testing scan and defect detection sequence"
+        >
+          <source src="/assets/mqs-ndt-1080.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,24,35,.98)_0%,rgba(6,30,42,.88)_43%,rgba(5,22,32,.22)_78%,rgba(5,22,32,.12)_100%)] max-md:bg-[linear-gradient(180deg,rgba(5,22,32,.18)_0%,rgba(5,22,32,.92)_58%,#071C28_100%)]" />
 
         <div className={`${shell} relative z-10 flex min-h-[720px] items-end pb-20 pt-32 max-md:min-h-[680px] max-md:pb-12`}>

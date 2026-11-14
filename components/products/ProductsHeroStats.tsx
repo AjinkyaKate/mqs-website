@@ -23,7 +23,7 @@ const DURATION = 1100;
 const STAGGER = 80;
 
 const STATS = [
-  { target: 15, suffix: "", label: "NDT solution lines" },
+  { target: 16, suffix: "", label: "NDT solution lines" },
   { target: 3, suffix: "", label: "ATE categories" },
   { target: 350, suffix: "+", label: "Installations" },
 ];

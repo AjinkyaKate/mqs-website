@@ -167,9 +167,6 @@ export default function MqsVigil() {
           className="object-cover object-[62%_center]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,24,35,.98)_0%,rgba(7,31,44,.91)_42%,rgba(5,22,32,.38)_72%,rgba(5,22,32,.16)_100%)] max-md:bg-[linear-gradient(180deg,rgba(5,22,32,.18)_0%,rgba(5,22,32,.94)_58%,#071C28_100%)]" />
-        <div className="absolute right-6 top-[110px] z-10 rounded-sm bg-white/90 p-3 shadow-lg md:right-10 lg:right-[55px]">
-          <Image src="/assets/mqs-logo-2a-dark.png" alt="MQS Technologies" width={190} height={72} className="h-auto w-[120px] md:w-[150px]" />
-        </div>
         <div className={`${shell} relative z-[2] flex min-h-[624px] flex-col justify-end pb-16 pt-28 md:pb-20 lg:pb-24`}>
           <div className="max-w-[760px]">
             <p className="t-eyebrow m-0 text-[#5AD1F7]">MQS.VIGIL</p>

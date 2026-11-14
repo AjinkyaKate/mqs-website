@@ -51,6 +51,11 @@ const GROUPS: { title: string; links: FooterLink[] }[] = [
     title: "Industries",
     links: [
       { label: "Industry Overview", href: "/industries" },
+      { label: "Automotive", href: "/industries/automotive" },
+      { label: "Aerospace", href: "/industries/aerospace" },
+      { label: "Defense and Securities", href: "/industries/defence" },
+      { label: "Electronics", href: "/industries/electronics" },
+      { label: "Heavy Engineering", href: "/industries/heavy-engineering" },
     ],
   },
   {
