@@ -12,8 +12,8 @@
    motion-reduce) so it stays a server component with no hydration
    flash. Breakpoints match the .dc: mobile <640, ≥640 hover-reveal.
 
-   NOTE: images are placeholders (existing facility photos) — swap for
-   real sector imagery (aerospace / automotive / electronics).
+   Five client-approved industry routes are represented here. Each card uses
+   an existing sector image and links directly to its detailed industry page.
    ────────────────────────────────────────────────────────────── */
 
 import Image from "next/image";
@@ -22,11 +22,18 @@ const EASE = "ease-[cubic-bezier(.22,.61,.36,1)]";
 
 const CARDS = [
   {
-    title: "Aerospace & Defence",
+    title: "Aerospace",
     href: "/industries/aerospace",
     src: "/assets/ind-aerospace.jpg",
     alt: "Jet engine — the kind of flight-critical component MQS X-ray and CT systems validate",
-    body: "Mission-critical X-ray and CT to validate flight- and defence-grade components with complete confidence.",
+    body: "Mission-critical X-ray and CT for flight-critical components, propulsion systems and structural assemblies.",
+  },
+  {
+    title: "Defense & Securities",
+    href: "/industries/defence",
+    src: "/assets/ind-hero-linac.jpg",
+    alt: "High-energy MQS inspection system for defence and security applications",
+    body: "Indigenous X-ray inspection and automated test systems for defence, security and mission-critical applications.",
   },
   {
     title: "Automotive",
@@ -37,10 +44,17 @@ const CARDS = [
   },
   {
     title: "Electronics",
-    href: "/industries",
+    href: "/industries/electronics",
     src: "/assets/ind-electronics.jpg",
     alt: "Printed circuit board close-up — PCB X-ray and CT inspection subject",
     body: "PCB X-ray – 2D / 2.5D, 3D CT slicing and AI reel counting to improve quality and traceability in SMT lines.",
+  },
+  {
+    title: "Heavy Engineering",
+    href: "/industries/heavy-engineering",
+    src: "/assets/inset-welder.jpg",
+    alt: "Industrial pipe welding for heavy engineering inspection",
+    body: "Digital radiography for pipe welds, large fabrications and dense components where reliable internal inspection matters.",
   },
 ];
 
@@ -67,7 +81,7 @@ export default function IndustriesSection() {
       </div>
 
       {/* cards */}
-      <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-3 lg:gap-6">
+      <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:gap-5">
         {CARDS.map((c) => (
           <a
             key={c.title}
@@ -80,7 +94,7 @@ export default function IndustriesSection() {
               src={c.src}
               alt={c.alt}
               fill
-              sizes="(max-width: 640px) 100vw, 33vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
               className={`object-cover grayscale contrast-[1.12] brightness-[.74] transition duration-[400ms] ${EASE} motion-reduce:transition-none sm:brightness-[.92] sm:group-hover:scale-105 sm:group-hover:brightness-[.70] sm:group-focus:scale-105 sm:group-focus:brightness-[.70]`}
             />
 

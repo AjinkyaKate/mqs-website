@@ -279,6 +279,18 @@ function Hero() {
         sizes="100vw"
         className="object-cover"
       />
+      <video
+        aria-hidden="true"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/assets/ind-hero-linac.jpg"
+        className="mqs-hero-video-reveal absolute inset-0 h-full w-full object-cover"
+      >
+        <source src="/assets/industries/overview/quality-assurance.mp4" type="video/mp4" />
+      </video>
       {/* Scrim matched to the /services hero at the client's request: 92% falling
           to 10% left-to-right, so the system stays legible on the right instead
           of being flattened to a tint, and a top-to-bottom variant on mobile
