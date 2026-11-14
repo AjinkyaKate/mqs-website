@@ -7,7 +7,7 @@ export const contactSchema = z.object({
   phone: z.string().optional().default(""),
   industry: z.string().optional().default(""),
   application: z.string().optional().default(""),
-  message: z.string().min(1, "Message is required"),
+  message: z.string().optional().default(""),
 });
 
 export const productSchema = z.object({

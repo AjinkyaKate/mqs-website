@@ -25,6 +25,7 @@ const EASE = "cubic-bezier(.22,.61,.36,1)";
 
 type Row = {
   title: string;
+  href: string;
   description: string;
   chips: string[];
   image: string;
@@ -38,6 +39,7 @@ type Row = {
 const ROWS: Row[] = [
   {
     title: "MQX.drIS",
+    href: "/products/mqx-dris",
     description: "Real-time, high-resolution X-ray inspection of castings, welds, assemblies and safety-critical components.",
     chips: ["Castings", "Welds", "PCB Assemblies"],
     image: "/assets/prod-mqxc.jpg",
@@ -48,6 +50,7 @@ const ROWS: Row[] = [
   },
   {
     title: "MQX.NeVa",
+    href: "/products/mqx-neva",
     description: "3D imaging for internal flaw detection, dimensional metrology and reverse engineering of complex parts.",
     chips: ["3D imaging", "Metrology", "Porosity"],
     image: "/assets/home-solutions-ct-cabinet.jpg",
@@ -57,6 +60,7 @@ const ROWS: Row[] = [
   },
   {
     title: "Automated Test Equipments",
+    href: "/products/automated-test-equipment",
     description: "Custom electrical and functional validation of mission-critical assemblies for aerospace and defence.",
     chips: ["Aerospace LRUs", "Defence Assemblies"],
     image: "/assets/product-ate.png",
@@ -67,6 +71,7 @@ const ROWS: Row[] = [
   },
   {
     title: "High-Energy X-ray",
+    href: "/products/high-energy-xray",
     description: "LINAC-based deep penetration for rocket motors, heavy castings and other dense, safety-critical components.",
     chips: ["Rocket Motors", "0.9–15 MeV", "2D / 3D"],
     image: "/assets/prod-highenergy-branded.png",
@@ -86,10 +91,10 @@ const focusLabelStyle = {
   color: MUTED,
 };
 
-function LearnMore() {
+function LearnMore({ href }: { href: string }) {
   return (
     <a
-      href="/products"
+      href={href}
       className="t-button no-underline transition-colors duration-200 hover:!text-[#0C87AD]"
       style={{
         color: ACCENT,
@@ -100,7 +105,7 @@ function LearnMore() {
   );
 }
 
-function ServiceRow({ title, description, chips, image, imageAlt, imageBackground, imageClassName, focusLabel = "Service focus:", active }: Row) {
+function ServiceRow({ title, href, description, chips, image, imageAlt, imageBackground, imageClassName, focusLabel = "Service focus:", active }: Row) {
   const [hovered, setHovered] = useState(false);
   const titleColor = active || hovered ? ACCENT : INK;
 
@@ -153,7 +158,7 @@ function ServiceRow({ title, description, chips, image, imageAlt, imageBackgroun
           ))}
         </div>
         <div className="mt-auto pt-1">
-          <LearnMore />
+          <LearnMore href={href} />
         </div>
       </div>
     </article>

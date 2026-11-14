@@ -65,7 +65,7 @@ export default function RoutingAccordion({ routes }: { routes: readonly (readonl
                   ))}
                 </div>
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="mt-4 flex w-full items-center justify-center transition-colors duration-200 hover:!bg-[#12496A]"
                   style={{
                     height: 52,

@@ -240,7 +240,7 @@ export default function AteSystems() {
               around one assembly and the way your people actually work.
             </p>
             <div className="ate-cta" style={{ display: "flex", flexWrap: "wrap", gap: 16, marginTop: 38 }}>
-              <Btn href="#contact" tone="cyan">Talk to an Engineer</Btn>
+              <Btn href="/contact" tone="cyan">Talk to an Engineer</Btn>
             </div>
           </div>
         </div>

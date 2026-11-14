@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
+import RelatedProductLinks from "./RelatedProductLinks";
 
 /* ──────────────────────────────────────────────────────────────
    MQCT Series product page — /products/mqct-series/
@@ -261,7 +262,7 @@ export default function MqctSeries() {
             to thick steel castings, with defect analysis that feeds back into defect-free production.
           </p>
           <div className="flex flex-wrap" style={{ gap: 12, marginTop: 8 }}>
-            <a href="#contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
+            <a href="/contact" style={btnPrimary} className="hover:!bg-white">Request a demo</a>
             <a href="#specs" style={btnGhostDark} className="hover:!bg-white/10">See specifications</a>
           </div>
         </div>
@@ -624,6 +625,12 @@ export default function MqctSeries() {
           </div>
         </div>
       </Section>
+
+      <RelatedProductLinks items={[
+        { name: "MQX.NeVa-M", href: "/products/microfocus-xray" },
+        { name: "MQX.drIS", href: "/products/mqx-dris" },
+        { name: "High Energy X-ray", href: "/products/high-energy-xray" },
+      ]} />
 
       {/* The closing CTA band is removed at the client's request. ContactSection
           follows immediately and is the enquiry form itself, with a real server

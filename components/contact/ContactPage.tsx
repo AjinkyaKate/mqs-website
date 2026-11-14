@@ -63,6 +63,7 @@ const EASE = "cubic-bezier(.22,.61,.36,1)";
 export const PHONE = "+91 40 2381 1122";
 export const TEL = "tel:+914023811122";
 export const EMAIL = "info@mqstechnologies.in";
+export const SALES_EMAIL = "sales@mqstechnologies.in";
 export const ADDRESS_LINES = [
   "KK House, Plot No. B-35/1, Industrial Estate",
   "Sanathnagar, Hyderabad – 500018",
@@ -125,8 +126,14 @@ const QUICK: { label: string; value: ReactNode; sub: string }[] = [
   },
   {
     label: "Email",
-    value: <a href={`mailto:${EMAIL}`} style={{ font: `500 20px/1.3 ${SANS}`, letterSpacing: "-.01em", color: INK, wordBreak: "break-word", minHeight: 44, display: "flex", alignItems: "center" }}>{EMAIL}</a>,
-    sub: "Sales and application advice",
+    value: (
+      <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        {[EMAIL, SALES_EMAIL].map((address) => (
+          <a key={address} href={`mailto:${address}`} style={{ font: `500 20px/1.3 ${SANS}`, letterSpacing: "-.01em", color: INK, wordBreak: "break-word", minHeight: 36, display: "flex", alignItems: "center" }}>{address}</a>
+        ))}
+      </span>
+    ),
+    sub: "General enquiries, sales and application advice",
   },
   {
     label: "System down?",
@@ -185,7 +192,7 @@ function Hero() {
             gap: 16, alignItems: "stretch", animationDelay: "220ms",
           }}>
             <Btn href="#enquiry-form" tone="cyan">Get in touch</Btn>
-            <Btn href={`mailto:${EMAIL}`} tone="quiet">Talk to Sales</Btn>
+            <Btn href={`mailto:${SALES_EMAIL}`} tone="quiet">Talk to Sales</Btn>
           </div>
         </div>
 
@@ -201,8 +208,8 @@ const DEPARTMENTS: { eyebrow: string; title: string; copy: string; emails: strin
   {
     eyebrow: "Sales", title: "New systems & enquiries",
     copy: "Product selection, demonstrations, quotations and application advice across X-ray, CT and ATE.",
-    emails: ["info@mqstechnologies.in", "bdev@mqstechnologies.in"],
-    cta: "Email Sales", href: "mailto:info@mqstechnologies.in", tone: "navy",
+    emails: [SALES_EMAIL, "bdev@mqstechnologies.in"],
+    cta: "Email Sales", href: `mailto:${SALES_EMAIL}`, tone: "navy",
   },
   {
     eyebrow: "Contract manufacturing", title: "Build to your drawing",

@@ -121,7 +121,7 @@ const INDUSTRIES: Industry[] = [
     systems: [
       { label: "High Energy X-ray and CT", href: "/products/high-energy-xray" },
       { label: "MQX.NeVa", href: "/products/mqx-neva" },
-      { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+      { label: "MQX.NeVa-M", href: "/products/microfocus-xray" },
       { label: "MQX.drIS", href: "/products/mqx-dris" },
     ],
     image: {
@@ -137,10 +137,10 @@ const INDUSTRIES: Industry[] = [
     name: "Automotive & EV",
     lead: "Inspect faster. Reduce scrap. Deliver safer vehicles. Cast housings, brake components, powertrain parts and battery assemblies — inspected at production speed, because a zero-defect target means checking parts, not samples.",
     systems: [
-      { label: "MQS.PRISM", href: "/brochures/mqs-prism.pdf" },
+      { label: "MQS.PRISM", href: "/products/prism" },
       { label: "MQX.drIS", href: "/products/mqx-dris" },
       { label: "MQX.NeVa", href: "/products/mqx-neva" },
-      { label: "MQWR 160U", href: "/brochures/mqwr-160u-wheel-inspection.pdf" },
+      { label: "MQWR 160U", href: "/products/mqwr-160u" },
     ],
     image: {
       src: "/assets/ind-auto-wheel-hub.jpg",
@@ -158,8 +158,8 @@ const INDUSTRIES: Industry[] = [
       { label: "MQX.tracE", href: "/products/mqx-trace" },
       { label: "MQX.tracE CT", href: "/products/mqx-trace" },
       { label: "MQX.tracE | IN-3D", href: "/products/mqx-trace" },
-      { label: "MQX.gINti", href: "/brochures/mqx-ginti.pdf" },
-      { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+      { label: "MQX.gINti", href: "/products/mqx-ginti" },
+      { label: "MQX.NeVa-M", href: "/products/microfocus-xray" },
     ],
     /* The handoff ships the same PTH radiograph here as in the internal-view
        figure above. Kept as designed so both captions stay accurate. */
@@ -182,14 +182,14 @@ const ALSO: [string, string][] = [
 
 const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
   ["Turbine and engine components", "Micro-defects in high-value parts", [
-    { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+    { label: "MQX.NeVa-M", href: "/products/microfocus-xray" },
     { label: "MQX.NeVa", href: "/products/mqx-neva" },
   ]],
   ["Thick castings and dense assemblies", "Penetration through the section", [
     { label: "High Energy X-ray and CT", href: "/products/high-energy-xray" },
   ]],
   ["Aluminium castings at volume", "Throughput without missing porosity", [
-    { label: "MQS.PRISM", href: "/brochures/mqs-prism.pdf" },
+    { label: "MQS.PRISM", href: "/products/prism" },
     { label: "MQX.drIS", href: "/products/mqx-dris" },
   ]],
   ["Brake, steering and safety parts", "100% inspection with traceability", [
@@ -198,7 +198,7 @@ const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
   ]],
   ["EV battery cells and modules", "Electrode alignment and internal defects", [
     { label: "MQX.NeVa", href: "/products/mqx-neva" },
-    { label: "Microfocus X-ray Solutions", href: "/brochures/microfocus-xray.pdf" },
+    { label: "MQX.NeVa-M", href: "/products/microfocus-xray" },
   ]],
   ["PCBs and solder joints", "Hidden voids under packages", [
     { label: "MQX.tracE", href: "/products/mqx-trace" },
@@ -206,7 +206,7 @@ const ROUTES: readonly (readonly [string, string, readonly SystemLink[]])[] = [
     { label: "MQX.tracE | IN-3D", href: "/products/mqx-trace" },
   ]],
   ["SMT component reels", "Inventory count accuracy", [
-    { label: "MQX.gINti", href: "/brochures/mqx-ginti.pdf" },
+    { label: "MQX.gINti", href: "/products/mqx-ginti" },
   ]],
   ["Welds and pressure components", "Root penetration and weld integrity", [
     { label: "MQX.drIS 320 / 450", href: "/products/mqx-dris" },
@@ -279,6 +279,18 @@ function Hero() {
         sizes="100vw"
         className="object-cover"
       />
+      <video
+        aria-hidden="true"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/assets/ind-hero-linac.jpg"
+        className="mqs-hero-video-reveal absolute inset-0 h-full w-full object-cover"
+      >
+        <source src="/assets/industries/overview/quality-assurance.mp4" type="video/mp4" />
+      </video>
       {/* Scrim matched to the /services hero at the client's request: 92% falling
           to 10% left-to-right, so the system stays legible on the right instead
           of being flattened to a tint, and a top-to-bottom variant on mobile
@@ -319,7 +331,7 @@ function Hero() {
         </p>
         <div className="mt-9 flex flex-wrap gap-3.5 max-[639px]:mt-7 max-[639px]:flex-col max-[639px]:gap-2.5">
           <a href="#routing" style={btn(CYAN, NAVY)} className="hover:!bg-[#0FA6D4] max-[639px]:!w-full">Find Your Industry</a>
-          <a href="#contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10 max-[639px]:!w-full">
+          <a href="/contact" style={btn("transparent", "#fff", "1px solid rgba(255,255,255,.28)")} className="hover:!bg-white/10 max-[639px]:!w-full">
             Talk to an Expert
           </a>
         </div>
@@ -394,6 +406,42 @@ function IndustryBlock({ item, index }: { item: Industry; index: number }) {
           {item.name}
         </h3>
         <p className="mt-4 max-w-[48ch]" style={lead(BODY)}>{item.lead}</p>
+        {item.name === "Automotive & EV" && (
+          <a
+            href="/industries/automotive"
+            className="mt-6 inline-flex items-center gap-2 no-underline hover:underline"
+            style={label(CYAN_INK)}
+          >
+            Explore automotive solutions <span aria-hidden>→</span>
+          </a>
+        )}
+        {item.name === "Aerospace & Defence" && (
+          <a
+            href="/industries/aerospace"
+            className="mt-6 inline-flex items-center gap-2 no-underline hover:underline"
+            style={label(CYAN_INK)}
+          >
+            Explore aerospace solutions <span aria-hidden>→</span>
+          </a>
+        )}
+        {item.name === "Aerospace & Defence" && (
+          <a
+            href="/industries/defence"
+            className="mt-3 flex w-fit items-center gap-2 no-underline hover:underline"
+            style={label(CYAN_INK)}
+          >
+            Explore defense and securities <span aria-hidden>→</span>
+          </a>
+        )}
+        {item.name === "Electronics & Semiconductors" && (
+          <a
+            href="/industries/electronics"
+            className="mt-6 inline-flex items-center gap-2 no-underline hover:underline"
+            style={label(CYAN_INK)}
+          >
+            Explore electronics solutions <span aria-hidden>→</span>
+          </a>
+        )}
         <div className="mt-7" style={{ borderTop: `1px solid ${HAIR}`, paddingTop: 18 }}>
           <p style={eyebrow(MUTED)}>Systems used</p>
           <div className="mt-3.5 flex flex-wrap gap-2">

@@ -3,6 +3,8 @@ import { Figtree, Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import SiteAnalytics from "@/components/SiteAnalytics";
+import { getTrackingIds } from "@/lib/site-settings";
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -53,7 +55,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  /* Set from Admin > Settings. Null when unset, so nothing loads. */
+  const tracking = await getTrackingIds();
+
   return (
     <html
       lang="en"
@@ -62,6 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full">
         <SmoothScroll>{children}</SmoothScroll>
         <Analytics />
+        <SiteAnalytics {...tracking} />
       </body>
     </html>
   );

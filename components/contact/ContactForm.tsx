@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useRef, useState, type CSSProperties } from "react";
+import { useActionState, useEffect, useRef, useState, type CSSProperties } from "react";
+import { trackEvent } from "@/lib/analytics";
 import FormSelect from "./FormSelect";
 import { submitEnquiry } from "@/lib/actions/enquiry";
 import type { EnquiryFormState } from "@/lib/schemas";
@@ -100,6 +101,9 @@ function SelectField({ label, name, options, required, error, defaultValue }: {
 
 export default function ContactForm() {
   const [state, action, pending] = useActionState<EnquiryFormState, FormData>(submitEnquiry, { success: false });
+  useEffect(() => {
+    if (state.success) trackEvent("generate_lead", { form: "contact-page" });
+  }, [state]);
   const [fileName, setFileName] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const e = state.errors ?? {};

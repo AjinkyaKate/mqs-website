@@ -728,3 +728,15 @@ video::-webkit-media-controls-start-playback-button {
 @media (max-width: 699px) {
   .ate-stats { grid-template-columns: 1fr; }
 }
+@keyframes mqsHeroVideoReveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mqs-hero-video-reveal {
+  animation: mqsHeroVideoReveal 900ms ease 350ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mqs-hero-video-reveal { animation: none; }
+}

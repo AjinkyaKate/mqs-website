@@ -5,19 +5,36 @@
    catalog (or the Industries hub when the parent is "Industries"). */
 
 export const HREF_MAP: Record<string, string> = {
-  /* Industries. Phase 1 is a single /industries/ page, so there are no child
-     routes and Industries is a plain top-level link rather than a dropdown. The
-     page's own industry sections and routing matrix do the routing. */
+  /* Industries. Phase 2 detail pages appear in the shared dropdown as they are
+     completed, while the overview remains the route to the full industry hub. */
   "Industries overview": "/industries",
   Industries: "/industries",
+  Automotive: "/industries/automotive",
+  Aerospace: "/industries/aerospace",
+  Defence: "/industries/defence",
+  "Defense and Securities": "/industries/defence",
+  Electronics: "/industries/electronics",
+  "Heavy Engineering": "/industries/heavy-engineering",
 
-  /* Products. Two detail pages exist. The rest of the catalogue is reachable from
+  /* Products. Each detail page has an entry. The rest of the catalogue is reachable from
      /products; category labels with no page behind them are not in the nav.
      Add children here as each product page lands. */
   "Products overview": "/products",
+  "Solutions overview": "/products",
   "MQX.drIS": "/products/mqx-dris",
   "MQX.NeVa": "/products/mqx-neva",
   "MQX.tracE": "/products/mqx-trace",
+  "MQS.PRISM": "/products/prism",
+  "MQS.VIGIL": "/products/mqs-vigil",
+  "MQWR 160U": "/products/mqwr-160u",
+  "Microfocus X-Ray": "/products/microfocus-xray",
+  "MQX.NeVa-M": "/products/microfocus-xray",
+  "MQX.OptimaXis": "/products/mqx-optimaxis",
+  "MQX.gINti": "/products/mqx-ginti",
+  "Pipe Inspection DR": "/products/pipe-inspection",
+  "Shell Inspection": "/products/shell-inspection",
+  "Fuze Inspection": "/products/fuze-inspection",
+  "MQIR 225 Irradiator": "/products/mqir-225",
   "High-Energy X-Ray": "/products/high-energy-xray",
   "Automated Test Equipments": "/products/automated-test-equipment",
 
